@@ -2,6 +2,7 @@
 #define CUSTOMDONUT_H
 #include "qcustomplot.h"
 #include "customslice.h"
+//#include <circos/circos.h>
 
 class CustomDonut {
   public:
@@ -11,6 +12,7 @@ class CustomDonut {
     void CaculateSum(void);
     qreal CaculateAngleSpan(int index);
     void DrawDonut(QCustomPlot *);
+//    void DrawDonut(QCustomPlot *, Circos *);
     void Clear(void);
     void RemoveFrom(QCustomPlot *);
 

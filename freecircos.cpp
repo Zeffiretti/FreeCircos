@@ -7,18 +7,12 @@ FreeCircos::FreeCircos(QWidget *parent)
     ui->setupUi(this);
     this->setGeometry(40, 40, 1800, 650);
 
-    circos = new Circos;
-    canvas = new QCustomPlot;
+    //init canvas
+    initCanvas();
+
     gene_donut = new CustomDonut;
     category_donut = new CustomDonut;
-    canvas->setParent(this);
-    canvas->setGeometry(10, 110, 500, 500);
-    canvas->xAxis->setRange(-1, 1);
-    canvas->yAxis->setRange(-1, 1);
-    canvas->xAxis->setVisible(false);
-    canvas->yAxis->setVisible(false);
-    canvas->setAntialiasedElements(QCP::AntialiasedElement::aeItems |
-                                   QCP::AntialiasedElement::aePlottables);
+    circos = new Circos;
 
     QPushButton *backbone_button = new QPushButton;
     backbone_button->setParent(this);
@@ -68,46 +62,9 @@ FreeCircos::FreeCircos(QWidget *parent)
     control_panel = new QTabWidget;
     control_panel->setParent(this);
     control_panel->setGeometry(600, 30, 1000, 600);
+    initBackBoneWidget(control_panel);
 
-    backbone_widget = new QWidget;
-    backbone_model = new QStandardItemModel;
-    backbone_table = new QTableView;
-    backbone_table->setSortingEnabled(true);
-    backbone_table->setGeometry(0, 0, 710, 580);
-    backbone_table->setParent(backbone_widget);
-    backbone_table->setModel(backbone_model);
-    backbone_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-//    backbone_table->verticalHeader()->hide();
-    backbone_table->setSelectionBehavior(QAbstractItemView::SelectRows);
-    backbone_table->setSelectionMode(QAbstractItemView::SingleSelection);
-    backbone_table->installEventFilter(this);
-//    backbone_table->movea
-    backbone_table_rightclick_menu = new QMenu;
-    backbone_table_rightclick_action_moveto = new QAction("MoveTo");
-    backbone_table_rightclick_action_moveto->setProperty("function", "backbonemove");
-//    backbone_table_rightclick_action_moveto
-    connect(backbone_table_rightclick_action_moveto, &QAction::triggered,
-            this, &FreeCircos::onActionTriggered);
-    backbone_table_rightclick_menu->addAction(backbone_table_rightclick_action_moveto);
-    backbone_header_list << "Index(Visable)"
-                         << "Gene Name"
-                         << "Length"
-                         << "Strike Color"
-                         << "Fill Color"
-                         << "Label State"
-                         << "Label Position";
-    backbone_model->setHorizontalHeaderLabels(backbone_header_list);
-    backbone_config_button = new QPushButton("Config");
-    backbone_config_button->setGeometry(750, 30, 200, 60);
-    backbone_config_button->setParent(backbone_widget);
-    backbone_config_button->setProperty("function", "backboneconfig");
-    connect(backbone_config_button, &QPushButton::clicked, this, &FreeCircos::onButtonClicked);
-    move_panel_button = new QPushButton("Move Panel");
-    move_panel_button->setGeometry(750, 100, 200, 60);
-    move_panel_button->setParent(backbone_widget);
-    move_panel_button->setProperty("function", "movepanel");
-    connect(move_panel_button, &QPushButton::clicked, this, &FreeCircos::onButtonClicked);
-    control_panel->addTab(backbone_widget, "BackBone");
+//    control_panel->addTab(backbone_widget, "BackBone");
 
 
 }

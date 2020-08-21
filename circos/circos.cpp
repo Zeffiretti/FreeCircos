@@ -84,8 +84,11 @@ void Circos::BuildBackBoneDonut(CustomDonut *donut) {
     donut->Clear();
     for(int i = 0; i < back_bone_sequence.size(); ++i) {
         int index = back_bone_sequence.at(i);
+
         CustomSlice *slice = new CustomSlice(back_bone.at(index)->name,
-                                             back_bone.at(index)->Length());
+                                             back_bone.at(index)->getLength());
+        slice->SetBrush(QBrush(back_bone.at(index)->getFillColor()));
+        slice->SetPen(QPen(back_bone.at(index)->getStrikeColor()));
         donut->AddSlice(slice);
     }
 }
@@ -98,7 +101,7 @@ void Circos::BuildCategoryDonut(CustomDonut *donut) {
         int sum = 0;
         for(int j = 0; j < c->Count(); ++j) {
             QString g = c->m_genes.at(j);
-            sum += FindGene(g)->Length();
+            sum += FindGene(g)->getLength();
         }
         CustomSlice* slice = new CustomSlice(c->name, sum);
         donut->AddSlice(slice);

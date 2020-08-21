@@ -37,6 +37,8 @@ class FreeCircos : public QMainWindow {
 
   public:
     FreeCircos(QWidget *parent = nullptr);
+    //init method
+    void initCanvas(void);
     void clearCanvas(QCustomPlot *cvs);
     void initBackBoneTableModel(QTableView *table,
                                 QStandardItemModel *model,
@@ -63,6 +65,7 @@ class FreeCircos : public QMainWindow {
 
     QWidget *backbone_widget;
     QTableView *backbone_table;
+    QWidget *backbone_config_widget;
     QPushButton *backbone_config_button;
     QPushButton *move_panel_button;
     QMenu *backbone_table_rightclick_menu;
@@ -71,6 +74,7 @@ class FreeCircos : public QMainWindow {
     QStringList backbone_index_list;
     QStandardItemModel *backbone_model;
     TableMoveDialog *table_move_dialog;
+    void initBackBoneWidget(QTabWidget *parent = nullptr);
 
   private slots:
     void onButtonClicked(bool);

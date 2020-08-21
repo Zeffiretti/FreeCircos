@@ -55,20 +55,34 @@ void CustomDonut::DrawDonut(QCustomPlot *canvas) {
     CaculateSum();
     qreal last_start = start_angle;
     for(int i = 0; i < m_slices.size(); ++i) {
-        if(pen_reset) {
-            SetSinglePen(i, QColor(qrand() % 256, qrand() % 256, qrand() % 256));
-            pen_reset = true;
-        }
-        if(brush_reset) {
-            SetSingleBrush(i, QColor(qrand() % 256, qrand() % 256, qrand() % 256));
-            brush_reset = true;
-        }
+//        if(pen_reset) {
+//            SetSinglePen(i, QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+//            pen_reset = true;
+//        }else{
+////            SetSinglePen(i,);
+//        }
+//        if(brush_reset) {
+//            SetSingleBrush(i, QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+//            brush_reset = true;
+//        }
         qreal span = CaculateAngleSpan(i);
         m_slices.at(i)->SetSE(last_start, last_start + span);
         m_slices.at(i)->DrawSlice(canvas);
         last_start += span;
     }
 }
+
+//void CustomDonut::DrawDonut(QCustomPlot *, Circos *) {
+//    CaculateSum();
+//    qreal last_start = start_angle;
+//    for(int i = 0; i < m_slices.size(); ++i) {
+////        SetSingleBrush(i,);
+//        qreal span = CaculateAngleSpan(i);
+//        m_slices.at(i)->SetSE(last_start, last_start + span);
+//        m_slices.at(i)->DrawSlice(canvas);
+//        last_start += span;
+//    }
+//}
 
 void CustomDonut::Clear(void) {
     m_slices.clear();

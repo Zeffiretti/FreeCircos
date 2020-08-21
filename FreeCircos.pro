@@ -25,6 +25,7 @@ SOURCES += \
     fileprocess/excelbase.cpp \
     fileprocess/qvariantlistlistmodel.cpp \
     functions.cpp \
+    init.cpp \
     main.cpp \
     freecircos.cpp \
     paint/colorgen.cpp \

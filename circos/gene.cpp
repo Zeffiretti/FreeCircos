@@ -17,20 +17,36 @@ Gene::Gene(const QString& n, int s, int e) {
     length = qAbs(end - start);
 }
 
-void Gene::SetSE(int s, int e) {
+void Gene::setSE(int s, int e) {
     start = s;
     end = e;
     length = qAbs(end - start);
 }
 
-void Gene::SetName(const QString &n) {
+void Gene::setName(const QString &n) {
     name = n;
 }
 
-void Gene::SetLength(int l) {
+void Gene::setLength(int l) {
     length = qAbs(l);
 }
 
-int Gene::Length(void) {
+int Gene::getLength(void) {
     return length;
+}
+
+void Gene::setStrikeColor(QColor c) {
+    strike_color = c;
+}
+
+QColor Gene::getStrikeColor(void) {
+    return strike_color;
+}
+
+void Gene::setFillColor(QColor c) {
+    fill_color = c;
+}
+
+QColor Gene::getFillColor(void) {
+    return fill_color;
 }

@@ -16,23 +16,6 @@ void FreeCircos::onButtonClicked(bool clicked) {
 
         QElapsedTimer timer;
         timer.start();
-////        QVector<QColor> colors;
-////        colors.resize(gene_donut->m_slices.size());
-////        std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
-////        QList<QColor> strike_colors = colors.toList();
-////        gene_donut->SetPens(strike_colors);
-////        std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
-////        QList<QColor> fill_colors = colors.toList();
-////        gene_donut->SetBrushes(fill_colors);
-
-//        gene_donut->SetSize(0.7, 0.75);
-//        clearCanvas(canvas);
-//        gene_donut->DrawDonut(canvas);
-//        qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";
-//        timer.restart();
-//        canvas->replot();
-//        qDebug() << "Elapsed time3: " << timer.elapsed() << " ms";
-//        timer.restart();
 
         initBackBoneTableModel(backbone_table, backbone_model, circos);
         backBoneTableToSequence(backbone_table, backbone_model, circos);
@@ -107,8 +90,6 @@ void FreeCircos::onButtonClicked(bool clicked) {
 void FreeCircos::onActionTriggered(bool triggered) {
     QAction *act = qobject_cast<QAction *>(sender());
     if(act->property("function").toString() == "backbonemove") {
-//        table_move_dialog = new TableMoveDialog(1, backbone_widget);
-//        table_move_dialog->exec();
         qDebug("Move Action Triggered.");
     }
 }
