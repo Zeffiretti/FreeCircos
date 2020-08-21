@@ -74,6 +74,12 @@ class FreeCircos : public QMainWindow {
     QStringList backbone_index_list;
     QStandardItemModel *backbone_model;
     TableMoveDialog *table_move_dialog;
+    QPushButton *backbone_strike_color_button;
+    QPushButton *backbone_fill_color_button;
+    QComboBox *backbone_label_state_combobox;
+    QComboBox *backbone_label_position_combobox;
+    QLabel *backbone_label_state_label;
+    QLabel *backbone_label_position_label;
     void initBackBoneWidget(QTabWidget *parent = nullptr);
 
   private slots:

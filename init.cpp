@@ -68,6 +68,66 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_model->setHorizontalHeaderLabels(backbone_header_list);
 
     //configuration
+    backbone_config_widget = new QWidget;
+    backbone_config_widget->setParent(backbone_widget);
+    backbone_config_widget->setGeometry(380, 20, 600, 560);
+    backbone_strike_color_button = new QPushButton("STRIKE");
+    backbone_strike_color_button->setParent(backbone_config_widget);
+    backbone_strike_color_button->setGeometry(50, 10, 200, 60);
+//    QPalette pal = backbone_strike_color_button->palette();
+//    QColor *color = new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
+//    pal.setColor(QPalette::Button, *color);
+//    backbone_strike_color_button->setPalette(pal);
+//    backbone_strike_color_button->setAutoFillBackground(true);
+//    backbone_strike_color_button->setFlat(true);
+    backbone_strike_color_button->setProperty("function", "backbone-strike-color");
+    ///TODO: connect
+
+    backbone_fill_color_button = new QPushButton("FILL");
+    backbone_fill_color_button->setParent(backbone_config_widget);
+    backbone_fill_color_button->setGeometry(350, 10, 200, 60);
+//    pal = backbone_fill_color_button->palette();
+//    color = new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
+//    pal.setColor(QPalette::Button, *color);
+//    backbone_fill_color_button->setPalette(pal);
+//    backbone_fill_color_button->setAutoFillBackground(true);
+//    backbone_fill_color_button->setFlat(true);
+    backbone_fill_color_button->setProperty("function", "backbone-fill-color");
+    ///TODO: connect
+
+    backbone_label_state_label = new QLabel;
+    backbone_label_state_label->setParent(backbone_config_widget);
+    backbone_label_state_label->setGeometry(50, 140, 300, 60);
+    backbone_label_state_label->setText("BackBone Label State: ");
+    QFont *ft = new QFont;
+    ft->setFamily("Source Code Pro");
+    ft->setPointSize(16);
+    ft->setBold(true);
+    backbone_label_state_label->setFont(*ft);
+    backbone_label_state_combobox = new QComboBox;
+    backbone_label_state_combobox->setParent(backbone_config_widget);
+    backbone_label_state_combobox->setGeometry(400, 140, 150, 60);
+    backbone_label_state_combobox->setFont(*ft);
+    QStringList backbone_label_state_combobox_items;
+    backbone_label_state_combobox_items << "Sleep"
+                                        << "Stand"
+                                        << "Invisable";
+    backbone_label_state_combobox->addItems(backbone_label_state_combobox_items);
+
+    backbone_label_position_label = new QLabel;
+    backbone_label_position_label->setParent(backbone_config_widget);
+    backbone_label_position_label->setGeometry(50, 230, 300, 60);
+    backbone_label_position_label->setText("BackBone Label Position: ");
+    backbone_label_position_label->setFont(*ft);
+    backbone_label_position_combobox = new QComboBox;
+    backbone_label_position_combobox->setParent(backbone_config_widget);
+    backbone_label_position_combobox->setGeometry(400, 230, 150, 60);
+    backbone_label_position_combobox->setFont(*ft);
+    QStringList backbone_label_position_combobox_items;
+    backbone_label_position_combobox_items << "Outside"
+                                           << "Inside"
+                                           << "On";
+    backbone_label_position_combobox->addItems(backbone_label_position_combobox_items);
 
     parent->addTab(backbone_widget, "BackBone");
 }
