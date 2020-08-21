@@ -77,10 +77,11 @@ FreeCircos::FreeCircos(QWidget *parent)
     backbone_table->setParent(backbone_widget);
     backbone_table->setModel(backbone_model);
     backbone_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    backbone_table->verticalHeader()->hide();
+//    backbone_table->verticalHeader()->hide();
     backbone_table->setSelectionBehavior(QAbstractItemView::SelectRows);
     backbone_table->setSelectionMode(QAbstractItemView::SingleSelection);
     backbone_table->installEventFilter(this);
+//    backbone_table->movea
     backbone_table_rightclick_menu = new QMenu;
     backbone_table_rightclick_action_moveto = new QAction("MoveTo");
     backbone_table_rightclick_action_moveto->setProperty("function", "backbonemove");
@@ -100,6 +101,12 @@ FreeCircos::FreeCircos(QWidget *parent)
     backbone_config_button->setGeometry(750, 30, 200, 60);
     backbone_config_button->setParent(backbone_widget);
     backbone_config_button->setProperty("function", "backboneconfig");
+    connect(backbone_config_button, &QPushButton::clicked, this, &FreeCircos::onButtonClicked);
+    move_panel_button = new QPushButton("Move Panel");
+    move_panel_button->setGeometry(750, 100, 200, 60);
+    move_panel_button->setParent(backbone_widget);
+    move_panel_button->setProperty("function", "movepanel");
+    connect(move_panel_button, &QPushButton::clicked, this, &FreeCircos::onButtonClicked);
     control_panel->addTab(backbone_widget, "BackBone");
 
 

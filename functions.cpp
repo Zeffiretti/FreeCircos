@@ -88,7 +88,11 @@ void FreeCircos::initBackBoneTableModel(QTableView *table,
         label_posittion_combobox->setProperty("function", "label_position");
         label_posittion_combobox->setEnabled(true);
         table->setIndexWidget(model->index(i, 6), label_posittion_combobox);
+
+        backbone_index_list << QString::number(i);
     }
+    backbone_index_list << QString::number(c->back_bone.size());
+    model->setVerticalHeaderLabels(backbone_index_list);
     qDebug("Count Genes: %d", c->back_bone.size());
 
     QStandardItem *all_item = new QStandardItem;
@@ -119,6 +123,22 @@ void FreeCircos::initBackBoneTableModel(QTableView *table,
     all_label_position_combobox->setProperty("function", "label_position");
     table->setIndexWidget(model->index(c->back_bone.size(), 6), all_label_position_combobox);
 
+}
+
+void FreeCircos::moveTableRow(QTableView *table,
+                              int from_row,
+                              int to_row) {
+    QHeaderView *header = table->verticalHeader();
+    QStandardItemModel *model = qobject_cast<QStandardItemModel *>(table->model());
+    QStringList tmp_labels = backbone_index_list;
+    header->moveSection(from_row, to_row);
+
+    backbone_index_list = tmp_labels;
+    header->reset();
+    model->setVerticalHeaderLabels(backbone_index_list);
+    table->setModel(model);
+    table->setVerticalHeader(header);
+    qDebug() << backbone_index_list;
 }
 
 void FreeCircos::backBoneTableToSequence(QTableView *table, QStandardItemModel *model, Circos *c) {

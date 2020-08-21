@@ -82,16 +82,46 @@ void FreeCircos::onButtonClicked(bool clicked) {
         timer.restart();
     }
 
-//    if(btn->property("function").toString() == "opencategoryfile") {
+    if(btn->property("function").toString() == "backboneconfig") {
+        moveTableRow(backbone_table, 4, 0);
+    }
 
-//    }
+    if(btn->property("function").toString() == "movepanel") {
+        btn->setEnabled(false);
+        table_move_dialog = new TableMoveDialog;
+        Qt::WindowFlags flags = table_move_dialog->windowFlags();
+        table_move_dialog->setWindowFlags(flags | Qt::WindowStaysOnTopHint);
+        table_move_dialog->setProperty("function", "movepanel");
+        connect(table_move_dialog,
+                &TableMoveDialog::rejected,
+                this,
+                &FreeCircos::onDialogStateChanged);
+        connect(table_move_dialog,
+                &TableMoveDialog::moveRow,
+                this,
+                &FreeCircos::onBackBoneTableMoveRequest);
+        table_move_dialog->show();
+    }
 }
 
 void FreeCircos::onActionTriggered(bool triggered) {
     QAction *act = qobject_cast<QAction *>(sender());
     if(act->property("function").toString() == "backbonemove") {
-        table_move_dialog = new TableMoveDialog(1, backbone_widget);
-        table_move_dialog->show();
+//        table_move_dialog = new TableMoveDialog(1, backbone_widget);
+//        table_move_dialog->exec();
         qDebug("Move Action Triggered.");
     }
+}
+
+void FreeCircos::onDialogStateChanged(void) {
+    QDialog *dlg = qobject_cast<QDialog *>(sender());
+    if(dlg->property("function").toString() == "movepanel") {
+        qDebug("Move Panel Dialog State Changed");
+        move_panel_button->setEnabled(true);
+    }
+}
+
+void FreeCircos::onBackBoneTableMoveRequest(int from_row, int to_row) {
+    qDebug("backbone_table moves row: %d to %d. ", from_row, to_row);
+    moveTableRow(backbone_table, from_row, to_row);
 }

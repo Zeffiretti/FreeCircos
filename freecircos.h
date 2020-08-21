@@ -31,7 +31,7 @@ class FreeCircos;
 
 }
 QT_END_NAMESPACE
-class TableMoveDialog;
+//class TableMoveDialog;
 class FreeCircos : public QMainWindow {
     Q_OBJECT
 
@@ -41,6 +41,9 @@ class FreeCircos : public QMainWindow {
     void initBackBoneTableModel(QTableView *table,
                                 QStandardItemModel *model,
                                 Circos *c);
+    void moveTableRow(QTableView *table,
+                      int from_row,
+                      int to_row);
     void backBoneTableToSequence(QTableView *table,
                                  QStandardItemModel *model,
                                  Circos *c);
@@ -61,15 +64,18 @@ class FreeCircos : public QMainWindow {
     QWidget *backbone_widget;
     QTableView *backbone_table;
     QPushButton *backbone_config_button;
+    QPushButton *move_panel_button;
     QMenu *backbone_table_rightclick_menu;
     QAction *backbone_table_rightclick_action_moveto;
     QStringList backbone_header_list;
+    QStringList backbone_index_list;
     QStandardItemModel *backbone_model;
     TableMoveDialog *table_move_dialog;
 
   private slots:
     void onButtonClicked(bool);
     void onActionTriggered(bool);
-//    v
+    void onDialogStateChanged(void);
+    void onBackBoneTableMoveRequest(int from_row, int to_row);
 };
 #endif // FREECIRCOS_H
