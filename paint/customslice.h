@@ -20,11 +20,11 @@ class CustomSlice {
     qreal Length(void);
     void SetSE(qreal start, qreal end);
     void SetGap(qreal g);
-    void SetPen(QPen p);
-    void SetBrush(QBrush b);
+    void setPen(QPen p);
+    void setBrush(QBrush b);
     void SetSize(qreal hole, qreal pie);
-    void SetLabelState(LabelState);
-    void SetLabelPosition(LabelPosition);
+    void setLabelState(LabelState);
+    void setLabelPosition(LabelPosition);
     void DrawSlice(QCustomPlot *canvas);
     void RemoveFrom(QCustomPlot *);
 

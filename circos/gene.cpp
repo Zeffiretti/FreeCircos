@@ -50,3 +50,19 @@ void Gene::setFillColor(QColor c) {
 QColor Gene::getFillColor(void) {
     return fill_color;
 }
+
+CustomSlice::LabelPosition Gene::getLabelPosition(void) {
+    return label_position;
+}
+
+void Gene::setLabelPosition(CustomSlice::LabelPosition l_p) {
+    label_position = l_p;
+}
+
+CustomSlice::LabelState Gene::getLabelState(void) {
+    return label_state;
+}
+
+void Gene::setLabelState(CustomSlice::LabelState l_s) {
+    label_state = l_s;
+}

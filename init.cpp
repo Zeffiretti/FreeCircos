@@ -1,5 +1,15 @@
 #include <freecircos.h>
 
+void FreeCircos::initGenerateButton(void) {
+    generate_button = new QPushButton("Generate!");
+    generate_button->setParent(this);
+    generate_button->setGeometry(230, 10, 100, 40);
+    generate_button->setProperty("function", "generate");
+
+    connect(generate_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
+}
+
 void FreeCircos::initCanvas(void) {
     canvas = new QCustomPlot;
     canvas->setParent(this);
@@ -55,6 +65,7 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     backbone_table->setSelectionBehavior(QAbstractItemView::SelectRows);
     backbone_table->setSelectionMode(QAbstractItemView::SingleSelection);
+    backbone_table->verticalHeader()->hide();
     backbone_table->installEventFilter(this);
     backbone_table_rightclick_menu = new QMenu;
     backbone_table_rightclick_action_moveto = new QAction("MoveTo");
@@ -74,12 +85,6 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_strike_color_button = new QPushButton("STRIKE");
     backbone_strike_color_button->setParent(backbone_config_widget);
     backbone_strike_color_button->setGeometry(50, 10, 200, 60);
-//    QPalette pal = backbone_strike_color_button->palette();
-//    QColor *color = new QColor(qrand() % 256, qrand() % 256, qrand() % 256);
-//    pal.setColor(QPalette::Button, *color);
-//    backbone_strike_color_button->setPalette(pal);
-//    backbone_strike_color_button->setAutoFillBackground(true);
-//    backbone_strike_color_button->setFlat(true);
     backbone_strike_color_button->setProperty("function", "backbone-strike-color");
     ///TODO: connect
 
@@ -106,8 +111,9 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_label_state_label->setFont(*ft);
     backbone_label_state_combobox = new QComboBox;
     backbone_label_state_combobox->setParent(backbone_config_widget);
-    backbone_label_state_combobox->setGeometry(400, 140, 150, 60);
+    backbone_label_state_combobox->setGeometry(400, 145, 150, 50);
     backbone_label_state_combobox->setFont(*ft);
+    backbone_label_state_combobox->setProperty("function", "backbone-label-state");
     QStringList backbone_label_state_combobox_items;
     backbone_label_state_combobox_items << "Sleep"
                                         << "Stand"
@@ -121,13 +127,49 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_label_position_label->setFont(*ft);
     backbone_label_position_combobox = new QComboBox;
     backbone_label_position_combobox->setParent(backbone_config_widget);
-    backbone_label_position_combobox->setGeometry(400, 230, 150, 60);
+    backbone_label_position_combobox->setGeometry(400, 235, 150, 50);
     backbone_label_position_combobox->setFont(*ft);
+    backbone_label_position_combobox->setProperty("function", "backbone-label-position");
     QStringList backbone_label_position_combobox_items;
-    backbone_label_position_combobox_items << "Outside"
-                                           << "Inside"
-                                           << "On";
+    backbone_label_position_combobox_items << "On"
+                                           << "Outside"
+                                           << "Inside";
     backbone_label_position_combobox->addItems(backbone_label_position_combobox_items);
 
+    backbone_moveup_button = new QPushButton("MoveUP");
+    backbone_moveup_button->setParent(backbone_config_widget);
+    backbone_moveup_button->setProperty("function", "backbone-moveup");
+    backbone_moveup_button->setGeometry(50, 400, 110, 40);
+
+    backbone_movedown_button = new QPushButton("MoveDOWN");
+    backbone_movedown_button->setParent(backbone_config_widget);
+    backbone_movedown_button->setGeometry(180, 400, 110, 40);
+    backbone_movedown_button->setProperty("function", "backbone-movedown");
+
+    backbone_move_button = new QPushButton("MoveTO");
+    backbone_move_button->setParent(backbone_config_widget);
+    backbone_move_button->setGeometry(310, 400, 110, 40);
+
+    backbone_move_lineedit = new QLineEdit;
+    backbone_move_lineedit->setParent(backbone_config_widget);
+    backbone_move_lineedit->setGeometry(440, 400, 110, 40);
+    backbone_move_lineedit->setValidator(new QIntValidator(0, 10000, this));
+
     parent->addTab(backbone_widget, "BackBone");
+
+    //signal----slot
+    connect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
+            this, &FreeCircos::onBackBoneTableSelectedChanged);
+    connect(backbone_strike_color_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
+    connect(backbone_fill_color_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
+    connect(backbone_label_state_combobox, &QComboBox::currentTextChanged,
+            this, &FreeCircos::onComboboxTextChanged);
+    connect(backbone_label_position_combobox, &QComboBox::currentTextChanged,
+            this, &FreeCircos::onComboboxTextChanged);
+    connect(backbone_moveup_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
+    connect(backbone_movedown_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
 }

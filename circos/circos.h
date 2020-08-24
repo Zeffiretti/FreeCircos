@@ -21,19 +21,20 @@ class Circos {
     QScopedPointer<ExcelBase> m_xls;
     QList<QList<QVariant> > m_datas;
 
-    void OpenFile(const QString&);
-    void DataToBackBone(void);
-    void DataToCategory(void);
-    int IndexOfGene(const QString&);
-    void BuildBackBoneDonut(CustomDonut*);
-    void BuildCategoryDonut(CustomDonut*);
-    Gene* FindGene(const QString name);
-    Category* FindCategory(const QString name);
-    int TakeGeneAt(int index);
-    void InsertGene(int index, int value);
-    int TakeCategoryAt(int index);
-    void InsertCategory(int index, int value);
-    void AdjustBackBoneToCategory(void);
+    void openFile(const QString&);
+    void dataToBackBone(void);
+    void dataToCategory(void);
+    int indexOfGene(const QString&);
+    void buildBackBoneSequence(QStandardItemModel *model);
+    void buildBackBoneDonut(CustomDonut*);
+    void buildCategoryDonut(CustomDonut*);
+    Gene* findGene(const QString name);
+    Category* findCategory(const QString name);
+    int takeGeneAt(int index);
+    void insertGene(int index, int value);
+    int takeCategoryAt(int index);
+    void insertCategory(int index, int value);
+    void adjustBackBoneToCategory(void);
 };
 
 #endif // CIRCOS_H

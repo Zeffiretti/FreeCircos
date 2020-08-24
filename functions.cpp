@@ -20,19 +20,15 @@ void FreeCircos::clearCanvas(QCustomPlot *cvs) {
 }
 
 void FreeCircos::moveTableRow(QTableView *table,
+                              QStandardItemModel *model,
                               int from_row,
                               int to_row) {
-    QHeaderView *header = table->verticalHeader();
-    QStandardItemModel *model = qobject_cast<QStandardItemModel *>(table->model());
-    QStringList tmp_labels = backbone_index_list;
-    header->moveSection(from_row, to_row);
-
-    backbone_index_list = tmp_labels;
-    header->reset();
-    model->setVerticalHeaderLabels(backbone_index_list);
-    table->setModel(model);
-    table->setVerticalHeader(header);
-    qDebug() << backbone_index_list;
+//    QHeaderView *header = table->verticalHeader();
+//    header->moveSection(from_row, to_row);
+//    table->selectRow(to_row);
+    QList<QStandardItem *> temp_model = model->takeRow(from_row);
+    model->insertRow(to_row, temp_model);
+    table->selectRow(to_row);
 }
 
 void FreeCircos::backBoneTableToSequence(QTableView *table, QStandardItemModel *model, Circos *c) {

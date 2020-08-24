@@ -8,6 +8,7 @@
 #include <QComboBox>
 #include <QCheckBox>
 #include <QDialog>
+#include <QLineEdit>
 
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
@@ -44,6 +45,7 @@ class FreeCircos : public QMainWindow {
                                 QStandardItemModel *model,
                                 Circos *c);
     void moveTableRow(QTableView *table,
+                      QStandardItemModel *model,
                       int from_row,
                       int to_row);
     void backBoneTableToSequence(QTableView *table,
@@ -61,6 +63,7 @@ class FreeCircos : public QMainWindow {
     Ui::FreeCircos *ui;
 
     QPushButton *generate_button;
+    void initGenerateButton(void);
     QTabWidget *control_panel;
 
     QWidget *backbone_widget;
@@ -80,6 +83,10 @@ class FreeCircos : public QMainWindow {
     QComboBox *backbone_label_position_combobox;
     QLabel *backbone_label_state_label;
     QLabel *backbone_label_position_label;
+    QPushButton *backbone_moveup_button;
+    QPushButton *backbone_movedown_button;
+    QPushButton *backbone_move_button;
+    QLineEdit *backbone_move_lineedit;
     void initBackBoneWidget(QTabWidget *parent = nullptr);
 
   private slots:
@@ -87,5 +94,7 @@ class FreeCircos : public QMainWindow {
     void onActionTriggered(bool);
     void onDialogStateChanged(void);
     void onBackBoneTableMoveRequest(int from_row, int to_row);
+    void onBackBoneTableSelectedChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onComboboxTextChanged(const QString &text);
 };
 #endif // FREECIRCOS_H

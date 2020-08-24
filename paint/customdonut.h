@@ -7,11 +7,11 @@
 class CustomDonut {
   public:
     CustomDonut();
-    void AddSlice(CustomSlice *slice);
+    void addSlice(CustomSlice *slice);
     void SetSize(qreal hole, qreal pie);
     void CaculateSum(void);
     qreal CaculateAngleSpan(int index);
-    void DrawDonut(QCustomPlot *);
+    void drawDonut(QCustomPlot *);
 //    void DrawDonut(QCustomPlot *, Circos *);
     void Clear(void);
     void RemoveFrom(QCustomPlot *);

@@ -4,7 +4,7 @@ CustomDonut::CustomDonut() {
     m_slices.clear();
 }
 
-void CustomDonut::AddSlice(CustomSlice *slice) {
+void CustomDonut::addSlice(CustomSlice *slice) {
     m_slices.append(slice);
 }
 
@@ -33,38 +33,22 @@ qreal CustomDonut::CaculateAngleSpan(int index) {
     }
 }
 
-void CustomDonut::DrawDonut(QCustomPlot *canvas) {
+void CustomDonut::drawDonut(QCustomPlot *canvas) {
     if(size_reset) {
         SetSize(d_hole_size, d_pie_size);
     }
     if(gap_reset) {
         SetGaps(d_gap);
     }
-//    if(pen_reset) {
-//        SetPens(d_pen);
+//    if(ls_reset) {
+//        SetLabelStates(d_ls);
 //    }
-//    if(brush_reset) {
-//        SetBrushes(d_brush);
+//    if(lp_reset) {
+//        SetLabelPositions(d_lp);
 //    }
-    if(ls_reset) {
-        SetLabelStates(d_ls);
-    }
-    if(lp_reset) {
-        SetLabelPositions(d_lp);
-    }
     CaculateSum();
     qreal last_start = start_angle;
     for(int i = 0; i < m_slices.size(); ++i) {
-//        if(pen_reset) {
-//            SetSinglePen(i, QColor(qrand() % 256, qrand() % 256, qrand() % 256));
-//            pen_reset = true;
-//        }else{
-////            SetSinglePen(i,);
-//        }
-//        if(brush_reset) {
-//            SetSingleBrush(i, QColor(qrand() % 256, qrand() % 256, qrand() % 256));
-//            brush_reset = true;
-//        }
         qreal span = CaculateAngleSpan(i);
         m_slices.at(i)->SetSE(last_start, last_start + span);
         m_slices.at(i)->DrawSlice(canvas);
@@ -134,7 +118,7 @@ void CustomDonut::SetSingleLabelState(int index, CustomSlice::LabelState ls) {
         qDebug() << "index is " << index;
         qDebug() << "size is " << m_slices.size();
     } else {
-        m_slices.at(index)->SetLabelState(ls);
+        m_slices.at(index)->setLabelState(ls);
     }
 }
 
@@ -157,7 +141,7 @@ void CustomDonut::SetSingleLabelPosition(int index, CustomSlice::LabelPosition l
         qDebug() << "index is " << index;
         qDebug() << "size is " << m_slices.size();
     } else {
-        m_slices.at(index)->SetLabelPosition(lp);
+        m_slices.at(index)->setLabelPosition(lp);
     }
 }
 
@@ -180,7 +164,7 @@ void CustomDonut::SetSinglePen(int index, QColor p) {
         qDebug() << "index is " << index;
         qDebug() << "size is " << m_slices.size();
     } else {
-        m_slices.at(index)->SetPen(QPen(p));
+        m_slices.at(index)->setPen(QPen(p));
     }
 }
 
@@ -203,7 +187,7 @@ void CustomDonut::SetSingleBrush(int index, QColor b) {
         qDebug() << "index is " << index;
         qDebug() << "size is " << m_slices.size();
     } else {
-        m_slices.at(index)->SetBrush(QBrush(b));
+        m_slices.at(index)->setBrush(QBrush(b));
     }
 }
 

@@ -3,6 +3,8 @@
 #include <QMainWindow>
 #include <QColor>
 
+#include "paint/customslice.h"
+
 class Gene {
   public:
     Gene();
@@ -13,6 +15,8 @@ class Gene {
     QColor fill_color;
     int start = 0, end;
     int length;
+    CustomSlice::LabelPosition label_position;
+    CustomSlice::LabelState label_state;
 
     void setSE(int, int);
     void setName(const QString&);
@@ -22,6 +26,10 @@ class Gene {
     void setStrikeColor(QColor c);
     QColor getFillColor(void);
     void setFillColor(QColor c);
+    CustomSlice::LabelPosition getLabelPosition(void);
+    void setLabelPosition(CustomSlice::LabelPosition l_p);
+    CustomSlice::LabelState getLabelState(void);
+    void setLabelState(CustomSlice::LabelState l_s);
 };
 
 #endif // GENE_H

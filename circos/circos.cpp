@@ -8,7 +8,7 @@ Circos::Circos() {
     category_sequence.clear();
 }
 
-void Circos::OpenFile(const QString &xlsFile) {
+void Circos::openFile(const QString &xlsFile) {
     m_datas.clear();
     if(xlsFile.isEmpty())
         return;
@@ -26,7 +26,7 @@ void Circos::OpenFile(const QString &xlsFile) {
     m_xls->close();
 }
 
-void Circos::DataToBackBone(void) {
+void Circos::dataToBackBone(void) {
     back_bone.clear();
     back_bone_sequence.clear();
     if(m_datas.at(0).at(2) != "") {
@@ -34,6 +34,10 @@ void Circos::DataToBackBone(void) {
             Gene *g = new Gene(m_datas.at(i).at(0).toString(),
                                m_datas.at(i).at(1).toUInt(),
                                m_datas.at(i).at(2).toUInt());
+            g->setFillColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+            g->setStrikeColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+            g->setLabelState(CustomSlice::LabelSleep);
+            g->setLabelPosition(CustomSlice::LabelOnDonut);
             back_bone.append(g);
             back_bone_sequence.append(i - 1);
         }
@@ -41,13 +45,15 @@ void Circos::DataToBackBone(void) {
         for(int i = 1; i < m_datas.size(); ++i) {
             Gene *g = new Gene(m_datas.at(i).at(0).toString(),
                                m_datas.at(i).at(1).toUInt());
+            g->setFillColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+            g->setStrikeColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
             back_bone.append(g);
             back_bone_sequence.append(i - 1);
         }
     }
 }
 
-void Circos::DataToCategory(void) {
+void Circos::dataToCategory(void) {
     category.clear();
     category_sequence.clear();
     QString category_name;
@@ -62,7 +68,7 @@ void Circos::DataToCategory(void) {
             category_sequence.append(cnt);
             cnt++;
         } else {
-            FindCategory(category_name)->AddGene(gene_name);
+            findCategory(category_name)->AddGene(gene_name);
         }
     }
 
@@ -71,7 +77,7 @@ void Circos::DataToCategory(void) {
 //    }
 }
 
-int Circos::IndexOfGene(const QString &n) {
+int Circos::indexOfGene(const QString &n) {
     for(int i = 0; i < back_bone.size(); ++i) {
         if(back_bone.at(i)->name == n) {
             return i;
@@ -80,20 +86,32 @@ int Circos::IndexOfGene(const QString &n) {
     return -1;
 }
 
-void Circos::BuildBackBoneDonut(CustomDonut *donut) {
+void Circos::buildBackBoneSequence(QStandardItemModel *model) {
+    back_bone_sequence.clear();
+    for(int i = 0; i < model->rowCount(); ++i) {
+        if(model->item(i, 0)->checkState() == Qt::Checked) {
+            int index = model->item(i, 0)->text().toInt() - 1;
+            back_bone_sequence.append(index);
+        }
+    }
+}
+
+void Circos::buildBackBoneDonut(CustomDonut *donut) {
     donut->Clear();
     for(int i = 0; i < back_bone_sequence.size(); ++i) {
         int index = back_bone_sequence.at(i);
 
         CustomSlice *slice = new CustomSlice(back_bone.at(index)->name,
                                              back_bone.at(index)->getLength());
-        slice->SetBrush(QBrush(back_bone.at(index)->getFillColor()));
-        slice->SetPen(QPen(back_bone.at(index)->getStrikeColor()));
-        donut->AddSlice(slice);
+        slice->setBrush(QBrush(back_bone.at(index)->getFillColor()));
+        slice->setPen(QPen(back_bone.at(index)->getStrikeColor()));
+        slice->setLabelPosition(back_bone.at(index)->getLabelPosition());
+        slice->setLabelState(back_bone.at(index)->getLabelState());
+        donut->addSlice(slice);
     }
 }
 
-void Circos::BuildCategoryDonut(CustomDonut *donut) {
+void Circos::buildCategoryDonut(CustomDonut *donut) {
     donut->Clear();
     for(int i = 0; i < category_sequence.size(); ++i) {
         int index = category_sequence.at(i);
@@ -101,14 +119,14 @@ void Circos::BuildCategoryDonut(CustomDonut *donut) {
         int sum = 0;
         for(int j = 0; j < c->Count(); ++j) {
             QString g = c->m_genes.at(j);
-            sum += FindGene(g)->getLength();
+            sum += findGene(g)->getLength();
         }
         CustomSlice* slice = new CustomSlice(c->name, sum);
-        donut->AddSlice(slice);
+        donut->addSlice(slice);
     }
 }
 
-Gene* Circos::FindGene(const QString name) {
+Gene* Circos::findGene(const QString name) {
     for(int i = 0; i < back_bone.size(); ++i) {
         if(back_bone.at(i)->name == name) {
             return back_bone.at(i);
@@ -117,7 +135,7 @@ Gene* Circos::FindGene(const QString name) {
     return new Gene;
 }
 
-Category* Circos::FindCategory(const QString name) {
+Category* Circos::findCategory(const QString name) {
     for(int i = 0; i < category.size(); ++i) {
         if(category.at(i)->name == name) {
             return category.at(i);
@@ -126,27 +144,27 @@ Category* Circos::FindCategory(const QString name) {
     return new Category;
 }
 
-int Circos::TakeGeneAt(int index) {
+int Circos::takeGeneAt(int index) {
     return back_bone_sequence.takeAt(index);
 }
 
-void Circos::InsertGene(int index, int value) {
+void Circos::insertGene(int index, int value) {
     return back_bone_sequence.insert(index, value);
 }
 
-int Circos::TakeCategoryAt(int index) {
+int Circos::takeCategoryAt(int index) {
     return category_sequence.takeAt(index);
 }
 
-void Circos::InsertCategory(int index, int value) {
+void Circos::insertCategory(int index, int value) {
     return category_sequence.insert(index, value);
 }
 
-void Circos::AdjustBackBoneToCategory(void) {
+void Circos::adjustBackBoneToCategory(void) {
     back_bone_sequence.clear();
     for(auto it = category_sequence.begin(); it != category_sequence.end(); ++it) {
         for(auto it2 = category.at(*it)->begin(); it2 != category.at(*it)->end(); ++it2) {
-            back_bone_sequence.append(IndexOfGene(*it2));
+            back_bone_sequence.append(indexOfGene(*it2));
         }
     }
 }

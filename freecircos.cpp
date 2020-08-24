@@ -10,6 +10,9 @@ FreeCircos::FreeCircos(QWidget *parent)
     //init canvas
     initCanvas();
 
+    //init generate button
+    initGenerateButton();
+
     gene_donut = new CustomDonut;
     category_donut = new CustomDonut;
     circos = new Circos;
@@ -39,7 +42,7 @@ FreeCircos::FreeCircos(QWidget *parent)
     for (int i = 0; i < size; ++i) {
         int value = qrand() % 10000;
         CustomSlice *slice = new CustomSlice(QString("%1").arg(value), value);
-        gene_donut->AddSlice(slice);
+        gene_donut->addSlice(slice);
     }
     qDebug() << "Elapsed time1: " << timer.elapsed() << " ms";
     timer.restart();
@@ -52,7 +55,7 @@ FreeCircos::FreeCircos(QWidget *parent)
     QList<QColor> fill_colors = colors.toList();
     gene_donut->SetBrushes(fill_colors);
     gene_donut->SetSize(0.7, 0.8);
-    gene_donut->DrawDonut(canvas);
+    gene_donut->drawDonut(canvas);
     qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";
     timer.restart();
     canvas->replot();

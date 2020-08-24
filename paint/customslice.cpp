@@ -22,11 +22,11 @@ void CustomSlice::SetGap(qreal g) {
     gap_angle = g;
 }
 
-void CustomSlice::SetPen(QPen p) {
+void CustomSlice::setPen(QPen p) {
     strike_pen = p;
 }
 
-void CustomSlice::SetBrush(QBrush b) {
+void CustomSlice::setBrush(QBrush b) {
     fill_brush = b;
 }
 
@@ -35,11 +35,11 @@ void CustomSlice::SetSize(qreal hole, qreal pie) {
     pie_size = pie;
 }
 
-void CustomSlice::SetLabelState(LabelState ls) {
+void CustomSlice::setLabelState(LabelState ls) {
     label_state = ls;
 }
 
-void CustomSlice::SetLabelPosition(LabelPosition lp) {
+void CustomSlice::setLabelPosition(LabelPosition lp) {
     label_position = lp;
 }
 
