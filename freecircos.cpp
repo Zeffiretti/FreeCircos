@@ -50,11 +50,11 @@ FreeCircos::FreeCircos(QWidget *parent)
     colors.resize(size);
     std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
     QList<QColor> strike_colors = colors.toList();
-    gene_donut->SetPens(strike_colors);
+    gene_donut->setPens(strike_colors);
     std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
     QList<QColor> fill_colors = colors.toList();
-    gene_donut->SetBrushes(fill_colors);
-    gene_donut->SetSize(0.7, 0.8);
+    gene_donut->setBrushes(fill_colors);
+    gene_donut->setSize(0.7, 0.8);
     gene_donut->drawDonut(canvas);
     qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";
     timer.restart();
@@ -66,9 +66,6 @@ FreeCircos::FreeCircos(QWidget *parent)
     control_panel->setParent(this);
     control_panel->setGeometry(600, 30, 1000, 600);
     initBackBoneWidget(control_panel);
-
-//    control_panel->addTab(backbone_widget, "BackBone");
-
 
 }
 

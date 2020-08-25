@@ -8,7 +8,7 @@ void CustomDonut::addSlice(CustomSlice *slice) {
     m_slices.append(slice);
 }
 
-void CustomDonut::SetSize(qreal hole, qreal pie) {
+void CustomDonut::setSize(qreal hole, qreal pie) {
     size_reset = false;
     for(int i = 0; i < m_slices.size(); ++i) {
         m_slices.at(i)->SetSize(hole, pie);
@@ -35,7 +35,7 @@ qreal CustomDonut::CaculateAngleSpan(int index) {
 
 void CustomDonut::drawDonut(QCustomPlot *canvas) {
     if(size_reset) {
-        SetSize(d_hole_size, d_pie_size);
+        setSize(d_hole_size, d_pie_size);
     }
     if(gap_reset) {
         SetGaps(d_gap);
@@ -168,13 +168,13 @@ void CustomDonut::SetSinglePen(int index, QColor p) {
     }
 }
 
-void CustomDonut::SetPens(QColor p) {
+void CustomDonut::setPens(QColor p) {
     for(int i = 0; i < m_slices.size(); ++i) {
         SetSinglePen(i, p);
     }
 }
 
-void CustomDonut::SetPens(QList<QColor> p_s) {
+void CustomDonut::setPens(QList<QColor> p_s) {
     for(int i = 0; i < p_s.size(); ++i) {
         SetSinglePen(i, p_s.at(i));
     }
@@ -191,13 +191,13 @@ void CustomDonut::SetSingleBrush(int index, QColor b) {
     }
 }
 
-void CustomDonut::SetBrushes(QColor b) {
+void CustomDonut::setBrushes(QColor b) {
     for(int i = 0; i < m_slices.size(); ++i) {
         SetSingleBrush(i, b);
     }
 }
 
-void CustomDonut::SetBrushes(QList<QColor> b_s) {
+void CustomDonut::setBrushes(QList<QColor> b_s) {
     for(int i = 0; i < b_s.size(); ++i) {
         SetSingleBrush(i, b_s.at(i));
     }

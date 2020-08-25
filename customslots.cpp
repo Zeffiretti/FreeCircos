@@ -6,7 +6,7 @@ void FreeCircos::onButtonClicked(bool clicked) {
     if(btn->property("function").toString() == "generate") {
         circos->buildBackBoneSequence(backbone_model);
         circos->buildBackBoneDonut(gene_donut);
-        gene_donut->SetSize(0.7, 0.75);
+        gene_donut->setSize(0.7, 0.75);
         clearCanvas(canvas);
         gene_donut->drawDonut(canvas);
         canvas->replot();
@@ -21,7 +21,6 @@ void FreeCircos::onButtonClicked(bool clicked) {
         gene_donut->Clear();
         circos->dataToBackBone();
         qDebug() << "open file finished";
-//        circos->BuildBackBoneDonut(gene_donut);
 
         QElapsedTimer timer;
         timer.start();
@@ -29,7 +28,7 @@ void FreeCircos::onButtonClicked(bool clicked) {
         initBackBoneTableModel(backbone_table, backbone_model, circos);
         backBoneTableToSequence(backbone_table, backbone_model, circos);
         circos->buildBackBoneDonut(gene_donut);
-        gene_donut->SetSize(0.7, 0.75);
+        gene_donut->setSize(0.7, 0.75);
         clearCanvas(canvas);
         gene_donut->drawDonut(canvas);
         qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";
@@ -58,13 +57,13 @@ void FreeCircos::onButtonClicked(bool clicked) {
         colors.resize(category_donut->m_slices.size());
         std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
         QList<QColor> strike_colors = colors.toList();
-        category_donut->SetPens(strike_colors);
+        category_donut->setPens(strike_colors);
         std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
         QList<QColor> fill_colors = colors.toList();
-        category_donut->SetBrushes(fill_colors);
-        category_donut->SetSize(0.75, 0.80);
+        category_donut->setBrushes(fill_colors);
+        category_donut->setSize(0.75, 0.80);
 //        ClearCanvas(canvas);
-        gene_donut->SetSize(0.7, 0.75);
+        gene_donut->setSize(0.7, 0.75);
         gene_donut->drawDonut(canvas);
         category_donut->drawDonut(canvas);
         qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";

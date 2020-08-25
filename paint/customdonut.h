@@ -8,7 +8,7 @@ class CustomDonut {
   public:
     CustomDonut();
     void addSlice(CustomSlice *slice);
-    void SetSize(qreal hole, qreal pie);
+    void setSize(qreal hole, qreal pie);
     void CaculateSum(void);
     qreal CaculateAngleSpan(int index);
     void drawDonut(QCustomPlot *);
@@ -29,12 +29,12 @@ class CustomDonut {
     void SetLabelPositions(QList<CustomSlice::LabelPosition> lp_s);
 
     void SetSinglePen(int index, QColor p);
-    void SetPens(QColor p);
-    void SetPens(QList<QColor> p_s);
+    void setPens(QColor p);
+    void setPens(QList<QColor> p_s);
 
     void SetSingleBrush(int index, QColor b);
-    void SetBrushes(QColor b);
-    void SetBrushes(QList<QColor> b_s);
+    void setBrushes(QColor b);
+    void setBrushes(QList<QColor> b_s);
 
     QList<CustomSlice *> m_slices;
     qreal sum = 0;
