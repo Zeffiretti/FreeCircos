@@ -249,3 +249,12 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
         }
     }
 }
+
+void FreeCircos::onTableHeaderViewClicked(int index) {
+    qDebug("Table Header ---%d--- Clicked...", index);
+    if(index == 3) {
+        circos->setCategoryEnable(true);
+    } else {
+        circos->setCategoryEnable(false);
+    }
+}

@@ -179,4 +179,6 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
             this, &FreeCircos::onButtonClicked);
     connect(backbone_movedown_button, &QPushButton::clicked,
             this, &FreeCircos::onButtonClicked);
+    connect(backbone_table->horizontalHeader(), &QHeaderView::sectionClicked,
+            this, &FreeCircos::onTableHeaderViewClicked);
 }

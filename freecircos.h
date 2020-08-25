@@ -99,5 +99,6 @@ class FreeCircos : public QMainWindow {
     void onBackBoneTableMoveRequest(int from_row, int to_row);
     void onBackBoneTableSelectedChanged(const QModelIndex &current, const QModelIndex &previous);
     void onComboboxTextChanged(const QString &text);
+    void onTableHeaderViewClicked(int index);
 };
 #endif // FREECIRCOS_H
