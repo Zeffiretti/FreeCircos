@@ -4,6 +4,8 @@
 #include <QColor>
 
 #include "paint/customslice.h"
+#include "category.h"
+class Category;
 
 class Gene {
   public:
@@ -17,9 +19,11 @@ class Gene {
     int length;
     CustomSlice::LabelPosition label_position;
     CustomSlice::LabelState label_state;
+    Category *cat;
 
     void setSE(int, int);
     void setName(const QString&);
+    QString getName(void);
     void setLength(int);
     int getLength(void);
     QColor getStrikeColor(void);
@@ -30,6 +34,8 @@ class Gene {
     void setLabelPosition(CustomSlice::LabelPosition l_p);
     CustomSlice::LabelState getLabelState(void);
     void setLabelState(CustomSlice::LabelState l_s);
+    Category* getCategory(void);
+    void setCategory(Category *);
 };
 
 #endif // GENE_H

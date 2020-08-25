@@ -50,27 +50,31 @@ void FreeCircos::onButtonClicked(bool clicked) {
         circos->buildCategoryDonut(category_donut);
         circos->adjustBackBoneToCategory();
         circos->buildBackBoneDonut(gene_donut);
+        circos->setCategoryEnable(true);
 
-        QElapsedTimer timer;
-        timer.start();
-        QVector<QColor> colors;
-        colors.resize(category_donut->m_slices.size());
-        std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
-        QList<QColor> strike_colors = colors.toList();
-        category_donut->setPens(strike_colors);
-        std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
-        QList<QColor> fill_colors = colors.toList();
-        category_donut->setBrushes(fill_colors);
-        category_donut->setSize(0.75, 0.80);
-//        ClearCanvas(canvas);
-        gene_donut->setSize(0.7, 0.75);
-        gene_donut->drawDonut(canvas);
-        category_donut->drawDonut(canvas);
-        qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";
-        timer.restart();
-        canvas->replot();
-        qDebug() << "Elapsed time3: " << timer.elapsed() << " ms";
-        timer.restart();
+//        initBackBoneTableModel(backbone_table, backbone_model, circos);
+        addCategoryToTable(backbone_table, backbone_model, circos);
+
+//        QElapsedTimer timer;
+//        timer.start();
+//        QVector<QColor> colors;
+//        colors.resize(category_donut->m_slices.size());
+//        std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
+//        QList<QColor> strike_colors = colors.toList();
+//        category_donut->setPens(strike_colors);
+//        std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
+//        QList<QColor> fill_colors = colors.toList();
+//        category_donut->setBrushes(fill_colors);
+//        category_donut->setSize(0.75, 0.80);
+////        ClearCanvas(canvas);
+//        gene_donut->setSize(0.7, 0.75);
+//        gene_donut->drawDonut(canvas);
+//        category_donut->drawDonut(canvas);
+//        qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";
+//        timer.restart();
+//        canvas->replot();
+//        qDebug() << "Elapsed time3: " << timer.elapsed() << " ms";
+//        timer.restart();
     }
 
     if(btn->property("function").toString() == "backboneconfig") {

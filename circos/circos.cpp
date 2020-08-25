@@ -6,6 +6,7 @@ Circos::Circos() {
     back_bone_sequence.clear();
     category.clear();
     category_sequence.clear();
+    category_enabled = false;
 }
 
 void Circos::openFile(const QString &xlsFile) {
@@ -54,6 +55,7 @@ void Circos::dataToBackBone(void) {
 }
 
 void Circos::dataToCategory(void) {
+    category_enabled = true;
     category.clear();
     category_sequence.clear();
     QString category_name;
@@ -63,18 +65,16 @@ void Circos::dataToCategory(void) {
         if(!m_datas.at(i).at(1).isNull()) {
             category_name = m_datas.at(i).at(1).toString();
             Category* new_category = new Category(category_name);
-            new_category->AddGene(gene_name);
+            new_category->addGene(gene_name);
+            findGene(gene_name)->setCategory(new_category);
             category.append(new_category);
             category_sequence.append(cnt);
             cnt++;
         } else {
-            findCategory(category_name)->AddGene(gene_name);
+            findCategory(category_name)->addGene(gene_name);
+            findGene(gene_name)->setCategory(findCategory(category_name));
         }
     }
-
-//    for(int i = 0; i < category.size(); ++i) {
-//        qDebug() << "category name:[" << category.at(i)->name << "] " << category.at(i)->m_genes;
-//    }
 }
 
 int Circos::indexOfGene(const QString &n) {
@@ -117,7 +117,7 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
         int index = category_sequence.at(i);
         Category* c = category.at(index);
         int sum = 0;
-        for(int j = 0; j < c->Count(); ++j) {
+        for(int j = 0; j < c->count(); ++j) {
             QString g = c->m_genes.at(j);
             sum += findGene(g)->getLength();
         }
@@ -167,4 +167,12 @@ void Circos::adjustBackBoneToCategory(void) {
             back_bone_sequence.append(indexOfGene(*it2));
         }
     }
+}
+
+void Circos::setCategoryEnable(bool b) {
+    category_enabled = b;
+}
+
+bool Circos::getCategoryEnable(void) {
+    return category_enabled;
 }

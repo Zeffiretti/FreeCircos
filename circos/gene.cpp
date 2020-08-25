@@ -1,13 +1,14 @@
 #include "gene.h"
 
 Gene::Gene() {
-
+    cat = new Category;
 }
 
 Gene::Gene(const QString& n, int l) {
     name = n;
     length = qAbs(l);
     end = start + l;
+    cat = new Category;
 }
 
 Gene::Gene(const QString& n, int s, int e) {
@@ -15,6 +16,7 @@ Gene::Gene(const QString& n, int s, int e) {
     start = s;
     end = e;
     length = qAbs(end - start);
+    cat = new Category;
 }
 
 void Gene::setSE(int s, int e) {
@@ -25,6 +27,10 @@ void Gene::setSE(int s, int e) {
 
 void Gene::setName(const QString &n) {
     name = n;
+}
+
+QString Gene::getName(void) {
+    return name;
 }
 
 void Gene::setLength(int l) {
@@ -65,4 +71,12 @@ CustomSlice::LabelState Gene::getLabelState(void) {
 
 void Gene::setLabelState(CustomSlice::LabelState l_s) {
     label_state = l_s;
+}
+
+Category* Gene::getCategory(void) {
+    return cat;
+}
+
+void Gene::setCategory(Category *c) {
+    cat = c;
 }

@@ -44,6 +44,9 @@ class FreeCircos : public QMainWindow {
     void initBackBoneTableModel(QTableView *table,
                                 QStandardItemModel *model,
                                 Circos *c);
+    void addCategoryToTable(QTableView *table,
+                            QStandardItemModel *model,
+                            Circos *c);
     void moveTableRow(QTableView *table,
                       QStandardItemModel *model,
                       int from_row,

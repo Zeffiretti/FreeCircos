@@ -10,9 +10,10 @@ class Category {
     QString name;
     QList<QString> m_genes;
 
-    void AddGene(const QString gene_name);
-    void SetName(const QString n);
-    int Count(void);
+    void addGene(const QString gene_name);
+    void setName(const QString n);
+    QString getName(void);
+    int count(void);
     QString at(int index);
     QList<QString>::iterator begin(void);
     QList<QString>::iterator end(void);

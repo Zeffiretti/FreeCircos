@@ -38,3 +38,14 @@ void FreeCircos::backBoneTableToSequence(QTableView *table, QStandardItemModel *
         qDebug("The %d th is %d.", i, c->back_bone_sequence.at(i));
     }
 }
+
+void FreeCircos::addCategoryToTable(QTableView *table,
+                                    QStandardItemModel *model,
+                                    Circos *c) {
+    for(int i = 0; i < model->rowCount(); ++i) {
+        QString gene_name = c->back_bone.at(i)->getName();
+        QString cat_name = c->findGene(gene_name)->getCategory()->getName();
+        model->setItem(i, 3, new QStandardItem(cat_name));
+    }
+
+}

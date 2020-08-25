@@ -9,15 +9,19 @@ Category::Category(const QString n) {
     name = n;
 }
 
-void Category::AddGene(const QString gene_name) {
+void Category::addGene(const QString gene_name) {
     m_genes.append(gene_name);
 }
 
-void Category::SetName(const QString n) {
+void Category::setName(const QString n) {
     name = n;
 }
 
-int Category::Count(void) {
+QString Category::getName(void) {
+    return name;
+}
+
+int Category::count(void) {
     return m_genes.size();
 }
 

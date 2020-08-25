@@ -15,6 +15,7 @@ class Circos {
 
     QList<Gene *> back_bone;
     QList<int> back_bone_sequence;
+    bool category_enabled;
     QList<Category *> category;
     QList<int> category_sequence;
 
@@ -35,6 +36,9 @@ class Circos {
     int takeCategoryAt(int index);
     void insertCategory(int index, int value);
     void adjustBackBoneToCategory(void);
+
+    void setCategoryEnable(bool b);
+    bool getCategoryEnable(void);
 };
 
 #endif // CIRCOS_H

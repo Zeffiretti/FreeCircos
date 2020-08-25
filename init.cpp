@@ -26,7 +26,6 @@ void FreeCircos::initCanvas(void) {
 void FreeCircos::initBackBoneTableModel(QTableView *table,
                                         QStandardItemModel *model,
                                         Circos *c) {
-    QStringList backbone_names_list; //Genes' Names List, showing at the 1st column
     for (qint8 i = 0; i < c->back_bone.size(); ++i) {
         //index
         QStandardItem *index_item = new QStandardItem;
@@ -36,13 +35,20 @@ void FreeCircos::initBackBoneTableModel(QTableView *table,
         model->setItem(i, 0, index_item);
 
         //name
-        model->setItem(i, 1, new QStandardItem(c->back_bone.at(i)->name));
-        backbone_names_list << c->back_bone.at(i)->name;
+        model->setItem(i, 1, new QStandardItem(c->back_bone.at(i)->getName()));
+//        backbone_names_list << c->back_bone.at(i)->name;
 
         //length value
         QStandardItem *value_item = new QStandardItem;
         value_item->setData(QVariant(c->back_bone.at(i)->getLength()), Qt::EditRole);
         model->setItem(i, 2, value_item);
+
+        //category info
+        if(c->getCategoryEnable()) {
+            QString gene_name = c->back_bone.at(i)->getName();
+            QString cat_name = c->findGene(gene_name)->getCategory()->getName();
+            model->setItem(i, 3, new QStandardItem(cat_name));
+        }
 
         backbone_index_list << QString::number(i) + 1;
     }
@@ -75,7 +81,8 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_table_rightclick_menu->addAction(backbone_table_rightclick_action_moveto);
     backbone_header_list << "Index(Visable)"
                          << "Gene Name"
-                         << "Length";
+                         << "Length"
+                         << "Category";
     backbone_model->setHorizontalHeaderLabels(backbone_header_list);
 
     //configuration
