@@ -28,6 +28,7 @@ class Circos {
     int indexOfGene(const QString&);
     void buildBackBoneSequence(QStandardItemModel *model);
     void buildBackBoneDonut(CustomDonut*);
+    void buildCategorySequence(QStandardItemModel *model);
     void buildCategoryDonut(CustomDonut*);
     Gene* findGene(const QString name);
     Category* findCategory(const QString name);

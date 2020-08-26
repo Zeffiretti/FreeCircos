@@ -4,11 +4,18 @@ void FreeCircos::onButtonClicked(bool clicked) {
     QPushButton *btn = qobject_cast<QPushButton *>(sender());
 
     if(btn->property("function").toString() == "generate") {
+        clearCanvas(canvas);
+
         circos->buildBackBoneSequence(backbone_model);
         circos->buildBackBoneDonut(gene_donut);
         gene_donut->setSize(0.7, 0.75);
-        clearCanvas(canvas);
         gene_donut->drawDonut(canvas);
+        if(circos->getCategoryEnable()) {
+            circos->buildCategorySequence(backbone_model);
+            circos->buildCategoryDonut(category_donut);
+            category_donut->setSize(0.78, 0.83);
+            category_donut->drawDonut(canvas);
+        }
         canvas->replot();
     }
 
@@ -18,24 +25,24 @@ void FreeCircos::onButtonClicked(bool clicked) {
             return;
         }
         circos->openFile(xlsFile);
-        gene_donut->Clear();
+        gene_donut->clear();
         circos->dataToBackBone();
         qDebug() << "open file finished";
 
-        QElapsedTimer timer;
-        timer.start();
+//        QElapsedTimer timer;
+//        timer.start();
 
         initBackBoneTableModel(backbone_table, backbone_model, circos);
-        backBoneTableToSequence(backbone_table, backbone_model, circos);
-        circos->buildBackBoneDonut(gene_donut);
-        gene_donut->setSize(0.7, 0.75);
-        clearCanvas(canvas);
-        gene_donut->drawDonut(canvas);
-        qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";
-        timer.restart();
-        canvas->replot();
-        qDebug() << "Elapsed time3: " << timer.elapsed() << " ms";
-        timer.restart();
+//        backBoneTableToSequence(backbone_table, backbone_model, circos);
+//        circos->buildBackBoneDonut(gene_donut);
+//        gene_donut->setSize(0.7, 0.75);
+//        clearCanvas(canvas);
+//        gene_donut->drawDonut(canvas);
+//        qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";
+//        timer.restart();
+//        canvas->replot();
+//        qDebug() << "Elapsed time3: " << timer.elapsed() << " ms";
+//        timer.restart();
 
     }
 
@@ -46,10 +53,9 @@ void FreeCircos::onButtonClicked(bool clicked) {
             return;
         }
         circos->dataToCategory();
-//        category_donut->RemoveFrom(canvas);
-        circos->buildCategoryDonut(category_donut);
-        circos->adjustBackBoneToCategory();
-        circos->buildBackBoneDonut(gene_donut);
+//        circos->buildCategoryDonut(category_donut);
+//        circos->adjustBackBoneToCategory();
+//        circos->buildBackBoneDonut(gene_donut);
         circos->setCategoryEnable(true);
 
 //        initBackBoneTableModel(backbone_table, backbone_model, circos);
@@ -66,7 +72,7 @@ void FreeCircos::onButtonClicked(bool clicked) {
 //        QList<QColor> fill_colors = colors.toList();
 //        category_donut->setBrushes(fill_colors);
 //        category_donut->setSize(0.75, 0.80);
-////        ClearCanvas(canvas);
+//        ClearCanvas(canvas);
 //        gene_donut->setSize(0.7, 0.75);
 //        gene_donut->drawDonut(canvas);
 //        category_donut->drawDonut(canvas);

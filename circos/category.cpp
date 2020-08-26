@@ -44,3 +44,36 @@ QList<QString>::iterator Category::end(void) {
 bool Category::IsEmpty(void) {
     return m_genes.isEmpty();
 }
+
+void Category::setStrikeColor(QColor c) {
+    strike_color = c;
+}
+
+QColor Category::getStrikeColor(void) {
+    return strike_color;
+}
+
+void Category::setFillColor(QColor c) {
+    fill_color = c;
+}
+
+QColor Category::getFillColor(void) {
+    return fill_color;
+}
+
+CustomSlice::LabelPosition Category::getLabelPosition(void) {
+    return label_position;
+}
+
+void Category::setLabelPosition(CustomSlice::LabelPosition l_p) {
+    label_position = l_p;
+}
+
+CustomSlice::LabelState Category::getLabelState(void) {
+    return label_state;
+}
+
+void Category::setLabelState(CustomSlice::LabelState l_s) {
+    label_state = l_s;
+}
+

@@ -9,30 +9,30 @@ class CustomDonut {
     CustomDonut();
     void addSlice(CustomSlice *slice);
     void setSize(qreal hole, qreal pie);
-    void CaculateSum(void);
-    qreal CaculateAngleSpan(int index);
+    void caculateSum(void);
+    qreal caculateAngleSpan(int index);
     void drawDonut(QCustomPlot *);
 //    void DrawDonut(QCustomPlot *, Circos *);
-    void Clear(void);
-    void RemoveFrom(QCustomPlot *);
+    void clear(void);
+    void removeFrom(QCustomPlot *);
 
-    void SetSingleGap(int index, qreal g);
-    void SetGaps(qreal g);
-    void SetGaps(QList<qreal> g_s);
+    void setSingleGap(int index, qreal g);
+    void setGaps(qreal g);
+    void setGaps(QList<qreal> g_s);
 
-    void SetSingleLabelState(int index, CustomSlice::LabelState ls);
-    void SetLabelStates(CustomSlice::LabelState ls);
-    void SetLabelStates(QList<CustomSlice::LabelState> ls_s);
+    void setSingleLabelState(int index, CustomSlice::LabelState ls);
+    void setLabelStates(CustomSlice::LabelState ls);
+    void setLabelStates(QList<CustomSlice::LabelState> ls_s);
 
-    void SetSingleLabelPosition(int index, CustomSlice::LabelPosition lp);
-    void SetLabelPositions(CustomSlice::LabelPosition lp);
-    void SetLabelPositions(QList<CustomSlice::LabelPosition> lp_s);
+    void setSingleLabelPosition(int index, CustomSlice::LabelPosition lp);
+    void setLabelPositions(CustomSlice::LabelPosition lp);
+    void setLabelPositions(QList<CustomSlice::LabelPosition> lp_s);
 
-    void SetSinglePen(int index, QColor p);
+    void setSinglePen(int index, QColor p);
     void setPens(QColor p);
     void setPens(QList<QColor> p_s);
 
-    void SetSingleBrush(int index, QColor b);
+    void setSingleBrush(int index, QColor b);
     void setBrushes(QColor b);
     void setBrushes(QList<QColor> b_s);
 

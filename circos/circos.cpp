@@ -97,7 +97,7 @@ void Circos::buildBackBoneSequence(QStandardItemModel *model) {
 }
 
 void Circos::buildBackBoneDonut(CustomDonut *donut) {
-    donut->Clear();
+    donut->clear();
     for(int i = 0; i < back_bone_sequence.size(); ++i) {
         int index = back_bone_sequence.at(i);
 
@@ -111,8 +111,30 @@ void Circos::buildBackBoneDonut(CustomDonut *donut) {
     }
 }
 
+void Circos::buildCategorySequence(QStandardItemModel *model) {
+    category_sequence.clear();
+    category.clear();
+    QString last_cat_name = "mm";
+    for(int i = 0, cnt = 0; i < model->rowCount(); ++i) {
+        if(model->item(i, 0)->checkState() == Qt::Checked) {
+            int index = model->item(i, 0)->text().toInt() - 1;
+            QString cat_name = model->item(i, 3)->text();
+            if(cat_name == last_cat_name) {
+                findCategory(cat_name)->addGene(model->item(i, 1)->text());
+            } else {
+                Category *c = new Category(cat_name);
+                c->addGene(model->item(i, 1)->text());
+                category.append(c);
+                category_sequence.append(cnt);
+                ++cnt;
+                last_cat_name = cat_name;
+            }
+        }
+    }
+}
+
 void Circos::buildCategoryDonut(CustomDonut *donut) {
-    donut->Clear();
+    donut->clear();
     for(int i = 0; i < category_sequence.size(); ++i) {
         int index = category_sequence.at(i);
         Category* c = category.at(index);
