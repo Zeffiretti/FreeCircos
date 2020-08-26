@@ -26,6 +26,7 @@ class Circos {
     void dataToBackBone(void);
     void dataToCategory(void);
     int indexOfGene(const QString&);
+    int indexofCategory(const QString&);
     void buildBackBoneSequence(QStandardItemModel *model);
     void buildBackBoneDonut(CustomDonut*);
     void buildCategorySequence(QStandardItemModel *model);

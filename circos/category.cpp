@@ -41,8 +41,12 @@ QList<QString>::iterator Category::end(void) {
     return m_genes.end();
 }
 
-bool Category::IsEmpty(void) {
+bool Category::isEmpty(void) {
     return m_genes.isEmpty();
+}
+
+void Category::clearGenes(void) {
+    m_genes.clear();
 }
 
 void Category::setStrikeColor(QColor c) {

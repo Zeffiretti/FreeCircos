@@ -66,6 +66,10 @@ void Circos::dataToCategory(void) {
             category_name = m_datas.at(i).at(1).toString();
             Category* new_category = new Category(category_name);
             new_category->addGene(gene_name);
+            new_category->setFillColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+            new_category->setStrikeColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+            new_category->setLabelState(CustomSlice::LabelSleep);
+            new_category->setLabelPosition(CustomSlice::LabelOnDonut);
             findGene(gene_name)->setCategory(new_category);
             category.append(new_category);
             category_sequence.append(cnt);
@@ -80,6 +84,15 @@ void Circos::dataToCategory(void) {
 int Circos::indexOfGene(const QString &n) {
     for(int i = 0; i < back_bone.size(); ++i) {
         if(back_bone.at(i)->name == n) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int Circos::indexofCategory(const QString &n) {
+    for(int i = 0; i < category.size(); ++i) {
+        if(category.at(i)->name == n) {
             return i;
         }
     }
@@ -113,23 +126,33 @@ void Circos::buildBackBoneDonut(CustomDonut *donut) {
 
 void Circos::buildCategorySequence(QStandardItemModel *model) {
     category_sequence.clear();
-    category.clear();
+//    category.clear();
     QString last_cat_name = "mm";
-    for(int i = 0, cnt = 0; i < model->rowCount(); ++i) {
+    Category *c = new Category;
+    for(int i = 0; i < model->rowCount(); ++i) {
         if(model->item(i, 0)->checkState() == Qt::Checked) {
-            int index = model->item(i, 0)->text().toInt() - 1;
             QString cat_name = model->item(i, 3)->text();
+            QString gene_name = model->item(i, 1)->text();
             if(cat_name == last_cat_name) {
-                findCategory(cat_name)->addGene(model->item(i, 1)->text());
+//                findCategory(cat_name)->addGene(model->item(i, 1)->text());
+                c->addGene(gene_name);
             } else {
-                Category *c = new Category(cat_name);
-                c->addGene(model->item(i, 1)->text());
-                category.append(c);
-                category_sequence.append(cnt);
-                ++cnt;
+//                Category *c = new Category(cat_name);
+//                c->addGene(model->item(i, 1)->text());
+//                category.append(c);
+//                category_sequence.append(cnt);
+//                ++cnt;
+//                last_cat_name = cat_name;
+                int cat_index = indexofCategory(cat_name);
+                c = category.at(cat_index);
+                c->clearGenes();
+                c->addGene(gene_name);
+                category_sequence.append(cat_index);
+//                category_sequence.append(indexofCategory(cat_name));
                 last_cat_name = cat_name;
             }
         }
+
     }
 }
 
@@ -144,6 +167,10 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
             sum += findGene(g)->getLength();
         }
         CustomSlice* slice = new CustomSlice(c->name, sum);
+        slice->setBrush(QBrush(c->getFillColor()));
+        slice->setPen(QPen(c->getStrikeColor()));
+        slice->setLabelPosition(c->getLabelPosition());
+        slice->setLabelState(c->getLabelState());
         donut->addSlice(slice);
     }
 }

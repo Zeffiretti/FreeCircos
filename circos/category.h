@@ -22,7 +22,8 @@ class Category {
     QString at(int index);
     QList<QString>::iterator begin(void);
     QList<QString>::iterator end(void);
-    bool IsEmpty(void);
+    bool isEmpty(void);
+    void clearGenes(void);
 
     QColor getStrikeColor(void);
     void setStrikeColor(QColor c);
