@@ -47,5 +47,4 @@ void FreeCircos::addCategoryToTable(QTableView *table,
         QString cat_name = c->findGene(gene_name)->getCategory()->getName();
         model->setItem(i, 3, new QStandardItem(cat_name));
     }
-
 }

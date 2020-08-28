@@ -16,6 +16,7 @@ FreeCircos::FreeCircos(QWidget *parent)
     gene_donut = new CustomDonut;
     category_donut = new CustomDonut;
     circos = new Circos;
+    table_edit_mode = EditGene;
 
     QPushButton *backbone_button = new QPushButton;
     backbone_button->setParent(this);
@@ -35,32 +36,32 @@ FreeCircos::FreeCircos(QWidget *parent)
     connect(category_button, &QPushButton::clicked, this,
             &FreeCircos::onButtonClicked);
 
-    QElapsedTimer timer;
-    timer.start();
+//    QElapsedTimer timer;
+//    timer.start();
 
-    int size = 50;
-    for (int i = 0; i < size; ++i) {
-        int value = qrand() % 10000;
-        CustomSlice *slice = new CustomSlice(QString("%1").arg(value), value);
-        gene_donut->addSlice(slice);
-    }
-    qDebug() << "Elapsed time1: " << timer.elapsed() << " ms";
-    timer.restart();
-    QVector<QColor> colors;
-    colors.resize(size);
-    std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
-    QList<QColor> strike_colors = colors.toList();
-    gene_donut->setPens(strike_colors);
-    std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
-    QList<QColor> fill_colors = colors.toList();
-    gene_donut->setBrushes(fill_colors);
-    gene_donut->setSize(0.7, 0.8);
-    gene_donut->drawDonut(canvas);
-    qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";
-    timer.restart();
-    canvas->replot();
-    qDebug() << "Elapsed time3: " << timer.elapsed() << " ms";
-    timer.restart();
+//    int size = 50;
+//    for (int i = 0; i < size; ++i) {
+//        int value = qrand() % 10000;
+//        CustomSlice *slice = new CustomSlice(QString("%1").arg(value), value);
+//        gene_donut->addSlice(slice);
+//    }
+//    qDebug() << "Elapsed time1: " << timer.elapsed() << " ms";
+//    timer.restart();
+//    QVector<QColor> colors;
+//    colors.resize(size);
+//    std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
+//    QList<QColor> strike_colors = colors.toList();
+//    gene_donut->setPens(strike_colors);
+//    std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
+//    QList<QColor> fill_colors = colors.toList();
+//    gene_donut->setBrushes(fill_colors);
+//    gene_donut->setSize(0.7, 0.8);
+//    gene_donut->drawDonut(canvas);
+//    qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";
+//    timer.restart();
+//    canvas->replot();
+//    qDebug() << "Elapsed time3: " << timer.elapsed() << " ms";
+//    timer.restart();
 
     control_panel = new QTabWidget;
     control_panel->setParent(this);

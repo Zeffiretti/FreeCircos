@@ -38,12 +38,20 @@ class FreeCircos : public QMainWindow {
 
   public:
     FreeCircos(QWidget *parent = nullptr);
+
+    enum TabelEditMode {
+        EditGene,
+        EditCategory
+    };
+
     //init method
     void initCanvas(void);
+    void initGenerateButton(void);
     void clearCanvas(QCustomPlot *cvs);
     void initBackBoneTableModel(QTableView *table,
                                 QStandardItemModel *model,
                                 Circos *c);
+    void initBackBoneWidget(QTabWidget *parent = nullptr);
     void addCategoryToTable(QTableView *table,
                             QStandardItemModel *model,
                             Circos *c);
@@ -66,20 +74,23 @@ class FreeCircos : public QMainWindow {
     Ui::FreeCircos *ui;
 
     QPushButton *generate_button;
-    void initGenerateButton(void);
     QTabWidget *control_panel;
 
     QWidget *backbone_widget;
     QTableView *backbone_table;
-    QWidget *backbone_config_widget;
+    QStandardItemModel *backbone_model;
+    TabelEditMode table_edit_mode;
+
+
     QPushButton *backbone_config_button;
-    QPushButton *move_panel_button;
+    QPushButton *move_panel_button;       //removed
     QMenu *backbone_table_rightclick_menu;
     QAction *backbone_table_rightclick_action_moveto;
     QStringList backbone_header_list;
     QStringList backbone_index_list;
-    QStandardItemModel *backbone_model;
     TableMoveDialog *table_move_dialog;
+    /// some configurations on backbone donut
+    QWidget *backbone_config_widget;
     QPushButton *backbone_strike_color_button;
     QPushButton *backbone_fill_color_button;
     QComboBox *backbone_label_state_combobox;
@@ -90,7 +101,18 @@ class FreeCircos : public QMainWindow {
     QPushButton *backbone_movedown_button;
     QPushButton *backbone_move_button;
     QLineEdit *backbone_move_lineedit;
-    void initBackBoneWidget(QTabWidget *parent = nullptr);
+    /// some configurations on category donut
+    QWidget *category_config_widget;
+    QPushButton *category_strike_color_button;
+    QPushButton *category_fill_color_button;
+    QComboBox *category_label_state_combobox;
+    QComboBox *category_label_position_combobox;
+    QLabel *category_label_state_label;
+    QLabel *category_label_position_label;
+    QPushButton *category_moveup_button;
+    QPushButton *category_movedown_button;
+    QPushButton *category_move_button;
+    QPushButton *category_move_lineedit;
 
   private slots:
     void onButtonClicked(bool);
