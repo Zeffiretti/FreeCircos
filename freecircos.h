@@ -39,7 +39,7 @@ class FreeCircos : public QMainWindow {
   public:
     FreeCircos(QWidget *parent = nullptr);
 
-    enum TabelEditMode {
+    enum TableEditMode {
         EditGene,
         EditCategory
     };
@@ -79,7 +79,7 @@ class FreeCircos : public QMainWindow {
     QWidget *backbone_widget;
     QTableView *backbone_table;
     QStandardItemModel *backbone_model;
-    TabelEditMode table_edit_mode;
+    TableEditMode table_edit_mode;
 
 
     QPushButton *backbone_config_button;
@@ -112,7 +112,10 @@ class FreeCircos : public QMainWindow {
     QPushButton *category_moveup_button;
     QPushButton *category_movedown_button;
     QPushButton *category_move_button;
-    QPushButton *category_move_lineedit;
+    QLineEdit *category_move_lineedit;
+
+  signals:
+    void setTableEditMode(TableEditMode tem);
 
   private slots:
     void onButtonClicked(bool);
@@ -122,5 +125,6 @@ class FreeCircos : public QMainWindow {
     void onBackBoneTableSelectedChanged(const QModelIndex &current, const QModelIndex &previous);
     void onComboboxTextChanged(const QString &text);
     void onTableHeaderViewClicked(int index);
+    void onTableEditModeChanged(TableEditMode tem);
 };
 #endif // FREECIRCOS_H

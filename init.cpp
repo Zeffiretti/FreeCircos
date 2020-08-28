@@ -71,7 +71,9 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_table->setModel(backbone_model);
     backbone_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     backbone_table->setSelectionBehavior(QAbstractItemView::SelectRows);
-    backbone_table->setSelectionMode(QAbstractItemView::SingleSelection);
+    if(table_edit_mode == EditGene) {
+        backbone_table->setSelectionMode(QAbstractItemView::SingleSelection);
+    }
     backbone_table->verticalHeader()->hide();
     backbone_table->installEventFilter(this);
     backbone_table_rightclick_menu = new QMenu;
@@ -156,6 +158,7 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_move_button = new QPushButton("MoveTO");
     backbone_move_button->setParent(backbone_config_widget);
     backbone_move_button->setGeometry(310, 400 / 2, 110, 40 / 2);
+    backbone_move_button->setProperty("function", "backbone-moveto");
 
     backbone_move_lineedit = new QLineEdit;
     backbone_move_lineedit->setParent(backbone_config_widget);
@@ -175,6 +178,7 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     category_fill_color_button->setParent(category_config_widget);
     category_fill_color_button->setText("FILL");
     category_fill_color_button->setGeometry(350, 10, 200, 30);
+    category_fill_color_button->setProperty("function", "category-fill-color");
     category_label_state_label = new QLabel;
     category_label_state_label->setParent(category_config_widget);
     category_label_state_label->setGeometry(50, 70, 300, 30);
@@ -202,11 +206,27 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     category_moveup_button->setText("MoveUP");
     category_moveup_button->setProperty("function", "category-moveup");
     category_moveup_button->setGeometry(50, 200, 110, 20);
+    category_movedown_button = new QPushButton;
+    category_movedown_button->setParent(category_config_widget);
+    category_movedown_button->setText("MoveDOWN");
+    category_movedown_button->setProperty("function", "category-movedown");
+    category_movedown_button->setGeometry(180, 200, 110, 20);
+    category_move_button = new QPushButton;
+    category_move_button->setParent(category_config_widget);
+    category_move_button->setText("MoveTO");
+    category_move_button->setProperty("function", "category-moveto");
+    category_move_button->setGeometry(310, 200, 110, 20);
+    category_move_lineedit = new QLineEdit;
+    category_move_lineedit->setParent(category_config_widget);
+    category_move_lineedit->setGeometry(440, 200, 110, 20);
+    category_move_lineedit->setValidator(new QIntValidator(0, 10000, this));
 
+    backbone_config_widget->setEnabled(false);
     category_config_widget->setEnabled(false);
     parent->addTab(backbone_widget, "BackBone");
 
     //signal----slot
+    connect(this, &FreeCircos::setTableEditMode, this, &FreeCircos::onTableEditModeChanged);
     connect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &FreeCircos::onBackBoneTableSelectedChanged);
     connect(backbone_strike_color_button, &QPushButton::clicked,
@@ -221,6 +241,41 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
             this, &FreeCircos::onButtonClicked);
     connect(backbone_movedown_button, &QPushButton::clicked,
             this, &FreeCircos::onButtonClicked);
+    connect(category_fill_color_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
+    connect(category_strike_color_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
+    connect(category_label_state_combobox, &QComboBox::currentTextChanged,
+            this, &FreeCircos::onComboboxTextChanged);
+    connect(category_label_position_combobox, &QComboBox::currentTextChanged,
+            this, &FreeCircos::onComboboxTextChanged);
     connect(backbone_table->horizontalHeader(), &QHeaderView::sectionClicked,
             this, &FreeCircos::onTableHeaderViewClicked);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
