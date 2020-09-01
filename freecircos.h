@@ -103,6 +103,8 @@ class FreeCircos : public QMainWindow {
     QLineEdit *backbone_move_lineedit;
     /// some configurations on category donut
     QWidget *category_config_widget;
+    int cat_begin_row;
+    int cat_end_row;
     QPushButton *category_strike_color_button;
     QPushButton *category_fill_color_button;
     QComboBox *category_label_state_combobox;

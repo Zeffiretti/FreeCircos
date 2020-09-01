@@ -249,6 +249,12 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
             this, &FreeCircos::onComboboxTextChanged);
     connect(category_label_position_combobox, &QComboBox::currentTextChanged,
             this, &FreeCircos::onComboboxTextChanged);
+    connect(category_moveup_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
+    connect(category_movedown_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
+    connect(category_move_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
     connect(backbone_table->horizontalHeader(), &QHeaderView::sectionClicked,
             this, &FreeCircos::onTableHeaderViewClicked);
 }

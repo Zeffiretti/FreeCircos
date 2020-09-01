@@ -41,7 +41,7 @@ void FreeCircos::backBoneTableToSequence(QTableView *table, QStandardItemModel *
 
 void FreeCircos::addCategoryToTable(QTableView *table,
                                     QStandardItemModel *model,
-                                    Circos *c) {
+                                    Circos *c)  {
     for(int i = 0; i < model->rowCount(); ++i) {
         QString gene_name = model->item(i, 1)->text();
         QString cat_name = c->findGene(gene_name)->getCategory()->getName();

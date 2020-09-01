@@ -176,8 +176,69 @@ void FreeCircos::onButtonClicked(bool clicked) {
             btn->setPalette(pal);
             btn->setAutoDefault(true);
             btn->setFlat(true);
+        }
+    }
+
+    if(func == "category-moveup") {
+        int up_cnt = 0;
+        QString up_cat_name = backbone_model->item(cat_begin_row - 1, 3)->text();
+        for(int i = cat_begin_row - 1; i >= 0; --i) {
+            if(backbone_model->item(i, 3)->text().compare(up_cat_name) == 0) {
+                up_cnt++;
+            } else {
+                break;
+            }
+        }
+        qDebug("Move Source: [%d~%d].", cat_begin_row, cat_end_row);
+        qDebug("Move Destination:[%d~%d].", cat_begin_row - up_cnt, cat_end_row - up_cnt);
+        disconnect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
+                   this, &FreeCircos::onBackBoneTableSelectedChanged);
+        for(int i = cat_begin_row; i <= cat_end_row; ++i) {
+//            QList<QStandardItem *> tmp_model=backbone_model->takeRow(i);
+            moveTableRow(backbone_table, backbone_model, i, i - up_cnt);
 
         }
+//        backbone_table->selectRow(cat_end_row - up_cnt);
+        QItemSelectionModel *sel_model = backbone_table->selectionModel();
+        sel_model->clearSelection();
+        QModelIndex l_index = backbone_model->index(cat_end_row - up_cnt, 0);
+        QModelIndex r_index = backbone_model->index(cat_end_row - up_cnt, backbone_model->columnCount() - 1);
+        QItemSelection *selection = new QItemSelection(l_index, r_index);
+        connect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
+                this, &FreeCircos::onBackBoneTableSelectedChanged);
+        sel_model->select(*selection, QItemSelectionModel::Select);
+        emit backbone_table->selectionModel()->currentRowChanged(l_index, r_index);
+    }
+
+    if(func == "category-movedown") {
+        int down_cnt = 0;
+        QString down_cat_name = backbone_model->item(cat_end_row + 1, 3)->text();
+        for(int i = cat_end_row + 1; i < backbone_model->rowCount(); ++i) {
+            if(backbone_model->item(i, 3)->text().compare(down_cat_name) == 0) {
+                down_cnt++;
+            } else {
+                break;
+            }
+        }
+        qDebug("Move Source: [%d~%d].", cat_begin_row, cat_end_row);
+        qDebug("Move Destination:[%d~%d].", cat_begin_row + down_cnt, cat_end_row + down_cnt);
+        disconnect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
+                   this, &FreeCircos::onBackBoneTableSelectedChanged);
+        for(int i = cat_end_row; i >= cat_begin_row; --i) {
+//            QList<QStandardItem *> tmp_model=backbone_model->takeRow(i);
+            moveTableRow(backbone_table, backbone_model, i, i + down_cnt);
+
+        }
+//        backbone_table->selectRow(cat_end_row - up_cnt);
+        QItemSelectionModel *sel_model = backbone_table->selectionModel();
+        sel_model->clearSelection();
+        QModelIndex l_index = backbone_model->index(cat_end_row + down_cnt, 0);
+        QModelIndex r_index = backbone_model->index(cat_end_row + down_cnt, backbone_model->columnCount() - 1);
+        QItemSelection *selection = new QItemSelection(l_index, r_index);
+        connect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
+                this, &FreeCircos::onBackBoneTableSelectedChanged);
+        sel_model->select(*selection, QItemSelectionModel::Select);
+        emit backbone_table->selectionModel()->currentRowChanged(l_index, r_index);
     }
 }
 
@@ -202,7 +263,7 @@ void FreeCircos::onDialogStateChanged(void) {
 
 void FreeCircos::onBackBoneTableMoveRequest(int from_row, int to_row) {
     qDebug("backbone_table moves row: %d to %d. ", from_row, to_row);
-    moveTableRow(backbone_table, backbone_model, from_row, to_row);
+//    moveTableRow(backbone_table, backbone_model, from_row, to_row);
 }
 
 void FreeCircos::onBackBoneTableSelectedChanged(const QModelIndex &current, const QModelIndex &previous) {
@@ -213,7 +274,6 @@ void FreeCircos::onBackBoneTableSelectedChanged(const QModelIndex &current, cons
     } else {
         backbone_moveup_button->setEnabled(false);
     }
-
     if(sel_row != backbone_model->rowCount() - 1) {
         backbone_movedown_button->setEnabled(true);
     } else {
@@ -223,8 +283,8 @@ void FreeCircos::onBackBoneTableSelectedChanged(const QModelIndex &current, cons
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
     qDebug("index: %d", index);
 
-    qDebug() << "Gene According to Table  IS " << backbone_model->item(sel_row, 1)->text();
-    qDebug() << "Gene According to Circos IS " << circos->back_bone.at(index)->name;
+//    qDebug() << "Gene According to Table  IS " << backbone_model->item(sel_row, 1)->text();
+//    qDebug() << "Gene According to Circos IS " << circos->back_bone.at(index)->name;
 
     Gene *b = circos->back_bone.at(index);
 
@@ -298,6 +358,51 @@ void FreeCircos::onBackBoneTableSelectedChanged(const QModelIndex &current, cons
     case CustomSlice::LabelOutsideDonut:
         category_label_position_combobox->setCurrentText("Outside");
         break;
+    }
+
+    if(table_edit_mode == TableEditMode::EditCategory) {
+        QString cat_name = backbone_model->item(sel_row, 3)->text();
+        if(backbone_model->item(0, 3)->text().compare(cat_name) == 0) {
+            category_moveup_button->setEnabled(false);
+        } else {
+            category_moveup_button->setEnabled(true);
+        }
+        if(backbone_model->item(backbone_model->rowCount() - 1, 3)->text().compare(cat_name) == 0) {
+            category_movedown_button->setEnabled(false);
+        } else {
+            category_movedown_button->setEnabled(true);
+        }
+        QItemSelectionModel *sel_model = backbone_table->selectionModel();
+        QItemSelection *selection = new QItemSelection;
+        disconnect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
+                   this, &FreeCircos::onBackBoneTableSelectedChanged);
+        sel_model->clearSelection();
+        connect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
+                this, &FreeCircos::onBackBoneTableSelectedChanged);
+//        QModelIndex ll_index = backbone_model->index(sel_row, 0);
+//        QModelIndex rr_index = backbone_model->index(sel_row, backbone_model->columnCount() - 1);
+//        QItemSelection esel(ll_index, rr_index);
+//        selection->merge(esel, QItemSelectionModel::Select);
+        for(int i = sel_row; i >= 0 && backbone_model->item(i, 3)->text().compare(cat_name) == 0; --i) {
+//            qDebug("select row:[%d].", i);
+//            backbone_table->selectRow(i);
+            QModelIndex l_index = backbone_model->index(i, 0);
+            QModelIndex r_index = backbone_model->index(i, backbone_model->columnCount() - 1);
+            QItemSelection sel(l_index, r_index);
+            selection->merge(sel, QItemSelectionModel::Select);
+            cat_begin_row = i;
+        }
+        cat_end_row = sel_row;
+        for(int i = sel_row + 1; i < backbone_model->rowCount() && backbone_model->item(i, 3)->text().compare(cat_name) == 0; ++i) {
+//            qDebug("select row:[%d].", i);
+            QModelIndex l_index = backbone_model->index(i, 0);
+            QModelIndex r_index = backbone_model->index(i, backbone_model->columnCount() - 1);
+            QItemSelection sel(l_index, r_index);
+            selection->merge(sel, QItemSelectionModel::Select);
+            cat_end_row = i;
+        }
+        sel_model->select(*selection, QItemSelectionModel::Select);
+//        backbone_table->sele
     }
 }
 
