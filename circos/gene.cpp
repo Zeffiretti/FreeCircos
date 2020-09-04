@@ -25,6 +25,14 @@ void Gene::setSE(int s, int e) {
     length = qAbs(end - start);
 }
 
+int Gene::getStart(void) {
+    return start;
+}
+
+int Gene::getEnd(void) {
+    return end;
+}
+
 void Gene::setName(const QString &n) {
     name = n;
 }

@@ -30,8 +30,10 @@ SOURCES += \
     freecircos.cpp \
     paint/colorgen.cpp \
     paint/customdonut.cpp \
+    paint/customlink.cpp \
     paint/customslice.cpp \
-    paint/qcustomplot.cpp
+    paint/qcustomplot.cpp \
+    paint/smoothcurvegenerator.cpp
 
 HEADERS += \
     addition/tablemovedialog.h \
@@ -44,8 +46,10 @@ HEADERS += \
     freecircos.h \
     paint/colorgen.h \
     paint/customdonut.h \
+    paint/customlink.h \
     paint/customslice.h \
-    paint/qcustomplot.h
+    paint/qcustomplot.h \
+    paint/smoothcurvegenerator.h
 
 FORMS += \
     freecircos.ui

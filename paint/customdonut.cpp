@@ -11,14 +11,14 @@ void CustomDonut::addSlice(CustomSlice *slice) {
 void CustomDonut::setSize(qreal hole, qreal pie) {
     size_reset = false;
     for(int i = 0; i < m_slices.size(); ++i) {
-        m_slices.at(i)->SetSize(hole, pie);
+        m_slices.at(i)->setSize(hole, pie);
     }
 }
 
 void CustomDonut::caculateSum(void) {
     sum = 0;
     for(int i = 0; i < m_slices.size(); ++i) {
-        sum += m_slices.at(i)->Length();
+        sum += m_slices.at(i)->getLength();
     }
 }
 
@@ -29,7 +29,7 @@ qreal CustomDonut::caculateAngleSpan(int index) {
         qDebug() << "size is " << m_slices.size();
         return 0;
     } else {
-        return m_slices.at(index)->Length() / sum * 2 * M_PI;
+        return m_slices.at(index)->getLength() / sum * 2 * M_PI;
     }
 }
 
@@ -50,8 +50,8 @@ void CustomDonut::drawDonut(QCustomPlot *canvas) {
     qreal last_start = start_angle;
     for(int i = 0; i < m_slices.size(); ++i) {
         qreal span = caculateAngleSpan(i);
-        m_slices.at(i)->SetSE(last_start, last_start + span);
-        m_slices.at(i)->DrawSlice(canvas);
+        m_slices.at(i)->setSE(last_start, last_start + span);
+        m_slices.at(i)->drawSlice(canvas);
         last_start += span;
     }
 }
@@ -84,7 +84,7 @@ void CustomDonut::clear(void) {
 
 void CustomDonut::removeFrom(QCustomPlot *canvas) {
     for(int i = 0; i < m_slices.size(); ++i) {
-        m_slices.at(i)->RemoveFrom(canvas);
+        m_slices.at(i)->removeFrom(canvas);
     }
 }
 
@@ -95,7 +95,7 @@ void CustomDonut::setSingleGap(int index, qreal g) {
         qDebug() << "index is " << index;
         qDebug() << "size is " << m_slices.size();
     } else {
-        m_slices.at(index)->SetGap(g);
+        m_slices.at(index)->setGap(g);
     }
 }
 

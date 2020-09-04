@@ -20,6 +20,20 @@ void FreeCircos::initCanvas(void) {
     canvas->yAxis->setVisible(false);
     canvas->setAntialiasedElements(QCP::AntialiasedElement::aeItems |
                                    QCP::AntialiasedElement::aePlottables);
+
+
+
+//    QCPGraph *graph = canvas->addGraph();
+//    graph->setPen(QPen(Qt::red, 2));
+//    graph->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, QColor(Qt::red), QColor(Qt::white), 6));
+//    graph->setData(xdata, ydata);
+//    graph->setSmooth(true);   // 开启平滑曲线
+//    QCPCurve *test_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
+////    test_curve->data()->add(QCPCurveData(-0.7,-0.2));
+//    test_curve->addData(xdata, ydata);
+//    test_curve->setParent(canvas);
+//    test_curve->setSmooth(true);
+//    test_curve->draw();
 }
 
 //BackBone Tables Method

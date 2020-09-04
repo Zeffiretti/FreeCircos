@@ -17,16 +17,16 @@ class CustomSlice {
 
     CustomSlice();
     CustomSlice(const QString& n, qreal len);
-    qreal Length(void);
-    void SetSE(qreal start, qreal end);
-    void SetGap(qreal g);
+    qreal getLength(void);
+    void setSE(qreal start, qreal end);
+    void setGap(qreal g);
     void setPen(QPen p);
     void setBrush(QBrush b);
-    void SetSize(qreal hole, qreal pie);
+    void setSize(qreal hole, qreal pie);
     void setLabelState(LabelState);
     void setLabelPosition(LabelPosition);
-    void DrawSlice(QCustomPlot *canvas);
-    void RemoveFrom(QCustomPlot *);
+    void drawSlice(QCustomPlot *canvas);
+    void removeFrom(QCustomPlot *);
 
     QCPCurve *slice_curve;
     QCPItemText *text;

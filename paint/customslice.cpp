@@ -9,16 +9,16 @@ CustomSlice::CustomSlice(const QString& n, qreal len) {
     length = len;
 }
 
-qreal CustomSlice::Length(void) {
+qreal CustomSlice::getLength(void) {
     return length;
 }
 
-void CustomSlice::SetSE(qreal start, qreal end) {
+void CustomSlice::setSE(qreal start, qreal end) {
     start_angle = start;
     end_angle = end;
 }
 
-void CustomSlice::SetGap(qreal g) {
+void CustomSlice::setGap(qreal g) {
     gap_angle = g;
 }
 
@@ -30,7 +30,7 @@ void CustomSlice::setBrush(QBrush b) {
     fill_brush = b;
 }
 
-void CustomSlice::SetSize(qreal hole, qreal pie) {
+void CustomSlice::setSize(qreal hole, qreal pie) {
     hole_size = hole;
     pie_size = pie;
 }
@@ -43,7 +43,7 @@ void CustomSlice::setLabelPosition(LabelPosition lp) {
     label_position = lp;
 }
 
-void CustomSlice::DrawSlice(QCustomPlot *canvas) {
+void CustomSlice::drawSlice(QCustomPlot *canvas) {
     //curve draw
 
     qreal angle_offset = 0.1, r_offset = 0.02;
@@ -175,7 +175,7 @@ void CustomSlice::DrawSlice(QCustomPlot *canvas) {
     }
 }
 
-void CustomSlice::RemoveFrom(QCustomPlot *canvas) {
+void CustomSlice::removeFrom(QCustomPlot *canvas) {
     canvas->removeItem(text);
     canvas->removePlottable(slice_curve);
 }

@@ -22,6 +22,8 @@ class Gene {
     Category *cat;
 
     void setSE(int, int);
+    int getStart(void);
+    int getEnd(void);
     void setName(const QString&);
     QString getName(void);
     void setLength(int);
