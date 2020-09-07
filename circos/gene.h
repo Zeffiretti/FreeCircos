@@ -17,13 +17,17 @@ class Gene {
     QColor fill_color;
     int start = 0, end;
     int length;
+    qreal start_angle, end_angle;
     CustomSlice::LabelPosition label_position;
     CustomSlice::LabelState label_state;
     Category *cat;
 
     void setSE(int, int);
+    void setAngle(qreal, qreal);
     int getStart(void);
     int getEnd(void);
+    qreal getStartAngle(void);
+    qreal getEndAngle(void);
     void setName(const QString&);
     QString getName(void);
     void setLength(int);

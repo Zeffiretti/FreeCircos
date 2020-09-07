@@ -18,6 +18,14 @@ void CustomSlice::setSE(qreal start, qreal end) {
     end_angle = end;
 }
 
+qreal CustomSlice::getStart(void) {
+    return start_angle;
+}
+
+qreal CustomSlice::getEnd(void) {
+    return end_angle;
+}
+
 void CustomSlice::setGap(qreal g) {
     gap_angle = g;
 }
@@ -180,3 +188,10 @@ void CustomSlice::removeFrom(QCustomPlot *canvas) {
     canvas->removePlottable(slice_curve);
 }
 
+QString CustomSlice::getName(void) {
+    return name;
+}
+
+void CustomSlice::setName(QString n) {
+    name = n;
+}

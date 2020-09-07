@@ -202,3 +202,17 @@ void CustomDonut::setBrushes(QList<QColor> b_s) {
         setSingleBrush(i, b_s.at(i));
     }
 }
+
+CustomSlice* CustomDonut::findSlice(const QString &n) {
+    for(int i = 0; i < m_slices.size(); ++i) {
+        if(m_slices.at(i)->getName() == n) {
+            return m_slices.at(i);
+        }
+    }
+    return new CustomSlice;
+//    QListIterator<CustomSlice *> it(m_slices);
+////    slic
+//    while (it.hasNext()) {
+//        if(it.)
+//    }
+}

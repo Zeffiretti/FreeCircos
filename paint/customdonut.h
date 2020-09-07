@@ -3,6 +3,8 @@
 #include "qcustomplot.h"
 #include "customslice.h"
 //#include <circos/circos.h>
+#include <QList>
+#include <QListIterator>
 
 class CustomDonut {
   public:
@@ -35,6 +37,8 @@ class CustomDonut {
     void setSingleBrush(int index, QColor b);
     void setBrushes(QColor b);
     void setBrushes(QList<QColor> b_s);
+
+    CustomSlice* findSlice(const QString &n);
 
     QList<CustomSlice *> m_slices;
     qreal sum = 0;

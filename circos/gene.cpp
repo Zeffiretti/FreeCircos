@@ -25,12 +25,25 @@ void Gene::setSE(int s, int e) {
     length = qAbs(end - start);
 }
 
+void Gene::setAngle(qreal s, qreal e) {
+    start_angle = s;
+    end_angle = e;
+}
+
 int Gene::getStart(void) {
     return start;
 }
 
 int Gene::getEnd(void) {
     return end;
+}
+
+qreal Gene::getStartAngle(void) {
+    return start_angle;
+}
+
+qreal Gene::getEndAngle(void) {
+    return end_angle;
 }
 
 void Gene::setName(const QString &n) {

@@ -19,6 +19,8 @@ class CustomSlice {
     CustomSlice(const QString& n, qreal len);
     qreal getLength(void);
     void setSE(qreal start, qreal end);
+    qreal getStart(void);
+    qreal getEnd(void);
     void setGap(qreal g);
     void setPen(QPen p);
     void setBrush(QBrush b);
@@ -27,6 +29,8 @@ class CustomSlice {
     void setLabelPosition(LabelPosition);
     void drawSlice(QCustomPlot *canvas);
     void removeFrom(QCustomPlot *);
+    QString getName(void);
+    void setName(QString);
 
     QCPCurve *slice_curve;
     QCPItemText *text;

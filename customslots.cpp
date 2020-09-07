@@ -17,8 +17,8 @@ void FreeCircos::onButtonClicked(bool clicked) {
             category_donut->setSize(0.78, 0.83);
             category_donut->drawDonut(canvas);
         }
-        QVector<double> xdata = { 0, 0, 0.68 };
-        QVector<double> ydata = { 0.68, 0, 0 };
+        QVector<double> xdata = { 0, 0.1, 0.68 };
+        QVector<double> ydata = { 0.68, 0.1, 0 };
         QCPCurve *test_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
         //    test_curve->data()->add(QCPCurveData(-0.7,-0.2));
         test_curve->addData(xdata, ydata);
