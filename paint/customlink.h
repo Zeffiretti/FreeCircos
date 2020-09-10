@@ -37,9 +37,17 @@ class CustomLink {
     QCPCurve *start_border_curve;
     QCPCurve *end_border_curve;
 
+    // properties
+    QString source_gene_name;
+    QString destination_gene_name;
+
     // data
     qreal end_size;
     const int link_data_count = 3;
+    QPointF source_start_point;
+    QPointF destination_start_point;
+    QPointF source_end_point;
+    QPointF destination_end_point;
     QVector<QCPCurveData> start_link_data;
     QVector<QCPCurveData> end_link_data;
     const qreal border_data_gap = 0.1;
@@ -52,14 +60,22 @@ class CustomLink {
     // getters
     qreal getEndSize(void);
     LinkClass getLinkClass(void);
+    LinkType getLinkType(void);
+    LinkDirection getLinkDirection(void);
     QPen getPen(void);
     QBrush getBrush(void);
+
 
     // setters
     void setEndSize(qreal es);
     void setLinkClass(LinkClass lc);
+    void setLinkType(LinkType lt);
+    void setLinkDirection(LinkDirection ld);
     void setPen(QPen p);
     void setBrush(QBrush b);
+
+    // hidden methods
+    void buildCurveData(void);
 
     // drawing
     void drawLink(QCustomPlot *);

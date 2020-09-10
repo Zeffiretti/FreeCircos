@@ -21,6 +21,7 @@ SOURCES += \
     circos/category.cpp \
     circos/circos.cpp \
     circos/gene.cpp \
+    circos/link.cpp \
     customslots.cpp \
     fileprocess/excelbase.cpp \
     fileprocess/qvariantlistlistmodel.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     circos/category.h \
     circos/circos.h \
     circos/gene.h \
+    circos/link.h \
     fileprocess/excelbase.h \
     fileprocess/qvariantlistlistmodel.h \
     freecircos.h \
