@@ -36,8 +36,12 @@ CustomLink::LinkDirection CustomLink::getLinkDirection(void) {
     return link_direction;
 }
 
-qreal CustomLink::getEndSize(void) {
-    return end_size;
+qreal CustomLink::getHoleSize(void) {
+    return hole_end_size;
+}
+
+qreal CustomLink::getPieSize(void) {
+    return pie_end_size;
 }
 
 QPen CustomLink::getPen(void) {
@@ -48,8 +52,28 @@ QBrush CustomLink::getBrush(void) {
     return filll_brush;
 }
 
-void CustomLink::setEndSize(qreal es) {
-    end_size = es;
+qreal CustomLink::getSSA(void) {
+    return source_start_angle;
+}
+
+qreal CustomLink::getSEA(void) {
+    return source_end_angle;
+}
+
+qreal CustomLink::getDSA(void) {
+    return destination_start_angle;
+}
+
+qreal CustomLink::getDEA(void) {
+    return destination_end_angle;
+}
+
+void CustomLink::setHoleSize(qreal hs) {
+    hole_end_size = hs;
+}
+
+void CustomLink::setPieSize(qreal ps) {
+    pie_end_size = ps;
 }
 
 void CustomLink::setLinkClass(LinkClass lc) {
@@ -72,32 +96,174 @@ void CustomLink::setBrush(QBrush b) {
     filll_brush = b;
 }
 
-void CustomLink::buildCurveData(void) {
+void CustomLink::setSEA(qreal _sea) {
+    source_end_angle = _sea;
+}
+
+void CustomLink::setSSA(qreal _ssa) {
+    source_start_angle = _ssa;
+}
+
+void CustomLink::setDSA(qreal _dsa) {
+    destination_start_angle = _dsa;
+}
+
+void CustomLink::setDEA(qreal _dea) {
+    destination_end_angle = _dea;
+}
+
+void CustomLink::buildStartCurveData(void) {
     start_link_data.clear();
+    QCPCurveData d;
+    qreal rel_len, rel_ang, rel_factor;
     switch (link_type) {
     case IntroOut:
         if(source_gene_name.compare(destination_gene_name) == 0) {
-            QCPCurveData d;
-            d.key = source_start_point.x();
-            d.value = source_start_point.y();
+            // start point
+            d.key = getHoleSize() * qCos(getSSA());
+            d.value = getHoleSize() * qSin(getSSA());
             start_link_data.append(d);
-            d.key = (source_start_point.x()
-                     + destination_start_point.x()) / 2;
-            d.value = (source_start_point.y()
-                       + destination_end_point.y()) / 2;
+            // control point
+            rel_len = getHoleSize();
+            rel_ang = (getSSA() + getDSA()) / 2;
+            rel_factor = 0.67;
+            d.key = rel_len * rel_factor * qCos(rel_ang);
+            d.value = rel_factor * rel_len * qSin(rel_ang);
             start_link_data.append(d);
-            d.key = destination_start_point.x();
-            d.value = destination_start_point.y();
+            // end point
+            d.key = getHoleSize() * qCos(getDSA());
+            d.value = getHoleSize() * qSin(getDSA());
             start_link_data.append(d);
-//            start_link_data.append(QCPCurveData(destination_start_point.x(),
-//                                                destination_start_point.y()));
+        } else {
+            // start point
+            d.key = getPieSize() * qCos(getSSA());
+            d.value = getPieSize() * qSin(getSSA());
+            start_link_data.append(d);
+            // control point
+            rel_len = getPieSize();
+            rel_ang = (getSSA() + getDSA()) / 2;
+            rel_factor = 1.67;
+            d.key = rel_len * rel_factor * qCos(rel_ang);
+            d.value = rel_factor * rel_len * qSin(rel_ang);
+            start_link_data.append(d);
+            // end point
+            d.key = getPieSize() * qCos(getDSA());
+            d.value = getPieSize() * qSin(getDSA());
+            start_link_data.append(d);
         }
         break;
     case AllIn:
-
+        // start point
+        d.key = getHoleSize() * qCos(getSSA());
+        d.value = getHoleSize() * qSin(getSSA());
+        start_link_data.append(d);
+        // control point
+        rel_len = getHoleSize();
+        rel_ang = (getSSA() + getDSA()) / 2;
+        rel_factor = 0.67;
+        d.key = rel_len * rel_factor * qCos(rel_ang);
+        d.value = rel_factor * rel_len * qSin(rel_ang);
+        start_link_data.append(d);
+        // end point
+        d.key = getHoleSize() * qCos(getDSA());
+        d.value = getHoleSize() * qSin(getDSA());
+        start_link_data.append(d);
         break;
     case AllOut:
+        // start point
+        d.key = getPieSize() * qCos(getSSA());
+        d.value = getPieSize() * qSin(getSSA());
+        start_link_data.append(d);
+        // control point
+        rel_len = getPieSize();
+        rel_ang = (getSSA() + getDSA()) / 2;
+        rel_factor = 1.67;
+        d.key = rel_len * rel_factor * qCos(rel_ang);
+        d.value = rel_factor * rel_len * qSin(rel_ang);
+        start_link_data.append(d);
+        // end point
+        d.key = getPieSize() * qCos(getDSA());
+        d.value = getPieSize() * qSin(getDSA());
+        start_link_data.append(d);
+        break;
+    default:
+        break;
+    }
+}
 
+void CustomLink::buildEndCurveData(void) {
+    end_link_data.clear();
+    QCPCurveData d;
+    qreal rel_len, rel_ang, rel_factor;
+    switch (link_type) {
+    case IntroOut:
+        if(source_gene_name.compare(destination_gene_name) == 0) {
+            // start point
+            d.key = getHoleSize() * qCos(getSEA());
+            d.value = getHoleSize() * qSin(getSEA());
+            end_link_data.append(d);
+            // control point
+            rel_len = getHoleSize();
+            rel_ang = (getSEA() + getDEA()) / 2;
+            rel_factor = 0.67;
+            d.key = rel_len * rel_factor * qCos(rel_ang);
+            d.value = rel_factor * rel_len * qSin(rel_ang);
+            end_link_data.append(d);
+            // end point
+            d.key = getHoleSize() * qCos(getDEA());
+            d.value = getHoleSize() * qSin(getDEA());
+            end_link_data.append(d);
+        } else {
+            // start point
+            d.key = getPieSize() * qCos(getSEA());
+            d.value = getPieSize() * qSin(getSEA());
+            end_link_data.append(d);
+            // control point
+            rel_len = getPieSize();
+            rel_ang = (getSEA() + getDEA()) / 2;
+            rel_factor = 1.67;
+            d.key = rel_len * rel_factor * qCos(rel_ang);
+            d.value = rel_factor * rel_len * qSin(rel_ang);
+            end_link_data.append(d);
+            // end point
+            d.key = getPieSize() * qCos(getDEA());
+            d.value = getPieSize() * qSin(getDEA());
+            end_link_data.append(d);
+        }
+        break;
+    case AllIn:
+        // start point
+        d.key = getHoleSize() * qCos(getSEA());
+        d.value = getHoleSize() * qSin(getSEA());
+        end_link_data.append(d);
+        // control point
+        rel_len = getHoleSize();
+        rel_ang = (getSEA() + getDEA()) / 2;
+        rel_factor = 0.67;
+        d.key = rel_len * rel_factor * qCos(rel_ang);
+        d.value = rel_factor * rel_len * qSin(rel_ang);
+        end_link_data.append(d);
+        // end point
+        d.key = getHoleSize() * qCos(getDEA());
+        d.value = getHoleSize() * qSin(getDEA());
+        end_link_data.append(d);
+        break;
+    case AllOut:
+        // start point
+        d.key = getPieSize() * qCos(getSEA());
+        d.value = getPieSize() * qSin(getSEA());
+        end_link_data.append(d);
+        // control point
+        rel_len = getPieSize();
+        rel_ang = (getSEA() + getDEA()) / 2;
+        rel_factor = 1.67;
+        d.key = rel_len * rel_factor * qCos(rel_ang);
+        d.value = rel_factor * rel_len * qSin(rel_ang);
+        end_link_data.append(d);
+        // end point
+        d.key = getPieSize() * qCos(getDEA());
+        d.value = getPieSize() * qSin(getDEA());
+        end_link_data.append(d);
         break;
     default:
         break;

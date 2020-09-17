@@ -67,7 +67,6 @@ FreeCircos::FreeCircos(QWidget *parent)
     control_panel->setParent(this);
     control_panel->setGeometry(600, 30, 1000, 600);
     initBackBoneWidget(control_panel);
-
 }
 
 FreeCircos::~FreeCircos() {
