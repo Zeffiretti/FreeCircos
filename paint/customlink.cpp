@@ -24,15 +24,15 @@ CustomLink::CustomLink(QCustomPlot *canvas) {
     end_border_data.clear();
 }
 
-CustomLink::LinkClass CustomLink::getLinkClass(void) {
+CustomLink::LinkClasses CustomLink::getLinkClass(void) {
     return link_class;
 }
 
-CustomLink::LinkType CustomLink::getLinkType(void) {
+CustomLink::LinkTypes CustomLink::getLinkType(void) {
     return link_type;
 }
 
-CustomLink::LinkDirection CustomLink::getLinkDirection(void) {
+CustomLink::LinkDirections CustomLink::getLinkDirection(void) {
     return link_direction;
 }
 
@@ -76,15 +76,15 @@ void CustomLink::setPieSize(qreal ps) {
     pie_end_size = ps;
 }
 
-void CustomLink::setLinkClass(LinkClass lc) {
+void CustomLink::setLinkClass(CustomLink::LinkClasses lc) {
     link_class = lc;
 }
 
-void CustomLink::setLinkType(LinkType lt) {
+void CustomLink::setLinkType(CustomLink::LinkTypes lt) {
     link_type = lt;
 }
 
-void CustomLink::setLinkDirection(LinkDirection ld) {
+void CustomLink::setLinkDirection(CustomLink::LinkDirections ld) {
     link_direction = ld;
 }
 
@@ -110,6 +110,56 @@ void CustomLink::setDSA(qreal _dsa) {
 
 void CustomLink::setDEA(qreal _dea) {
     destination_end_angle = _dea;
+}
+
+void CustomLink::buildCurveData(QVector<QCPCurveData> *data,
+                                CustomLink::LinkTypes lt,
+                                CustomLink::LinkDataType type) {
+    data->clear();
+    QCPCurveData d, d_m;
+    qreal rel_len, rel_ang, rel_factor;
+    qreal radius, source_angle, destination_angle;
+
+    // radius and rel_factor setup
+    setLinkType(lt);
+    if(lt.testFlag(CustomLink::LinkType::AllIn)) {
+        radius = getHoleSize();
+        rel_factor = c_rel_factor_in;
+    } else if (lt.testFlag(CustomLink::LinkType::AllOut)) {
+        radius = getPieSize();
+        rel_factor = c_rel_factor_out;
+    } else {
+        if(source_gene_name.compare(destination_gene_name) == 0) {
+            radius = getHoleSize();
+            rel_factor = c_rel_factor_in;
+        } else {
+            radius = getPieSize();
+            rel_factor = c_rel_factor_out;
+        }
+    }
+
+    // first data setup
+    d.key = radius * qCos(getSSA());
+    d.value = radius * qSin(getSSA());
+    data->append(d);
+
+    // d_m setup and mid point setup
+    switch (type) {
+    case StartLinkCurve:
+//        d_m.key=
+        break;
+    case EndLinkCurve:
+
+        break;
+    case StartBoardCurve:
+
+        break;
+    case EndBoardCurve:
+
+        break;
+    default:
+        break;
+    }
 }
 
 void CustomLink::buildStartCurveData(void) {

@@ -1,6 +1,7 @@
 #ifndef CUSTOMLINK_H
 #define CUSTOMLINK_H
 #include <QtMath>
+#include <QFlags>
 #include "qcustomplot.h"
 #include "customslice.h"
 #include "customdonut.h"
@@ -13,32 +14,39 @@ class CustomLink {
         Block2End,
         Block2Block
     };
+    Q_DECLARE_FLAGS(LinkClasses, LinkClass)
     enum LinkType {
         IntroOut,
         AllIn,
         AllOut
     };
+    Q_DECLARE_FLAGS(LinkTypes, LinkType)
     enum LinkDirection {
         ClockWise,
         CounterClockWise
     };
+    Q_DECLARE_FLAGS(LinkDirections, LinkDirection)
     enum DataType {
-        StartLinkCurve,
-        EndLinkCurve,
-        StartBoardCurve,
-        EndBoardCurve
+        StartLinkCurve    = 0x0001,
+        EndLinkCurve      = 0x0002,
+        StartBoardCurve   = 0x0004,
+        EndBoardCurve     = 0x0008
     };
+    Q_DECLARE_FLAGS(LinkDataType, DataType)
 
     CustomLink();
     CustomLink(QCustomPlot *canvas);
+
+    const qreal c_rel_factor_in = 0.67;
+    const qreal c_rel_factor_out = 1.67;
 
     // pen and brush
     QPen strike_pen;
     QBrush filll_brush;
 
-    LinkClass link_class = End2End;
-    LinkType link_type = IntroOut;
-    LinkDirection link_direction = ClockWise;
+    LinkClasses link_class = End2End;
+    LinkTypes link_type = IntroOut;
+    LinkDirections link_direction = ClockWise;
     QCPCurve *start_link_curve;
     QCPCurve *end_link_curve;
     QCPCurve *start_border_curve;
@@ -73,9 +81,9 @@ class CustomLink {
     // getters
     qreal getHoleSize(void);
     qreal getPieSize(void);
-    LinkClass getLinkClass(void);
-    LinkType getLinkType(void);
-    LinkDirection getLinkDirection(void);
+    LinkClasses getLinkClass(void);
+    LinkTypes getLinkType(void);
+    LinkDirections getLinkDirection(void);
     QPen getPen(void);
     QBrush getBrush(void);
     qreal getSSA(void);
@@ -87,9 +95,9 @@ class CustomLink {
     // setters
     void setHoleSize(qreal hs);
     void setPieSize(qreal ps);
-    void setLinkClass(LinkClass lc);
-    void setLinkType(LinkType lt);
-    void setLinkDirection(LinkDirection ld);
+    void setLinkClass(CustomLink::LinkClasses lc);
+    void setLinkType(CustomLink::LinkTypes lt);
+    void setLinkDirection(CustomLink::LinkDirections ld);
     void setPen(QPen p);
     void setBrush(QBrush b);
     void setSSA(qreal _ssa);
@@ -99,7 +107,9 @@ class CustomLink {
 
     // hidden methods
 //    void buildCurvePoint(void);
-//    void buildCurveData()
+    void buildCurveData(QVector<QCPCurveData>* data,
+                        CustomLink::LinkTypes lt,
+                        CustomLink::LinkDataType type);
     void buildStartCurveData(void);
     void buildEndCurveData(void);
 
@@ -107,5 +117,9 @@ class CustomLink {
     void drawLink(QCustomPlot *);
     void drawEnd2End(QCustomPlot *);
 };
+Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkClasses)
+Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkDirections)
+Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkTypes)
+Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkDataType)
 
 #endif // CUSTOMLINK_H
