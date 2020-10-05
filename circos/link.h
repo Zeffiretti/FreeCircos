@@ -2,6 +2,8 @@
 #define LINK_H
 #include <QMainWindow>
 #include <QString>
+#include "paint/customlink.h"
+#include "gene.h"
 
 class Link {
   public:
@@ -14,6 +16,8 @@ class Link {
     int destination_start, destination_end;
     qreal stre_code;
     qreal lwd;
+
+//    void
 };
 
 #endif // LINK_H

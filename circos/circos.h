@@ -5,6 +5,7 @@
 #include <QDebug>
 #include "gene.h"
 #include "category.h"
+#include "link.h"
 #include "paint/customdonut.h"
 #include "paint/customslice.h"
 #include "fileprocess/excelbase.h"
@@ -18,6 +19,7 @@ class Circos {
     bool category_enabled;
     QList<Category *> category;
     QList<int> category_sequence;
+    QList<Link *> links;
 
     QScopedPointer<ExcelBase> m_xls;
     QList<QList<QVariant> > m_datas;

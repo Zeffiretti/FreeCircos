@@ -8,6 +8,11 @@
 
 class CustomLink {
   public:
+    enum LinkGene {
+        LinkStart,
+        LinkEnd
+    };
+    Q_DECLARE_FLAGS(LinkGenes, LinkGene)
     enum LinkClass {
         End2End,
         End2Block,
@@ -19,11 +24,12 @@ class CustomLink {
         IntroOut,
         AllIn,
         AllOut
+//        Customize
     };
     Q_DECLARE_FLAGS(LinkTypes, LinkType)
     enum LinkDirection {
-        ClockWise,
-        CounterClockWise
+        Start2End,
+        End2Start
     };
     Q_DECLARE_FLAGS(LinkDirections, LinkDirection)
     enum DataType {
@@ -46,7 +52,7 @@ class CustomLink {
 
     LinkClasses link_class = End2End;
     LinkTypes link_type = IntroOut;
-    LinkDirections link_direction = ClockWise;
+    LinkDirections link_direction = Start2End;
     QCPCurve *start_link_curve;
     QCPCurve *end_link_curve;
     QCPCurve *start_border_curve;
@@ -117,6 +123,7 @@ class CustomLink {
     void drawLink(QCustomPlot *);
     void drawEnd2End(QCustomPlot *);
 };
+Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkGenes)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkClasses)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkDirections)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkTypes)

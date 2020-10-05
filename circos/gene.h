@@ -5,7 +5,9 @@
 
 #include "paint/customslice.h"
 #include "category.h"
+#include "link.h"
 class Category;
+class Link;
 
 class Gene {
   public:
@@ -21,6 +23,7 @@ class Gene {
     CustomSlice::LabelPosition label_position;
     CustomSlice::LabelState label_state;
     Category *cat;
+    QList<Link *> links;
 
     void setSE(int, int);
     void setAngle(qreal, qreal);
@@ -42,6 +45,8 @@ class Gene {
     void setLabelState(CustomSlice::LabelState l_s);
     Category* getCategory(void);
     void setCategory(Category *);
+    void addLink(Link *);
+    void addLink(Link *, CustomLink::LinkGenes);
 };
 
 #endif // GENE_H

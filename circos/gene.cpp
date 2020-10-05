@@ -2,6 +2,7 @@
 
 Gene::Gene() {
     cat = new Category;
+    links.clear();
 }
 
 Gene::Gene(const QString& n, int l) {
@@ -9,6 +10,7 @@ Gene::Gene(const QString& n, int l) {
     length = qAbs(l);
     end = start + l;
     cat = new Category;
+    links.clear();
 }
 
 Gene::Gene(const QString& n, int s, int e) {
@@ -17,6 +19,7 @@ Gene::Gene(const QString& n, int s, int e) {
     end = e;
     length = qAbs(end - start);
     cat = new Category;
+    links.clear();
 }
 
 void Gene::setSE(int s, int e) {
@@ -100,4 +103,22 @@ Category* Gene::getCategory(void) {
 
 void Gene::setCategory(Category *c) {
     cat = c;
+}
+
+void Gene::addLink(Link *l) {
+    links.append(l);
+}
+
+void Gene::addLink(Link *l, CustomLink::LinkGenes lg) {
+    links.append(l);
+    switch (lg) {
+    case CustomLink::LinkGene::LinkStart:
+
+        break;
+    case CustomLink::LinkGene::LinkEnd:
+
+        break;
+    default:
+        break;
+    }
 }
