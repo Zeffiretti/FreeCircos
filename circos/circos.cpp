@@ -160,9 +160,10 @@ void Circos::buildBackBoneSequence(QStandardItemModel *model) {
 
 void Circos::buildBackBoneDonut(CustomDonut *donut) {
     donut->clear();
-    QMutableListIterator<Gene*> it(back_bone);
+    QListIterator<Gene*> it(back_bone);
     while (it.hasNext()) {
-        it.value()->setOnCanvas(false);
+        Gene* g = it.next();
+        g->setOnCanvas(false);
     }
     for(int i = 0; i < back_bone_sequence.size(); ++i) {
         int index = back_bone_sequence.at(i);
@@ -240,7 +241,8 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
             CustomLink *custom_link = new CustomLink;
             custom_link->setPen(QPen(QColor(255, 0, 0)));
             custom_link->setBrush(QBrush(QColor(255, 255, 0)));
-//            custom_link->set
+            custom_link->setSGN(sg->getName());
+            custom_link->setDGN(dg->getName());
 
             if(l->getSourceEnd() > 0) {
                 if(l->getDestEnd() > 0) {
