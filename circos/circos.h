@@ -29,6 +29,7 @@ class Circos {
     void openFile(const QString&);
     void dataToBackBone(void);
     void dataToCategory(void);
+    void dataToLink(void);
     int indexOfGene(const QString&);
     int indexofCategory(const QString&);
     void buildBackBoneSequence(QStandardItemModel *model);

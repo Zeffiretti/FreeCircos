@@ -81,6 +81,45 @@ void Circos::dataToCategory(void) {
     }
 }
 
+void Circos::dataToLink(void) {
+    links.clear();
+    // all varibles from file
+    QString source_gene_name, dest_gene_name;
+    int source_gene_start, source_gene_end, dest_gene_start, dest_gene_end;
+    qreal stre, lwd;
+
+    QListIterator<QList<QVariant> > it(m_datas);
+//    it.peekNext();
+    QList<QVariant> data = it.next();
+    while (it.hasNext()) {
+        data = it.next();
+        source_gene_name = data.at(0).toString();
+        dest_gene_name = data.at(3).toString();
+
+        source_gene_start = data.at(1).toInt();
+        if(!data.at(2).isNull()) {
+            source_gene_end = data.at(2).toInt();
+        } else {
+            source_gene_end = -1;
+        }
+        dest_gene_start = data.at(4).toInt();
+        if(!data.at(5).isNull()) {
+            dest_gene_end = data.at(5).toInt();
+        } else {
+            dest_gene_end = -1;
+        }
+
+        stre = data.at(6).toReal();
+        lwd = data.at(7).toReal();
+
+        Link* l = new Link;
+
+    }
+//    for(int i=1;i<m_datas.size();++i){
+//        source_gene_name=m_datas
+//    }
+}
+
 int Circos::indexOfGene(const QString &n) {
     for(int i = 0; i < back_bone.size(); ++i) {
         if(back_bone.at(i)->name == n) {
@@ -188,6 +227,7 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
         Gene* dg = findGene(it.value()->getDGN());
         if(sg->getOnCanvas() && dg->getOnCanvas()) {
             CustomLink *custom_link = new CustomLink;
+//            custom_link->setHoleSize();
         }
     }
 }
