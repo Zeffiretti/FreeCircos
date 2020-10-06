@@ -85,6 +85,8 @@ class CustomLink {
 
     // method
     // getters
+    QString getSGN(void);
+    QString getDGN(void);
     qreal getHoleSize(void);
     qreal getPieSize(void);
     LinkClasses getLinkClass(void);
@@ -99,6 +101,8 @@ class CustomLink {
 
 
     // setters
+    void setSGN(const QString& n);
+    void setDGN(const QString& n);
     void setHoleSize(qreal hs);
     void setPieSize(qreal ps);
     void setLinkClass(CustomLink::LinkClasses lc);

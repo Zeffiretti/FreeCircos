@@ -36,6 +36,14 @@ CustomLink::LinkDirections CustomLink::getLinkDirection(void) {
     return link_direction;
 }
 
+QString CustomLink::getSGN(void) {
+    return source_gene_name;
+}
+
+QString CustomLink::getDGN(void) {
+    return destination_gene_name;
+}
+
 qreal CustomLink::getHoleSize(void) {
     return hole_end_size;
 }
@@ -66,6 +74,14 @@ qreal CustomLink::getDSA(void) {
 
 qreal CustomLink::getDEA(void) {
     return destination_end_angle;
+}
+
+void CustomLink::setSGN(const QString &n) {
+    source_gene_name = n;
+}
+
+void CustomLink::setDGN(const QString &n) {
+    destination_gene_name = n;
 }
 
 void CustomLink::setHoleSize(qreal hs) {

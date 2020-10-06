@@ -231,13 +231,30 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
 }
 
 void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
-    QMutableListIterator<Link*> it(links);
+    QListIterator<Link*> it(links);
     while (it.hasNext()) {
-        Gene* sg = findGene(it.value()->getSGN());
-        Gene* dg = findGene(it.value()->getDGN());
+        Link* l = it.next();
+        Gene* sg = findGene(l->getSGN());
+        Gene* dg = findGene(l->getDGN());
         if(sg->getOnCanvas() && dg->getOnCanvas()) {
             CustomLink *custom_link = new CustomLink;
-//            custom_link->setHoleSize();
+            custom_link->setPen(QPen(QColor(255, 0, 0)));
+            custom_link->setBrush(QBrush(QColor(255, 255, 0)));
+//            custom_link->set
+
+            if(l->getSourceEnd() > 0) {
+                if(l->getDestEnd() > 0) {
+                    custom_link->setLinkClass(CustomLink::LinkClass::Block2Block);
+                } else {
+                    custom_link->setLinkClass(CustomLink::LinkClass::Block2End);
+                }
+            } else {
+                if(l->getDestEnd() > 0) {
+                    custom_link->setLinkClass(CustomLink::LinkClass::End2Block);
+                } else {
+                    custom_link->setLinkClass(CustomLink::LinkClass::End2End);
+                }
+            }
         }
     }
 }
