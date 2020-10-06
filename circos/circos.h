@@ -8,6 +8,8 @@
 #include "link.h"
 #include "paint/customdonut.h"
 #include "paint/customslice.h"
+#include "paint/customlink.h"
+#include "paint/customlinkcanvas.h"
 #include "fileprocess/excelbase.h"
 #include "fileprocess/qvariantlistlistmodel.h"
 class Circos {
@@ -33,6 +35,7 @@ class Circos {
     void buildBackBoneDonut(CustomDonut*);
     void buildCategorySequence(QStandardItemModel *model);
     void buildCategoryDonut(CustomDonut*);
+    void buildCustomLink(CustomLinkCanvas*);
     Gene* findGene(const QString name);
     Category* findCategory(const QString name);
     int takeGeneAt(int index);

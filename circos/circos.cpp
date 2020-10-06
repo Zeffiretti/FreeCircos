@@ -111,15 +111,21 @@ void Circos::buildBackBoneSequence(QStandardItemModel *model) {
 
 void Circos::buildBackBoneDonut(CustomDonut *donut) {
     donut->clear();
+    QMutableListIterator<Gene*> it(back_bone);
+    while (it.hasNext()) {
+        it.value()->setOnCanvas(false);
+    }
     for(int i = 0; i < back_bone_sequence.size(); ++i) {
         int index = back_bone_sequence.at(i);
+        Gene *g = back_bone.at(index);
+        g->setOnCanvas(true);
+        CustomSlice *slice = new CustomSlice(g->getName(),
+                                             g->getLength());
 
-        CustomSlice *slice = new CustomSlice(back_bone.at(index)->name,
-                                             back_bone.at(index)->getLength());
-        slice->setBrush(QBrush(back_bone.at(index)->getFillColor()));
-        slice->setPen(QPen(back_bone.at(index)->getStrikeColor()));
-        slice->setLabelPosition(back_bone.at(index)->getLabelPosition());
-        slice->setLabelState(back_bone.at(index)->getLabelState());
+        slice->setBrush(QBrush(g->getFillColor()));
+        slice->setPen(QPen(g->getStrikeColor()));
+        slice->setLabelPosition(g->getLabelPosition());
+        slice->setLabelState(g->getLabelState());
         donut->addSlice(slice);
     }
 }
@@ -172,6 +178,17 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
         slice->setLabelPosition(c->getLabelPosition());
         slice->setLabelState(c->getLabelState());
         donut->addSlice(slice);
+    }
+}
+
+void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
+    QMutableListIterator<Link*> it(links);
+    while (it.hasNext()) {
+        Gene* sg = findGene(it.value()->getSGN());
+        Gene* dg = findGene(it.value()->getDGN());
+        if(sg->getOnCanvas() && dg->getOnCanvas()) {
+            CustomLink *custom_link = new CustomLink;
+        }
     }
 }
 

@@ -22,6 +22,14 @@ Gene::Gene(const QString& n, int s, int e) {
     links.clear();
 }
 
+bool Gene::getOnCanvas(void) {
+    return on_canvas;
+}
+
+void Gene::setOnCanvas(bool oc) {
+    on_canvas = oc;
+}
+
 void Gene::setSE(int s, int e) {
     start = s;
     end = e;

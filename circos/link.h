@@ -8,7 +8,13 @@
 class Link {
   public:
     Link();
+    // setters
+    void setSGN(QString sgn);
+    void setDGN(QString dgn);
 
+    // getters
+    QString getSGN(void);
+    QString getDGN(void);
   private:
     QString source_gene_name;
     QString destination_gene_name;
@@ -17,7 +23,7 @@ class Link {
     qreal stre_code;
     qreal lwd;
 
-//    void
+
 };
 
 #endif // LINK_H

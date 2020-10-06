@@ -29,7 +29,7 @@ void FreeCircos::initCanvas(void) {
 //    graph->setData(xdata, ydata);
 //    graph->setSmooth(true);   // 开启平滑曲线
 //    QCPCurve *test_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
-////    test_curve->data()->add(QCPCurveData(-0.7,-0.2));
+//    test_curve->data()->add(QCPCurveData(-0.7,-0.2));
 //    test_curve->addData(xdata, ydata);
 //    test_curve->setParent(canvas);
 //    test_curve->setSmooth(true);

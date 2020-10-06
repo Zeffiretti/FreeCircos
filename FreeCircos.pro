@@ -32,6 +32,7 @@ SOURCES += \
     paint/colorgen.cpp \
     paint/customdonut.cpp \
     paint/customlink.cpp \
+    paint/customlinkcanvas.cpp \
     paint/customslice.cpp \
     paint/qcustomplot.cpp \
     paint/smoothcurvegenerator.cpp
@@ -49,6 +50,7 @@ HEADERS += \
     paint/colorgen.h \
     paint/customdonut.h \
     paint/customlink.h \
+    paint/customlinkcanvas.h \
     paint/customslice.h \
     paint/qcustomplot.h \
     paint/smoothcurvegenerator.h

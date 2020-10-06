@@ -14,6 +14,7 @@ class Gene {
     Gene();
     Gene(const QString&, int);
     Gene(const QString&, int, int);
+    bool on_canvas = false;
     QString name;
     QColor strike_color;
     QColor fill_color;
@@ -25,6 +26,8 @@ class Gene {
     Category *cat;
     QList<Link *> links;
 
+    bool getOnCanvas(void);
+    void setOnCanvas(bool oc);
     void setSE(int, int);
     void setAngle(qreal, qreal);
     int getStart(void);

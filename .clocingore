@@ -1,5 +1,0 @@
-*.pro
-FreeCircos.pro.*
-freecircos.ui
-paint/qcustomplot.cpp
-paint/qcustomplot.h
