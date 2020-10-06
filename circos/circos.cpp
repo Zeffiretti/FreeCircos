@@ -113,11 +113,21 @@ void Circos::dataToLink(void) {
         lwd = data.at(7).toReal();
 
         Link* l = new Link;
+        l->setSGN(source_gene_name);
+        l->setDGN(dest_gene_name);
+        l->setSourceStart(source_gene_start);
+        if(source_gene_end > 0) {
+            l->setSourceEnd(source_gene_end);
+        }
+        l->setDestStart(dest_gene_start);
+        if(dest_gene_end > 0) {
+            l->setDestEnd(dest_gene_end);
+        }
+        l->setStreCode(stre);
+        l->setLineWidth(lwd);
+        links.append(l);
 
     }
-//    for(int i=1;i<m_datas.size();++i){
-//        source_gene_name=m_datas
-//    }
 }
 
 int Circos::indexOfGene(const QString &n) {
