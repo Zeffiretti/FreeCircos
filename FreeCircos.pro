@@ -35,7 +35,8 @@ SOURCES += \
     paint/customlinkcanvas.cpp \
     paint/customslice.cpp \
     paint/qcustomplot.cpp \
-    paint/smoothcurvegenerator.cpp
+    paint/smoothcurvegenerator.cpp \
+    tool/customtool.cpp
 
 HEADERS += \
     addition/tablemovedialog.h \
@@ -53,7 +54,8 @@ HEADERS += \
     paint/customlinkcanvas.h \
     paint/customslice.h \
     paint/qcustomplot.h \
-    paint/smoothcurvegenerator.h
+    paint/smoothcurvegenerator.h \
+    tool/customtool.h
 
 FORMS += \
     freecircos.ui

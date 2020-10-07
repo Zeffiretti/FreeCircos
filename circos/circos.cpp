@@ -139,7 +139,7 @@ int Circos::indexOfGene(const QString &n) {
     return -1;
 }
 
-int Circos::indexofCategory(const QString &n) {
+int Circos::indexOfCategory(const QString &n) {
     for(int i = 0; i < category.size(); ++i) {
         if(category.at(i)->name == n) {
             return i;
@@ -199,7 +199,7 @@ void Circos::buildCategorySequence(QStandardItemModel *model) {
 //                category_sequence.append(cnt);
 //                ++cnt;
 //                last_cat_name = cat_name;
-                int cat_index = indexofCategory(cat_name);
+                int cat_index = indexOfCategory(cat_name);
                 c = category.at(cat_index);
                 c->clearGenes();
                 c->addGene(gene_name);
@@ -237,7 +237,7 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
         Link* l = it.next();
         Gene* sg = findGene(l->getSGN());
         Gene* dg = findGene(l->getDGN());
-        if(sg->getOnCanvas() && dg->getOnCanvas()) {
+        if(sg->getOnCanvas() && dg->getOnCanvas()) { // 开始与结束的Gene均在画布上，该link才会被绘出
             CustomLink *custom_link = new CustomLink;
             custom_link->setPen(QPen(QColor(255, 0, 0)));
             custom_link->setBrush(QBrush(QColor(255, 255, 0)));
@@ -258,6 +258,9 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
                 }
             }
         }
+
+        // key process: set the start and end position of the link
+
     }
 }
 

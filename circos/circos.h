@@ -37,6 +37,7 @@ class Circos {
     void buildCategorySequence(QStandardItemModel *model);
     void buildCategoryDonut(CustomDonut*);
     void buildCustomLink(CustomLinkCanvas*);
+
     Gene* findGene(const QString name);
     Category* findCategory(const QString name);
     int takeGeneAt(int index);
