@@ -63,8 +63,8 @@ class CustomLink {
     QString destination_gene_name;
 
     // data
-    qreal hole_end_size;
-    qreal pie_end_size;
+    qreal hole_end_size = 0.5;
+    qreal pie_end_size = 0.8;
     const int link_data_count = 3;
     // all points are (r, \theta)
     QPointF source_start_point;

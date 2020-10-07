@@ -19,9 +19,10 @@ class Circos {
 
     QList<Gene *> back_bone;
     QList<int> back_bone_sequence;
-    bool category_enabled;
+    bool category_enabled = false;
     QList<Category *> category;
     QList<int> category_sequence;
+    bool link_enabled = false;
     QList<Link *> links;
 
     QScopedPointer<ExcelBase> m_xls;
@@ -49,6 +50,9 @@ class Circos {
 
     void setCategoryEnable(bool b);
     bool getCategoryEnable(void);
+
+    void setLinkEnable(bool b);
+    bool getLinkEnable(void);
 };
 
 #endif // CIRCOS_H

@@ -15,6 +15,7 @@ FreeCircos::FreeCircos(QWidget *parent)
 
     gene_donut = new CustomDonut;
     category_donut = new CustomDonut;
+    link_canvas = new CustomLinkCanvas;
     circos = new Circos;
     table_edit_mode = EditGene;
 
@@ -24,8 +25,8 @@ FreeCircos::FreeCircos(QWidget *parent)
     backbone_button->setGeometry(10, 10, 100, 40);
     backbone_button->setProperty("function", "openbackbonefile");
     backbone_button->setVisible(true);
-    connect(backbone_button, &QPushButton::clicked, this,
-            &FreeCircos::onButtonClicked);
+    connect(backbone_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
 
     QPushButton *category_button = new QPushButton;
     category_button->setParent(this);
@@ -33,8 +34,17 @@ FreeCircos::FreeCircos(QWidget *parent)
     category_button->setGeometry(120, 10, 100, 40);
     category_button->setProperty("function", "opencategoryfile");
     category_button->setVisible(true);
-    connect(category_button, &QPushButton::clicked, this,
-            &FreeCircos::onButtonClicked);
+    connect(category_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
+
+    QPushButton *link_button = new QPushButton;
+    link_button->setParent(this);
+    link_button->setText("link");
+    link_button->setGeometry(10, 60, 100, 40);
+    link_button->setProperty("function", "openlinkfile");
+    link_button->setVisible(true);
+    connect(link_button, &QPushButton::clicked,
+            this, &FreeCircos::onButtonClicked);
 
 //    QElapsedTimer timer;
 //    timer.start();

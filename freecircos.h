@@ -68,6 +68,7 @@ class FreeCircos : public QMainWindow {
     QCustomPlot *canvas;
     CustomDonut *gene_donut;
     CustomDonut *category_donut;
+    CustomLinkCanvas *link_canvas;
     Circos *circos;
 
   private:

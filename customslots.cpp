@@ -17,13 +17,19 @@ void FreeCircos::onButtonClicked(bool clicked) {
             category_donut->setSize(0.78, 0.83);
             category_donut->drawDonut(canvas);
         }
-        QVector<double> xdata = { 0, 0.1, 0.68 };
-        QVector<double> ydata = { 0.68, 0.1, 0 };
-        QCPCurve *test_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
-        //    test_curve->data()->add(QCPCurveData(-0.7,-0.2));
-        test_curve->addData(xdata, ydata);
-        test_curve->setParent(canvas);
-        test_curve->setSmooth(true);
+        if(circos->getLinkEnable()) {
+            circos->buildCustomLink(link_canvas);
+            link_canvas->drawLinks(canvas);
+        }
+
+
+//        QVector<double> xdata = { 0, 0.1, 0.68 };
+//        QVector<double> ydata = { 0.68, 0.1, 0 };
+//        QCPCurve *test_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
+//        //    test_curve->data()->add(QCPCurveData(-0.7,-0.2));
+//        test_curve->addData(xdata, ydata);
+//        test_curve->setParent(canvas);
+//        test_curve->setSmooth(true);
         canvas->replot();
     }
 
@@ -90,6 +96,19 @@ void FreeCircos::onButtonClicked(bool clicked) {
 //        canvas->replot();
 //        qDebug() << "Elapsed time3: " << timer.elapsed() << " ms";
 //        timer.restart();
+    }
+
+    if(func == "openlinkfile") {
+        QString xlsFile = QFileDialog::getOpenFileName(this, QString(), QString(), "excel(*.xls *.xlsx)");
+        circos->openFile(xlsFile);
+        if(xlsFile.isEmpty()) {
+            return;
+        }
+        circos->dataToLink();
+        circos->setLinkEnable(true);
+
+        //addCategoryToTable(backbone_table, backbone_model, circos);
+
     }
 
     if(func == "backboneconfig") {

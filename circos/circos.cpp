@@ -126,7 +126,7 @@ void Circos::dataToLink(void) {
         l->setStreCode(stre);
         l->setLineWidth(lwd);
         links.append(l);
-
+        qDebug() << l->getSGN() << "---" << l->getDGN();
     }
 }
 
@@ -233,11 +233,14 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
 
 void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
     QListIterator<Link*> it(links);
+    qDebug("buildCustomLink starts...");
     while (it.hasNext()) {
         Link* l = it.next();
         Gene* sg = findGene(l->getSGN());
         Gene* dg = findGene(l->getDGN());
+        qDebug() << sg->getName() << "---" << dg->getName();
         if(sg->getOnCanvas() && dg->getOnCanvas()) { // 开始与结束的Gene均在画布上，该link才会被绘出
+            qDebug("----------------------------");
             CustomLink *custom_link = new CustomLink;
             custom_link->setPen(QPen(QColor(255, 0, 0)));
             custom_link->setBrush(QBrush(QColor(255, 255, 0)));
@@ -328,4 +331,12 @@ void Circos::setCategoryEnable(bool b) {
 
 bool Circos::getCategoryEnable(void) {
     return category_enabled;
+}
+
+void Circos::setLinkEnable(bool b) {
+    link_enabled = b;
+}
+
+bool Circos::getLinkEnable(void) {
+    return link_enabled;
 }

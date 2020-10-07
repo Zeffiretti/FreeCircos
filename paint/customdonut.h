@@ -2,7 +2,6 @@
 #define CUSTOMDONUT_H
 #include "qcustomplot.h"
 #include "customslice.h"
-//#include <circos/circos.h>
 #include <QList>
 #include <QListIterator>
 
