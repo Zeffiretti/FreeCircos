@@ -12,6 +12,7 @@
 #include "paint/customlinkcanvas.h"
 #include "fileprocess/excelbase.h"
 #include "fileprocess/qvariantlistlistmodel.h"
+#include "tool/customtool.h"
 class Circos {
   public:
     Circos();
@@ -31,7 +32,7 @@ class Circos {
     void dataToCategory(void);
     void dataToLink(void);
     int indexOfGene(const QString&);
-    int indexofCategory(const QString&);
+    int indexOfCategory(const QString&);
     void buildBackBoneSequence(QStandardItemModel *model);
     void buildBackBoneDonut(CustomDonut*);
     void buildCategorySequence(QStandardItemModel *model);

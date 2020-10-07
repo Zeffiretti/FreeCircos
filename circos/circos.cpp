@@ -244,6 +244,7 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
             custom_link->setSGN(sg->getName());
             custom_link->setDGN(dg->getName());
 
+            // key process: set the start and end position(angle) of the link
             if(l->getSourceEnd() > 0) {
                 if(l->getDestEnd() > 0) {
                     custom_link->setLinkClass(CustomLink::LinkClass::Block2Block);
@@ -255,12 +256,26 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
                     custom_link->setLinkClass(CustomLink::LinkClass::End2Block);
                 } else {
                     custom_link->setLinkClass(CustomLink::LinkClass::End2End);
+                    int s_i_min = sg->getStart();
+                    int s_i_max = dg->getEnd();
+                    qreal s_r_min = dg->getStartAngle();
+                    qreal s_r_max = sg->getEndAngle();
+                    int value = l->getSourceStart();
+                    qreal angle = CustomTool::mapInt2Real(s_i_min, s_i_max, s_r_min, s_r_max, value);
+                    custom_link->setSSA(angle);
+
+                    s_i_min = dg->getStart();
+                    s_i_max = dg->getEnd();
+                    s_r_min = dg->getStartAngle();
+                    s_r_max = dg->getEndAngle();
+                    value = l->getDestStart();
+                    angle = CustomTool::mapInt2Real(s_i_min, s_i_max, s_r_min, s_r_max, value);
+                    custom_link->setDSA(angle);
                 }
             }
+
+            custom_links->addCustomLink(custom_link);
         }
-
-        // key process: set the start and end position of the link
-
     }
 }
 

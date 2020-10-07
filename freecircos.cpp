@@ -67,6 +67,8 @@ FreeCircos::FreeCircos(QWidget *parent)
     control_panel->setParent(this);
     control_panel->setGeometry(600, 30, 1000, 600);
     initBackBoneWidget(control_panel);
+
+//    qDebug() << CustomTool::mapInt2Real(1, 3, 0.1, 0.2, 2);
 }
 
 FreeCircos::~FreeCircos() {
