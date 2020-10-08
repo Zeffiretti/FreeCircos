@@ -2,12 +2,15 @@
 #define CUSTOMDONUT_H
 #include "qcustomplot.h"
 #include "customslice.h"
+#include <QObject>
 #include <QList>
 #include <QListIterator>
 
-class CustomDonut {
+class CustomDonut: public QObject {
+    Q_OBJECT
   public:
-    CustomDonut();
+    CustomDonut(QObject *parent = nullptr);
+    ~CustomDonut() {};
     void addSlice(CustomSlice *slice);
     void setSize(qreal hole, qreal pie);
     void caculateSum(void);
@@ -36,8 +39,11 @@ class CustomDonut {
     void setSingleBrush(int index, QColor b);
     void setBrushes(QColor b);
     void setBrushes(QList<QColor> b_s);
-
     CustomSlice* findSlice(const QString &n);
+  signals:
+    void sliceAngleChanged(const QString& n, qreal s, qreal e);
+
+  private:
 
     QList<CustomSlice *> m_slices;
     qreal sum = 0;

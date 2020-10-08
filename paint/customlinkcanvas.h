@@ -7,9 +7,11 @@ class CustomLinkCanvas {
     CustomLinkCanvas();
     void addCustomLink(CustomLink *);
     void drawLinks(QCustomPlot *);
+    void clearLinks(void);
 
   private:
     QList<CustomLink *> custom_link_list;
+
 };
 
 #endif // CUSTOMLINKCANVAS_H

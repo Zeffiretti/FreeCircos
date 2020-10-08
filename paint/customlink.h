@@ -51,7 +51,7 @@ class CustomLink {
     QBrush filll_brush;
 
     LinkClasses link_class = End2End;
-    LinkTypes link_type = IntroOut;
+    LinkTypes link_type = AllIn;
     LinkDirections link_direction = Start2End;
     QCPCurve *start_link_curve;
     QCPCurve *end_link_curve;
@@ -63,7 +63,7 @@ class CustomLink {
     QString destination_gene_name;
 
     // data
-    qreal hole_end_size = 0.5;
+    qreal hole_end_size = 0.75;
     qreal pie_end_size = 0.8;
     const int link_data_count = 3;
     // all points are (r, \theta)

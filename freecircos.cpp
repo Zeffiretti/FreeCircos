@@ -18,6 +18,8 @@ FreeCircos::FreeCircos(QWidget *parent)
     link_canvas = new CustomLinkCanvas;
     circos = new Circos;
     table_edit_mode = EditGene;
+    connect(gene_donut, &CustomDonut::sliceAngleChanged,
+            circos, &Circos::onGeneAngleChanged);
 
     QPushButton *backbone_button = new QPushButton;
     backbone_button->setParent(this);

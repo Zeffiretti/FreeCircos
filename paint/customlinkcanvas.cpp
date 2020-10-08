@@ -17,3 +17,7 @@ void CustomLinkCanvas::drawLinks(QCustomPlot *canvas) {
         link->drawLink(canvas);
     }
 }
+
+void CustomLinkCanvas::clearLinks(void) {
+    custom_link_list.clear();
+}

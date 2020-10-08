@@ -358,7 +358,7 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
 void CustomLink::drawEnd2End(QCustomPlot *canvas) {
     start_link_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
     start_link_curve->setPen(strike_pen);
-    start_link_curve->setBrush(filll_brush);
+//    start_link_curve->setBrush(filll_brush);
     buildStartCurveData();
     switch (link_type) {
     case IntroOut:
@@ -369,7 +369,7 @@ void CustomLink::drawEnd2End(QCustomPlot *canvas) {
 //            test_curve->setParent(canvas);
 //            test_curve->setSmooth(true);
             for(QVector<QCPCurveData>::iterator iter = start_link_data.begin(); iter != start_link_data.end(); ++iter) {
-//                start_link_curve->addData(iter->key, iter->value);
+                start_link_curve->addData(iter->key, iter->value);
             }
         } else { // in different gene blocks
             for(QVector<QCPCurveData>::iterator iter = start_link_data.begin(); iter != start_link_data.end(); ++iter) {
@@ -379,7 +379,10 @@ void CustomLink::drawEnd2End(QCustomPlot *canvas) {
         start_link_curve->setSmooth(true);
         break;
     case AllIn:
-
+        for(QVector<QCPCurveData>::iterator iter = start_link_data.begin(); iter != start_link_data.end(); ++iter) {
+            start_link_curve->addData(iter->key, iter->value);
+        }
+        start_link_curve->setSmooth(true);
         break;
     case AllOut:
 

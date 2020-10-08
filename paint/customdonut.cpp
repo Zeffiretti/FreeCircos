@@ -1,6 +1,6 @@
 #include "customdonut.h"
 
-CustomDonut::CustomDonut() {
+CustomDonut::CustomDonut(QObject *parent): QObject(parent) {
     m_slices.clear();
 }
 
@@ -51,6 +51,7 @@ void CustomDonut::drawDonut(QCustomPlot *canvas) {
     for(int i = 0; i < m_slices.size(); ++i) {
         qreal span = caculateAngleSpan(i);
         m_slices.at(i)->setSE(last_start, last_start + span);
+        emit sliceAngleChanged(m_slices.at(i)->getName(), m_slices.at(i)->getStart(), m_slices.at(i)->getEnd());
         m_slices.at(i)->drawSlice(canvas);
         last_start += span;
     }

@@ -1,6 +1,6 @@
 #include "circos.h"
 
-Circos::Circos() {
+Circos::Circos(QObject *parent) : QObject(parent) {
     back_bone.clear();
     m_datas.clear();
     back_bone_sequence.clear();
@@ -232,6 +232,7 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
 }
 
 void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
+    custom_links->clearLinks();
     QListIterator<Link*> it(links);
     qDebug("buildCustomLink starts...");
     while (it.hasNext()) {
@@ -242,8 +243,8 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
         if(sg->getOnCanvas() && dg->getOnCanvas()) { // 开始与结束的Gene均在画布上，该link才会被绘出
             qDebug("----------------------------");
             CustomLink *custom_link = new CustomLink;
-            custom_link->setPen(QPen(QColor(255, 0, 0)));
-            custom_link->setBrush(QBrush(QColor(255, 255, 0)));
+            custom_link->setPen(QPen(QColor(qrand() % 256, qrand() % 256, qrand() % 256)));
+//            custom_link->setBrush(QBrush(QColor(qrand()%255, qrand()%255, qrand()%255)));
             custom_link->setSGN(sg->getName());
             custom_link->setDGN(dg->getName());
 
@@ -339,4 +340,8 @@ void Circos::setLinkEnable(bool b) {
 
 bool Circos::getLinkEnable(void) {
     return link_enabled;
+}
+
+void Circos::onGeneAngleChanged(const QString& n, qreal s, qreal e) {
+    findGene(n)->setAngle(s, e);
 }

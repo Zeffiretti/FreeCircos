@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QElapsedTimer>
 #include <QDebug>
+#include <QObject>
 #include "gene.h"
 #include "category.h"
 #include "link.h"
@@ -13,9 +14,11 @@
 #include "fileprocess/excelbase.h"
 #include "fileprocess/qvariantlistlistmodel.h"
 #include "tool/customtool.h"
-class Circos {
+class Circos : public QObject {
+    Q_OBJECT
   public:
-    Circos();
+    Circos(QObject *parent = nullptr);
+    ~Circos() {};
 
     QList<Gene *> back_bone;
     QList<int> back_bone_sequence;
@@ -53,6 +56,9 @@ class Circos {
 
     void setLinkEnable(bool b);
     bool getLinkEnable(void);
+
+  public slots:
+    void onGeneAngleChanged(const QString& n, qreal s, qreal e);
 };
 
 #endif // CIRCOS_H
