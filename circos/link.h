@@ -31,7 +31,7 @@ class Link {
     QString source_gene_name;
     QString destination_gene_name;
     int source_start, source_end;
-    int destination_start, destination_end;
+    int destination_start = -1, destination_end = -1;
     qreal stre_code;
     qreal line_width;
 

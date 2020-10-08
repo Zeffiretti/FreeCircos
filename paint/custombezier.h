@@ -9,8 +9,9 @@ class CustomBezier : public QObject {
     Q_OBJECT
   public:
     explicit CustomBezier(QObject *parent = nullptr);
-    explicit CustomBezier(QObject *parent, int order, int knot);
+    explicit CustomBezier(int order, int knot, QObject *parent);
 
+    const QVector<QPointF>& calculateSpline(void);
     const QVector<QPointF>& calculateSpline(QVector<QPointF>& control_points,
                                             const int& points_number);
     void calculateSecond(void);

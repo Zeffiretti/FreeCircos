@@ -18,11 +18,11 @@ void Circos::openFile(const QString &xlsFile) {
     if(m_xls.isNull())
         m_xls.reset(new ExcelBase);
     m_xls->open(xlsFile);
-    qDebug() << "open cost:" << timer.elapsed() << "ms";
+//    qDebug() << "open cost:" << timer.elapsed() << "ms";
     timer.restart();
     m_xls->setCurrentSheet(1);
     m_xls->readAll(m_datas);
-    qDebug() << "read data cost:" << timer.elapsed() << "ms";
+//    qDebug() << "read data cost:" << timer.elapsed() << "ms";
     timer.restart();
     m_xls->close();
 }
@@ -106,6 +106,7 @@ void Circos::dataToLink(void) {
         if(!data.at(5).isNull()) {
             dest_gene_end = data.at(5).toInt();
         } else {
+//            qDebug() << source_gene_name << "----" << dest_gene_name << " empty";
             dest_gene_end = -1;
         }
 
@@ -126,7 +127,7 @@ void Circos::dataToLink(void) {
         l->setStreCode(stre);
         l->setLineWidth(lwd);
         links.append(l);
-        qDebug() << l->getSGN() << "---" << l->getDGN();
+//        qDebug() << l->getSGN() << "---" << l->getDGN();
     }
 }
 
@@ -234,50 +235,73 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
 void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
     custom_links->clearLinks();
     QListIterator<Link*> it(links);
-    qDebug("buildCustomLink starts...");
+//    qDebug("buildCustomLink starts...");
     while (it.hasNext()) {
         Link* l = it.next();
         Gene* sg = findGene(l->getSGN());
         Gene* dg = findGene(l->getDGN());
-        qDebug() << sg->getName() << "---" << dg->getName();
         if(sg->getOnCanvas() && dg->getOnCanvas()) { // 开始与结束的Gene均在画布上，该link才会被绘出
-            qDebug("----------------------------");
             CustomLink *custom_link = new CustomLink;
-            custom_link->setPen(QPen(QColor(qrand() % 256, qrand() % 256, qrand() % 256)));
-//            custom_link->setBrush(QBrush(QColor(qrand()%255, qrand()%255, qrand()%255)));
-            custom_link->setSGN(sg->getName());
-            custom_link->setDGN(dg->getName());
 
             // key process: set the start and end position(angle) of the link
-            if(l->getSourceEnd() > 0) {
-                if(l->getDestEnd() > 0) {
-                    custom_link->setLinkClass(CustomLink::LinkClass::Block2Block);
-                } else {
-                    custom_link->setLinkClass(CustomLink::LinkClass::Block2End);
-                }
-            } else {
-                if(l->getDestEnd() > 0) {
-                    custom_link->setLinkClass(CustomLink::LinkClass::End2Block);
-                } else {
-                    custom_link->setLinkClass(CustomLink::LinkClass::End2End);
-                    int s_i_min = sg->getStart();
-                    int s_i_max = dg->getEnd();
-                    qreal s_r_min = dg->getStartAngle();
-                    qreal s_r_max = sg->getEndAngle();
-                    int value = l->getSourceStart();
-                    qreal angle = CustomTool::mapInt2Real(s_i_min, s_i_max, s_r_min, s_r_max, value);
-                    custom_link->setSSA(angle);
+            // start link
+            int s_i_min = sg->getStart();
+            int s_i_max = sg->getEnd();
+            qreal s_r_min = sg->getStartAngle();
+            qreal s_r_max = sg->getEndAngle();
+            int value = l->getSourceStart();
+            qreal source_start_angle = CustomTool::mapInt2Real(s_i_min, s_i_max, s_r_min, s_r_max, value);
 
-                    s_i_min = dg->getStart();
-                    s_i_max = dg->getEnd();
-                    s_r_min = dg->getStartAngle();
-                    s_r_max = dg->getEndAngle();
-                    value = l->getDestStart();
-                    angle = CustomTool::mapInt2Real(s_i_min, s_i_max, s_r_min, s_r_max, value);
-                    custom_link->setDSA(angle);
-                }
+            s_i_min = dg->getStart();
+            s_i_max = dg->getEnd();
+            s_r_min = dg->getStartAngle();
+            s_r_max = dg->getEndAngle();
+            value = l->getDestStart();
+            qreal dest_start_angle = CustomTool::mapInt2Real(s_i_min, s_i_max, s_r_min, s_r_max, value);
+
+
+            qreal source_end_angle = source_start_angle;
+            qreal dest_end_angle = dest_start_angle;
+
+            CustomLink::LinkCurveType lt = CustomLink::CurveType::StartLinkCurve;
+            int status = 0;
+            if(l->getSourceEnd() > 0) {
+                lt |= CustomLink::CurveType::StartBoardCurve;
+                status++;
+
+                s_i_min = sg->getStart();
+                s_i_max = sg->getEnd();
+                s_r_min = sg->getStartAngle();
+                s_r_max = sg->getEndAngle();
+                value = l->getSourceEnd();
+                source_end_angle = CustomTool::mapInt2Real(s_i_min, s_i_max, s_r_min, s_r_max, value);
+
+            }
+            if(l->getDestEnd() > 0) {
+                qDebug("here error.");
+                lt |= CustomLink::CurveType::EndBoardCurve;
+                status++;
+
+                s_i_min = dg->getStart();
+                s_i_max = dg->getEnd();
+                s_r_min = dg->getStartAngle();
+                s_r_max = dg->getEndAngle();
+                value = l->getDestEnd();
+                dest_end_angle = CustomTool::mapInt2Real(s_i_min, s_i_max, s_r_min, s_r_max, value);
+            }
+            if(status == 2) {
+                lt |= CustomLink::CurveType::EndLinkCurve;
             }
 
+            custom_link->setPen(QPen(QColor(qrand() % 256, qrand() % 256, qrand() % 256)));
+            custom_link->setBrush(QBrush(QColor(qrand() % 255, qrand() % 255, qrand() % 255)));
+            custom_link->setSGN(sg->getName());
+            custom_link->setDGN(dg->getName());
+            custom_link->setLinkCurveType(lt);
+            custom_link->setSSA(source_start_angle);
+            custom_link->setDSA(dest_start_angle);
+            custom_link->setSEA(source_end_angle);
+            custom_link->setDEA(dest_end_angle);
             custom_links->addCustomLink(custom_link);
         }
     }

@@ -4,11 +4,25 @@ CustomBezier::CustomBezier(QObject *parent) : QObject(parent) {
     clearCtrlPoints();
 }
 
-CustomBezier::CustomBezier(QObject *parent, int order, int knot) : QObject(parent) {
+CustomBezier::CustomBezier(int order, int knot, QObject *parent) : QObject(parent) {
     clearCtrlPoints();
     order_ = order;
     ctrl_num_ = order + 1;
     knot_num_ = knot;
+}
+
+const QVector<QPointF>& CustomBezier::calculateSpline(void) {
+    switch (order_) {
+    case 2:
+        calculateSecond();
+        break;
+    case 3:
+        calculateCubic();
+    default:
+        calculateSecond();
+        break;
+    }
+    return path_points_;
 }
 
 const QVector<QPointF>& CustomBezier::calculateSpline(

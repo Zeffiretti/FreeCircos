@@ -73,7 +73,7 @@ TableMoveDialog::TableMoveDialog(QWidget *parent): QDialog(parent) {
 
 void TableMoveDialog::onButtonClicked(bool clicked) {
     QPushButton *btn = qobject_cast<QPushButton *>(sender());
-    qDebug() << btn->text();
+//    qDebug() << btn->text();
     if(btn->text() == "MoveUP") {
         emit moveRow(from_edit->text().toInt() - 1, from_edit->text().toInt() - 2);
     }

@@ -50,7 +50,7 @@ class CustomLink {
 
     // pen and brush
     QPen strike_pen;
-    QBrush filll_brush;
+    QBrush fill_brush;
 
     LinkClasses link_class = End2End;
     LinkTypes link_type = In;
@@ -79,13 +79,11 @@ class CustomLink {
     qreal source_end_angle;
     QPointF destination_end_point;
     qreal destination_end_angle;
-    QVector<QCPCurveData> start_link_data;
-    QVector<QCPCurveData> end_link_data;
+    QVector<QPointF> start_link_data;
+    QVector<QPointF> end_link_data;
     const qreal border_data_gap = 0.1;
-    QVector<QCPCurveData> start_border_data;
-    QVector<QCPCurveData> end_border_data;
-//    qreal start_link_point_radius,start_link_point_degree;
-//    qreal
+    QVector<QPointF> start_border_data;
+    QVector<QPointF> end_border_data;
 
     // method
     // getters
@@ -112,6 +110,7 @@ class CustomLink {
     void setLinkClass(CustomLink::LinkClasses lc);
     void setLinkType(CustomLink::LinkTypes lt);
     void setLinkDirection(CustomLink::LinkDirections ld);
+    void setLinkCurveType(CustomLink::LinkCurveType lt);
     void setPen(QPen p);
     void setBrush(QBrush b);
     void setSSA(qreal _ssa);
