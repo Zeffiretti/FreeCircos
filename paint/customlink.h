@@ -72,13 +72,13 @@ class CustomLink {
     const int link_data_count = 3;
     // all points are (r, \theta)
     QPointF source_start_point;
-    qreal source_start_angle;
+    qreal source_start_angle = 100;
     QPointF destination_start_point;
-    qreal destination_start_angle;
+    qreal destination_start_angle = -100;
     QPointF source_end_point;
-    qreal source_end_angle;
+    qreal source_end_angle = -100;
     QPointF destination_end_point;
-    qreal destination_end_angle;
+    qreal destination_end_angle = 100;
     QVector<QPointF> start_link_data;
     QVector<QPointF> end_link_data;
     const qreal border_data_gap = 0.1;

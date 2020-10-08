@@ -98,13 +98,15 @@ void Circos::dataToLink(void) {
 
         source_gene_start = data.at(1).toInt();
         if(!data.at(2).isNull()) {
-            source_gene_end = data.at(2).toInt();
+            source_gene_start = qMin(data.at(1).toInt(), data.at(2).toInt());
+            source_gene_end = qMax(data.at(1).toInt(), data.at(2).toInt());
         } else {
             source_gene_end = -1;
         }
         dest_gene_start = data.at(4).toInt();
         if(!data.at(5).isNull()) {
-            dest_gene_end = data.at(5).toInt();
+            dest_gene_start = qMax(data.at(4).toInt(), data.at(5).toInt());
+            dest_gene_end = qMin(data.at(4).toInt(), data.at(5).toInt());
         } else {
 //            qDebug() << source_gene_name << "----" << dest_gene_name << " empty";
             dest_gene_end = -1;
@@ -278,7 +280,6 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
 
             }
             if(l->getDestEnd() > 0) {
-                qDebug("here error.");
                 lt |= CustomLink::CurveType::EndBoardCurve;
                 status++;
 

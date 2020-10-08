@@ -10,6 +10,10 @@ CustomLink::CustomLink() {
     end_link_data.clear();
     start_border_data.clear();
     end_border_data.clear();
+    source_start_angle = 100;
+    source_end_angle = -100;
+    destination_start_angle = -100;
+    destination_end_angle = 100;
 }
 
 CustomLink::CustomLink(QCustomPlot *canvas) {
@@ -350,6 +354,7 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
             draw_curve->addData(p.x(), p.y());
         }
     }
+    qDebug("end boarder size:[%d].", end_border_data.size());
     if(end_border_data.size() > 0) {
         draw_curve->setBrush(fill_brush);
         QVectorIterator<QPointF> pit(end_border_data);
@@ -359,6 +364,7 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
             draw_curve->addData(p.x(), p.y());
         }
     }
+    qDebug("end link size:[%d].", end_link_data.size());
     if(end_link_data.size() > 0) {
         draw_curve->setBrush(fill_brush);
         QVectorIterator<QPointF> pit(end_link_data);
@@ -368,6 +374,7 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
             draw_curve->addData(p.x(), p.y());
         }
     }
+    qDebug("start border size:[%d].", start_border_data.size());
     if(start_border_data.size() > 0) {
         draw_curve->setBrush(fill_brush);
         QVectorIterator<QPointF> pit(start_border_data);
