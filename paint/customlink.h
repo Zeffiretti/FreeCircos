@@ -5,6 +5,7 @@
 #include "qcustomplot.h"
 #include "customslice.h"
 #include "customdonut.h"
+#include "custombezier.h"
 
 class CustomLink {
   public:
@@ -21,24 +22,25 @@ class CustomLink {
     };
     Q_DECLARE_FLAGS(LinkClasses, LinkClass)
     enum LinkType {
-        IntroOut,
-        AllIn,
-        AllOut
+        Default,
+        In,
+        Out
 //        Customize
     };
     Q_DECLARE_FLAGS(LinkTypes, LinkType)
     enum LinkDirection {
+        NoDirection,
         Start2End,
         End2Start
     };
     Q_DECLARE_FLAGS(LinkDirections, LinkDirection)
-    enum DataType {
+    enum CurveType {
         StartLinkCurve    = 0x0001,
         EndLinkCurve      = 0x0002,
         StartBoardCurve   = 0x0004,
         EndBoardCurve     = 0x0008
     };
-    Q_DECLARE_FLAGS(LinkDataType, DataType)
+    Q_DECLARE_FLAGS(LinkCurveType, CurveType)
 
     CustomLink();
     CustomLink(QCustomPlot *canvas);
@@ -51,19 +53,21 @@ class CustomLink {
     QBrush filll_brush;
 
     LinkClasses link_class = End2End;
-    LinkTypes link_type = AllIn;
-    LinkDirections link_direction = Start2End;
+    LinkTypes link_type = In;
+    LinkDirections link_direction = NoDirection;
+    LinkCurveType link_curve_type = StartLinkCurve;
     QCPCurve *start_link_curve;
     QCPCurve *end_link_curve;
     QCPCurve *start_border_curve;
     QCPCurve *end_border_curve;
+    QCPCurve *draw_curve;
 
     // properties
     QString source_gene_name;
     QString destination_gene_name;
 
     // data
-    qreal hole_end_size = 0.75;
+    qreal hole_end_size = 0.7;
     qreal pie_end_size = 0.8;
     const int link_data_count = 3;
     // all points are (r, \theta)
@@ -117,9 +121,7 @@ class CustomLink {
 
     // hidden methods
 //    void buildCurvePoint(void);
-    void buildCurveData(QVector<QCPCurveData>* data,
-                        CustomLink::LinkTypes lt,
-                        CustomLink::LinkDataType type);
+    void buildCurveData(void);
     void buildStartCurveData(void);
     void buildEndCurveData(void);
 
@@ -131,6 +133,6 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkGenes)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkClasses)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkDirections)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkTypes)
-Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkDataType)
+Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkCurveType)
 
 #endif // CUSTOMLINK_H

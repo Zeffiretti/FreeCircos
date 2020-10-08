@@ -4,6 +4,10 @@ CustomDonut::CustomDonut(QObject *parent): QObject(parent) {
     m_slices.clear();
 }
 
+CustomDonut::~CustomDonut(void) {
+    delete this;
+}
+
 void CustomDonut::addSlice(CustomSlice *slice) {
     m_slices.append(slice);
 }
@@ -56,18 +60,6 @@ void CustomDonut::drawDonut(QCustomPlot *canvas) {
         last_start += span;
     }
 }
-
-//void CustomDonut::DrawDonut(QCustomPlot *, Circos *) {
-//    CaculateSum();
-//    qreal last_start = start_angle;
-//    for(int i = 0; i < m_slices.size(); ++i) {
-////        SetSingleBrush(i,);
-//        qreal span = CaculateAngleSpan(i);
-//        m_slices.at(i)->SetSE(last_start, last_start + span);
-//        m_slices.at(i)->DrawSlice(canvas);
-//        last_start += span;
-//    }
-//}
 
 void CustomDonut::clear(void) {
     m_slices.clear();

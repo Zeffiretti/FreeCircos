@@ -30,6 +30,7 @@ SOURCES += \
     main.cpp \
     freecircos.cpp \
     paint/colorgen.cpp \
+    paint/custombezier.cpp \
     paint/customdonut.cpp \
     paint/customlink.cpp \
     paint/customlinkcanvas.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     fileprocess/qvariantlistlistmodel.h \
     freecircos.h \
     paint/colorgen.h \
+    paint/custombezier.h \
     paint/customdonut.h \
     paint/customlink.h \
     paint/customlinkcanvas.h \

@@ -128,54 +128,23 @@ void CustomLink::setDEA(qreal _dea) {
     destination_end_angle = _dea;
 }
 
-void CustomLink::buildCurveData(QVector<QCPCurveData> *data,
-                                CustomLink::LinkTypes lt,
-                                CustomLink::LinkDataType type) {
-    data->clear();
-    QCPCurveData d, d_m;
-    qreal rel_len, rel_ang, rel_factor;
-    qreal radius, source_angle, destination_angle;
+void CustomLink::buildCurveData(void) {
+    CustomBezier* bezier = new CustomBezier;
+    if(link_curve_type.testFlag(CustomLink::CurveType::StartLinkCurve)) {
+        // build start link datas
+        start_link_data.clear();
 
-    // radius and rel_factor setup
-    setLinkType(lt);
-    if(lt.testFlag(CustomLink::LinkType::AllIn)) {
-        radius = getHoleSize();
-        rel_factor = c_rel_factor_in;
-    } else if (lt.testFlag(CustomLink::LinkType::AllOut)) {
-        radius = getPieSize();
-        rel_factor = c_rel_factor_out;
-    } else {
-        if(source_gene_name.compare(destination_gene_name) == 0) {
-            radius = getHoleSize();
-            rel_factor = c_rel_factor_in;
-        } else {
-            radius = getPieSize();
-            rel_factor = c_rel_factor_out;
-        }
+    }
+    if(link_curve_type.testFlag(CustomLink::CurveType::EndLinkCurve)) {
+
+    }
+    if(link_curve_type.testFlag(CustomLink::CurveType::StartBoardCurve)) {
+
+    }
+    if(link_curve_type.testFlag(CustomLink::CurveType::EndBoardCurve)) {
+
     }
 
-    // first data setup
-    d.key = radius * qCos(getSSA());
-    d.value = radius * qSin(getSSA());
-    data->append(d);
-
-    // d_m setup and mid point setup
-    switch (type) {
-    case StartLinkCurve:
-//        d_m.key=
-        break;
-    case EndLinkCurve:
-
-        break;
-    case StartBoardCurve:
-
-        break;
-    case EndBoardCurve:
-
-        break;
-    default:
-        break;
-    }
 }
 
 void CustomLink::buildStartCurveData(void) {
@@ -183,7 +152,7 @@ void CustomLink::buildStartCurveData(void) {
     QCPCurveData d;
     qreal rel_len, rel_ang, rel_factor;
     switch (link_type) {
-    case IntroOut:
+    case Default:
         if(source_gene_name.compare(destination_gene_name) == 0) {
             // start point
             d.key = getHoleSize() * qCos(getSSA());
@@ -218,7 +187,7 @@ void CustomLink::buildStartCurveData(void) {
             start_link_data.append(d);
         }
         break;
-    case AllIn:
+    case In:
         // start point
         d.key = getHoleSize() * qCos(getSSA());
         d.value = getHoleSize() * qSin(getSSA());
@@ -235,7 +204,7 @@ void CustomLink::buildStartCurveData(void) {
         d.value = getHoleSize() * qSin(getDSA());
         start_link_data.append(d);
         break;
-    case AllOut:
+    case Out:
         // start point
         d.key = getPieSize() * qCos(getSSA());
         d.value = getPieSize() * qSin(getSSA());
@@ -262,7 +231,7 @@ void CustomLink::buildEndCurveData(void) {
     QCPCurveData d;
     qreal rel_len, rel_ang, rel_factor;
     switch (link_type) {
-    case IntroOut:
+    case Default:
         if(source_gene_name.compare(destination_gene_name) == 0) {
             // start point
             d.key = getHoleSize() * qCos(getSEA());
@@ -297,7 +266,7 @@ void CustomLink::buildEndCurveData(void) {
             end_link_data.append(d);
         }
         break;
-    case AllIn:
+    case In:
         // start point
         d.key = getHoleSize() * qCos(getSEA());
         d.value = getHoleSize() * qSin(getSEA());
@@ -314,7 +283,7 @@ void CustomLink::buildEndCurveData(void) {
         d.value = getHoleSize() * qSin(getDEA());
         end_link_data.append(d);
         break;
-    case AllOut:
+    case Out:
         // start point
         d.key = getPieSize() * qCos(getSEA());
         d.value = getPieSize() * qSin(getSEA());
@@ -361,7 +330,7 @@ void CustomLink::drawEnd2End(QCustomPlot *canvas) {
 //    start_link_curve->setBrush(filll_brush);
     buildStartCurveData();
     switch (link_type) {
-    case IntroOut:
+    case Default:
         if(source_gene_name.compare(destination_gene_name) == 0) { //share the same gene block
 //            QCPCurve *test_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
 //            //    test_curve->data()->add(QCPCurveData(-0.7,-0.2));
@@ -378,13 +347,13 @@ void CustomLink::drawEnd2End(QCustomPlot *canvas) {
         }
         start_link_curve->setSmooth(true);
         break;
-    case AllIn:
+    case In:
         for(QVector<QCPCurveData>::iterator iter = start_link_data.begin(); iter != start_link_data.end(); ++iter) {
             start_link_curve->addData(iter->key, iter->value);
         }
         start_link_curve->setSmooth(true);
         break;
-    case AllOut:
+    case Out:
 
         break;
     default:

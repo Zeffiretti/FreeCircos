@@ -10,7 +10,7 @@ class CustomDonut: public QObject {
     Q_OBJECT
   public:
     CustomDonut(QObject *parent = nullptr);
-    ~CustomDonut() {};
+    ~CustomDonut();
     void addSlice(CustomSlice *slice);
     void setSize(qreal hole, qreal pie);
     void caculateSum(void);
