@@ -173,12 +173,20 @@ void CustomLink::buildCurveData(void) {
         end_link_data = bezier->calculateSpline();
     }
     if(link_curve_type.testFlag(CustomLink::CurveType::StartBoardCurve)) {
-        for(qreal angle = getSSA(); angle <= getSEA(); angle += 0.1) {
+        qreal angle_offset = 0.1;
+        if(qAbs(getSSA() - getSEA()) < 0.5) {
+            angle_offset = qAbs(getSSA() - getSEA()) / 5;
+        }
+        for(qreal angle = qMin(getSSA(), getSEA()); angle <= qMax(getSSA(), getSEA()); angle += angle_offset) {
             start_border_data.append(QPointF(rel_len * qCos(angle), rel_len * qSin(angle)));
         }
     }
     if(link_curve_type.testFlag(CustomLink::CurveType::EndBoardCurve)) {
-        for(qreal angle = getDSA(); angle <= getDEA(); angle += 0.1) {
+        qreal angle_offset = 0.1;
+        if(qAbs(getDEA() - getDSA()) < 0.5) {
+            angle_offset = qAbs(getSSA() - getSEA()) / 5;
+        }
+        for(qreal angle = qMin(getDSA(), getDEA()); angle <= qMax(getDSA(), getDEA()); angle += 0.1) {
             end_border_data.append(QPointF(rel_len * qCos(angle), rel_len * qSin(angle)));
         }
     }
@@ -355,7 +363,7 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
         }
     }
     qDebug("end boarder size:[%d].", end_border_data.size());
-    if(end_border_data.size() > 0) {
+    if(end_border_data.size() > 1) {
         draw_curve->setBrush(fill_brush);
         QVectorIterator<QPointF> pit(end_border_data);
         pit.toBack();
@@ -375,7 +383,7 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
         }
     }
     qDebug("start border size:[%d].", start_border_data.size());
-    if(start_border_data.size() > 0) {
+    if(start_border_data.size() > 1) {
         draw_curve->setBrush(fill_brush);
         QVectorIterator<QPointF> pit(start_border_data);
         while (pit.hasNext()) {
