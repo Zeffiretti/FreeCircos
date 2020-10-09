@@ -120,6 +120,7 @@ class CustomLink {
 
     // hidden methods
 //    void buildCurvePoint(void);
+    void buildLinkCurve(void);
     void buildCurveData(void);
     void buildStartCurveData(void);
     void buildEndCurveData(void);
@@ -127,6 +128,7 @@ class CustomLink {
     // drawing
     void drawLink(QCustomPlot *);
     void drawEnd2End(QCustomPlot *);
+    void drawEnd2Block(QCustomPlot *);
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkGenes)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkClasses)

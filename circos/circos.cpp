@@ -265,12 +265,9 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
             qreal source_end_angle = source_start_angle;
             qreal dest_end_angle = dest_start_angle;
 
-            CustomLink::LinkCurveType lt = CustomLink::CurveType::StartLinkCurve;
-            int status = 0;
+            bool source_mul = false, end_mul = false;
             if(l->getSourceEnd() > 0) {
-                lt |= CustomLink::CurveType::StartBoardCurve;
-                status++;
-
+                source_mul = true;
                 s_i_min = sg->getStart();
                 s_i_max = sg->getEnd();
                 s_r_min = sg->getStartAngle();
@@ -280,9 +277,7 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
 
             }
             if(l->getDestEnd() > 0) {
-                lt |= CustomLink::CurveType::EndBoardCurve;
-                status++;
-
+                end_mul = true;
                 s_i_min = dg->getStart();
                 s_i_max = dg->getEnd();
                 s_r_min = dg->getStartAngle();
@@ -290,15 +285,21 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
                 value = l->getDestEnd();
                 dest_end_angle = CustomTool::mapInt2Real(s_i_min, s_i_max, s_r_min, s_r_max, value);
             }
-            if(status == 2) {
-                lt |= CustomLink::CurveType::EndLinkCurve;
+
+            CustomLink::LinkClasses lc = CustomLink::LinkClass::End2End;
+            if(source_mul && end_mul) {
+                lc = CustomLink::LinkClass::Block2Block;
+            } else if(source_mul) {
+                lc = CustomLink::LinkClass::Block2End;
+            } else if(end_mul) {
+                lc = CustomLink::LinkClass::End2Block;
             }
 
+            custom_link->setLinkClass(lc);
             custom_link->setPen(QPen(QColor(qrand() % 256, qrand() % 256, qrand() % 256)));
-            custom_link->setBrush(QBrush(QColor(qrand() % 255, qrand() % 255, qrand() % 255)));
+            custom_link->setBrush(QBrush(QColor(qrand() % 256, qrand() % 256, qrand() % 256)));
             custom_link->setSGN(sg->getName());
             custom_link->setDGN(dg->getName());
-            custom_link->setLinkCurveType(lt);
             custom_link->setSSA(source_start_angle);
             custom_link->setDSA(dest_start_angle);
             custom_link->setSEA(source_end_angle);
@@ -309,11 +310,18 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
 }
 
 Gene* Circos::findGene(const QString name) {
-    for(int i = 0; i < back_bone.size(); ++i) {
-        if(back_bone.at(i)->name == name) {
-            return back_bone.at(i);
+    QListIterator<Gene*> it(back_bone);
+    while (it.hasNext()) {
+        Gene *g = it.next();
+        if(g->getName().compare(name) == 0) {
+            return g;
         }
     }
+//    for(int i = 0; i < back_bone.size(); ++i) {
+//        if(back_bone.at(i)->name == name) {
+//            return back_bone.at(i);
+//        }
+//    }
     return new Gene;
 }
 
