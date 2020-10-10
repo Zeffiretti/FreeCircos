@@ -44,35 +44,52 @@ class FreeCircos : public QMainWindow {
         EditCategory
     };
 
+    ~FreeCircos();
+
     //init method
     void initCanvas(void);
     void initGenerateButton(void);
     void clearCanvas(QCustomPlot *cvs);
-    void initBackBoneTableModel(QTableView *table,
-                                QStandardItemModel *model,
+    void initBackBoneTableModel(QStandardItemModel *model,
                                 Circos *c);
     void initBackBoneWidget(QTabWidget *parent = nullptr);
-    void addCategoryToTable(QTableView *table,
-                            QStandardItemModel *model,
+    void addCategoryToTable(QStandardItemModel *model,
                             Circos *c);
     void moveTableRow(QTableView *table,
                       QStandardItemModel *model,
                       int from_row,
                       int to_row);
-    void backBoneTableToSequence(QTableView *table,
-                                 QStandardItemModel *model,
+    void backBoneTableToSequence(QStandardItemModel *model,
                                  Circos *c);
+
+    void initLinkWidget(QTabWidget *parent = nullptr);
+    void initLinkTableModel(QStandardItemModel*, Circos*);
+
     bool eventFilter(QObject *watched, QEvent *event);
-    ~FreeCircos();
+
+  signals:
+    void setTableEditMode(TableEditMode tem);
+
+  private slots:
+    void onButtonClicked(bool);
+    void onActionTriggered(bool);
+    void onDialogStateChanged(void);
+    void onBackBoneTableMoveRequest(int from_row, int to_row);
+    void onBackBoneTableSelectedChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onComboboxTextChanged(const QString &text);
+    void onTableHeaderViewClicked(int index);
+    void onTableEditModeChanged(TableEditMode tem);
+
+
+  private:
+
+    Ui::FreeCircos *ui;
 
     QCustomPlot *canvas;
     CustomDonut *gene_donut;
     CustomDonut *category_donut;
     CustomLinkCanvas *link_canvas;
     Circos *circos;
-
-  private:
-    Ui::FreeCircos *ui;
 
     QPushButton *generate_button;
     QTabWidget *control_panel;
@@ -81,6 +98,10 @@ class FreeCircos : public QMainWindow {
     QTableView *backbone_table;
     QStandardItemModel *backbone_model;
     TableEditMode table_edit_mode;
+
+    QWidget *link_widget;
+    QTableView *link_table;
+    QStandardItemModel *link_model;
 
 
     QPushButton *backbone_config_button;
@@ -117,17 +138,6 @@ class FreeCircos : public QMainWindow {
     QPushButton *category_move_button;
     QLineEdit *category_move_lineedit;
 
-  signals:
-    void setTableEditMode(TableEditMode tem);
 
-  private slots:
-    void onButtonClicked(bool);
-    void onActionTriggered(bool);
-    void onDialogStateChanged(void);
-    void onBackBoneTableMoveRequest(int from_row, int to_row);
-    void onBackBoneTableSelectedChanged(const QModelIndex &current, const QModelIndex &previous);
-    void onComboboxTextChanged(const QString &text);
-    void onTableHeaderViewClicked(int index);
-    void onTableEditModeChanged(TableEditMode tem);
 };
 #endif // FREECIRCOS_H

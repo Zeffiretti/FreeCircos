@@ -46,7 +46,7 @@ void FreeCircos::onButtonClicked(bool clicked) {
 //        QElapsedTimer timer;
 //        timer.start();
 
-        initBackBoneTableModel(backbone_table, backbone_model, circos);
+        initBackBoneTableModel(backbone_model, circos);
         emit setTableEditMode(TableEditMode::EditGene);
 //        backBoneTableToSequence(backbone_table, backbone_model, circos);
 //        circos->buildBackBoneDonut(gene_donut);
@@ -74,7 +74,7 @@ void FreeCircos::onButtonClicked(bool clicked) {
         circos->setCategoryEnable(true);
 
 //        initBackBoneTableModel(backbone_table, backbone_model, circos);
-        addCategoryToTable(backbone_table, backbone_model, circos);
+        addCategoryToTable( backbone_model, circos);
 
 //        QElapsedTimer timer;
 //        timer.start();

@@ -31,7 +31,7 @@ void FreeCircos::moveTableRow(QTableView *table,
     table->selectRow(to_row);
 }
 
-void FreeCircos::backBoneTableToSequence(QTableView *table, QStandardItemModel *model, Circos *c) {
+void FreeCircos::backBoneTableToSequence(QStandardItemModel *model, Circos *c) {
     c->clearBackBoneSequence();
     for(int i = 0;  i < model->rowCount(); ++i) {
         c->appendBackBoneSequence(model->item(i, 0)->text().toInt() - 1);
@@ -39,8 +39,7 @@ void FreeCircos::backBoneTableToSequence(QTableView *table, QStandardItemModel *
     }
 }
 
-void FreeCircos::addCategoryToTable(QTableView *table,
-                                    QStandardItemModel *model,
+void FreeCircos::addCategoryToTable(QStandardItemModel *model,
                                     Circos *c)  {
     for(int i = 0; i < model->rowCount(); ++i) {
         QString gene_name = model->item(i, 1)->text();

@@ -37,8 +37,7 @@ void FreeCircos::initCanvas(void) {
 }
 
 //BackBone Tables Method
-void FreeCircos::initBackBoneTableModel(QTableView *table,
-                                        QStandardItemModel *model,
+void FreeCircos::initBackBoneTableModel(QStandardItemModel *model,
                                         Circos *c) {
     for (qint8 i = 0; i < c->getGeneNum(); ++i) {
         //index
@@ -273,29 +272,23 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
             this, &FreeCircos::onTableHeaderViewClicked);
 }
 
+void FreeCircos::initLinkWidget(QTabWidget *parent) {
+    link_widget = new QWidget;
+    link_model = new QStandardItemModel;
+    link_table = new QTableView;
+    link_table->setSortingEnabled(false);
+    link_table->setGeometry(0, 0, 360, 580);
+    link_table->setParent(link_widget);
+    link_table->setModel(link_model);
+    link_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    link_table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    link_table->verticalHeader()->hide();
+//    link_table->installEventFilter(this);
 
 
+    parent->addTab(link_widget, "Link");
+}
 
+void FreeCircos::initLinkTableModel(QStandardItemModel *model, Circos *c) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
