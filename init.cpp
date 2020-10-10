@@ -40,7 +40,7 @@ void FreeCircos::initCanvas(void) {
 void FreeCircos::initBackBoneTableModel(QTableView *table,
                                         QStandardItemModel *model,
                                         Circos *c) {
-    for (qint8 i = 0; i < c->back_bone.size(); ++i) {
+    for (qint8 i = 0; i < c->getGeneNum(); ++i) {
         //index
         QStandardItem *index_item = new QStandardItem;
         index_item->setData(i + 1, Qt::EditRole);
@@ -49,12 +49,12 @@ void FreeCircos::initBackBoneTableModel(QTableView *table,
         model->setItem(i, 0, index_item);
 
         //name
-        model->setItem(i, 1, new QStandardItem(c->back_bone.at(i)->getName()));
+        model->setItem(i, 1, new QStandardItem(c->getGene(i)->getName()));
 //        backbone_names_list << c->back_bone.at(i)->name;
 
         //length value
         QStandardItem *value_item = new QStandardItem;
-        value_item->setData(QVariant(c->back_bone.at(i)->getLength()), Qt::EditRole);
+        value_item->setData(QVariant(c->getGene(i)->getLength()), Qt::EditRole);
         model->setItem(i, 2, value_item);
 
 //        //category info
@@ -69,7 +69,7 @@ void FreeCircos::initBackBoneTableModel(QTableView *table,
     table_edit_mode = EditGene;
 //    backbone_index_list << QString::number(c->back_bone.size());
     model->setVerticalHeaderLabels(backbone_index_list);
-    qDebug("Count Genes: %d", c->back_bone.size());
+    qDebug("Count Genes: %d", c->getGeneNum());
 
 }
 

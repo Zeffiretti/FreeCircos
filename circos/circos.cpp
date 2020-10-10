@@ -9,6 +9,10 @@ Circos::Circos(QObject *parent) : QObject(parent) {
     category_enabled = false;
 }
 
+Circos::~Circos() {
+    delete this;
+}
+
 void Circos::openFile(const QString &xlsFile) {
     m_datas.clear();
     if(xlsFile.isEmpty())
@@ -373,6 +377,30 @@ void Circos::setLinkEnable(bool b) {
 
 bool Circos::getLinkEnable(void) {
     return link_enabled;
+}
+
+Gene* Circos::getGene(int index) {
+    return back_bone.at(index);
+}
+
+void Circos::clearBackBone(void) {
+    back_bone.clear();
+}
+
+void Circos::clearBackBoneSequence(void) {
+    back_bone_sequence.clear();
+}
+
+void Circos::appendBackBoneSequence(int index) {
+    back_bone_sequence.append(index);
+}
+
+int Circos::getBackBoneSequence(int index) {
+    return back_bone_sequence.at(index);
+}
+
+int Circos::getGeneNum(void) {
+    return back_bone.size();
 }
 
 void Circos::onGeneAngleChanged(const QString& n, qreal s, qreal e) {

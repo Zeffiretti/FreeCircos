@@ -18,18 +18,7 @@ class Circos : public QObject {
     Q_OBJECT
   public:
     Circos(QObject *parent = nullptr);
-    ~Circos() {};
-
-    QList<Gene *> back_bone;
-    QList<int> back_bone_sequence;
-    bool category_enabled = false;
-    QList<Category *> category;
-    QList<int> category_sequence;
-    bool link_enabled = false;
-    QList<Link *> links;
-
-    QScopedPointer<ExcelBase> m_xls;
-    QList<QList<QVariant> > m_datas;
+    ~Circos();
 
     void openFile(const QString&);
     void dataToBackBone(void);
@@ -57,8 +46,29 @@ class Circos : public QObject {
     void setLinkEnable(bool b);
     bool getLinkEnable(void);
 
+    Gene* getGene(int index);
+    void clearBackBone(void);
+    void clearBackBoneSequence(void);
+    void appendBackBoneSequence(int index);
+    int getBackBoneSequence(int index);
+    int getGeneNum(void);
+
   public slots:
     void onGeneAngleChanged(const QString& n, qreal s, qreal e);
+
+  private:
+    QList<Gene *> back_bone;
+    QList<int> back_bone_sequence;
+    bool category_enabled = false;
+    QList<Category *> category;
+    QList<int> category_sequence;
+    bool link_enabled = false;
+    QList<Link *> links;
+
+    QScopedPointer<ExcelBase> m_xls;
+    QList<QList<QVariant> > m_datas;
+
+
 };
 
 #endif // CIRCOS_H

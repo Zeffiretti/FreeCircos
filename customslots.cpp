@@ -139,7 +139,7 @@ void FreeCircos::onButtonClicked(bool clicked) {
         QColor color = QColorDialog::getColor(Qt::white, backbone_config_widget, "Strike Color");
         if(color.isValid()) {
             QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
-            circos->back_bone.at(index)->setStrikeColor(color);
+            circos->getGene(index)->setStrikeColor(color);
             pal.setColor(QPalette::Button, color);
             btn->setPalette(pal);
             btn->setAutoDefault(true);
@@ -154,7 +154,7 @@ void FreeCircos::onButtonClicked(bool clicked) {
         QColor color = QColorDialog::getColor(Qt::white, backbone_config_widget, "Strike Color");
         if(color.isValid()) {
             QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
-            circos->back_bone.at(index)->setFillColor(color);
+            circos->getGene(index)->setFillColor(color);
             pal.setColor(QPalette::Button, color);
             btn->setPalette(pal);
             btn->setAutoDefault(true);
@@ -182,7 +182,7 @@ void FreeCircos::onButtonClicked(bool clicked) {
         QColor color = QColorDialog::getColor(Qt::white, category_config_widget, "Strike Color");
         if(color.isValid()) {
             QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
-            circos->back_bone.at(index)->getCategory()->setStrikeColor(color);
+            circos->getGene(index)->getCategory()->setStrikeColor(color);
             pal.setColor(QPalette::Button, color);
             btn->setPalette(pal);
             btn->setAutoDefault(true);
@@ -197,7 +197,7 @@ void FreeCircos::onButtonClicked(bool clicked) {
         QColor color = QColorDialog::getColor(Qt::white, category_config_widget, "Strike Color");
         if(color.isValid()) {
             QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
-            circos->back_bone.at(index)->getCategory()->setFillColor(color);
+            circos->getGene(index)->getCategory()->setFillColor(color);
             pal.setColor(QPalette::Button, color);
             btn->setPalette(pal);
             btn->setAutoDefault(true);
@@ -312,7 +312,7 @@ void FreeCircos::onBackBoneTableSelectedChanged(const QModelIndex &current, cons
 //    qDebug() << "Gene According to Table  IS " << backbone_model->item(sel_row, 1)->text();
 //    qDebug() << "Gene According to Circos IS " << circos->back_bone.at(index)->name;
 
-    Gene *b = circos->back_bone.at(index);
+    Gene *b = circos->getGene(index);
 
     QPalette pal = backbone_strike_color_button->palette();
     pal.setColor(QPalette::Button, b->getStrikeColor());
@@ -326,7 +326,7 @@ void FreeCircos::onBackBoneTableSelectedChanged(const QModelIndex &current, cons
     backbone_fill_color_button->setAutoFillBackground(true);
     backbone_fill_color_button->setFlat(true);
 
-    Category *c = circos->back_bone.at(index)->getCategory();
+    Category *c = circos->getGene(index)->getCategory();
     pal = category_strike_color_button->palette();
     pal.setColor(QPalette::Button, c->getStrikeColor());
     category_strike_color_button->setPalette(pal);
@@ -441,46 +441,46 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
     if(func == "backbone-label-state") {
         if(text == "Invisable") {
             backbone_label_position_combobox->setEnabled(false);
-            circos->back_bone.at(index)->setLabelState(CustomSlice::LabelInvisable);
+            circos->getGene(index)->setLabelState(CustomSlice::LabelInvisable);
         } else if (text == "Sleep") {
             backbone_label_position_combobox->setEnabled(true);
-            circos->back_bone.at(index)->setLabelState(CustomSlice::LabelSleep);
+            circos->getGene(index)->setLabelState(CustomSlice::LabelSleep);
         } else {
             backbone_label_position_combobox->setEnabled(true);
-            circos->back_bone.at(index)->setLabelState(CustomSlice::LabelStand);
+            circos->getGene(index)->setLabelState(CustomSlice::LabelStand);
         }
     }
 
     if(func == "backbone-label-position") {
         if(text == "On") {
-            circos->back_bone.at(index)->setLabelPosition(CustomSlice::LabelOnDonut);
+            circos->getGene(index)->setLabelPosition(CustomSlice::LabelOnDonut);
         } else if (text == "Outside") {
-            circos->back_bone.at(index)->setLabelPosition(CustomSlice::LabelOutsideDonut);
+            circos->getGene(index)->setLabelPosition(CustomSlice::LabelOutsideDonut);
         } else {
-            circos->back_bone.at(index)->setLabelPosition(CustomSlice::LabelInsideDonut);
+            circos->getGene(index)->setLabelPosition(CustomSlice::LabelInsideDonut);
         }
     }
 
     if(func == "category-label-state") {
         if(text == "Invisable") {
             category_label_position_combobox->setEnabled(false);
-            circos->back_bone.at(index)->getCategory()->setLabelState(CustomSlice::LabelInvisable);
+            circos->getGene(index)->getCategory()->setLabelState(CustomSlice::LabelInvisable);
         } else if (text == "Sleep") {
             category_label_position_combobox->setEnabled(true);
-            circos->back_bone.at(index)->getCategory()->setLabelState(CustomSlice::LabelSleep);
+            circos->getGene(index)->getCategory()->setLabelState(CustomSlice::LabelSleep);
         } else {
             category_label_position_combobox->setEnabled(true);
-            circos->back_bone.at(index)->getCategory()->setLabelState(CustomSlice::LabelStand);
+            circos->getGene(index)->getCategory()->setLabelState(CustomSlice::LabelStand);
         }
     }
 
     if(func == "category-label-position") {
         if(text == "On") {
-            circos->back_bone.at(index)->getCategory()->setLabelPosition(CustomSlice::LabelOnDonut);
+            circos->getGene(index)->getCategory()->setLabelPosition(CustomSlice::LabelOnDonut);
         } else if (text == "Outside") {
-            circos->back_bone.at(index)->getCategory()->setLabelPosition(CustomSlice::LabelOutsideDonut);
+            circos->getGene(index)->getCategory()->setLabelPosition(CustomSlice::LabelOutsideDonut);
         } else {
-            circos->back_bone.at(index)->getCategory()->setLabelPosition(CustomSlice::LabelInsideDonut);
+            circos->getGene(index)->getCategory()->setLabelPosition(CustomSlice::LabelInsideDonut);
         }
     }
 }

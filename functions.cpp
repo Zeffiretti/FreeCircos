@@ -32,10 +32,10 @@ void FreeCircos::moveTableRow(QTableView *table,
 }
 
 void FreeCircos::backBoneTableToSequence(QTableView *table, QStandardItemModel *model, Circos *c) {
-    c->back_bone_sequence.clear();
+    c->clearBackBoneSequence();
     for(int i = 0;  i < model->rowCount(); ++i) {
-        c->back_bone_sequence.append(model->item(i, 0)->text().toInt() - 1);
-        qDebug("The %d th is %d.", i, c->back_bone_sequence.at(i));
+        c->appendBackBoneSequence(model->item(i, 0)->text().toInt() - 1);
+        qDebug("The %d th is %d.", i, c->getBackBoneSequence(i));
     }
 }
 
