@@ -19,7 +19,9 @@ void FreeCircos::onButtonClicked(bool clicked) {
         }
         if(circos->getLinkEnable()) {
             circos->buildCustomLink(link_canvas);
+            link_canvas->setLinkType(CustomLinkCanvas::LinkType::AllOut);
             link_canvas->drawLinks(canvas);
+
         }
         canvas->replot();
     }

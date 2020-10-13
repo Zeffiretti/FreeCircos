@@ -6,6 +6,7 @@
 #include "customslice.h"
 #include "customdonut.h"
 #include "custombezier.h"
+#include "tool/customtool.h"
 
 class CustomLink {
   public:

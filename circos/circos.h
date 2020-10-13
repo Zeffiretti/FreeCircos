@@ -67,6 +67,7 @@ class Circos : public QObject {
     QList<int> category_sequence;
     bool link_enabled = false;
     QList<Link *> links;
+    CustomLinkCanvas::LinkTypes link_type = CustomLinkCanvas::LinkType::IntroOut;
 
     QScopedPointer<ExcelBase> m_xls;
     QList<QList<QVariant> > m_datas;
