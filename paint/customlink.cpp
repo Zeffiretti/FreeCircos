@@ -185,11 +185,13 @@ void CustomLink::buildCurveData(void) {
         rel_factor = 2;
         rel_len = getPieSize();
     }
-
+    QVector<QPointF> control_points;
     if(link_curve_type.testFlag(CustomLink::CurveType::StartLinkCurve)) {
         // build start link datas
         rel_ang = (getSSA() + CustomTool::normalizeAngle(getDSA(), getSSA())) / 2;
+
         if(link_type.testFlag(CustomLink::LinkType::Out)) {
+            control_points.clear();
             bezier->setCtrlNum(4);
             bezier->clearCtrlPoints();
             bezier->addCtrlPoint(QPointF(rel_len * qCos(getSSA()),
@@ -200,8 +202,18 @@ void CustomLink::buildCurveData(void) {
                                          rel_factor * rel_len * qSin(getDSA())));
             bezier->addCtrlPoint(QPointF(rel_len * qCos(getDSA()),
                                          rel_len * qSin(getDSA())));
-            start_link_data = bezier->calculateSpline();
+
+            control_points.append(QPointF(rel_len * qCos(getSSA()),
+                                          rel_len * qSin(getSSA())));
+            control_points.append(QPointF(rel_factor * rel_len * qCos(getSSA()),
+                                          rel_factor * rel_len * qSin(getSSA())));
+            control_points.append(QPointF(rel_factor * rel_len * qCos(getDSA()),
+                                          rel_factor * rel_len * qSin(getDSA())));
+            control_points.append(QPointF(rel_len * qCos(getDSA()),
+                                          rel_len * qSin(getDSA())));
+            start_link_data = bezier->calculateSpline(control_points);
         } else {
+            control_points.clear();
             bezier->clearCtrlPoints();
             bezier->addCtrlPoint(QPointF(rel_len * qCos(getSSA()),
                                          rel_len * qSin(getSSA())));
@@ -209,7 +221,14 @@ void CustomLink::buildCurveData(void) {
                                          rel_factor * rel_len * qSin(rel_ang)));
             bezier->addCtrlPoint(QPointF(rel_len * qCos(getDSA()),
                                          rel_len * qSin(getDSA())));
-            start_link_data = bezier->calculateSpline();
+
+            control_points.append(QPointF(rel_len * qCos(getSSA()),
+                                          rel_len * qSin(getSSA())));
+            control_points.append(QPointF(rel_factor * rel_len * qCos(rel_ang),
+                                          rel_factor * rel_len * qSin(rel_ang)));
+            control_points.append(QPointF(rel_len * qCos(getDSA()),
+                                          rel_len * qSin(getDSA())));
+            start_link_data = bezier->calculateSpline(control_points);
         }
 
     }
@@ -217,6 +236,7 @@ void CustomLink::buildCurveData(void) {
         // build end link datas
         rel_ang = (getSEA() + CustomTool::normalizeAngle(getDEA(), getSEA())) / 2;
         bezier->clearCtrlPoints();
+        control_points.clear();
         if(link_type.testFlag(CustomLink::LinkType::Out)) {
             bezier->setCtrlNum(4);
             bezier->addCtrlPoint(QPointF(rel_len * qCos(getSEA()),
@@ -227,7 +247,16 @@ void CustomLink::buildCurveData(void) {
                                          rel_factor * rel_len * qSin(getDEA())));
             bezier->addCtrlPoint(QPointF(rel_len * qCos(getDEA()),
                                          rel_len * qSin(getDEA())));
-            end_link_data = bezier->calculateSpline();
+
+            control_points.append(QPointF(rel_len * qCos(getSEA()),
+                                          rel_len * qSin(getSEA())));
+            control_points.append(QPointF(rel_factor * rel_len * qCos(getSEA()),
+                                          rel_factor * rel_len * qSin(getSEA())));
+            control_points.append(QPointF(rel_factor * rel_len * qCos(getDEA()),
+                                          rel_factor * rel_len * qSin(getDEA())));
+            control_points.append(QPointF(rel_len * qCos(getDEA()),
+                                          rel_len * qSin(getDEA())));
+            end_link_data = bezier->calculateSpline(control_points);
         } else {
             bezier->addCtrlPoint(QPointF(rel_len * qCos(getSEA()),
                                          rel_len * qSin(getSEA())));
@@ -235,7 +264,14 @@ void CustomLink::buildCurveData(void) {
                                          rel_factor * rel_len * qSin(rel_ang)));
             bezier->addCtrlPoint(QPointF(rel_len * qCos(getDEA()),
                                          rel_len * qSin(getDEA())));
-            end_link_data = bezier->calculateSpline();
+
+            control_points.append(QPointF(rel_len * qCos(getSEA()),
+                                          rel_len * qSin(getSEA())));
+            control_points.append(QPointF(rel_factor * rel_len * qCos(rel_ang),
+                                          rel_factor * rel_len * qSin(rel_ang)));
+            control_points.append(QPointF(rel_len * qCos(getDEA()),
+                                          rel_len * qSin(getDEA())));
+            end_link_data = bezier->calculateSpline(control_points);
         }
 
     }

@@ -25,6 +25,44 @@ const QVector<QPointF>& CustomBezier::calculateSpline(void) {
     return path_points_;
 }
 
+const QVector<QPointF>& CustomBezier::calculateSpline(const QVector<QPointF>& control_points) {
+    if(control_points.size() < 1) {
+        return control_points;
+    }
+    static int cnt = 0;
+    QVector<QPointF> mPoints;
+    mPoints.clear();
+    const qreal step = 1.0 / knot_num_;
+    qDebug("step=[%f].", step);
+    if(control_points.size() == 1) { // 递归结束
+        for(int i = 0; i < knot_num_; ++i) { // generate points in the same size
+            mPoints.append(control_points.at(0));
+        }
+        qDebug("bezier generation end with cnt=[%d].", cnt);
+        return mPoints;
+    }
+    cnt++;
+    qDebug("bezier continue end with cnt=[%d].", cnt);
+//    QVector<QPointF> src1(control_points);
+//    QVector<QPointF> src2(control_points);
+//    src1.remove(0);
+//    src2.remove(src2.size() - 1);
+    QVector<QPointF> src1;
+    QVector<QPointF> src2;
+    for(int i = 0; i < control_points.size() - 1; ++i) {
+        src1.append(control_points.at(i));
+        src2.append(control_points.at(i + 1));
+    }
+    QVector<QPointF> spl1 = calculateSpline(src1);
+    QVector<QPointF> spl2 = calculateSpline(src2);
+    for(int i = 0; i < knot_num_; ++i) {
+        QPointF tmp = (1.0 - i * step) * spl1.at(i) + i * step * spl2.at(i);
+        mPoints.append(tmp);
+    }
+    qDebug("generation ok.");
+    return mPoints;
+}
+
 const QVector<QPointF>& CustomBezier::calculateSpline(
     QVector<QPointF> &control_points,
     const int &points_number) {
