@@ -403,6 +403,14 @@ int Circos::getGeneNum(void) {
     return back_bone.size();
 }
 
+Link* Circos::getLink(int index) {
+    return links.at(index);
+}
+
+int Circos::getLinkNum(void) {
+    return links.size();
+}
+
 void Circos::onGeneAngleChanged(const QString& n, qreal s, qreal e) {
     findGene(n)->setAngle(s, e);
 }

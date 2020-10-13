@@ -53,6 +53,9 @@ class Circos : public QObject {
     int getBackBoneSequence(int index);
     int getGeneNum(void);
 
+    Link* getLink(int index);
+    int getLinkNum(void);
+
   public slots:
     void onGeneAngleChanged(const QString& n, qreal s, qreal e);
 

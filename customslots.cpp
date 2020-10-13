@@ -21,15 +21,6 @@ void FreeCircos::onButtonClicked(bool clicked) {
             circos->buildCustomLink(link_canvas);
             link_canvas->drawLinks(canvas);
         }
-
-
-//        QVector<double> xdata = { 0, 0.1, 0.68 };
-//        QVector<double> ydata = { 0.68, 0.1, 0 };
-//        QCPCurve *test_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
-//        //    test_curve->data()->add(QCPCurveData(-0.7,-0.2));
-//        test_curve->addData(xdata, ydata);
-//        test_curve->setParent(canvas);
-//        test_curve->setSmooth(true);
         canvas->replot();
     }
 
@@ -43,22 +34,8 @@ void FreeCircos::onButtonClicked(bool clicked) {
         circos->dataToBackBone();
         qDebug() << "open file finished";
 
-//        QElapsedTimer timer;
-//        timer.start();
-
         initBackBoneTableModel(backbone_model, circos);
         emit setTableEditMode(TableEditMode::EditGene);
-//        backBoneTableToSequence(backbone_table, backbone_model, circos);
-//        circos->buildBackBoneDonut(gene_donut);
-//        gene_donut->setSize(0.7, 0.75);
-//        clearCanvas(canvas);
-//        gene_donut->drawDonut(canvas);
-//        qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";
-//        timer.restart();
-//        canvas->replot();
-//        qDebug() << "Elapsed time3: " << timer.elapsed() << " ms";
-//        timer.restart();
-
     }
 
     if(func == "opencategoryfile") {
@@ -68,34 +45,10 @@ void FreeCircos::onButtonClicked(bool clicked) {
             return;
         }
         circos->dataToCategory();
-//        circos->buildCategoryDonut(category_donut);
-//        circos->adjustBackBoneToCategory();
-//        circos->buildBackBoneDonut(gene_donut);
         circos->setCategoryEnable(true);
 
 //        initBackBoneTableModel(backbone_table, backbone_model, circos);
-        addCategoryToTable( backbone_model, circos);
-
-//        QElapsedTimer timer;
-//        timer.start();
-//        QVector<QColor> colors;
-//        colors.resize(category_donut->m_slices.size());
-//        std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
-//        QList<QColor> strike_colors = colors.toList();
-//        category_donut->setPens(strike_colors);
-//        std::generate(colors.begin(), colors.end(), ColorGen(colors.size()));
-//        QList<QColor> fill_colors = colors.toList();
-//        category_donut->setBrushes(fill_colors);
-//        category_donut->setSize(0.75, 0.80);
-//        ClearCanvas(canvas);
-//        gene_donut->setSize(0.7, 0.75);
-//        gene_donut->drawDonut(canvas);
-//        category_donut->drawDonut(canvas);
-//        qDebug() << "Elapsed time2: " << timer.elapsed() << " ms";
-//        timer.restart();
-//        canvas->replot();
-//        qDebug() << "Elapsed time3: " << timer.elapsed() << " ms";
-//        timer.restart();
+        addCategoryToTable(backbone_model, circos);
     }
 
     if(func == "openlinkfile") {
@@ -106,8 +59,8 @@ void FreeCircos::onButtonClicked(bool clicked) {
         }
         circos->dataToLink();
         circos->setLinkEnable(true);
-
         //addCategoryToTable(backbone_table, backbone_model, circos);
+        initLinkTableModel(link_model, circos);
 
     }
 

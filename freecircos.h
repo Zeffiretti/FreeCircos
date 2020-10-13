@@ -99,11 +99,6 @@ class FreeCircos : public QMainWindow {
     QStandardItemModel *backbone_model;
     TableEditMode table_edit_mode;
 
-    QWidget *link_widget;
-    QTableView *link_table;
-    QStandardItemModel *link_model;
-
-
     QPushButton *backbone_config_button;
     QPushButton *move_panel_button;       //removed
     QMenu *backbone_table_rightclick_menu;
@@ -138,6 +133,12 @@ class FreeCircos : public QMainWindow {
     QPushButton *category_move_button;
     QLineEdit *category_move_lineedit;
 
+
+    QWidget *link_widget;
+    QTableView *link_table;
+    QStandardItemModel *link_model;
+
+    QStringList link_header_list;
 
 };
 #endif // FREECIRCOS_H

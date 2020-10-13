@@ -285,10 +285,26 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_table->verticalHeader()->hide();
 //    link_table->installEventFilter(this);
 
+    link_header_list << "Index"
+                     << "From"
+                     << "To";
+    link_model->setHorizontalHeaderLabels(link_header_list);
+
 
     parent->addTab(link_widget, "Link");
 }
 
 void FreeCircos::initLinkTableModel(QStandardItemModel *model, Circos *c) {
+    for (qint8 i = 0; i < c->getLinkNum(); ++i) {
+        //index
+        QStandardItem *index_item = new QStandardItem;
+        index_item->setData(i + 1, Qt::EditRole);
+//        index_item->setCheckable(true);
+//        index_item->setCheckState(Qt::CheckState::Checked);
+        model->setItem(i, 0, index_item);
 
+        //name
+        model->setItem(i, 1, new QStandardItem(c->getLink(i)->getSGN()));
+        model->setItem(i, 2, new QStandardItem(c->getLink(i)->getDGN()));
+    }
 }
