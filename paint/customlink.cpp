@@ -200,7 +200,7 @@ void CustomLink::buildLinkCurve(void) {
 }
 
 void CustomLink::buildCurveData(void) {
-    const qreal mGap = 2 * M_PI / 8;
+    const qreal mGap = 2 * M_PI / 16;
 
     start_link_data.clear();
     start_border_data.clear();
@@ -222,7 +222,17 @@ void CustomLink::buildCurveData(void) {
         qreal s = getSSA();
         qreal e = getDSA();
         if(link_type.testFlag(CustomLink::LinkType::Out)) {
-            int knot_num = qMax(int(qMin((s - e), 2 * M_PI - (s - e)) / mGap), 2);
+            int knot_num;
+            if(qMin(qAbs(s - e), 2 * M_PI - qAbs(s - e)) > mGap) {
+                knot_num = qMax(int((qMin((s - e), 2 * M_PI - (s - e)) / mGap)), 2);
+            } else {
+                knot_num = 1;
+            }
+//            int knot_num = qMax(int(qMin((s - e), 2 * M_PI - (s - e)) / mGap), 1);
+            if(knot_num > 3) {
+                qDebug() << knot_num;
+                rel_factor *= 1.1;
+            }
             qreal gap = qMin((s - e), 2 * M_PI - (s - e)) / (knot_num + 1);
             control_points.push_back(QPointF(rel_len * qCos(s), rel_len * qSin(s)));
             control_points.push_back(QPointF(rel_factor * rel_len * qCos(s),
@@ -340,7 +350,7 @@ QVector<qreal> CustomLink::buildCtrlPoints(qreal start_angle, qreal end_angle, i
         }
     }
     qreal gap = (e - s) / (knot_num + 1);
-    for(int i = 0; i < knot_num; ++i) {
+    for(int i = 1; i <= knot_num; ++i) {
         angles.append(s + i * gap);
     }
     return angles;

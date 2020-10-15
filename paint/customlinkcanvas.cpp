@@ -22,9 +22,9 @@ void CustomLinkCanvas::drawLinks(QCustomPlot *canvas) {
             break;
         case LinkType::IntroOut:
             if(link->getSGN().compare(link->getDGN()) == 0) {
-                link->setLinkType(CustomLink::LinkType::In);
-            } else {
                 link->setLinkType(CustomLink::LinkType::Out);
+            } else {
+                link->setLinkType(CustomLink::LinkType::In);
             }
             break;
         default:
