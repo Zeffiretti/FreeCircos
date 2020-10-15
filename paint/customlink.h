@@ -46,6 +46,53 @@ class CustomLink {
     CustomLink();
     CustomLink(QCustomPlot *canvas);
 
+    void applyAngles(void);
+    // method
+    // getters
+    QString getSGN(void);
+    QString getDGN(void);
+    qreal getHoleSize(void);
+    qreal getPieSize(void);
+    LinkClasses getLinkClass(void);
+    LinkTypes getLinkType(void);
+    LinkDirections getLinkDirection(void);
+    QPen getPen(void);
+    QBrush getBrush(void);
+    qreal getSSA(void);
+    qreal getSEA(void);
+    qreal getDSA(void);
+    qreal getDEA(void);
+    // setters
+    void setSGN(const QString& n);
+    void setDGN(const QString& n);
+    void setHoleSize(qreal hs);
+    void setPieSize(qreal ps);
+    void setLinkClass(CustomLink::LinkClasses lc);
+    void setLinkType(CustomLink::LinkTypes lt);
+    void setLinkDirection(CustomLink::LinkDirections ld);
+    void setLinkCurveType(CustomLink::LinkCurveType lt);
+    void setPen(QPen p);
+    void setBrush(QBrush b);
+    void setSSA(qreal _ssa);
+    void setSEA(qreal _sea);
+    void setDSA(qreal _dsa);
+    void setDEA(qreal _dea);
+
+    // hidden methods
+//    void buildCurvePoint(void);
+    void buildLinkCurve(void);
+    void buildCurveData(void);
+    void buildStartCurveData(void);
+    void buildEndCurveData(void);
+    QVector<qreal> buildCtrlPoints(qreal start_angle, qreal end_angle, int knot_num);
+
+    // drawing
+    void drawLink(QCustomPlot *);
+    void drawEnd2End(QCustomPlot *);
+    void drawEnd2Block(QCustomPlot *);
+
+  private:
+
     const qreal c_rel_factor_in = 0.67;
     const qreal c_rel_factor_out = 1.67;
 
@@ -85,51 +132,6 @@ class CustomLink {
     const qreal border_data_gap = 0.1;
     QVector<QPointF> start_border_data;
     QVector<QPointF> end_border_data;
-
-    // method
-    // getters
-    QString getSGN(void);
-    QString getDGN(void);
-    qreal getHoleSize(void);
-    qreal getPieSize(void);
-    LinkClasses getLinkClass(void);
-    LinkTypes getLinkType(void);
-    LinkDirections getLinkDirection(void);
-    QPen getPen(void);
-    QBrush getBrush(void);
-    qreal getSSA(void);
-    qreal getSEA(void);
-    qreal getDSA(void);
-    qreal getDEA(void);
-
-
-    // setters
-    void setSGN(const QString& n);
-    void setDGN(const QString& n);
-    void setHoleSize(qreal hs);
-    void setPieSize(qreal ps);
-    void setLinkClass(CustomLink::LinkClasses lc);
-    void setLinkType(CustomLink::LinkTypes lt);
-    void setLinkDirection(CustomLink::LinkDirections ld);
-    void setLinkCurveType(CustomLink::LinkCurveType lt);
-    void setPen(QPen p);
-    void setBrush(QBrush b);
-    void setSSA(qreal _ssa);
-    void setSEA(qreal _sea);
-    void setDSA(qreal _dsa);
-    void setDEA(qreal _dea);
-
-    // hidden methods
-//    void buildCurvePoint(void);
-    void buildLinkCurve(void);
-    void buildCurveData(void);
-    void buildStartCurveData(void);
-    void buildEndCurveData(void);
-
-    // drawing
-    void drawLink(QCustomPlot *);
-    void drawEnd2End(QCustomPlot *);
-    void drawEnd2Block(QCustomPlot *);
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkGenes)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkClasses)

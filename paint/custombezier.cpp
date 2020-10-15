@@ -53,8 +53,10 @@ const QVector<QPointF>& CustomBezier::calculateSpline(const QVector<QPointF>& co
         src1.append(control_points.at(i));
         src2.append(control_points.at(i + 1));
     }
-    QVector<QPointF> spl1 = calculateSpline(src1);
-    QVector<QPointF> spl2 = calculateSpline(src2);
+    QVector<QPointF> spl1;
+    spl1 = calculateSpline(src1);
+    QVector<QPointF> spl2;
+    spl2 = calculateSpline(src2);
     for(int i = 0; i < knot_num_; ++i) {
         QPointF tmp = (1.0 - i * step) * spl1.at(i) + i * step * spl2.at(i);
         mPoints.append(tmp);

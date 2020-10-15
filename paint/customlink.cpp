@@ -28,6 +28,34 @@ CustomLink::CustomLink(QCustomPlot *canvas) {
     end_border_data.clear();
 }
 
+void CustomLink::applyAngles(void) {
+    while (source_start_angle > M_PI) {
+        source_start_angle -= 2 * M_PI;
+    }
+    while (source_end_angle > M_PI) {
+        source_end_angle -= 2 * M_PI;
+    }
+    while (destination_start_angle > M_PI) {
+        destination_start_angle -= 2 * M_PI;
+    }
+    while (destination_end_angle > M_PI) {
+        destination_end_angle -= 2 * M_PI;
+    }
+
+    while (source_start_angle < -M_PI) {
+        source_start_angle += 2 * M_PI;
+    }
+    while (source_end_angle < -M_PI) {
+        source_end_angle += 2 * M_PI;
+    }
+    while (destination_start_angle < -M_PI) {
+        destination_start_angle += 2 * M_PI;
+    }
+    while (destination_end_angle < -M_PI) {
+        destination_end_angle += 2 * M_PI;
+    }
+}
+
 CustomLink::LinkClasses CustomLink::getLinkClass(void) {
     return link_class;
 }
@@ -172,106 +200,96 @@ void CustomLink::buildLinkCurve(void) {
 }
 
 void CustomLink::buildCurveData(void) {
+    const qreal mGap = 2 * M_PI / 8;
+
     start_link_data.clear();
     start_border_data.clear();
     end_link_data.clear();
     end_border_data.clear();
-    CustomBezier* bezier = new CustomBezier(2, 100, nullptr);
     qreal rel_len, rel_ang, rel_factor;
     if(link_type.testFlag(CustomLink::LinkType::Default) || link_type.testFlag(CustomLink::LinkType::In)) {
         rel_factor = 0;
         rel_len = getHoleSize();
     } else {
-        rel_factor = 2;
+        rel_factor = 1.3;
         rel_len = getPieSize();
     }
-    QVector<QPointF> control_points;
+    vector<QPointF> control_points;
+    QVector<qreal> angles;
     if(link_curve_type.testFlag(CustomLink::CurveType::StartLinkCurve)) {
         // build start link datas
-        rel_ang = (getSSA() + CustomTool::normalizeAngle(getDSA(), getSSA())) / 2;
-
+        control_points.clear();
+        qreal s = getSSA();
+        qreal e = getDSA();
         if(link_type.testFlag(CustomLink::LinkType::Out)) {
-            control_points.clear();
-            bezier->setCtrlNum(4);
-            bezier->clearCtrlPoints();
-            bezier->addCtrlPoint(QPointF(rel_len * qCos(getSSA()),
-                                         rel_len * qSin(getSSA())));
-            bezier->addCtrlPoint(QPointF(rel_factor * rel_len * qCos(getSSA()),
-                                         rel_factor * rel_len * qSin(getSSA())));
-            bezier->addCtrlPoint(QPointF(rel_factor * rel_len * qCos(getDSA()),
-                                         rel_factor * rel_len * qSin(getDSA())));
-            bezier->addCtrlPoint(QPointF(rel_len * qCos(getDSA()),
-                                         rel_len * qSin(getDSA())));
+            int knot_num = qMax(int(qMin((s - e), 2 * M_PI - (s - e)) / mGap), 2);
+            qreal gap = qMin((s - e), 2 * M_PI - (s - e)) / (knot_num + 1);
+            control_points.push_back(QPointF(rel_len * qCos(s), rel_len * qSin(s)));
+            control_points.push_back(QPointF(rel_factor * rel_len * qCos(s),
+                                             rel_factor * rel_len * qSin(s)));
+            angles = buildCtrlPoints(s, e, knot_num);
+            QVectorIterator<qreal> angleIt(angles);
+            int i = 0;
+            while (angleIt.hasNext()) {
+                rel_ang = angleIt.next();
+                if(i % 2 == 0) {
+                    control_points.push_back(QPointF(rel_factor * rel_len * qCos(rel_ang),
+                                                     rel_factor * rel_len * qSin(rel_ang)));
+                } else {
+                    control_points.push_back(QPointF(rel_len * qCos(rel_ang),
+                                                     rel_len * qSin(rel_ang)));
+                }
+                i++;
+            }
+//            for(int i = 0; i < knot_num; ++i) {
+//                rel_ang = s + (e - s) * (i + 1) * gap;
+//                control_points.push_back(QPointF(rel_factor * rel_len * qCos(rel_ang),
+//                                                 rel_factor * rel_len * qSin(rel_ang)));
+//            }
+            control_points.push_back(QPointF(rel_factor * rel_len * qCos(e),
+                                             rel_factor * rel_len * qSin(e)));
+            control_points.push_back(QPointF(rel_len * qCos(e), rel_len * qSin(e)));
 
-            control_points.append(QPointF(rel_len * qCos(getSSA()),
-                                          rel_len * qSin(getSSA())));
-            control_points.append(QPointF(rel_factor * rel_len * qCos(getSSA()),
-                                          rel_factor * rel_len * qSin(getSSA())));
-            control_points.append(QPointF(rel_factor * rel_len * qCos(getDSA()),
-                                          rel_factor * rel_len * qSin(getDSA())));
-            control_points.append(QPointF(rel_len * qCos(getDSA()),
-                                          rel_len * qSin(getDSA())));
-            start_link_data = bezier->calculateSpline(control_points);
+            start_link_data = QVector<QPointF>::fromStdVector(CustomTool::bezierCurve(control_points));
         } else {
-            control_points.clear();
-            bezier->clearCtrlPoints();
-            bezier->addCtrlPoint(QPointF(rel_len * qCos(getSSA()),
-                                         rel_len * qSin(getSSA())));
-            bezier->addCtrlPoint(QPointF(rel_factor * rel_len * qCos(rel_ang),
-                                         rel_factor * rel_len * qSin(rel_ang)));
-            bezier->addCtrlPoint(QPointF(rel_len * qCos(getDSA()),
-                                         rel_len * qSin(getDSA())));
-
-            control_points.append(QPointF(rel_len * qCos(getSSA()),
-                                          rel_len * qSin(getSSA())));
-            control_points.append(QPointF(rel_factor * rel_len * qCos(rel_ang),
-                                          rel_factor * rel_len * qSin(rel_ang)));
-            control_points.append(QPointF(rel_len * qCos(getDSA()),
-                                          rel_len * qSin(getDSA())));
-            start_link_data = bezier->calculateSpline(control_points);
+            control_points.push_back(QPointF(rel_len * qCos(s), rel_len * qSin(s)));
+            control_points.push_back(QPointF(0, 0));
+            control_points.push_back(QPointF(rel_len * qCos(e), rel_len * qSin(e)));
+            start_link_data = QVector<QPointF>::fromStdVector(CustomTool::bezierCurve(control_points));
         }
-
     }
     if(link_curve_type.testFlag(CustomLink::CurveType::EndLinkCurve)) {
         // build end link datas
-        rel_ang = (getSEA() + CustomTool::normalizeAngle(getDEA(), getSEA())) / 2;
-        bezier->clearCtrlPoints();
         control_points.clear();
+        qreal s = getSEA();
+        qreal e = getDEA();
         if(link_type.testFlag(CustomLink::LinkType::Out)) {
-            bezier->setCtrlNum(4);
-            bezier->addCtrlPoint(QPointF(rel_len * qCos(getSEA()),
-                                         rel_len * qSin(getSEA())));
-            bezier->addCtrlPoint(QPointF(rel_factor * rel_len * qCos(getSEA()),
-                                         rel_factor * rel_len * qSin(getSEA())));
-            bezier->addCtrlPoint(QPointF(rel_factor * rel_len * qCos(getDEA()),
-                                         rel_factor * rel_len * qSin(getDEA())));
-            bezier->addCtrlPoint(QPointF(rel_len * qCos(getDEA()),
-                                         rel_len * qSin(getDEA())));
-
-            control_points.append(QPointF(rel_len * qCos(getSEA()),
-                                          rel_len * qSin(getSEA())));
-            control_points.append(QPointF(rel_factor * rel_len * qCos(getSEA()),
-                                          rel_factor * rel_len * qSin(getSEA())));
-            control_points.append(QPointF(rel_factor * rel_len * qCos(getDEA()),
-                                          rel_factor * rel_len * qSin(getDEA())));
-            control_points.append(QPointF(rel_len * qCos(getDEA()),
-                                          rel_len * qSin(getDEA())));
-            end_link_data = bezier->calculateSpline(control_points);
+            int knot_num = qMax(int((qAbs(s - e)) / mGap), 2);
+            qreal gap = (s - e) / (knot_num + 1);
+            control_points.push_back(QPointF(rel_len * qCos(s), rel_len * qSin(s)));
+            control_points.push_back(QPointF(rel_factor * rel_len * qCos(s),
+                                             rel_factor * rel_len * qSin(s)));
+            angles = buildCtrlPoints(s, e, knot_num);
+            QVectorIterator<qreal> angleIt(angles);
+            while (angleIt.hasNext()) {
+                rel_ang = angleIt.next();
+                control_points.push_back(QPointF(rel_factor * rel_len * qCos(rel_ang),
+                                                 rel_factor * rel_len * qSin(rel_ang)));
+            }
+//            for(int i = 0; i < knot_num; ++i) {
+//                rel_ang = s + (e - s) * (i + 1) * gap;
+//                control_points.push_back(QPointF(rel_factor * rel_len * qCos(rel_ang),
+//                                                 rel_factor * rel_len * qSin(rel_ang)));
+//            }
+            control_points.push_back(QPointF(rel_factor * rel_len * qCos(e),
+                                             rel_factor * rel_len * qSin(e)));
+            control_points.push_back(QPointF(rel_len * qCos(e), rel_len * qSin(e)));
+            end_link_data = QVector<QPointF>::fromStdVector(CustomTool::bezierCurve(control_points));
         } else {
-            bezier->addCtrlPoint(QPointF(rel_len * qCos(getSEA()),
-                                         rel_len * qSin(getSEA())));
-            bezier->addCtrlPoint(QPointF(rel_factor * rel_len * qCos(rel_ang),
-                                         rel_factor * rel_len * qSin(rel_ang)));
-            bezier->addCtrlPoint(QPointF(rel_len * qCos(getDEA()),
-                                         rel_len * qSin(getDEA())));
-
-            control_points.append(QPointF(rel_len * qCos(getSEA()),
-                                          rel_len * qSin(getSEA())));
-            control_points.append(QPointF(rel_factor * rel_len * qCos(rel_ang),
-                                          rel_factor * rel_len * qSin(rel_ang)));
-            control_points.append(QPointF(rel_len * qCos(getDEA()),
-                                          rel_len * qSin(getDEA())));
-            end_link_data = bezier->calculateSpline(control_points);
+            control_points.push_back(QPointF(rel_len * qCos(s), rel_len * qSin(s)));
+            control_points.push_back(QPointF(0, 0));
+            control_points.push_back(QPointF(rel_len * qCos(e), rel_len * qSin(e)));
+            end_link_data = QVector<QPointF>::fromStdVector(CustomTool::bezierCurve(control_points));
         }
 
     }
@@ -304,7 +322,32 @@ void CustomLink::buildEndCurveData(void) {
 
 }
 
+QVector<qreal> CustomLink::buildCtrlPoints(qreal start_angle, qreal end_angle, int knot_num) {
+    qreal s = start_angle;
+    qreal e = end_angle;
+    QVector<qreal> angles;
+    if(qAbs(s - e) < M_PI) {
+
+    } else {
+        if(e > s) {
+            while (qAbs(s - e) > M_PI) {
+                e -= 2 * M_PI;
+            }
+        } else {
+            while (qAbs(s - e) > M_PI) {
+                e += 2 * M_PI;
+            }
+        }
+    }
+    qreal gap = (e - s) / (knot_num + 1);
+    for(int i = 0; i < knot_num; ++i) {
+        angles.append(s + i * gap);
+    }
+    return angles;
+}
+
 void CustomLink::drawLink(QCustomPlot *canvas) {
+    applyAngles();
     buildLinkCurve();
     buildCurveData();
     draw_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
