@@ -283,13 +283,18 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     link_table->setSelectionBehavior(QAbstractItemView::SelectRows);
     link_table->verticalHeader()->hide();
-//    link_table->installEventFilter(this);
-
     link_header_list << "Index"
                      << "From"
                      << "To";
     link_model->setHorizontalHeaderLabels(link_header_list);
-
+    link_config_widget = new QWidget;
+    link_type_combobox = new QComboBox;
+    link_directional_checkbox = new QCheckBox;
+    link_colfun_combobox = new QComboBox;
+    link_lty_combobox = new QComboBox;
+    link_thermometer_checkbox = new QCheckBox;
+    link_stre_lineedit = new QLineEdit;
+    link_lwd_lineedit = new QLineEdit;
 
     parent->addTab(link_widget, "Link");
 }

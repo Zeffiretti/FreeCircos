@@ -137,6 +137,14 @@ class FreeCircos : public QMainWindow {
     QWidget *link_widget;
     QTableView *link_table;
     QStandardItemModel *link_model;
+    QWidget *link_config_widget;
+    QComboBox *link_type_combobox;
+    QCheckBox *link_directional_checkbox;
+    QComboBox *link_colfun_combobox;
+    QComboBox *link_lty_combobox;
+    QCheckBox *link_thermometer_checkbox;
+    QLineEdit *link_stre_lineedit;
+    QLineEdit *link_lwd_lineedit;
 
     QStringList link_header_list;
 
