@@ -296,6 +296,16 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_stre_lineedit = new QLineEdit;
     link_lwd_lineedit = new QLineEdit;
 
+    link_config_widget->setEnabled(true);
+    link_config_widget->setParent(link_widget);
+    link_config_widget->setGeometry(380, 20, 600, 560);
+    QFont *ft = new QFont;
+    ft->setFamily("Source Code Pro");
+    ft->setPointSize(16);
+    ft->setBold(true);
+    link_type_combobox->setParent(link_config_widget);
+//    link_config_widget->setGeometry();
+
     parent->addTab(link_widget, "Link");
 }
 
