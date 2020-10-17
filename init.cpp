@@ -288,6 +288,7 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
                      << "To";
     link_model->setHorizontalHeaderLabels(link_header_list);
     link_config_widget = new QWidget;
+    link_type_label = new QLabel;
     link_type_combobox = new QComboBox;
     link_directional_checkbox = new QCheckBox;
     link_colfun_combobox = new QComboBox;
@@ -303,8 +304,18 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     ft->setFamily("Source Code Pro");
     ft->setPointSize(16);
     ft->setBold(true);
+    link_type_label->setParent(link_config_widget);
+    link_type_label->setGeometry(50, 140, 300, 60);
+    link_type_label->setText("Link Type: ");
+    link_type_label->setFont(*ft);
     link_type_combobox->setParent(link_config_widget);
-//    link_config_widget->setGeometry();
+    link_type_combobox->setGeometry(400, 145, 150, 50);
+    link_type_combobox->setFont(*ft);
+    QStringList link_type_list;
+    link_type_list << "Intro Out"
+                   << "All In"
+                   << "All Out";
+    link_type_combobox->addItems(link_type_list);
 
     parent->addTab(link_widget, "Link");
 }
