@@ -141,8 +141,12 @@ class FreeCircos : public QMainWindow {
     QLabel *link_type_label;
     QComboBox *link_type_combobox;
     QCheckBox *link_directional_checkbox;
+    QComboBox *link_direction_combobox;
+    QLineEdit *link_border_lineedit;
+    QLabel *link_border_label;
     QComboBox *link_colfun_combobox;
     QComboBox *link_lty_combobox;
+    QLabel *link_lty_label;
     QCheckBox *link_thermometer_checkbox;
     QLineEdit *link_stre_lineedit;
     QLineEdit *link_lwd_lineedit;

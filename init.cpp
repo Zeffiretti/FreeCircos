@@ -291,6 +291,10 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_type_label = new QLabel;
     link_type_combobox = new QComboBox;
     link_directional_checkbox = new QCheckBox;
+    link_direction_combobox = new QComboBox;
+    link_border_label = new QLabel;
+    link_border_lineedit = new QLineEdit;
+    link_lty_label = new QLabel;
     link_colfun_combobox = new QComboBox;
     link_lty_combobox = new QComboBox;
     link_thermometer_checkbox = new QCheckBox;
@@ -305,17 +309,36 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     ft->setPointSize(16);
     ft->setBold(true);
     link_type_label->setParent(link_config_widget);
-    link_type_label->setGeometry(50, 140, 300, 60);
+    link_type_label->setGeometry(80, 20, 160, 60);
     link_type_label->setText("Link Type: ");
     link_type_label->setFont(*ft);
     link_type_combobox->setParent(link_config_widget);
-    link_type_combobox->setGeometry(400, 145, 150, 50);
+    link_type_combobox->setGeometry(340, 20, 160, 60);
     link_type_combobox->setFont(*ft);
     QStringList link_type_list;
     link_type_list << "Intro Out"
                    << "All In"
                    << "All Out";
     link_type_combobox->addItems(link_type_list);
+    link_directional_checkbox->setParent(link_config_widget);
+    link_directional_checkbox->setGeometry(80, 100, 160, 60);
+    link_directional_checkbox->setText("Directional");
+    link_directional_checkbox->setFont(*ft);
+    link_directional_checkbox->setCheckState(Qt::CheckState::Unchecked);
+    link_direction_combobox->setParent(link_config_widget);
+    link_direction_combobox->setGeometry(340, 100, 160, 60);
+    link_direction_combobox->setFont(*ft);
+    QStringList link_direction_list;
+    link_direction_list << "Head--->Tail" << "Head<---Tail";
+    link_direction_combobox->addItems(link_direction_list);
+    link_direction_combobox->setEnabled(false);
+    link_border_label->setParent(link_config_widget);
+    link_border_label->setGeometry(80, 180, 160, 60);
+    link_border_label->setFont(*ft);
+    link_border_label->setText("Border");
+    link_border_lineedit->setParent(link_config_widget);
+    link_border_lineedit->setGeometry(340, 180, 160, 60);
+    link_border_lineedit->setValidator(new QDoubleValidator(0, 100, 2, this));
 
     parent->addTab(link_widget, "Link");
 }
