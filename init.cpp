@@ -314,6 +314,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_directional_checkbox->setText("Directional");
     link_directional_checkbox->setFont(*ft);
     link_directional_checkbox->setCheckState(Qt::CheckState::Unchecked);
+    link_directional_checkbox->setProperty("prefix", "link");
+    link_directional_checkbox->setProperty("function", "link-directional");
     link_direction_combobox->setParent(link_config_widget);
     link_direction_combobox->setGeometry(340, 100, 160, 60);
     link_direction_combobox->setFont(*ft);
@@ -321,7 +323,7 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_direction_list << "Head--->Tail" << "Head<---Tail";
     link_direction_combobox->addItems(link_direction_list);
     link_direction_combobox->setEnabled(false);
-    link_direction_combobox->setProperty("function", "link-direcction");
+    link_direction_combobox->setProperty("function", "link-direction");
     link_direction_combobox->setProperty("prefix", "link");
     link_border_label->setParent(link_config_widget);
     link_border_label->setGeometry(80, 180, 80, 60);
@@ -383,6 +385,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
             this, &FreeCircos::onComboboxTextChanged);
     connect(link_lty_combobox, &QComboBox::currentTextChanged,
             this, &FreeCircos::onComboboxTextChanged);
+    connect(link_directional_checkbox, &QCheckBox::stateChanged,
+            this, &FreeCircos::onCheckboxStateChanged);
     parent->addTab(link_widget, "Link");
 }
 

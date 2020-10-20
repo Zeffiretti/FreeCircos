@@ -79,7 +79,7 @@ class FreeCircos : public QMainWindow {
     void onComboboxTextChanged(const QString &text);
     void onTableHeaderViewClicked(int index);
     void onTableEditModeChanged(TableEditMode tem);
-
+    void onCheckboxStateChanged(int state);
 
   private:
 

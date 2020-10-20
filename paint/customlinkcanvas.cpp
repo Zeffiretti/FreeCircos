@@ -10,7 +10,6 @@ void CustomLinkCanvas::addCustomLink(CustomLink *link) {
 
 void CustomLinkCanvas::drawLinks(QCustomPlot *canvas) {
     QListIterator<CustomLink*> it(custom_link_list);
-//    qDebug("drawLinks starts...");
     while (it.hasNext()) {
         CustomLink* link = it.next();
         switch (link_type) {
@@ -30,6 +29,7 @@ void CustomLinkCanvas::drawLinks(QCustomPlot *canvas) {
         default:
             break;
         }
+        link->setLinkDirection(arrow_direction);
         link->drawLink(canvas);
     }
 }

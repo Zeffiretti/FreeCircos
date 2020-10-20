@@ -449,23 +449,19 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
             CustomLinkCanvas::LinkTypes link_type;
             if(text == "Intro-Out") {
                 link_type = CustomLinkCanvas::LinkType::IntroOut;
-//            circos->setLinkType(CustomLinkCanvas::LinkType::IntroOut);
             } else if(text == "All-In") {
                 link_type = CustomLinkCanvas::LinkType::AllIn;
-//            circos->setLinkType(CustomLinkCanvas::LinkType::AllIn);
             } else {
                 link_type = CustomLinkCanvas::LinkType::AllOut;
-//            circos->setLinkType(CustomLinkCanvas::LinkType::AllOut);
             }
-//            qDebug() << "setting link type...";
             circos->setLinkType(link_type);
         }
 
-        if(func.compare("link-direcction") == 0) {
+        if(func.compare("link-direction") == 0) {
             if(text.compare("Head--->Tail") == 0) {
-                //// TODO: fix link direction painting
+                circos->setLinkArrowDirection(CustomLink::LinkDirection::Start2End);
             } else {
-
+                circos->setLinkArrowDirection(CustomLink::LinkDirection::End2Start);
             }
         }
 
@@ -513,5 +509,30 @@ void FreeCircos::onTableEditModeChanged(TableEditMode tem) {
         backbone_table->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
 //        qDebug() << "Edit Category.";
         break;
+    }
+}
+
+void FreeCircos::onCheckboxStateChanged(int state) {
+    QCheckBox *check_box = qobject_cast<QCheckBox*>(sender());
+    QString prefix = check_box->property("prefix").toString();
+    QString func = check_box->property("function").toString();
+
+    if(prefix.compare("link") == 0) {
+        if(func.compare("link-directional") == 0) {
+            switch (state) {
+            case Qt::CheckState::Checked:
+                emit link_direction_combobox->currentTextChanged(link_direction_combobox->currentText());
+                link_direction_combobox->setEnabled(true);
+                break;
+            case Qt::CheckState::Unchecked:
+                link_direction_combobox->setEnabled(false);
+                circos->setLinkArrowDirection(CustomLink::LinkDirection::NoArrow);
+                break;
+            default:
+                link_direction_combobox->setEnabled(false);
+                circos->setLinkArrowDirection(CustomLink::LinkDirection::NoArrow);
+                break;
+            }
+        }
     }
 }

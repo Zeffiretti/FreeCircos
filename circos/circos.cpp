@@ -242,6 +242,7 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
     custom_links->clearLinks();
     QListIterator<Link*> it(links);
     custom_links->setLinkType(link_type);
+    custom_links->setArrowDirection(link_arrow_direction);
 //    qDebug("buildCustomLink starts...");
     while (it.hasNext()) {
         Link* l = it.next();
@@ -249,6 +250,7 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
         Gene* dg = findGene(l->getDGN());
         if(sg->getOnCanvas() && dg->getOnCanvas()) { // 开始与结束的Gene均在画布上，该link才会被绘出
             CustomLink *custom_link = new CustomLink;
+//            custom_link->setLinkDirection(link_arrow_direction);
 
             // key process: set the start and end position(angle) of the link
             // start link
@@ -299,8 +301,6 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
             } else if(end_mul) {
                 lc = CustomLink::LinkClass::End2Block;
             }
-
-            CustomLink::LinkTypes lt;
 
             custom_link->setLinkClass(lc);
             custom_link->setPen(QPen(QColor(qrand() % 256, qrand() % 256, qrand() % 256)));
