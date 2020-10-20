@@ -390,6 +390,14 @@ CustomLinkCanvas::LinkTypes Circos::getLinkType(void) {
     return link_type;
 }
 
+void Circos::setLinkArrowDirection(CustomLink::LinkDirections ad) {
+    link_arrow_direction = ad;
+}
+
+CustomLink::LinkDirections Circos::getLinkArrowDirection(void) {
+    return link_arrow_direction;
+}
+
 Gene* Circos::getGene(int index) {
     return back_bone.at(index);
 }

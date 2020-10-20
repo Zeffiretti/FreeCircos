@@ -49,6 +49,9 @@ class Circos : public QObject {
     void setLinkType(CustomLinkCanvas::LinkTypes);
     CustomLinkCanvas::LinkTypes getLinkType(void);
 
+    void setLinkArrowDirection(CustomLink::LinkDirections);
+    CustomLink::LinkDirections getLinkArrowDirection(void);
+
     Gene* getGene(int index);
     void clearBackBone(void);
     void clearBackBoneSequence(void);
@@ -71,6 +74,7 @@ class Circos : public QObject {
     bool link_enabled = false;
     QList<Link *> links;
     CustomLinkCanvas::LinkTypes link_type = CustomLinkCanvas::LinkType::IntroOut;
+    CustomLink::LinkDirections link_arrow_direction = CustomLink::LinkDirection::NoArrow;
 
     QScopedPointer<ExcelBase> m_xls;
     QList<QList<QVariant> > m_datas;

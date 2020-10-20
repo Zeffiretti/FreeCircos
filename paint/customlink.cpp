@@ -366,11 +366,13 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
         QVectorIterator<QPointF> pit(start_link_data);
         while (pit.hasNext()) {
             QPointF p = pit.next();
+//            draw_curve->
             draw_curve->addData(p.x(), p.y());
         }
     }
 
     if(end_border_data.size() > 1) {
+        setLinkDirection(NoArrow);
         draw_curve->setBrush(fill_brush);
         QVectorIterator<QPointF> pit(end_border_data);
         pit.toBack();
@@ -381,6 +383,7 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
     }
 
     if(end_link_data.size() > 0) {
+        setLinkDirection(NoArrow);
         draw_curve->setBrush(fill_brush);
         QVectorIterator<QPointF> pit(end_link_data);
         pit.toBack();
@@ -391,12 +394,32 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
     }
 
     if(start_border_data.size() > 1) {
+        setLinkDirection(NoArrow);
         draw_curve->setBrush(fill_brush);
         QVectorIterator<QPointF> pit(start_border_data);
         while (pit.hasNext()) {
             QPointF p = pit.next();
             draw_curve->addData(p.x(), p.y());
         }
+    }
+
+    if(link_direction.testFlag(End2Start)) {
+        QCPItemLine *arrow_line;
+        arrow_line = new QCPItemLine(canvas);
+        arrow_line->setParent(canvas);
+        arrow_line->start->setCoords(start_link_data.at(0));
+        arrow_line->end->setCoords(start_link_data.at(1));
+        arrow_line->setTail(QCPLineEnding::esSpikeArrow);
+        arrow_line->setPen(strike_pen);
+    }
+    if(link_direction.testFlag(Start2End)) {
+        QCPItemLine *arrow_line;
+        arrow_line = new QCPItemLine(canvas);
+        arrow_line->setParent(canvas);
+        arrow_line->start->setCoords(start_link_data.at(start_link_data.size() - 1));
+        arrow_line->end->setCoords(start_link_data.at(start_link_data.size() - 2));
+        arrow_line->setTail(QCPLineEnding::esSpikeArrow);
+        arrow_line->setPen(strike_pen);
     }
 
     draw_curve->setSmooth(false);

@@ -30,7 +30,7 @@ class CustomLink {
     };
     Q_DECLARE_FLAGS(LinkTypes, LinkType)
     enum LinkDirection {
-        NoDirection,
+        NoArrow,
         Start2End,
         End2Start
     };
@@ -102,7 +102,7 @@ class CustomLink {
 
     LinkClasses link_class = End2End;
     LinkTypes link_type = In;
-    LinkDirections link_direction = NoDirection;
+    LinkDirections link_direction = NoArrow;
     LinkCurveType link_curve_type = StartLinkCurve;
     QCPCurve *start_link_curve;
     QCPCurve *end_link_curve;

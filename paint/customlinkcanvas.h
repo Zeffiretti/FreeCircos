@@ -18,12 +18,15 @@ class CustomLinkCanvas {
 
     // getters
     LinkTypes getLinkType(void);
+    CustomLink::LinkDirections getArrowDirection(void);
     // setters
     void setLinkType(LinkTypes lt);
+    void setArrowDirection(CustomLink::LinkDirections ad);
 
   private:
     QList<CustomLink *> custom_link_list;
     LinkTypes link_type = IntroOut;
+    CustomLink::LinkDirections arrow_direction = CustomLink::LinkDirection::NoArrow;
 
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLinkCanvas::LinkTypes)

@@ -42,6 +42,14 @@ CustomLinkCanvas::LinkTypes CustomLinkCanvas::getLinkType(void) {
     return link_type;
 }
 
+CustomLink::LinkDirections CustomLinkCanvas::getArrowDirection(void) {
+    return arrow_direction;
+}
+
+void CustomLinkCanvas::setArrowDirection(CustomLink::LinkDirections ad) {
+    arrow_direction = ad;
+}
+
 void CustomLinkCanvas::setLinkType(LinkTypes lt) {
     link_type = lt;
 }
