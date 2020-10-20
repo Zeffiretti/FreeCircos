@@ -382,6 +382,14 @@ bool Circos::getLinkEnable(void) {
     return link_enabled;
 }
 
+void Circos::setLinkType(CustomLinkCanvas::LinkTypes lt) {
+    link_type = lt;
+}
+
+CustomLinkCanvas::LinkTypes Circos::getLinkType(void) {
+    return link_type;
+}
+
 Gene* Circos::getGene(int index) {
     return back_bone.at(index);
 }

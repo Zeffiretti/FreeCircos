@@ -19,7 +19,7 @@ void FreeCircos::onButtonClicked(bool clicked) {
         }
         if(circos->getLinkEnable()) {
             circos->buildCustomLink(link_canvas);
-            link_canvas->setLinkType(CustomLinkCanvas::LinkType::AllOut);
+//            link_canvas->setLinkType(CustomLinkCanvas::LinkType::AllOut);
             link_canvas->drawLinks(canvas);
 
         }
@@ -389,53 +389,101 @@ void FreeCircos::onBackBoneTableSelectedChanged(const QModelIndex &current, cons
 
 void FreeCircos::onComboboxTextChanged(const QString &text) {
     QComboBox *cbb = qobject_cast<QComboBox *>(sender());
-    int sel_row = backbone_table->selectionModel()->currentIndex().row();
-    int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
-
+    QString prefix = cbb->property("prefix").toString();
     QString func = cbb->property("function").toString();
-    if(func == "backbone-label-state") {
-        if(text == "Invisable") {
-            backbone_label_position_combobox->setEnabled(false);
-            circos->getGene(index)->setLabelState(CustomSlice::LabelInvisable);
-        } else if (text == "Sleep") {
-            backbone_label_position_combobox->setEnabled(true);
-            circos->getGene(index)->setLabelState(CustomSlice::LabelSleep);
-        } else {
-            backbone_label_position_combobox->setEnabled(true);
-            circos->getGene(index)->setLabelState(CustomSlice::LabelStand);
+    if(prefix.compare("backbone") == 0
+            || prefix.compare("gene") == 0
+            || prefix.compare("category") == 0) {
+        int sel_row = backbone_table->selectionModel()->currentIndex().row();
+        int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
+
+        if(func == "backbone-label-state") {
+            if(text == "Invisable") {
+                backbone_label_position_combobox->setEnabled(false);
+                circos->getGene(index)->setLabelState(CustomSlice::LabelInvisable);
+            } else if (text == "Sleep") {
+                backbone_label_position_combobox->setEnabled(true);
+                circos->getGene(index)->setLabelState(CustomSlice::LabelSleep);
+            } else {
+                backbone_label_position_combobox->setEnabled(true);
+                circos->getGene(index)->setLabelState(CustomSlice::LabelStand);
+            }
+        }
+
+        if(func == "backbone-label-position") {
+            if(text == "On") {
+                circos->getGene(index)->setLabelPosition(CustomSlice::LabelOnDonut);
+            } else if (text == "Outside") {
+                circos->getGene(index)->setLabelPosition(CustomSlice::LabelOutsideDonut);
+            } else {
+                circos->getGene(index)->setLabelPosition(CustomSlice::LabelInsideDonut);
+            }
+        }
+
+        if(func == "category-label-state") {
+            if(text == "Invisable") {
+                category_label_position_combobox->setEnabled(false);
+                circos->getGene(index)->getCategory()->setLabelState(CustomSlice::LabelInvisable);
+            } else if (text == "Sleep") {
+                category_label_position_combobox->setEnabled(true);
+                circos->getGene(index)->getCategory()->setLabelState(CustomSlice::LabelSleep);
+            } else {
+                category_label_position_combobox->setEnabled(true);
+                circos->getGene(index)->getCategory()->setLabelState(CustomSlice::LabelStand);
+            }
+        }
+
+        if(func == "category-label-position") {
+            if(text == "On") {
+                circos->getGene(index)->getCategory()->setLabelPosition(CustomSlice::LabelOnDonut);
+            } else if (text == "Outside") {
+                circos->getGene(index)->getCategory()->setLabelPosition(CustomSlice::LabelOutsideDonut);
+            } else {
+                circos->getGene(index)->getCategory()->setLabelPosition(CustomSlice::LabelInsideDonut);
+            }
         }
     }
-
-    if(func == "backbone-label-position") {
-        if(text == "On") {
-            circos->getGene(index)->setLabelPosition(CustomSlice::LabelOnDonut);
-        } else if (text == "Outside") {
-            circos->getGene(index)->setLabelPosition(CustomSlice::LabelOutsideDonut);
-        } else {
-            circos->getGene(index)->setLabelPosition(CustomSlice::LabelInsideDonut);
+    if(prefix.compare("link") == 0) {
+        if(func == "link-type") {
+            qDebug() << func << "---" << text;
+            CustomLinkCanvas::LinkTypes link_type;
+            if(text == "Intro-Out") {
+                link_type = CustomLinkCanvas::LinkType::IntroOut;
+//            circos->setLinkType(CustomLinkCanvas::LinkType::IntroOut);
+            } else if(text == "All-In") {
+                link_type = CustomLinkCanvas::LinkType::AllIn;
+//            circos->setLinkType(CustomLinkCanvas::LinkType::AllIn);
+            } else {
+                link_type = CustomLinkCanvas::LinkType::AllOut;
+//            circos->setLinkType(CustomLinkCanvas::LinkType::AllOut);
+            }
+//            qDebug() << "setting link type...";
+            circos->setLinkType(link_type);
         }
-    }
 
-    if(func == "category-label-state") {
-        if(text == "Invisable") {
-            category_label_position_combobox->setEnabled(false);
-            circos->getGene(index)->getCategory()->setLabelState(CustomSlice::LabelInvisable);
-        } else if (text == "Sleep") {
-            category_label_position_combobox->setEnabled(true);
-            circos->getGene(index)->getCategory()->setLabelState(CustomSlice::LabelSleep);
-        } else {
-            category_label_position_combobox->setEnabled(true);
-            circos->getGene(index)->getCategory()->setLabelState(CustomSlice::LabelStand);
+        if(func.compare("link-direcction") == 0) {
+            if(text.compare("Head--->Tail") == 0) {
+                //// TODO: fix link direction painting
+            } else {
+
+            }
         }
-    }
 
-    if(func == "category-label-position") {
-        if(text == "On") {
-            circos->getGene(index)->getCategory()->setLabelPosition(CustomSlice::LabelOnDonut);
-        } else if (text == "Outside") {
-            circos->getGene(index)->getCategory()->setLabelPosition(CustomSlice::LabelOutsideDonut);
-        } else {
-            circos->getGene(index)->getCategory()->setLabelPosition(CustomSlice::LabelInsideDonut);
+        if(func.compare("link-colfun") == 0) {
+            if(text.compare("ramp") == 0) {
+                //// TODO: fix link colfun painting
+            } else if(text.compare("rainbow") == 0) {
+
+            } else {
+
+            }
+        }
+
+        if(func.compare("link-linestyle") == 0) {
+            //// TODO: fix link linestyle painting
+            if(text.compare("one") == 0) {
+
+            }
         }
     }
 }

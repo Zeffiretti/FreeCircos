@@ -20,20 +20,6 @@ void FreeCircos::initCanvas(void) {
     canvas->yAxis->setVisible(false);
     canvas->setAntialiasedElements(QCP::AntialiasedElement::aeItems |
                                    QCP::AntialiasedElement::aePlottables);
-
-
-
-//    QCPGraph *graph = canvas->addGraph();
-//    graph->setPen(QPen(Qt::red, 2));
-//    graph->setScatterStyle(QCPScatterStyle(QCPScatterStyle::ssCircle, QColor(Qt::red), QColor(Qt::white), 6));
-//    graph->setData(xdata, ydata);
-//    graph->setSmooth(true);   // 开启平滑曲线
-//    QCPCurve *test_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
-//    test_curve->data()->add(QCPCurveData(-0.7,-0.2));
-//    test_curve->addData(xdata, ydata);
-//    test_curve->setParent(canvas);
-//    test_curve->setSmooth(true);
-//    test_curve->draw();
 }
 
 //BackBone Tables Method
@@ -55,13 +41,6 @@ void FreeCircos::initBackBoneTableModel(QStandardItemModel *model,
         QStandardItem *value_item = new QStandardItem;
         value_item->setData(QVariant(c->getGene(i)->getLength()), Qt::EditRole);
         model->setItem(i, 2, value_item);
-
-//        //category info
-//        if(c->getCategoryEnable()) {
-//            QString gene_name = c->back_bone.at(i)->getName();
-//            QString cat_name = c->findGene(gene_name)->getCategory()->getName();
-//            model->setItem(i, 3, new QStandardItem(cat_name));
-//        }
 
         backbone_index_list << QString::number(i) + 1;
     }
@@ -136,6 +115,7 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_label_state_combobox->setGeometry(400, 145 / 2, 150, 50 / 2);
     backbone_label_state_combobox->setFont(*ft);
     backbone_label_state_combobox->setProperty("function", "backbone-label-state");
+    backbone_label_state_combobox->setProperty("prefix", "backbone");
     QStringList label_state_combobox_items;
     label_state_combobox_items << "Sleep"
                                << "Stand"
@@ -152,6 +132,7 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_label_position_combobox->setGeometry(400, 235 / 2, 150, 50 / 2);
     backbone_label_position_combobox->setFont(*ft);
     backbone_label_position_combobox->setProperty("function", "backbone-label-position");
+    backbone_label_position_combobox->setProperty("prefix", "backbone");
     QStringList label_position_combobox_items;
     label_position_combobox_items << "On"
                                   << "Outside"
@@ -206,12 +187,14 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     category_label_state_combobox->setParent(category_config_widget);
     category_label_state_combobox->setFont(*ft);
     category_label_state_combobox->setProperty("function", "category-label-state");
+    category_label_state_combobox->setProperty("prefix", "category");
     category_label_state_combobox->setGeometry(400, 72.5, 150, 25);
     category_label_state_combobox->addItems(label_state_combobox_items);
     category_label_position_combobox = new QComboBox;
     category_label_position_combobox->setParent(category_config_widget);
     category_label_position_combobox->setFont(*ft);
     category_label_position_combobox->setProperty("function", "category-label-position");
+    category_label_position_combobox->setProperty("prefix", "category");
     category_label_position_combobox->setGeometry(400, 117.5, 150, 25);
     category_label_position_combobox->addItems(label_position_combobox_items);
     category_moveup_button = new QPushButton;
@@ -295,10 +278,14 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_border_label = new QLabel;
     link_border_lineedit = new QLineEdit;
     link_lty_label = new QLabel;
+    link_colfun_label = new QLabel;
     link_colfun_combobox = new QComboBox;
     link_lty_combobox = new QComboBox;
+    link_thermometer_label = new QLabel;
     link_thermometer_checkbox = new QCheckBox;
+    link_stre_label = new QLabel;
     link_stre_lineedit = new QLineEdit;
+    link_lwd_label = new QLabel;
     link_lwd_lineedit = new QLineEdit;
 
     link_config_widget->setEnabled(true);
@@ -316,10 +303,12 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_type_combobox->setGeometry(340, 20, 160, 60);
     link_type_combobox->setFont(*ft);
     QStringList link_type_list;
-    link_type_list << "Intro Out"
-                   << "All In"
-                   << "All Out";
+    link_type_list << "Intro-Out"
+                   << "All-In"
+                   << "All-Out";
     link_type_combobox->addItems(link_type_list);
+    link_type_combobox->setProperty("function", "link-type");
+    link_type_combobox->setProperty("prefix", "link");
     link_directional_checkbox->setParent(link_config_widget);
     link_directional_checkbox->setGeometry(80, 100, 160, 60);
     link_directional_checkbox->setText("Directional");
@@ -332,14 +321,68 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_direction_list << "Head--->Tail" << "Head<---Tail";
     link_direction_combobox->addItems(link_direction_list);
     link_direction_combobox->setEnabled(false);
+    link_direction_combobox->setProperty("function", "link-direcction");
+    link_direction_combobox->setProperty("prefix", "link");
     link_border_label->setParent(link_config_widget);
-    link_border_label->setGeometry(80, 180, 160, 60);
+    link_border_label->setGeometry(80, 180, 80, 60);
     link_border_label->setFont(*ft);
     link_border_label->setText("Border");
     link_border_lineedit->setParent(link_config_widget);
-    link_border_lineedit->setGeometry(340, 180, 160, 60);
+    link_border_lineedit->setGeometry(160, 180, 80, 60);
     link_border_lineedit->setValidator(new QDoubleValidator(0, 100, 2, this));
+    link_lty_label->setParent(link_config_widget);
+    link_lty_label->setGeometry(340, 180, 80, 60);
+    link_lty_label->setFont(*ft);
+    link_lty_label->setText("LTY");
+    link_lty_combobox->setParent(link_config_widget);
+    link_lty_combobox->setGeometry(420, 180, 80, 60);
+    link_lty_combobox->setFont(*ft);
+    QStringList link_lty_list;
+    link_lty_list << "one" << "two" << "three";
+    link_lty_combobox->addItems(link_lty_list);
+    link_lty_combobox->setEnabled(true);
+    link_lty_combobox->setProperty("function", "link-linestyle");
+    link_lty_combobox->setProperty("prefix", "link");
+    link_colfun_label->setParent(link_config_widget);
+    link_colfun_label->setGeometry(80, 260, 160, 60);
+    link_colfun_label->setFont(*ft);
+    link_colfun_label->setText("ColFun");
+    link_colfun_combobox->setParent(link_config_widget);
+    link_colfun_combobox->setGeometry(340, 260, 160, 60);
+    link_colfun_combobox->setFont(*ft);
+    QStringList link_colfun_list;
+    link_colfun_list << "ramp" << "rainbow" << "none";
+    link_colfun_combobox->addItems(link_colfun_list);
+    link_colfun_combobox->setProperty("function", "link-colfun");
+    link_colfun_combobox->setProperty("prefix", "link");
+    link_stre_label->setParent(link_config_widget);
+    link_stre_label->setGeometry(80, 340, 80, 60);
+    link_stre_label->setFont(*ft);
+    link_stre_label->setText("Stre");
+    link_stre_lineedit->setParent(link_config_widget);
+    link_stre_lineedit->setGeometry(160, 340, 80, 60);
+    link_stre_lineedit->setValidator(new QDoubleValidator(0, 100, 2, this));
+    link_lwd_label->setParent(link_config_widget);
+    link_lwd_label->setGeometry(340, 340, 80, 60);
+    link_lwd_label->setFont(*ft);
+    link_lwd_label->setText("LineWidth");
+    link_lwd_lineedit->setParent(link_config_widget);
+    link_lwd_lineedit->setGeometry(340, 340, 80, 60);
+    link_lwd_lineedit->setValidator(new QDoubleValidator(0, 100, 2, this));
+    link_thermometer_checkbox->setParent(link_config_widget);
+    link_thermometer_checkbox->setGeometry(80, 420, 160, 60);
+    link_thermometer_checkbox->setFont(*ft);
+    link_thermometer_checkbox->setText("thermometer");
+    link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
 
+    connect(link_type_combobox, &QComboBox::currentTextChanged,
+            this, &FreeCircos::onComboboxTextChanged);
+    connect(link_direction_combobox, &QComboBox::currentTextChanged,
+            this, &FreeCircos::onComboboxTextChanged);
+    connect(link_colfun_combobox, &QComboBox::currentTextChanged,
+            this, &FreeCircos::onComboboxTextChanged);
+    connect(link_lty_combobox, &QComboBox::currentTextChanged,
+            this, &FreeCircos::onComboboxTextChanged);
     parent->addTab(link_widget, "Link");
 }
 
@@ -348,8 +391,6 @@ void FreeCircos::initLinkTableModel(QStandardItemModel *model, Circos *c) {
         //index
         QStandardItem *index_item = new QStandardItem;
         index_item->setData(i + 1, Qt::EditRole);
-//        index_item->setCheckable(true);
-//        index_item->setCheckState(Qt::CheckState::Checked);
         model->setItem(i, 0, index_item);
 
         //name

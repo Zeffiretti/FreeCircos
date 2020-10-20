@@ -46,6 +46,9 @@ class Circos : public QObject {
     void setLinkEnable(bool b);
     bool getLinkEnable(void);
 
+    void setLinkType(CustomLinkCanvas::LinkTypes);
+    CustomLinkCanvas::LinkTypes getLinkType(void);
+
     Gene* getGene(int index);
     void clearBackBone(void);
     void clearBackBoneSequence(void);
