@@ -42,6 +42,7 @@ class CustomLink {
         EndBoardCurve     = 0x0008
     };
     Q_DECLARE_FLAGS(LinkCurveType, CurveType)
+//    typedef LineStyle Qt::PenStyle;
 
     CustomLink();
     CustomLink(QCustomPlot *canvas);
@@ -57,6 +58,8 @@ class CustomLink {
     LinkTypes getLinkType(void);
     LinkDirections getLinkDirection(void);
     QPen getPen(void);
+    Qt::PenStyle getLineStyle(void);
+    qreal getLineWidth(void);
     QBrush getBrush(void);
     qreal getSSA(void);
     qreal getSEA(void);
@@ -72,6 +75,8 @@ class CustomLink {
     void setLinkDirection(CustomLink::LinkDirections ld);
     void setLinkCurveType(CustomLink::LinkCurveType lt);
     void setPen(QPen p);
+    void setLineStyle(Qt::PenStyle ps);
+    void setLineWidth(qreal w);
     void setBrush(QBrush b);
     void setSSA(qreal _ssa);
     void setSEA(qreal _sea);
@@ -99,6 +104,8 @@ class CustomLink {
     // pen and brush
     QPen strike_pen;
     QBrush fill_brush;
+    qreal line_width = 1;
+    Qt::PenStyle pen_style = Qt::PenStyle::SolidLine;
 
     LinkClasses link_class = End2End;
     LinkTypes link_type = In;

@@ -46,6 +46,9 @@ class Circos : public QObject {
     void setLinkEnable(bool b);
     bool getLinkEnable(void);
 
+    void setLinkLineStyle(Qt::PenStyle ps);
+    Qt::PenStyle getLinkLineStyle(void);
+
     void setLinkType(CustomLinkCanvas::LinkTypes);
     CustomLinkCanvas::LinkTypes getLinkType(void);
 
@@ -75,6 +78,7 @@ class Circos : public QObject {
     QList<Link *> links;
     CustomLinkCanvas::LinkTypes link_type = CustomLinkCanvas::LinkType::IntroOut;
     CustomLink::LinkDirections link_arrow_direction = CustomLink::LinkDirection::NoArrow;
+    Qt::PenStyle link_line_style = Qt::PenStyle::SolidLine;
 
     QScopedPointer<ExcelBase> m_xls;
     QList<QList<QVariant> > m_datas;

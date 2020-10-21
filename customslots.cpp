@@ -476,16 +476,24 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
         }
 
         if(func.compare("link-linestyle") == 0) {
-            //// TODO: fix link linestyle painting
-            if(text.compare("one") == 0) {
-
+            if(text.compare("Solid") == 0) {
+                circos->setLinkLineStyle(Qt::PenStyle::SolidLine);
+            } else if(text.compare("Dash") == 0) {
+                circos->setLinkLineStyle(Qt::PenStyle::DashLine);
+            } else if(text.compare("Dot") == 0) {
+                circos->setLinkLineStyle(Qt::PenStyle::DotLine);
+            } else if(text.compare("DashDot") == 0) {
+                circos->setLinkLineStyle(Qt::PenStyle::DashDotLine);
+            } else if(text.compare("dashDotDot") == 0) {
+                circos->setLinkLineStyle(Qt::PenStyle::DashDotDotLine);
+            } else {
+                circos->setLinkLineStyle(Qt::PenStyle::SolidLine);
             }
         }
     }
 }
 
 void FreeCircos::onTableHeaderViewClicked(int index) {
-    qDebug("Table Header ---%d--- Clicked...", index);
     if(index == 3) {
         circos->setCategoryEnable(true);
     } else {

@@ -29,6 +29,7 @@ void CustomLinkCanvas::drawLinks(QCustomPlot *canvas) {
         default:
             break;
         }
+        link->setLineStyle(line_style);
         link->setLinkDirection(arrow_direction);
         link->drawLink(canvas);
     }
@@ -46,10 +47,18 @@ CustomLink::LinkDirections CustomLinkCanvas::getArrowDirection(void) {
     return arrow_direction;
 }
 
+Qt::PenStyle CustomLinkCanvas::getLineStyle(void) {
+    return line_style;
+}
+
 void CustomLinkCanvas::setArrowDirection(CustomLink::LinkDirections ad) {
     arrow_direction = ad;
 }
 
 void CustomLinkCanvas::setLinkType(LinkTypes lt) {
     link_type = lt;
+}
+
+void CustomLinkCanvas::setLineStyle(Qt::PenStyle ps) {
+    line_style = ps;
 }

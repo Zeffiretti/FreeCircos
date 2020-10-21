@@ -325,22 +325,26 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_direction_combobox->setEnabled(false);
     link_direction_combobox->setProperty("function", "link-direction");
     link_direction_combobox->setProperty("prefix", "link");
-    link_border_label->setParent(link_config_widget);
-    link_border_label->setGeometry(80, 180, 80, 60);
-    link_border_label->setFont(*ft);
-    link_border_label->setText("Border");
-    link_border_lineedit->setParent(link_config_widget);
-    link_border_lineedit->setGeometry(160, 180, 80, 60);
-    link_border_lineedit->setValidator(new QDoubleValidator(0, 100, 2, this));
+//    link_border_label->setParent(link_config_widget);
+//    link_border_label->setGeometry(80, 180, 80, 60);
+//    link_border_label->setFont(*ft);
+//    link_border_label->setText("Border");
+//    link_border_lineedit->setParent(link_config_widget);
+//    link_border_lineedit->setGeometry(160, 180, 80, 60);
+//    link_border_lineedit->setValidator(new QDoubleValidator(0, 100, 2, this));
     link_lty_label->setParent(link_config_widget);
-    link_lty_label->setGeometry(340, 180, 80, 60);
+    link_lty_label->setGeometry(80, 180, 160, 60);
     link_lty_label->setFont(*ft);
     link_lty_label->setText("LTY");
     link_lty_combobox->setParent(link_config_widget);
-    link_lty_combobox->setGeometry(420, 180, 80, 60);
+    link_lty_combobox->setGeometry(340, 180, 160, 60);
     link_lty_combobox->setFont(*ft);
     QStringList link_lty_list;
-    link_lty_list << "one" << "two" << "three";
+    link_lty_list << "Solid"
+                  << "Dash"
+                  << "Dot"
+                  << "DashDot"
+                  << "DashDotDot";
     link_lty_combobox->addItems(link_lty_list);
     link_lty_combobox->setEnabled(true);
     link_lty_combobox->setProperty("function", "link-linestyle");
@@ -369,7 +373,7 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_lwd_label->setFont(*ft);
     link_lwd_label->setText("LineWidth");
     link_lwd_lineedit->setParent(link_config_widget);
-    link_lwd_lineedit->setGeometry(340, 340, 80, 60);
+    link_lwd_lineedit->setGeometry(420, 340, 80, 60);
     link_lwd_lineedit->setValidator(new QDoubleValidator(0, 100, 2, this));
     link_thermometer_checkbox->setParent(link_config_widget);
     link_thermometer_checkbox->setGeometry(80, 420, 160, 60);

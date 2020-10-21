@@ -243,6 +243,7 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
     QListIterator<Link*> it(links);
     custom_links->setLinkType(link_type);
     custom_links->setArrowDirection(link_arrow_direction);
+    custom_links->setLineStyle(link_line_style);
 //    qDebug("buildCustomLink starts...");
     while (it.hasNext()) {
         Link* l = it.next();
@@ -380,6 +381,14 @@ void Circos::setLinkEnable(bool b) {
 
 bool Circos::getLinkEnable(void) {
     return link_enabled;
+}
+
+void Circos::setLinkLineStyle(Qt::PenStyle ps) {
+    link_line_style = ps;
+}
+
+Qt::PenStyle Circos::getLinkLineStyle(void) {
+    return link_line_style;
 }
 
 void Circos::setLinkType(CustomLinkCanvas::LinkTypes lt) {

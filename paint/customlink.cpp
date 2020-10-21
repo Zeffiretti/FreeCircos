@@ -88,6 +88,14 @@ QPen CustomLink::getPen(void) {
     return strike_pen;
 }
 
+Qt::PenStyle CustomLink::getLineStyle(void) {
+    return pen_style;
+}
+
+qreal CustomLink::getLineWidth(void) {
+    return line_width;
+}
+
 QBrush CustomLink::getBrush(void) {
     return fill_brush;
 }
@@ -152,6 +160,14 @@ void CustomLink::setLinkCurveType(CustomLink::LinkCurveType lt) {
 
 void CustomLink::setPen(QPen p) {
     strike_pen = p;
+}
+
+void CustomLink::setLineStyle(Qt::PenStyle ps) {
+    pen_style = ps;
+}
+
+void CustomLink::setLineWidth(qreal w) {
+    line_width = w;
 }
 
 void CustomLink::setBrush(QBrush b) {
@@ -361,7 +377,10 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
     buildLinkCurve();
     buildCurveData();
     draw_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
+    strike_pen.setWidth(line_width);
+    strike_pen.setStyle(pen_style);
     draw_curve->setPen(strike_pen);
+//    draw_curve->setp
     if(start_link_data.size() > 0) {
         QVectorIterator<QPointF> pit(start_link_data);
         while (pit.hasNext()) {
