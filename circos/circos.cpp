@@ -244,6 +244,7 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
     custom_links->setLinkType(link_type);
     custom_links->setArrowDirection(link_arrow_direction);
     custom_links->setLineStyle(link_line_style);
+    custom_links->setLineWidth(link_line_width);
 //    qDebug("buildCustomLink starts...");
     while (it.hasNext()) {
         Link* l = it.next();
@@ -405,6 +406,14 @@ void Circos::setLinkArrowDirection(CustomLink::LinkDirections ad) {
 
 CustomLink::LinkDirections Circos::getLinkArrowDirection(void) {
     return link_arrow_direction;
+}
+
+qreal Circos::getLinkLineWidth(void) {
+    return link_line_width;
+}
+
+void Circos::setLinkLineWidth(qreal w) {
+    link_line_width = w;
 }
 
 Gene* Circos::getGene(int index) {

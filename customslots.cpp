@@ -544,3 +544,19 @@ void FreeCircos::onCheckboxStateChanged(int state) {
         }
     }
 }
+
+void FreeCircos::onLineEditTextChanged(const QString &text) {
+    QLineEdit* lineedit = qobject_cast<QLineEdit*>(sender());
+    QString prefix = lineedit->property("prefix").toString();
+    QString func = lineedit->property("function").toString();
+
+    if(prefix.compare("gene") == 0) {
+
+    }
+
+    if(prefix.compare("link") == 0) {
+        if(func.compare("link-line-width") == 0) {
+            circos->setLinkLineWidth(text.toDouble());
+        }
+    }
+}

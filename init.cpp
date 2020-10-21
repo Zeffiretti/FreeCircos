@@ -71,6 +71,7 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_table_rightclick_menu = new QMenu;
     backbone_table_rightclick_action_moveto = new QAction("MoveTo");
     backbone_table_rightclick_action_moveto->setProperty("function", "backbonemove");
+    backbone_table_rightclick_action_moveto->setProperty("prefix", "backbone");
     connect(backbone_table_rightclick_action_moveto, &QAction::triggered,
             this, &FreeCircos::onActionTriggered);
     backbone_table_rightclick_menu->addAction(backbone_table_rightclick_action_moveto);
@@ -88,6 +89,7 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_strike_color_button->setParent(backbone_config_widget);
     backbone_strike_color_button->setGeometry(50, 10, 200, 60 / 2);
     backbone_strike_color_button->setProperty("function", "backbone-strike-color");
+    backbone_strike_color_button->setProperty("prefix", "backbone");
 
     backbone_fill_color_button = new QPushButton("FILL");
     backbone_fill_color_button->setParent(backbone_config_widget);
@@ -99,6 +101,7 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
 //    backbone_fill_color_button->setAutoFillBackground(true);
 //    backbone_fill_color_button->setFlat(true);
     backbone_fill_color_button->setProperty("function", "backbone-fill-color");
+    backbone_fill_color_button->setProperty("prefix", "backbone");
     ///TODO: connect
 
     backbone_label_state_label = new QLabel;
@@ -142,17 +145,20 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_moveup_button = new QPushButton("MoveUP");
     backbone_moveup_button->setParent(backbone_config_widget);
     backbone_moveup_button->setProperty("function", "backbone-moveup");
+    backbone_moveup_button->setProperty("prefix", "backbone");
     backbone_moveup_button->setGeometry(50, 400 / 2, 110, 40 / 2);
 
     backbone_movedown_button = new QPushButton("MoveDOWN");
     backbone_movedown_button->setParent(backbone_config_widget);
     backbone_movedown_button->setGeometry(180, 400 / 2, 110, 40 / 2);
     backbone_movedown_button->setProperty("function", "backbone-movedown");
+    backbone_movedown_button->setProperty("prefix", "backbone");
 
     backbone_move_button = new QPushButton("MoveTO");
     backbone_move_button->setParent(backbone_config_widget);
     backbone_move_button->setGeometry(310, 400 / 2, 110, 40 / 2);
     backbone_move_button->setProperty("function", "backbone-moveto");
+    backbone_move_button->setProperty("prefix", "backbone");
 
     backbone_move_lineedit = new QLineEdit;
     backbone_move_lineedit->setParent(backbone_config_widget);
@@ -168,11 +174,13 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     category_strike_color_button->setText("STRIKE");
     category_strike_color_button->setGeometry(50, 10, 200, 30);
     category_strike_color_button->setProperty("function", "category-strike-color");
+    category_strike_color_button->setProperty("prefix", "category");
     category_fill_color_button = new QPushButton;
     category_fill_color_button->setParent(category_config_widget);
     category_fill_color_button->setText("FILL");
     category_fill_color_button->setGeometry(350, 10, 200, 30);
     category_fill_color_button->setProperty("function", "category-fill-color");
+    category_fill_color_button->setProperty("prefix", "category");
     category_label_state_label = new QLabel;
     category_label_state_label->setParent(category_config_widget);
     category_label_state_label->setGeometry(50, 70, 300, 30);
@@ -201,16 +209,19 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     category_moveup_button->setParent(category_config_widget);
     category_moveup_button->setText("MoveUP");
     category_moveup_button->setProperty("function", "category-moveup");
+    category_moveup_button->setProperty("prefix", "category");
     category_moveup_button->setGeometry(50, 200, 110, 20);
     category_movedown_button = new QPushButton;
     category_movedown_button->setParent(category_config_widget);
     category_movedown_button->setText("MoveDOWN");
     category_movedown_button->setProperty("function", "category-movedown");
+    category_movedown_button->setProperty("prefix", "category");
     category_movedown_button->setGeometry(180, 200, 110, 20);
     category_move_button = new QPushButton;
     category_move_button->setParent(category_config_widget);
     category_move_button->setText("MoveTO");
     category_move_button->setProperty("function", "category-moveto");
+    category_move_button->setProperty("prefix", "category");
     category_move_button->setGeometry(310, 200, 110, 20);
     category_move_lineedit = new QLineEdit;
     category_move_lineedit->setParent(category_config_widget);
@@ -374,7 +385,11 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_lwd_label->setText("LineWidth");
     link_lwd_lineedit->setParent(link_config_widget);
     link_lwd_lineedit->setGeometry(420, 340, 80, 60);
-    link_lwd_lineedit->setValidator(new QDoubleValidator(0, 100, 2, this));
+    link_lwd_lineedit->setValidator(new QDoubleValidator(0, 20, 2, this));
+    link_lwd_lineedit->setText("1.00");
+    link_lwd_lineedit->setFont(*ft);
+    link_lwd_lineedit->setProperty("prefix", "link");
+    link_lwd_lineedit->setProperty("function", "link-line-width");
     link_thermometer_checkbox->setParent(link_config_widget);
     link_thermometer_checkbox->setGeometry(80, 420, 160, 60);
     link_thermometer_checkbox->setFont(*ft);
@@ -391,6 +406,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
             this, &FreeCircos::onComboboxTextChanged);
     connect(link_directional_checkbox, &QCheckBox::stateChanged,
             this, &FreeCircos::onCheckboxStateChanged);
+    connect(link_lwd_lineedit, &QLineEdit::textChanged,
+            this, &FreeCircos::onLineEditTextChanged);
     parent->addTab(link_widget, "Link");
 }
 

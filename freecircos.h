@@ -80,6 +80,7 @@ class FreeCircos : public QMainWindow {
     void onTableHeaderViewClicked(int index);
     void onTableEditModeChanged(TableEditMode tem);
     void onCheckboxStateChanged(int state);
+    void onLineEditTextChanged(const QString& text);
 
   private:
 
