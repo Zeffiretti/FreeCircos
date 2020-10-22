@@ -70,6 +70,7 @@ class Circos : public QObject {
 
   public slots:
     void onGeneAngleChanged(const QString& n, qreal s, qreal e);
+    void onLinkColorSet(int index, QColor c);
 
   private:
     QList<Gene *> back_bone;

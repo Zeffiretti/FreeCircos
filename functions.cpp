@@ -39,6 +39,10 @@ void FreeCircos::backBoneTableToSequence(QStandardItemModel *model, Circos *c) {
     }
 }
 
+//void FreeCircos::initLinkWidget(QTableWidget *parent){
+
+//}
+
 void FreeCircos::addCategoryToTable(QStandardItemModel *model,
                                     Circos *c)  {
     for(int i = 0; i < model->rowCount(); ++i) {

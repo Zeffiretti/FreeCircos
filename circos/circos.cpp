@@ -451,3 +451,7 @@ int Circos::getLinkNum(void) {
 void Circos::onGeneAngleChanged(const QString& n, qreal s, qreal e) {
     findGene(n)->setAngle(s, e);
 }
+
+void Circos::onLinkColorSet(int index, QColor c) {
+    getLink(index)->setColor(c);
+}

@@ -68,6 +68,10 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     }
     backbone_table->verticalHeader()->hide();
     backbone_table->installEventFilter(this);
+    backbone_table->selectionModel()->setProperty("prefix", "backbone");
+    backbone_table->selectionModel()->setProperty("function", "backbone-table-model");
+    backbone_table->setProperty("prefix", "backbone");
+    backbone_table->setProperty("function", "backbone-table");
     backbone_table_rightclick_menu = new QMenu;
     backbone_table_rightclick_action_moveto = new QAction("MoveTo");
     backbone_table_rightclick_action_moveto->setProperty("function", "backbonemove");
@@ -235,7 +239,7 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     //signal----slot
     connect(this, &FreeCircos::setTableEditMode, this, &FreeCircos::onTableEditModeChanged);
     connect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
-            this, &FreeCircos::onBackBoneTableSelectedChanged);
+            this, &FreeCircos::onTableSelectedChanged);
     connect(backbone_strike_color_button, &QPushButton::clicked,
             this, &FreeCircos::onButtonClicked);
     connect(backbone_fill_color_button, &QPushButton::clicked,
@@ -277,6 +281,10 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
     link_table->setSelectionBehavior(QAbstractItemView::SelectRows);
     link_table->verticalHeader()->hide();
+    link_table->selectionModel()->setProperty("prefix", "link");
+    link_table->selectionModel()->setProperty("funciton", "link-table-model");
+    link_table->setProperty("prefix", "link");
+    link_table->setProperty("funciton", "link-table");
     link_header_list << "Index"
                      << "From"
                      << "To";
@@ -296,6 +304,7 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_thermometer_checkbox = new QCheckBox;
     link_stre_label = new QLabel;
     link_stre_lineedit = new QLineEdit;
+    line_stre_combobox = new QComboBox;
     link_lwd_label = new QLabel;
     link_lwd_lineedit = new QLineEdit;
 
@@ -368,17 +377,32 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_colfun_combobox->setGeometry(340, 260, 160, 60);
     link_colfun_combobox->setFont(*ft);
     QStringList link_colfun_list;
-    link_colfun_list << "ramp" << "rainbow" << "none";
+    link_colfun_list << "none" << "ramp" << "rainbow";
     link_colfun_combobox->addItems(link_colfun_list);
     link_colfun_combobox->setProperty("function", "link-colfun");
     link_colfun_combobox->setProperty("prefix", "link");
+    link_colfun_combobox->setEnabled(false);
     link_stre_label->setParent(link_config_widget);
     link_stre_label->setGeometry(80, 340, 80, 60);
     link_stre_label->setFont(*ft);
     link_stre_label->setText("Stre");
     link_stre_lineedit->setParent(link_config_widget);
     link_stre_lineedit->setGeometry(160, 340, 80, 60);
-    link_stre_lineedit->setValidator(new QDoubleValidator(0, 100, 2, this));
+    link_stre_lineedit->setValidator(new QDoubleValidator(10, 50, 2, this));
+    link_stre_lineedit->setEnabled(false);
+    link_stre_lineedit->setText("10.00");
+    link_stre_lineedit->setProperty("prefix", "link");
+    link_stre_lineedit->setProperty("function", "link-line-color");
+    line_stre_combobox->setParent(link_config_widget);
+    line_stre_combobox->setGeometry(160, 340, 80, 60);
+    line_stre_combobox->setValidator(new QDoubleValidator(0, 100, 2, this));
+    line_stre_combobox->setVisible(false);
+    QStringList rainbow_color_list;
+    rainbow_color_list << "blue" << "green" << "yellow" << "red" << "darked";
+    line_stre_combobox->addItems(rainbow_color_list);
+    line_stre_combobox->setProperty("prefix", "link");
+    line_stre_combobox->setProperty("function", "link-line-color");
+    link_lwd_label->setParent(link_config_widget);
     link_lwd_label->setParent(link_config_widget);
     link_lwd_label->setGeometry(340, 340, 80, 60);
     link_lwd_label->setFont(*ft);
@@ -396,6 +420,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_thermometer_checkbox->setText("thermometer");
     link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
 
+    connect(link_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
+            this, &FreeCircos::onTableSelectedChanged);
     connect(link_type_combobox, &QComboBox::currentTextChanged,
             this, &FreeCircos::onComboboxTextChanged);
     connect(link_direction_combobox, &QComboBox::currentTextChanged,
@@ -404,10 +430,18 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
             this, &FreeCircos::onComboboxTextChanged);
     connect(link_lty_combobox, &QComboBox::currentTextChanged,
             this, &FreeCircos::onComboboxTextChanged);
+    connect(link_colfun_combobox, &QComboBox::currentTextChanged,
+            this, &FreeCircos::onComboboxTextChanged);
+    connect(line_stre_combobox, &QComboBox::currentTextChanged,
+            this, &FreeCircos::onComboboxTextChanged);
     connect(link_directional_checkbox, &QCheckBox::stateChanged,
             this, &FreeCircos::onCheckboxStateChanged);
     connect(link_lwd_lineedit, &QLineEdit::textChanged,
             this, &FreeCircos::onLineEditTextChanged);
+    connect(link_stre_lineedit, &QLineEdit::textChanged,
+            this, &FreeCircos::onLineEditTextChanged);
+    connect(this, &FreeCircos::setLinkColor,
+            circos, &Circos::onLinkColorSet);
     parent->addTab(link_widget, "Link");
 }
 

@@ -69,13 +69,14 @@ class FreeCircos : public QMainWindow {
 
   signals:
     void setTableEditMode(TableEditMode tem);
+    void setLinkColor(int index, QColor c);
 
   private slots:
     void onButtonClicked(bool);
     void onActionTriggered(bool);
     void onDialogStateChanged(void);
     void onBackBoneTableMoveRequest(int from_row, int to_row);
-    void onBackBoneTableSelectedChanged(const QModelIndex &current, const QModelIndex &previous);
+    void onTableSelectedChanged(const QModelIndex &current, const QModelIndex &previous);
     void onComboboxTextChanged(const QString &text);
     void onTableHeaderViewClicked(int index);
     void onTableEditModeChanged(TableEditMode tem);
@@ -153,6 +154,7 @@ class FreeCircos : public QMainWindow {
     QCheckBox *link_thermometer_checkbox;
     QLabel *link_stre_label;
     QLineEdit *link_stre_lineedit;
+    QComboBox *line_stre_combobox;
     QLabel *link_lwd_label;
     QLineEdit *link_lwd_lineedit;
 
