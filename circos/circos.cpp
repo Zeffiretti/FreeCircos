@@ -305,8 +305,8 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
             }
 
             custom_link->setLinkClass(lc);
-            custom_link->setPen(QPen(QColor(qrand() % 256, qrand() % 256, qrand() % 256)));
-            custom_link->setBrush(QBrush(QColor(qrand() % 256, qrand() % 256, qrand() % 256)));
+            custom_link->setPen(QPen(l->getColor()));
+            custom_link->setBrush(QBrush(l->getColor()));
             custom_link->setSGN(sg->getName());
             custom_link->setDGN(dg->getName());
             custom_link->setSSA(source_start_angle);

@@ -388,12 +388,10 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
     strike_pen.setWidth(line_width);
     strike_pen.setStyle(pen_style);
     draw_curve->setPen(strike_pen);
-//    draw_curve->setp
     if(start_link_data.size() > 0) {
         QVectorIterator<QPointF> pit(start_link_data);
         while (pit.hasNext()) {
             QPointF p = pit.next();
-//            draw_curve->
             draw_curve->addData(p.x(), p.y());
         }
     }

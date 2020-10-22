@@ -52,3 +52,11 @@ vector<QPointF> CustomTool::bezierCurve(vector<QPointF> src) {
     }
     return res;
 }
+
+QColor CustomTool::colorFun(const QString &type, qreal index) {
+    if(type.compare("none") == 0) {
+        return Qt::black;
+    } else if(type.compare("ramp") == 0) {
+//        QLinearGradient
+    }
+}

@@ -17,6 +17,7 @@ class Link {
     void setDestEnd(int de);
     void setStreCode(qreal sc);
     void setLineWidth(qreal lwd);
+    void setColor(const QColor& c);
 
     // getters
     QString getSGN(void);
@@ -27,6 +28,7 @@ class Link {
     int getDestEnd(void);
     qreal getStreCode(void);
     qreal getLineWidth(void);
+    QColor getColor(void);
   private:
     QString source_gene_name;
     QString destination_gene_name;
@@ -34,7 +36,7 @@ class Link {
     int destination_start = -1, destination_end = -1;
     qreal stre_code;
     qreal line_width;
-
+    QColor color = Qt::red;
 
 };
 

@@ -48,6 +48,7 @@ class CustomLink {
         None
     };
     Q_DECLARE_FLAGS(ColorFuns, ColorFun)
+//    enum RainbowColor
 
     CustomLink();
     CustomLink(QCustomPlot *canvas);

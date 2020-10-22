@@ -11,6 +11,7 @@ class CustomTool {
     static qreal normalizeAngle(qreal angle);
     static qreal normalizeAngle(qreal angle1, qreal angle2);
     static vector<QPointF> bezierCurve(vector<QPointF> src);
+    static QColor colorFun(const QString& type, qreal index = 0);
 };
 
 #endif // CUSTOMTOOL_H

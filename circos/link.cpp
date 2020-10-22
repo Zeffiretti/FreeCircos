@@ -36,6 +36,10 @@ void Link::setLineWidth(qreal lwd) {
     line_width = lwd;
 }
 
+void Link::setColor(const QColor &c) {
+    color = c;
+}
+
 QString Link::getSGN(void) {
     return source_gene_name;
 }
@@ -66,4 +70,8 @@ qreal Link::getStreCode(void) {
 
 qreal Link::getLineWidth(void) {
     return line_width;
+}
+
+QColor Link::getColor(void) {
+    return color;
 }
