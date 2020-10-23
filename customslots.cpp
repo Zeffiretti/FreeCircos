@@ -1,6 +1,6 @@
 #include "freecircos.h"
 
-void FreeCircos::onButtonClicked(bool clicked) {
+void FreeCircos::onButtonClicked(bool ) {
     QPushButton *btn = qobject_cast<QPushButton *>(sender());
     QString func = btn->property("function").toString();
 
@@ -223,7 +223,7 @@ void FreeCircos::onButtonClicked(bool clicked) {
     }
 }
 
-void FreeCircos::onActionTriggered(bool triggered) {
+void FreeCircos::onActionTriggered(bool ) {
     QAction *act = qobject_cast<QAction *>(sender());
     if(act->property("function").toString() == "backbonemove") {
         if(table_edit_mode == TableEditMode::EditGene) {
@@ -247,7 +247,7 @@ void FreeCircos::onBackBoneTableMoveRequest(int from_row, int to_row) {
 //    moveTableRow(backbone_table, backbone_model, from_row, to_row);
 }
 
-void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModelIndex &previous) {
+void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModelIndex &) {
 //    qDebug() << current << " " << previous;
     QItemSelectionModel *table = qobject_cast<QItemSelectionModel*>(sender());
     QString prefix = table->property("prefix").toString();

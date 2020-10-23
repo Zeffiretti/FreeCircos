@@ -71,7 +71,7 @@ TableMoveDialog::TableMoveDialog(QWidget *parent): QDialog(parent) {
 }
 
 
-void TableMoveDialog::onButtonClicked(bool clicked) {
+void TableMoveDialog::onButtonClicked(bool ) {
     QPushButton *btn = qobject_cast<QPushButton *>(sender());
 //    qDebug() << btn->text();
     if(btn->text() == "MoveUP") {

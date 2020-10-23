@@ -20,6 +20,13 @@ void FreeCircos::initCanvas(void) {
     canvas->yAxis->setVisible(false);
     canvas->setAntialiasedElements(QCP::AntialiasedElement::aeItems |
                                    QCP::AntialiasedElement::aePlottables);
+    link_thermometer_image_label = new QLabel;
+    link_thermometer_image_label->setParent(canvas);
+    link_thermometer_image_label->setGeometry(450, 400, 50, 100);
+    link_thermometer_image = new QImage;
+    link_thermometer_image->load(":/internal/thermometer.png");
+    link_thermometer_image_label->setPixmap(QPixmap::fromImage(link_thermometer_image));
+    link_thermometer_image_label->show();
 }
 
 //BackBone Tables Method

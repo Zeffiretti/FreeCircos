@@ -157,6 +157,8 @@ class FreeCircos : public QMainWindow {
     QComboBox *line_stre_combobox;
     QLabel *link_lwd_label;
     QLineEdit *link_lwd_lineedit;
+    QLabel *link_thermometer_image_label;
+    QImage *link_thermometer_image;
 
     QStringList link_header_list;
 
