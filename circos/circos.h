@@ -46,6 +46,15 @@ class Circos : public QObject {
     void setLinkEnable(bool b);
     bool getLinkEnable(void);
 
+    void setLinkColorFun(int index, const QString& cf);
+    QString getLinkColorFun(int index);
+
+    void setLinkColorName(int index, const QString& name);
+    QString getLinkColorName(int index);
+
+    void setLinkColorCode(int index, qreal code);
+    qreal getLinkColorCode(int index);
+
     void setLinkLineStyle(Qt::PenStyle ps);
     Qt::PenStyle getLinkLineStyle(void);
 

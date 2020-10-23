@@ -40,6 +40,18 @@ void Link::setColor(const QColor &c) {
     color = c;
 }
 
+void Link::setColorFun(const QString &cf) {
+    color_fun = cf;
+}
+
+void Link::setColorName(const QString &name) {
+    color_name = name;
+}
+
+void Link::setColorCode(qreal c) {
+    color_code = c;
+}
+
 QString Link::getSGN(void) {
     return source_gene_name;
 }
@@ -74,4 +86,16 @@ qreal Link::getLineWidth(void) {
 
 QColor Link::getColor(void) {
     return color;
+}
+
+QString Link::getColorFun(void) {
+    return color_fun;
+}
+
+QString Link::getColorName(void) {
+    return color_name;
+}
+
+qreal Link::getColorCode(void) {
+    return color_code;
 }

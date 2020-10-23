@@ -282,7 +282,7 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_table->setSelectionBehavior(QAbstractItemView::SelectRows);
     link_table->verticalHeader()->hide();
     link_table->selectionModel()->setProperty("prefix", "link");
-    link_table->selectionModel()->setProperty("funciton", "link-table-model");
+    link_table->selectionModel()->setProperty("function", "link-table-model");
     link_table->setProperty("prefix", "link");
     link_table->setProperty("funciton", "link-table");
     link_header_list << "Index"

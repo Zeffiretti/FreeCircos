@@ -384,6 +384,30 @@ bool Circos::getLinkEnable(void) {
     return link_enabled;
 }
 
+void Circos::setLinkColorFun(int index, const QString &cf) {
+    getLink(index)->setColorFun(cf);
+}
+
+QString Circos::getLinkColorFun(int index) {
+    return getLink(index)->getColorFun();
+}
+
+void Circos::setLinkColorName(int index, const QString &name) {
+    getLink(index)->setColorName(name);
+}
+
+QString Circos::getLinkColorName(int index) {
+    return getLink(index)->getColorName();
+}
+
+void Circos::setLinkColorCode(int index, qreal code) {
+    getLink(index)->setColorCode(code);
+}
+
+qreal Circos::getLinkColorCode(int index) {
+    return getLink(index)->getColorCode();
+}
+
 void Circos::setLinkLineStyle(Qt::PenStyle ps) {
     link_line_style = ps;
 }

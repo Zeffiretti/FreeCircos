@@ -396,7 +396,24 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
             link_stre_lineedit->setEnabled(true);
             line_stre_combobox->setEnabled(true);
             int index = link_model->item(sel_row, 0)->text().toInt() - 1;
-
+            QString colfun = circos->getLinkColorFun(index);
+            link_colfun_combobox->setCurrentText(colfun);
+            if(colfun.compare("ramp") == 0) {
+                link_stre_lineedit->setVisible(true);
+                link_stre_lineedit->setEnabled(true);
+                line_stre_combobox->setEnabled(false);
+                line_stre_combobox->setVisible(false);
+                link_stre_lineedit->setText(QString::number(circos->getLinkColorCode(index)));
+            } else if(colfun.compare("rainbow") == 0) {
+                link_stre_lineedit->setVisible(false);
+                link_stre_lineedit->setEnabled(false);
+                line_stre_combobox->setEnabled(true);
+                line_stre_combobox->setVisible(true);
+                line_stre_combobox->setCurrentText(circos->getLinkColorName(index));
+            } else {
+                link_stre_lineedit->setEnabled(false);
+                line_stre_combobox->setEnabled(false);
+            }
         }
 
     }/*else{
@@ -485,6 +502,9 @@ void FreeCircos::onComboboxTextChanged(const QString & text) {
         }
 
         if(func.compare("link-colfun") == 0) {
+            int row = link_table->currentIndex().row();
+            int index = link_model->item(row, 0)->text().toInt() - 1;
+            circos->setLinkColorFun(index, text);
             if(text.compare("ramp") == 0) {
                 link_stre_lineedit->setVisible(true);
                 link_stre_lineedit->setEnabled(true);
@@ -504,8 +524,6 @@ void FreeCircos::onComboboxTextChanged(const QString & text) {
                 link_stre_lineedit->setEnabled(false);
                 //line_stre_combobox->setVisible(false);
                 line_stre_combobox->setEnabled(false);
-                int row = link_table->currentIndex().row();
-                int index = link_model->item(row, 0)->text().toInt() - 1;
                 emit setLinkColor(index, QColor(Qt::black));
             }
         }
@@ -542,6 +560,7 @@ void FreeCircos::onComboboxTextChanged(const QString & text) {
             QColor c = CustomTool::colorFun("rainbow", color_index);
             int row = link_table->currentIndex().row();
             int index = link_model->item(row, 0)->text().toInt() - 1;
+            circos->setLinkColorName(index, text);
             emit setLinkColor(index, c);
         }
     }
@@ -617,6 +636,7 @@ void FreeCircos::onLineEditTextChanged(const QString & text) {
             int row = link_table->currentIndex().row();
             int index = link_model->item(row, 0)->text().toInt() - 1;
             qreal value = text.toDouble();
+            circos->setLinkColorCode(index, value);
             QColor c = CustomTool::colorFun("ramp", value);
             emit setLinkColor(index, c);
         }
