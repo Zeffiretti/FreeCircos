@@ -22,11 +22,13 @@ void FreeCircos::initCanvas(void) {
                                    QCP::AntialiasedElement::aePlottables);
     link_thermometer_image_label = new QLabel;
     link_thermometer_image_label->setParent(canvas);
-    link_thermometer_image_label->setGeometry(450, 400, 50, 100);
+    link_thermometer_image_label->setGeometry(460, 410, 40, 90);
     link_thermometer_image = new QImage;
     link_thermometer_image->load(":/internal/thermometer.png");
-    link_thermometer_image_label->setPixmap(QPixmap::fromImage(link_thermometer_image));
+    *link_thermometer_image = link_thermometer_image->scaled(40, 90, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    link_thermometer_image_label->setPixmap(QPixmap::fromImage(*link_thermometer_image));
     link_thermometer_image_label->show();
+    link_thermometer_image_label->setVisible(false);
 }
 
 //BackBone Tables Method
@@ -426,6 +428,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_thermometer_checkbox->setFont(*ft);
     link_thermometer_checkbox->setText("thermometer");
     link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
+    link_thermometer_checkbox->setProperty("prefix", "link");
+    link_thermometer_checkbox->setProperty("function", "link-thermometer");
 
     connect(link_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &FreeCircos::onTableSelectedChanged);
@@ -442,6 +446,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     connect(line_stre_combobox, &QComboBox::currentTextChanged,
             this, &FreeCircos::onComboboxTextChanged);
     connect(link_directional_checkbox, &QCheckBox::stateChanged,
+            this, &FreeCircos::onCheckboxStateChanged);
+    connect(link_thermometer_checkbox, &QCheckBox::stateChanged,
             this, &FreeCircos::onCheckboxStateChanged);
     connect(link_lwd_lineedit, &QLineEdit::textChanged,
             this, &FreeCircos::onLineEditTextChanged);
