@@ -1,0 +1,10 @@
+*.*
+!*/
+!*.cpp
+!*.c
+!*.h
+!*.ui
+!*.pro
+!*.png
+!*.qrc
+!.gitignore
