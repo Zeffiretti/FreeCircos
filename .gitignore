@@ -1,5 +1,6 @@
 *.*
 !*/
+!.gitignore
 !*.cpp
 !*.c
 !*.h
@@ -7,4 +8,3 @@
 !*.pro
 !*.png
 !*.qrc
-!.gitignore
