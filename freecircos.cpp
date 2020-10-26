@@ -5,7 +5,7 @@
 FreeCircos::FreeCircos(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::FreeCircos) {
     ui->setupUi(this);
-    this->setGeometry(40, 40, 1800, 650);
+    this->setGeometry(40, 40, 1610, 650);
 
     //init canvas
     initCanvas();
