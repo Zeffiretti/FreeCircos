@@ -316,6 +316,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     line_stre_combobox = new QComboBox;
     link_lwd_label = new QLabel;
     link_lwd_lineedit = new QLineEdit;
+    link_thermometer_color_rect = new QRectF;
+    link_thermometer_color_plot = new QCustomPlot;
 
     link_config_widget->setEnabled(true);
     link_config_widget->setParent(link_widget);
@@ -430,6 +432,12 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
     link_thermometer_checkbox->setProperty("prefix", "link");
     link_thermometer_checkbox->setProperty("function", "link-thermometer");
+    link_thermometer_color_plot->setParent(link_config_widget);
+    link_thermometer_color_plot->setGeometry(80, 500, 320, 20);
+
+//    link_thermometer_color_rect->setParent(link_config_widget);
+//    link_thermometer_color_rect->setGeometry(80, 500, 320, 20);
+//    link_thermometer_color_widget->setbr
 
     connect(link_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &FreeCircos::onTableSelectedChanged);
