@@ -318,6 +318,10 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_lwd_lineedit = new QLineEdit;
     link_thermometer_color_rect = new QRectF;
     link_thermometer_color_plot = new QCustomPlot;
+    link_thermometer_color_map = new QCPColorMap(
+        link_thermometer_color_plot->xAxis,
+        link_thermometer_color_plot->yAxis);
+    link_thermometer_color_scale = new QCPColorScale(canvas);
 
     link_config_widget->setEnabled(true);
     link_config_widget->setParent(link_widget);
@@ -434,6 +438,19 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_thermometer_checkbox->setProperty("function", "link-thermometer");
     link_thermometer_color_plot->setParent(link_config_widget);
     link_thermometer_color_plot->setGeometry(80, 500, 320, 20);
+    link_thermometer_color_map->data()->setSize(4000, 1);
+    link_thermometer_color_map->data()->setRange(QCPRange(10, 50), QCPRange(0, 1));
+    for(int i = 0; i < 4000; ++i) {
+        double index = i;
+        link_thermometer_color_map->data()->cellToCoord(i, 0, &index, 0);
+        qreal value = CustomTool::mapInt2Real(0, 4000, 10, 50, i);
+        link_thermometer_color_map->data()->setCell(i, 0, value);
+    }
+    link_thermometer_color_scale->setType(QCPAxis::atRight);
+    link_thermometer_color_scale->setGradient(QCPColorGradient::gpPolar);
+    link_thermometer_color_map->setColorScale(link_thermometer_color_scale);
+    link_thermometer_color_map->rescaleDataRange();
+    link_thermometer_color_plot->rescaleAxes();
 
 //    link_thermometer_color_rect->setParent(link_config_widget);
 //    link_thermometer_color_rect->setGeometry(80, 500, 320, 20);
