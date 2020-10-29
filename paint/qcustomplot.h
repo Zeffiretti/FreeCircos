@@ -4779,6 +4779,13 @@ class QCP_LIB_DECL QCPColorGradient {
     bool periodic() const {
         return mPeriodic;
     }
+    QColor colorAt(int index) {
+        if(index >= 0 && index < mLevelCount) {
+            return QColor(mColorBuffer.at(index));
+        } else {
+            return QColor(Qt::white);
+        }
+    }
 
     // setters:
     void setLevelCount(int n);
