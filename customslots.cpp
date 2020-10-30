@@ -619,13 +619,13 @@ void FreeCircos::onCheckboxStateChanged(int state) {
         if(func.compare("link-thermometer") == 0) {
             switch (state) {
             case Qt::CheckState::Checked:
-                link_thermometer_image_label->setVisible(true);
+
                 break;
             case Qt::CheckState::Unchecked:
-                link_thermometer_image_label->setVisible(false);
+
                 break;
             default:
-                link_thermometer_image_label->setVisible(false);
+
                 break;
             }
         }

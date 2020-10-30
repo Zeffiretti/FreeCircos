@@ -157,13 +157,16 @@ class FreeCircos : public QMainWindow {
     QComboBox *line_stre_combobox;
     QLabel *link_lwd_label;
     QLineEdit *link_lwd_lineedit;
-    QLabel *link_thermometer_image_label;
-    QImage *link_thermometer_image;
-    QCustomPlot *link_thermometer_color_plot;
-    QCPColorMap *link_thermometer_color_map;
-    QCPColorMap *link_show_color_map;
+    QCustomPlot *link_thermometer_colormap_onpanel_plot;
+    QCPColorMap *link_thermometer_onpanel_color_map;
+    QCPColorMap *link_thermometer_oncanvas_color_map;
     QCPColorScale *link_thermometer_color_scale;
-    QCustomPlot *link_color_scale_plot;
+    QCustomPlot *link_thermometer_colormap_oncanvas_plot;
+    QPushButton *link_cm_button1;
+    QPushButton *link_cm_button2;
+    QPushButton *link_cm_button3;
+    QPushButton *link_cm_button4;
+    QPushButton *link_cm_button5;
 
     QStringList link_header_list;
 
