@@ -439,18 +439,19 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_thermometer_colormap_onpanel_plot->setParent(link_config_widget);
     link_thermometer_colormap_onpanel_plot->setGeometry(80, 500, 420, 20);
     link_thermometer_colormap_onpanel_plot->yAxis->setVisible(false);
-    link_thermometer_onpanel_color_map->data()->setSize(4000, 1);
+    link_thermometer_onpanel_color_map->data()->setSize(40, 1);
     link_thermometer_onpanel_color_map->data()->setRange(QCPRange(10, 50), QCPRange(0, 1));
 //    link_thermometer_oncanvas_color_map->data()->setSize(1, 4000);
 //    link_thermometer_oncanvas_color_map->data()->setRange(QCPRange(0, 1), QCPRange(10, 50));
-    for(int i = 0; i < 4000; ++i) {
+    for(int i = 0; i < 40; ++i) {
         double index = i;
         link_thermometer_onpanel_color_map->data()->cellToCoord(i, 0, &index, 0);
 //        link_thermometer_oncanvas_color_map->data()->cellToCoord(0, i, 0, &index);
-//        qreal value = CustomTool::mapInt2Real(0, 4000, 10, 50, index);
-        link_thermometer_onpanel_color_map->data()->setCell(i, 0, index);
+        qreal value = CustomTool::mapInt2Real(0, 39, 10, 50, i);
+        link_thermometer_onpanel_color_map->data()->setData(value, 0, i);
 //        link_thermometer_oncanvas_color_map->data()->setCell(0, i, value);
     }
+    link_thermometer_onpanel_color_map->setGradient(*link_gradient);
     link_thermometer_colormap_oncanvas_plot->setParent(canvas);
     link_thermometer_colormap_oncanvas_plot->xAxis->setVisible(false);
     link_thermometer_colormap_oncanvas_plot->yAxis->setTickLength(5);
@@ -466,6 +467,7 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_thermometer_color_scale->setGradient(*link_gradient);
     link_thermometer_color_scale->setDataRange(QCPRange(10, 50));
     link_thermometer_color_scale->setRangeZoom(true);
+    link_thermometer_color_scale->setRangeDrag(false);
     link_thermometer_onpanel_color_map->setColorScale(link_thermometer_color_scale);
     link_thermometer_onpanel_color_map->rescaleDataRange();
 //    link_thermometer_oncanvas_color_map->setColorScale(link_thermometer_color_scale);
