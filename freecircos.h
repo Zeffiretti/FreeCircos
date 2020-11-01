@@ -159,7 +159,7 @@ class FreeCircos : public QMainWindow {
     QLineEdit *link_lwd_lineedit;
     QCustomPlot *link_thermometer_colormap_onpanel_plot;
     QCPColorMap *link_thermometer_onpanel_color_map;
-//    QCPColorMap *link_thermometer_oncanvas_color_map;
+    QCPColorMap *link_thermometer_oncanvas_color_map;
     QCPColorScale *link_thermometer_color_scale;
     QCustomPlot *link_thermometer_colormap_oncanvas_plot;
     QCPColorGradient *link_gradient;
