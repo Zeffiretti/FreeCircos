@@ -200,14 +200,14 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     category_label_state_combobox->setFont(*ft);
     category_label_state_combobox->setProperty("function", "category-label-state");
     category_label_state_combobox->setProperty("prefix", "category");
-    category_label_state_combobox->setGeometry(400, 72.5, 150, 25);
+    category_label_state_combobox->setGeometry(400, 72, 150, 25);
     category_label_state_combobox->addItems(label_state_combobox_items);
     category_label_position_combobox = new QComboBox;
     category_label_position_combobox->setParent(category_config_widget);
     category_label_position_combobox->setFont(*ft);
     category_label_position_combobox->setProperty("function", "category-label-position");
     category_label_position_combobox->setProperty("prefix", "category");
-    category_label_position_combobox->setGeometry(400, 117.5, 150, 25);
+    category_label_position_combobox->setGeometry(400, 117, 150, 25);
     category_label_position_combobox->addItems(label_position_combobox_items);
     category_moveup_button = new QPushButton;
     category_moveup_button->setParent(category_config_widget);
