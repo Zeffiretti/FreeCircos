@@ -308,20 +308,7 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_lwd_label = new QLabel;
     link_lwd_lineedit = new QLineEdit;
     link_thermometer_colormap_onpanel_plot = new QCustomPlot;
-    link_thermometer_onpanel_color_map = new QCPColorMap(
-        link_thermometer_colormap_onpanel_plot->xAxis,
-        link_thermometer_colormap_onpanel_plot->yAxis);
     link_thermometer_colormap_oncanvas_plot = new QCustomPlot;
-    link_thermometer_oncanvas_color_map = new QCPColorMap(
-        link_thermometer_colormap_oncanvas_plot->xAxis,
-        link_thermometer_colormap_oncanvas_plot->yAxis);
-    link_thermometer_color_scale = new QCPColorScale(canvas);
-    link_cm_button1 = new QPushButton;
-    link_cm_button2 = new QPushButton;
-    link_cm_button3 = new QPushButton;
-    link_cm_button4 = new QPushButton;
-    link_cm_button5 = new QPushButton;
-    link_gradient = new QCPColorGradient;
 
     link_config_widget->setEnabled(true);
     link_config_widget->setParent(link_widget);
@@ -436,61 +423,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
     link_thermometer_checkbox->setProperty("prefix", "link");
     link_thermometer_checkbox->setProperty("function", "link-thermometer");
-    link_thermometer_colormap_onpanel_plot->setParent(link_config_widget);
-    link_thermometer_colormap_onpanel_plot->setGeometry(80, 500, 420, 20);
-    link_thermometer_colormap_onpanel_plot->yAxis->setVisible(false);
-    link_thermometer_onpanel_color_map->data()->setSize(40, 1);
-    link_thermometer_onpanel_color_map->data()->setRange(QCPRange(10, 50), QCPRange(0, 1));
-    link_thermometer_oncanvas_color_map->data()->setSize(1, 40);
-    link_thermometer_oncanvas_color_map->data()->setRange(QCPRange(0, 1), QCPRange(10, 50));
-    for(int i = 0; i < 40; ++i) {
-//        double index = i;
-//        link_thermometer_onpanel_color_map->data()->cellToCoord(i, 0, &index, 0);
-//        link_thermometer_oncanvas_color_map->data()->cellToCoord(0, i, 0, &index);
-        qreal value = CustomTool::mapInt2Real(0, 39, 10, 50, i);
-        link_thermometer_onpanel_color_map->data()->setData(value, 0, i);
-        link_thermometer_oncanvas_color_map->data()->setData(0, value, i);
-    }
-    link_thermometer_oncanvas_color_map->setGradient(*link_gradient);
-    link_thermometer_onpanel_color_map->setGradient(*link_gradient);
-    link_thermometer_colormap_oncanvas_plot->setParent(canvas);
-    link_thermometer_colormap_oncanvas_plot->xAxis->setVisible(false);
-    link_thermometer_colormap_oncanvas_plot->yAxis->setTickLength(5);
-    link_thermometer_colormap_oncanvas_plot->setGeometry(430, 350, 60, 140);
-    canvas->plotLayout()->addElement(3, 3, link_thermometer_color_scale);
-    link_thermometer_color_scale->setType(QCPAxis::atRight);
-    link_gradient->setColorStopAt(0.0, QColor(Qt::blue));   // 设置色条开始时的颜色
-    link_gradient->setColorStopAt(0.25, QColor(Qt::green));
-    link_gradient->setColorStopAt(0.5, QColor(Qt::yellow));
-    link_gradient->setColorStopAt(0.75, QColor(Qt::red));
-    link_gradient->setColorStopAt(1.0, QColor(Qt::darkRed));  // 设置色条结束时的颜色
-    link_thermometer_color_scale->setGradient(*link_gradient);
-    link_thermometer_color_scale->setDataRange(QCPRange(10, 50));
-    link_thermometer_onpanel_color_map->setColorScale(link_thermometer_color_scale);
-    link_thermometer_onpanel_color_map->rescaleDataRange();
-    link_thermometer_oncanvas_color_map->setColorScale(link_thermometer_color_scale);
-    link_thermometer_oncanvas_color_map->rescaleDataRange();
-    link_thermometer_oncanvas_color_map->setVisible(true);
 
-    link_thermometer_colormap_onpanel_plot->rescaleAxes();
-    link_thermometer_colormap_oncanvas_plot->rescaleAxes();
-    link_thermometer_color_scale->rescaleDataRange(false);
-    link_thermometer_color_scale->setVisible(false);
-    link_thermometer_colormap_oncanvas_plot->setVisible(true);
-    link_cm_button1->setParent(link_config_widget);
-    link_cm_button1->setGeometry(90, 520, 18, 30);
-
-    link_cm_button2->setParent(link_config_widget);
-    link_cm_button2->setGeometry(185, 520, 18, 30);
-
-    link_cm_button3->setParent(link_config_widget);
-    link_cm_button3->setGeometry(280, 520, 18, 30);
-
-    link_cm_button4->setParent(link_config_widget);
-    link_cm_button4->setGeometry(375, 520, 18, 30);
-
-    link_cm_button5->setParent(link_config_widget);
-    link_cm_button5->setGeometry(470, 520, 18, 30);
+    initLinkColorScale(link_thermometer_colormap_onpanel_plot, link_thermometer_colormap_oncanvas_plot);
 
     connect(link_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &FreeCircos::onTableSelectedChanged);
@@ -517,6 +451,68 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
     connect(this, &FreeCircos::setLinkColor,
             circos, &Circos::onLinkColorSet);
     parent->addTab(link_widget, "Link");
+}
+
+void FreeCircos::initLinkColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
+    link_thermometer_onpanel_color_map = new QCPColorMap(parent1->xAxis, parent1->yAxis);
+    link_thermometer_oncanvas_color_map = new QCPColorMap(parent2->xAxis, parent2->yAxis);
+//    link_thermometer_color_scale = new QCPColorScale(canvas);
+    link_cm_button1 = new QPushButton;
+    link_cm_button2 = new QPushButton;
+    link_cm_button3 = new QPushButton;
+    link_cm_button4 = new QPushButton;
+    link_cm_button5 = new QPushButton;
+    link_gradient = new QCPColorGradient;
+
+    parent1->setParent(link_config_widget);
+    parent1->setGeometry(80, 500, 420, 20);
+    parent1->yAxis->setVisible(false);
+    link_thermometer_onpanel_color_map->data()->setSize(40, 1);
+    link_thermometer_onpanel_color_map->data()->setRange(QCPRange(10, 50), QCPRange(0, 1));
+    link_thermometer_oncanvas_color_map->data()->setSize(1, 40);
+    link_thermometer_oncanvas_color_map->data()->setRange(QCPRange(0, 1), QCPRange(10, 50));
+    for(int i = 0; i < 40; ++i) {
+        qreal value = CustomTool::mapInt2Real(0, 39, 10, 50, i);
+        link_thermometer_onpanel_color_map->data()->setData(value, 0, i);
+        link_thermometer_oncanvas_color_map->data()->setData(0, value, i);
+    }
+    parent2->setParent(canvas);
+    parent2->xAxis->setVisible(false);
+//    parent2->yAxis->setTickLength(5);
+//    parent2->yAxis->setTicker();
+    parent2->yAxis->setSubTicks(false);
+    parent2->setGeometry(430, 350, 60, 160);
+
+    link_gradient->setColorStopAt(0.0, QColor(Qt::blue));   // 设置色条开始时的颜色
+    link_gradient->setColorStopAt(0.25, QColor(Qt::green));
+    link_gradient->setColorStopAt(0.5, QColor(Qt::yellow));
+    link_gradient->setColorStopAt(0.75, QColor(Qt::red));
+    link_gradient->setColorStopAt(1.0, QColor(Qt::darkRed));  // 设置色条结束时的颜色
+    link_thermometer_oncanvas_color_map->setGradient(*link_gradient);
+    link_thermometer_onpanel_color_map->setGradient(*link_gradient);
+    link_thermometer_onpanel_color_map->rescaleDataRange();
+    link_thermometer_oncanvas_color_map->rescaleDataRange();
+    link_thermometer_oncanvas_color_map->setVisible(true);
+
+    parent1->rescaleAxes();
+    parent2->rescaleAxes();
+//    link_thermometer_color_scale->setVisible(false);
+    parent2->setVisible(true);
+    link_cm_button1->setParent(link_config_widget);
+    link_cm_button1->setGeometry(90, 520, 18, 30);
+
+    link_cm_button2->setParent(link_config_widget);
+    link_cm_button2->setGeometry(185, 520, 18, 30);
+
+    link_cm_button3->setParent(link_config_widget);
+    link_cm_button3->setGeometry(280, 520, 18, 30);
+
+    link_cm_button4->setParent(link_config_widget);
+    link_cm_button4->setGeometry(375, 520, 18, 30);
+
+    link_cm_button5->setParent(link_config_widget);
+    link_cm_button5->setGeometry(470, 520, 18, 30);
+
 }
 
 void FreeCircos::initLinkTableModel(QStandardItemModel *model, Circos *c) {

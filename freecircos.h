@@ -63,6 +63,7 @@ class FreeCircos : public QMainWindow {
                                  Circos *c);
 
     void initLinkWidget(QTabWidget *parent = nullptr);
+    void initLinkColorScale(QCustomPlot *parent1 = nullptr, QCustomPlot *parent2 = nullptr);
     void initLinkTableModel(QStandardItemModel*, Circos*);
 
     bool eventFilter(QObject *watched, QEvent *event);
@@ -158,10 +159,10 @@ class FreeCircos : public QMainWindow {
     QLabel *link_lwd_label;
     QLineEdit *link_lwd_lineedit;
     QCustomPlot *link_thermometer_colormap_onpanel_plot;
+    QCustomPlot *link_thermometer_colormap_oncanvas_plot;
     QCPColorMap *link_thermometer_onpanel_color_map;
     QCPColorMap *link_thermometer_oncanvas_color_map;
-    QCPColorScale *link_thermometer_color_scale;
-    QCustomPlot *link_thermometer_colormap_oncanvas_plot;
+//    QCPColorScale *link_thermometer_color_scale;
     QCPColorGradient *link_gradient;
     QPushButton *link_cm_button1;
     QPushButton *link_cm_button2;
