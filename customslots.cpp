@@ -510,8 +510,10 @@ void FreeCircos::onComboboxTextChanged(const QString & text) {
                 link_stre_lineedit->setEnabled(true);
                 line_stre_combobox->setVisible(false);
                 line_stre_combobox->setEnabled(false);
-                emit link_stre_lineedit->textChanged(
-                    link_stre_lineedit->text());
+
+
+//                emit link_stre_lineedit->textChanged(
+//                    link_stre_lineedit->text());
             } else if(text.compare("rainbow") == 0) {
                 link_stre_lineedit->setVisible(false);
                 link_stre_lineedit->setEnabled(false);

@@ -67,6 +67,11 @@ class Circos : public QObject {
     void setLinkLineWidth(qreal w);
     qreal getLinkLineWidth(void);
 
+    void setLinkStre(qreal min, qreal max);
+    qreal getLinkStreMin(void);
+    qreal getLinkStreMax(void);
+    QCPRange* getLinkStreRange(void);
+
     Gene* getGene(int index);
     void clearBackBone(void);
     void clearBackBoneSequence(void);
@@ -93,6 +98,7 @@ class Circos : public QObject {
     CustomLink::LinkDirections link_arrow_direction = CustomLink::LinkDirection::NoArrow;
     Qt::PenStyle link_line_style = Qt::PenStyle::SolidLine;
     qreal link_line_width;
+    qreal link_stre_min = 0, link_stre_max = 10;
 
     QScopedPointer<ExcelBase> m_xls;
     QList<QList<QVariant> > m_datas;

@@ -117,6 +117,12 @@ void Circos::dataToLink(void) {
         }
 
         stre = data.at(6).toReal();
+        if(stre <= link_stre_min) {
+            setLinkStre(stre, link_stre_max);
+        }
+        if(stre >= link_stre_max) {
+            setLinkStre(link_stre_min, stre);
+        }
         lwd = data.at(7).toReal();
 
         Link* l = new Link;
@@ -434,6 +440,23 @@ CustomLink::LinkDirections Circos::getLinkArrowDirection(void) {
 
 qreal Circos::getLinkLineWidth(void) {
     return link_line_width;
+}
+
+void Circos::setLinkStre(qreal min, qreal max) {
+    link_stre_max = max;
+    link_stre_min = min;
+}
+
+qreal Circos::getLinkStreMax(void) {
+    return link_stre_max;
+}
+
+qreal Circos::getLinkStreMin(void) {
+    return link_stre_min;
+}
+
+QCPRange* Circos::getLinkStreRange(void) {
+    return new QCPRange(link_stre_min, link_stre_max);
 }
 
 void Circos::setLinkLineWidth(qreal w) {
