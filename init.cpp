@@ -55,6 +55,7 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
     backbone_widget = new QWidget;
 
     //table
+
     backbone_model = new QStandardItemModel;
     backbone_table = new QTableView;
     backbone_table->setSortingEnabled(true);
