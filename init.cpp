@@ -20,6 +20,7 @@ void FreeCircos::initCanvas(void) {
     canvas->yAxis->setVisible(false);
     canvas->setAntialiasedElements(QCP::AntialiasedElement::aeItems |
                                    QCP::AntialiasedElement::aePlottables);
+
 }
 
 //BackBone Tables Method
