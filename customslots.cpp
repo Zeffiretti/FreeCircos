@@ -522,11 +522,15 @@ void FreeCircos::onComboboxTextChanged(const QString & text) {
                 emit line_stre_combobox->currentTextChanged(
                     line_stre_combobox->currentText());
             } else {
-                //link_stre_lineedit->setVisible(false);
-                link_stre_lineedit->setEnabled(false);
-                //line_stre_combobox->setVisible(false);
-                line_stre_combobox->setEnabled(false);
-                emit setLinkColor(index, QColor(Qt::black));
+//                //link_stre_lineedit->setVisible(false);
+//                link_stre_lineedit->setEnabled(false);
+//                //line_stre_combobox->setVisible(false);
+//                line_stre_combobox->setEnabled(false);
+//                emit setLinkColor(index, QColor(Qt::black));
+                qreal stre_code = circos->getLink(index)->getStreCode();
+                QColor c = QColor(link_gradient->color(stre_code,
+                                                       QCPRange(circos->getLinkStreMin(), circos->getLinkStreMax())));
+                emit setLinkColor(index, c);
             }
         }
 
