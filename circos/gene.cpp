@@ -1,132 +1,130 @@
 #include "gene.h"
 
 Gene::Gene() {
-    cat = new Category;
-    links.clear();
+  cat = new Category;
+  links.clear();
 }
 
 Gene::Gene(const QString& n, int l) {
-    name = n;
-    length = qAbs(l);
-    end = start + l;
-    cat = new Category;
-    links.clear();
+  name = n;
+  length = qAbs(l);
+  end = start + l;
+  cat = new Category;
+  links.clear();
 }
 
 Gene::Gene(const QString& n, int s, int e) {
-    name = n;
-    start = s;
-    end = e;
-    length = qAbs(end - start);
-    cat = new Category;
-    links.clear();
+  name = n;
+  start = s;
+  end = e;
+  length = qAbs(end - start);
+  cat = new Category;
+  links.clear();
 }
 
 bool Gene::getOnCanvas(void) {
-    return on_canvas;
+  return on_canvas;
 }
 
 void Gene::setOnCanvas(bool oc) {
-    on_canvas = oc;
+  on_canvas = oc;
 }
 
 void Gene::setSE(int s, int e) {
-    start = s;
-    end = e;
-    length = qAbs(end - start);
+  start = s;
+  end = e;
+  length = qAbs(end - start);
 }
 
 void Gene::setAngle(qreal s, qreal e) {
-    start_angle = s;
-    end_angle = e;
+  start_angle = s;
+  end_angle = e;
 }
 
 int Gene::getStart(void) {
-    return start;
+  return start;
 }
 
 int Gene::getEnd(void) {
-    return end;
+  return end;
 }
 
 qreal Gene::getStartAngle(void) {
-    return start_angle;
+  return start_angle;
 }
 
 qreal Gene::getEndAngle(void) {
-    return end_angle;
+  return end_angle;
 }
 
 void Gene::setName(const QString &n) {
-    name = n;
+  name = n;
 }
 
 QString Gene::getName(void) {
-    return name;
+  return name;
 }
 
 void Gene::setLength(int l) {
-    length = qAbs(l);
+  length = qAbs(l);
 }
 
 int Gene::getLength(void) {
-    return length;
+  return length;
 }
 
 void Gene::setStrikeColor(QColor c) {
-    strike_color = c;
+  strike_color = c;
 }
 
 QColor Gene::getStrikeColor(void) {
-    return strike_color;
+  return strike_color;
 }
 
 void Gene::setFillColor(QColor c) {
-    fill_color = c;
+  fill_color = c;
 }
 
 QColor Gene::getFillColor(void) {
-    return fill_color;
+  return fill_color;
 }
 
 CustomSlice::LabelPosition Gene::getLabelPosition(void) {
-    return label_position;
+  return label_position;
 }
 
 void Gene::setLabelPosition(CustomSlice::LabelPosition l_p) {
-    label_position = l_p;
+  label_position = l_p;
 }
 
 CustomSlice::LabelState Gene::getLabelState(void) {
-    return label_state;
+  return label_state;
 }
 
 void Gene::setLabelState(CustomSlice::LabelState l_s) {
-    label_state = l_s;
+  label_state = l_s;
 }
 
 Category* Gene::getCategory(void) {
-    return cat;
+  return cat;
 }
 
 void Gene::setCategory(Category *c) {
-    cat = c;
+  cat = c;
 }
 
 void Gene::addLink(Link *l) {
-    links.append(l);
+  links.append(l);
 }
 
 void Gene::addLink(Link *l, CustomLink::LinkGenes lg) {
-    links.append(l);
-    switch (lg) {
-    case CustomLink::LinkGene::LinkStart:
-
-        break;
-    case CustomLink::LinkGene::LinkEnd:
-
-        break;
-    default:
-        break;
-    }
+  links.append(l);
+  switch (lg) {
+  case CustomLink::LinkGene::LinkStart:
+    break;
+  case CustomLink::LinkGene::LinkEnd:
+    break;
+  default:
+    break;
+  }
 }

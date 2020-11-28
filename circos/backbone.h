@@ -4,8 +4,8 @@
 #include "gene.h"
 
 class BackBone {
-  public:
-    BackBone();
+ public:
+  BackBone();
 };
 
 #endif // BACKBONE_H

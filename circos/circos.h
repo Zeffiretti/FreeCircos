@@ -15,93 +15,93 @@
 #include "fileprocess/qvariantlistlistmodel.h"
 #include "tool/customtool.h"
 class Circos : public QObject {
-    Q_OBJECT
-  public:
-    Circos(QObject *parent = nullptr);
-    ~Circos();
+  Q_OBJECT
+ public:
+  Circos(QObject *parent = nullptr);
+  ~Circos();
 
-    void openFile(const QString&);
-    void dataToBackBone(void);
-    void dataToCategory(void);
-    void dataToLink(void);
-    int indexOfGene(const QString&);
-    int indexOfCategory(const QString&);
-    void buildBackBoneSequence(QStandardItemModel *model);
-    void buildBackBoneDonut(CustomDonut*);
-    void buildCategorySequence(QStandardItemModel *model);
-    void buildCategoryDonut(CustomDonut*);
-    void buildCustomLink(CustomLinkCanvas*);
+  void openFile(const QString&);
+  void dataToBackBone(void);
+  void dataToCategory(void);
+  void dataToLink(void);
+  int indexOfGene(const QString&);
+  int indexOfCategory(const QString&);
+  void buildBackBoneSequence(QStandardItemModel *model);
+  void buildBackBoneDonut(CustomDonut*);
+  void buildCategorySequence(QStandardItemModel *model);
+  void buildCategoryDonut(CustomDonut*);
+  void buildCustomLink(CustomLinkCanvas*);
 
-    Gene* findGene(const QString name);
-    Category* findCategory(const QString name);
-    int takeGeneAt(int index);
-    void insertGene(int index, int value);
-    int takeCategoryAt(int index);
-    void insertCategory(int index, int value);
-    void adjustBackBoneToCategory(void);
+  Gene* findGene(const QString name);
+  Category* findCategory(const QString name);
+  int takeGeneAt(int index);
+  void insertGene(int index, int value);
+  int takeCategoryAt(int index);
+  void insertCategory(int index, int value);
+  void adjustBackBoneToCategory(void);
 
-    void setCategoryEnable(bool b);
-    bool getCategoryEnable(void);
+  void setCategoryEnable(bool b);
+  bool getCategoryEnable(void);
 
-    void setLinkEnable(bool b);
-    bool getLinkEnable(void);
+  void setLinkEnable(bool b);
+  bool getLinkEnable(void);
 
-    void setLinkColorFun(int index, const QString& cf);
-    QString getLinkColorFun(int index);
+  void setLinkColorFun(int index, const QString& cf);
+  QString getLinkColorFun(int index);
 
-    void setLinkColorName(int index, const QString& name);
-    QString getLinkColorName(int index);
+  void setLinkColorName(int index, const QString& name);
+  QString getLinkColorName(int index);
 
-    void setLinkColorCode(int index, qreal code);
-    qreal getLinkColorCode(int index);
+  void setLinkColorCode(int index, qreal code);
+  qreal getLinkColorCode(int index);
 
-    void setLinkLineStyle(Qt::PenStyle ps);
-    Qt::PenStyle getLinkLineStyle(void);
+  void setLinkLineStyle(Qt::PenStyle ps);
+  Qt::PenStyle getLinkLineStyle(void);
 
-    void setLinkType(CustomLinkCanvas::LinkTypes);
-    CustomLinkCanvas::LinkTypes getLinkType(void);
+  void setLinkType(CustomLinkCanvas::LinkTypes);
+  CustomLinkCanvas::LinkTypes getLinkType(void);
 
-    void setLinkArrowDirection(CustomLink::LinkDirections);
-    CustomLink::LinkDirections getLinkArrowDirection(void);
+  void setLinkArrowDirection(CustomLink::LinkDirections);
+  CustomLink::LinkDirections getLinkArrowDirection(void);
 
-    void setLinkLineWidth(qreal w);
-    qreal getLinkLineWidth(void);
+  void setLinkLineWidth(qreal w);
+  qreal getLinkLineWidth(void);
 
-    void setLinkStre(qreal min, qreal max);
-    qreal getLinkStreMin(void);
-    qreal getLinkStreMax(void);
-    QCPRange* getLinkStreRange(void);
+  void setLinkStre(qreal min, qreal max);
+  qreal getLinkStreMin(void);
+  qreal getLinkStreMax(void);
+  QCPRange* getLinkStreRange(void);
 
-    Gene* getGene(int index);
-    void clearBackBone(void);
-    void clearBackBoneSequence(void);
-    void appendBackBoneSequence(int index);
-    int getBackBoneSequence(int index);
-    int getGeneNum(void);
+  Gene* getGene(int index);
+  void clearBackBone(void);
+  void clearBackBoneSequence(void);
+  void appendBackBoneSequence(int index);
+  int getBackBoneSequence(int index);
+  int getGeneNum(void);
 
-    Link* getLink(int index);
-    int getLinkNum(void);
+  Link* getLink(int index);
+  int getLinkNum(void);
 
-  public slots:
-    void onGeneAngleChanged(const QString& n, qreal s, qreal e);
-    void onLinkColorSet(int index, QColor c);
+ public slots:
+  void onGeneAngleChanged(const QString& n, qreal s, qreal e);
+  void onLinkColorSet(int index, QColor c);
 
-  private:
-    QList<Gene *> back_bone;
-    QList<int> back_bone_sequence;
-    bool category_enabled = false;
-    QList<Category *> category;
-    QList<int> category_sequence;
-    bool link_enabled = false;
-    QList<Link *> links;
-    CustomLinkCanvas::LinkTypes link_type = CustomLinkCanvas::LinkType::IntroOut;
-    CustomLink::LinkDirections link_arrow_direction = CustomLink::LinkDirection::NoArrow;
-    Qt::PenStyle link_line_style = Qt::PenStyle::SolidLine;
-    qreal link_line_width;
-    qreal link_stre_min = 0, link_stre_max = 10;
+ private:
+  QList<Gene *> back_bone;
+  QList<int> back_bone_sequence;
+  bool category_enabled = false;
+  QList<Category *> category;
+  QList<int> category_sequence;
+  bool link_enabled = false;
+  QList<Link *> links;
+  CustomLinkCanvas::LinkTypes link_type = CustomLinkCanvas::LinkType::IntroOut;
+  CustomLink::LinkDirections link_arrow_direction = CustomLink::LinkDirection::NoArrow;
+  Qt::PenStyle link_line_style = Qt::PenStyle::SolidLine;
+  qreal link_line_width;
+  qreal link_stre_min = 0, link_stre_max = 10;
 
-    QScopedPointer<ExcelBase> m_xls;
-    QList<QList<QVariant> > m_datas;
+  QScopedPointer<ExcelBase> m_xls;
+  QList<QList<QVariant> > m_datas;
 
 
 };
