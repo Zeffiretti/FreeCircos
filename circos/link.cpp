@@ -47,9 +47,9 @@ void Link::setColorName(const QString &name) {
   color_name = name;
 }
 
-void Link::setColorCode(qreal c) {
-  color_code = c;
-}
+//void Link::setColorCode(qreal c) {
+//  color_code = c;
+//}
 
 QString Link::getSGN(void) {
   return source_gene_name;
@@ -95,6 +95,6 @@ QString Link::getColorName(void) {
   return color_name;
 }
 
-qreal Link::getColorCode(void) {
-  return color_code;
-}
+//qreal Link::getColorCode(void) {
+//  return color_code;
+//}

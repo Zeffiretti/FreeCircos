@@ -20,7 +20,7 @@ class Link {
   void setColor(const QColor& c);
   void setColorFun(const QString& cf);
   void setColorName(const QString& name);
-  void setColorCode(qreal c);
+//  void setColorCode(qreal c);
 
   // getters
   QString getSGN(void);
@@ -34,7 +34,7 @@ class Link {
   QColor getColor(void);
   QString getColorFun(void);
   QString getColorName(void);
-  qreal getColorCode(void);
+//  qreal getColorCode(void);
  private:
   QString source_gene_name;
   QString destination_gene_name;
@@ -45,7 +45,7 @@ class Link {
   QColor color = Qt::black;
   QString color_fun = "none";
   QString color_name = "black";
-  qreal color_code = 10.00;
+//  qreal color_code = 10.00;
 
 };
 

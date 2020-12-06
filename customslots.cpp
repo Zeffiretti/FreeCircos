@@ -370,7 +370,7 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
         link_stre_lineedit->setEnabled(true);
         line_stre_combobox->setEnabled(false);
         line_stre_combobox->setVisible(false);
-        link_stre_lineedit->setText(QString::number(circos->getLinkColorCode(index)));
+        link_stre_lineedit->setText(QString::number(circos->getLinkStre(index)));
       } else if(colfun.compare("rainbow") == 0) {
         link_stre_lineedit->setVisible(false);
         link_stre_lineedit->setEnabled(false);
@@ -603,7 +603,7 @@ void FreeCircos::onLineEditTextChanged(const QString & text) {
       int row = link_table->currentIndex().row();
       int index = link_model->item(row, 0)->text().toInt() - 1;
       qreal value = text.toDouble();
-      circos->setLinkColorCode(index, value);
+//      circos->setLinkColorCode(index, value);
       QColor c = CustomTool::colorFun("ramp", value);
       emit setLinkColor(index, c);
     }

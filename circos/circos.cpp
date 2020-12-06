@@ -392,13 +392,13 @@ QString Circos::getLinkColorName(int index) {
   return getLink(index)->getColorName();
 }
 
-void Circos::setLinkColorCode(int index, qreal code) {
-  getLink(index)->setColorCode(code);
-}
+//void Circos::setLinkColorCode(int index, qreal code) {
+//  getLink(index)->setColorCode(code);
+//}
 
-qreal Circos::getLinkColorCode(int index) {
-  return getLink(index)->getColorCode();
-}
+//qreal Circos::getLinkColorCode(int index) {
+//  return getLink(index)->getColorCode();
+//}
 
 void Circos::setLinkLineStyle(Qt::PenStyle ps) {
   link_line_style = ps;
@@ -431,6 +431,10 @@ qreal Circos::getLinkLineWidth(void) {
 void Circos::setLinkStre(qreal min, qreal max) {
   link_stre_max = max;
   link_stre_min = min;
+}
+
+qreal Circos::getLinkStre(int index) {
+  return getLink(index)->getStreCode();
 }
 
 qreal Circos::getLinkStreMax(void) {
