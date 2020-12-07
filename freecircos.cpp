@@ -8,7 +8,8 @@ FreeCircos::FreeCircos(QWidget *parent)
   this->setGeometry(40, 40, 1610, 650);
   major_font = new QFont;
   major_font->setFamily("Source Code Pro");
-  major_font->setPointSize(16);
+  major_font->setPixelSize(16);
+//  major_font->setPointSize(10);
   major_font->setBold(true);
   //init canvas
   initCanvas();
