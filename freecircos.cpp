@@ -6,6 +6,10 @@ FreeCircos::FreeCircos(QWidget *parent)
   : QMainWindow(parent), ui(new Ui::FreeCircos) {
   ui->setupUi(this);
   this->setGeometry(40, 40, 1610, 650);
+  major_font = new QFont;
+  major_font->setFamily("Source Code Pro");
+  major_font->setPointSize(16);
+  major_font->setBold(true);
   //init canvas
   initCanvas();
   //init generate button

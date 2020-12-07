@@ -9,6 +9,7 @@
 #include <QCheckBox>
 #include <QDialog>
 #include <QLineEdit>
+#include <QFont>
 
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
@@ -87,6 +88,7 @@ class FreeCircos : public QMainWindow {
  private:
 
   Ui::FreeCircos *ui;
+  QFont *major_font;
 
   QCustomPlot *canvas;
   CustomDonut *gene_donut;
