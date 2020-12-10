@@ -369,13 +369,13 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
 //        link_stre_lineedit->setVisible(true);
 //        link_stre_lineedit->setEnabled(true);
         line_stre_combobox->setEnabled(false);
-        line_stre_combobox->setVisible(false);
+//        line_stre_combobox->setVisible(false);
 //        link_stre_lineedit->setText(QString::number(circos->getLinkStre(index)));
       } else if(colfun.compare("rainbow") == 0) {
 //        link_stre_lineedit->setVisible(false);
 //        link_stre_lineedit->setEnabled(false);
         line_stre_combobox->setEnabled(true);
-        line_stre_combobox->setVisible(true);
+//        line_stre_combobox->setVisible(true);
         line_stre_combobox->setCurrentText(circos->getLinkColorName(index));
       } else {
 //        link_stre_lineedit->setEnabled(false);
@@ -489,10 +489,11 @@ void FreeCircos::onComboboxTextChanged(const QString & text) {
 //                line_stre_combobox->setEnabled(false);
 //                emit setLinkColor(index, QColor(Qt::black));
         circos->setLinkColorFun(index, Link::ColorFun::None);
-        qreal stre_code = circos->getLinkStre(index);
-        QColor c = QColor(link_gradient->color(stre_code,
-                                               QCPRange(circos->getLinkStreMin(), circos->getLinkStreMax())));
-        emit setLinkColor(index, c);
+//        qreal stre_code = circos->getLinkStre(index);
+//        QColor c = QColor(link_gradient->color(stre_code,
+//                                               QCPRange(circos->getLinkStreMin(),
+//                                                   circos->getLinkStreMax())));
+//        emit setLinkColor(index, c);
       }
     }
     if(func.compare("link-linestyle") == 0) {

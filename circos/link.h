@@ -43,6 +43,8 @@ class Link {
   ColorFuns getColorFun(void);
   QString getColorName(void);
 //  qreal getColorCode(void);
+// public slots:
+//  void onColorFunChanged(ColorFuns cf);
  private:
   QString source_gene_name;
   QString destination_gene_name;

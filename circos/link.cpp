@@ -103,6 +103,13 @@ QString Link::getColorName(void) {
   return color_name;
 }
 
+//void Link::onColorFunChanged(ColorFuns cf) {
+//  if(cf.testFlag(ColorFun::Ramp)) {
+//  } else if(cf.testFlag(ColorFun::Rainbow)) {
+//  } else {
+
+//  }
+//}
 //qreal Link::getColorCode(void) {
 //  return color_code;
 //}

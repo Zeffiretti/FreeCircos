@@ -429,8 +429,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
           this, &FreeCircos::onLineEditTextChanged);
 //  connect(link_stre_lineedit, &QLineEdit::textChanged,
 //          this, &FreeCircos::onLineEditTextChanged);
-  connect(this, &FreeCircos::setLinkColor,
-          circos, &Circos::onLinkColorSet);
+//  connect(this, &FreeCircos::setLinkColor,
+//          circos, &Circos::onLinkColorSet);
   parent->addTab(link_widget, "Link");
 }
 
@@ -469,6 +469,7 @@ void FreeCircos::initLinkColorScale(QCustomPlot *parent1, QCustomPlot *parent2) 
   link_gradient->setColorStopAt(1.0, QColor(Qt::darkRed));  // 设置色条结束时的颜色
   link_thermometer_oncanvas_color_map->setGradient(*link_gradient);
   link_thermometer_onpanel_color_map->setGradient(*link_gradient);
+  circos->setLinkGradient(link_gradient);
   link_thermometer_onpanel_color_map->rescaleDataRange();
   link_thermometer_oncanvas_color_map->rescaleDataRange();
   link_thermometer_oncanvas_color_map->setVisible(true);

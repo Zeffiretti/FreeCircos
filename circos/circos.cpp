@@ -135,6 +135,7 @@ void Circos::dataToLink(void) {
     l->setStreCode(stre);
     l->setLineWidth(lwd);
     links.append(l);
+//    connect(l,&Link::setColorFun
 //        qDebug() << l->getSGN() << "---" << l->getDGN();
   }
 }
@@ -295,6 +296,17 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
         lc = CustomLink::LinkClass::Block2End;
       } else if(end_mul) {
         lc = CustomLink::LinkClass::End2Block;
+      }
+      Link::ColorFuns cf = l->getColorFun();
+      if(cf.testFlag(Link::ColorFun::Ramp)) {
+      } else if(cf.testFlag(Link::ColorFun::Rainbow)) {
+      } else {
+//                  qreal stre_code = circos->getLinkStre(index);
+//                  QColor c = QColor(link_gradient->color(stre_code,
+//                                                         QCPRange(circos->getLinkStreMin(),
+//                                                             circos->getLinkStreMax())));
+//                  emit setLinkColor(index, c);
+//          l->set
       }
       custom_link->setLinkClass(lc);
       custom_link->setPen(QPen(l->getColor()));
@@ -457,6 +469,14 @@ QCPRange* Circos::getLinkStreRange(void) {
   return new QCPRange(link_stre_min, link_stre_max);
 }
 
+void Circos::setLinkGradient(QCPColorGradient *g) {
+  link_gradient = g;
+}
+
+QCPColorGradient* Circos::getLinkGradient(void) {
+  return link_gradient;
+}
+
 void Circos::setLinkLineWidth(qreal w) {
   link_line_width = w;
 }
@@ -497,6 +517,19 @@ void Circos::onGeneAngleChanged(const QString& n, qreal s, qreal e) {
   findGene(n)->setAngle(s, e);
 }
 
-void Circos::onLinkColorSet(int index, QColor c) {
-  getLink(index)->setColor(c);
+//void Circos::onLinkColorSet(int index, QColor c) {
+//  getLink(index)->setColor(c);
+//}
+
+void Circos::onLinkColorFunChanged(int index) {
+  Link::ColorFuns cf = getLinkColorFun(index);
+  if(cf.testFlag(Link::ColorFun::Ramp)) {
+  } else if(cf.testFlag(Link::ColorFun::Rainbow)) {
+  } else {
+    qreal stre_code = getLinkStre(index);
+    QColor c = QColor(link_gradient->color(stre_code,
+                                           QCPRange(getLinkStreMin(), getLinkStreMax())));
+//    emit setLinkColor(index, c);
+    getLink(index)->setColor(c);
+  }
 }

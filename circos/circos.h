@@ -75,6 +75,9 @@ class Circos : public QObject {
   qreal getLinkStreMax(void);
   QCPRange* getLinkStreRange(void);
 
+  void setLinkGradient(QCPColorGradient* g);
+  QCPColorGradient* getLinkGradient(void);
+
   Gene* getGene(int index);
   void clearBackBone(void);
   void clearBackBoneSequence(void);
@@ -87,7 +90,10 @@ class Circos : public QObject {
 
  public slots:
   void onGeneAngleChanged(const QString& n, qreal s, qreal e);
-  void onLinkColorSet(int index, QColor c);
+//  void onLinkColorSet(int index, QColor c);
+  void onLinkColorFunChanged(int index);
+// public signals:
+//  void linkColorFunChanged(int index);
 
  private:
   QList<Gene *> back_bone;
@@ -97,6 +103,7 @@ class Circos : public QObject {
   QList<int> category_sequence;
   bool link_enabled = false;
   QList<Link *> links;
+  QCPColorGradient *link_gradient;
   CustomLinkCanvas::LinkTypes link_type = CustomLinkCanvas::LinkType::IntroOut;
   CustomLink::LinkDirections link_arrow_direction = CustomLink::LinkDirection::NoArrow;
   Qt::PenStyle link_line_style = Qt::PenStyle::SolidLine;
