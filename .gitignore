@@ -8,3 +8,5 @@
 !*.pro
 !*.png
 !*.qrc
+!*.pptx
+!*.xlsx
