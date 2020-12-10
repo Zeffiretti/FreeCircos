@@ -297,17 +297,18 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
       } else if(end_mul) {
         lc = CustomLink::LinkClass::End2Block;
       }
-      Link::ColorFuns cf = l->getColorFun();
-      if(cf.testFlag(Link::ColorFun::Ramp)) {
-      } else if(cf.testFlag(Link::ColorFun::Rainbow)) {
-      } else {
-//                  qreal stre_code = circos->getLinkStre(index);
-//                  QColor c = QColor(link_gradient->color(stre_code,
-//                                                         QCPRange(circos->getLinkStreMin(),
-//                                                             circos->getLinkStreMax())));
-//                  emit setLinkColor(index, c);
-//          l->set
-      }
+//      Link::ColorFuns cf = l->getColorFun();
+//      if(cf.testFlag(Link::ColorFun::Ramp)) {
+//      } else if(cf.testFlag(Link::ColorFun::Rainbow)) {
+//      } else {
+////                  qreal stre_code = circos->getLinkStre(index);
+////                  QColor c = QColor(link_gradient->color(stre_code,
+////                                                         QCPRange(circos->getLinkStreMin(),
+////                                                             circos->getLinkStreMax())));
+////                  emit setLinkColor(index, c);
+////          l->set
+//      }
+      custom_link->setLineWidth(1);
       custom_link->setLinkClass(lc);
       custom_link->setPen(QPen(l->getColor()));
       custom_link->setBrush(QBrush(l->getColor()));

@@ -53,7 +53,7 @@ class Link {
   qreal stre_code;
   qreal line_width;
   QColor color = Qt::black;
-  ColorFuns color_fun;
+  ColorFuns color_fun = ColorFun::None;
   QString color_fun_s = "none";
   QString color_name = "black";
 //  qreal color_code = 10.00;

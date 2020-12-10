@@ -107,7 +107,7 @@ class Circos : public QObject {
   CustomLinkCanvas::LinkTypes link_type = CustomLinkCanvas::LinkType::IntroOut;
   CustomLink::LinkDirections link_arrow_direction = CustomLink::LinkDirection::NoArrow;
   Qt::PenStyle link_line_style = Qt::PenStyle::SolidLine;
-  qreal link_line_width;
+  qreal link_line_width = 1;
   qreal link_stre_min = 0, link_stre_max = 10;
 
   QScopedPointer<ExcelBase> m_xls;
