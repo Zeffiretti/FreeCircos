@@ -363,7 +363,7 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
 //      link_stre_lineedit->setEnabled(true);
       line_stre_combobox->setEnabled(true);
       int index = link_model->item(sel_row, 0)->text().toInt() - 1;
-      QString colfun = circos->getLinkColorFun(index);
+      QString colfun = circos->getLinkColorFunStr(index);
       link_colfun_combobox->setCurrentText(colfun);
       if(colfun.compare("ramp") == 0) {
 //        link_stre_lineedit->setVisible(true);
@@ -464,18 +464,21 @@ void FreeCircos::onComboboxTextChanged(const QString & text) {
     if(func.compare("link-colfun") == 0) {
       int row = link_table->currentIndex().row();
       int index = link_model->item(row, 0)->text().toInt() - 1;
-      circos->setLinkColorFun(index, text);
+      circos->setLinkColorFunStr(index, text);
       if(text.compare("ramp") == 0) {
 //        link_stre_lineedit->setVisible(true);
 //        link_stre_lineedit->setEnabled(true);
 //        line_stre_combobox->setVisible(false);
+//          circos->setlink
         line_stre_combobox->setEnabled(false);
+        circos->setLinkColorFun(index, Link::ColorFun::Ramp);
 //                emit link_stre_lineedit->textChanged(
 //                    link_stre_lineedit->text());
       } else if(text.compare("rainbow") == 0) {
 //        link_stre_lineedit->setVisible(false);
 //        link_stre_lineedit->setEnabled(false);
 //        line_stre_combobox->setVisible(true);
+        circos->setLinkColorFun(index, Link::ColorFun::Rainbow);
         line_stre_combobox->setEnabled(true);
         emit line_stre_combobox->currentTextChanged(
           line_stre_combobox->currentText());
@@ -485,6 +488,7 @@ void FreeCircos::onComboboxTextChanged(const QString & text) {
 //                //line_stre_combobox->setVisible(false);
 //                line_stre_combobox->setEnabled(false);
 //                emit setLinkColor(index, QColor(Qt::black));
+        circos->setLinkColorFun(index, Link::ColorFun::None);
         qreal stre_code = circos->getLinkStre(index);
         QColor c = QColor(link_gradient->color(stre_code,
                                                QCPRange(circos->getLinkStreMin(), circos->getLinkStreMax())));
