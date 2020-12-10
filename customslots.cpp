@@ -485,7 +485,7 @@ void FreeCircos::onComboboxTextChanged(const QString & text) {
 //                //line_stre_combobox->setVisible(false);
 //                line_stre_combobox->setEnabled(false);
 //                emit setLinkColor(index, QColor(Qt::black));
-        qreal stre_code = circos->getLink(index)->getStreCode();
+        qreal stre_code = circos->getLinkStre(index);
         QColor c = QColor(link_gradient->color(stre_code,
                                                QCPRange(circos->getLinkStreMin(), circos->getLinkStreMax())));
         emit setLinkColor(index, c);

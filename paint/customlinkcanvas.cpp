@@ -56,9 +56,9 @@ qreal CustomLinkCanvas::getLineWidth(void) {
   return line_width;
 }
 
-CustomLink::ColorFuns CustomLinkCanvas::getColFun(void) {
-  return col_fun;
-}
+//CustomLink::ColorFuns CustomLinkCanvas::getColFun(void) {
+//  return col_fun;
+//}
 
 void CustomLinkCanvas::setArrowDirection(CustomLink::LinkDirections ad) {
   arrow_direction = ad;
@@ -76,6 +76,6 @@ void CustomLinkCanvas::setLineWidth(qreal w) {
   line_width = w;
 }
 
-void CustomLinkCanvas::setColFun(CustomLink::ColorFuns c) {
-  col_fun = c;
-}
+//void CustomLinkCanvas::setColFun(CustomLink::ColorFuns c) {
+//  col_fun = c;
+//}

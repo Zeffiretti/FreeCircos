@@ -377,11 +377,11 @@ bool Circos::getLinkEnable(void) {
 }
 
 void Circos::setLinkColorFun(int index, const QString &cf) {
-  getLink(index)->setColorFun(cf);
+  getLink(index)->setColorFunString(cf);
 }
 
 QString Circos::getLinkColorFun(int index) {
-  return getLink(index)->getColorFun();
+  return getLink(index)->getColorFunString();
 }
 
 void Circos::setLinkColorName(int index, const QString &name) {

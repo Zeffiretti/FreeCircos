@@ -81,9 +81,9 @@ qreal CustomLink::getPieSize(void) {
   return pie_end_size;
 }
 
-CustomLink::ColorFuns CustomLink::getColFun(void) {
-  return col_fun;
-}
+//CustomLink::ColorFuns CustomLink::getColFun(void) {
+//  return col_fun;
+//}
 
 QPen CustomLink::getPen(void) {
   return strike_pen;
@@ -158,9 +158,9 @@ void CustomLink::setLinkCurveType(CustomLink::LinkCurveType lt) {
   link_curve_type = lt;
 }
 
-void CustomLink::setColFun(CustomLink::ColorFuns c) {
-  col_fun = c;
-}
+//void CustomLink::setColFun(CustomLink::ColorFuns c) {
+//  col_fun = c;
+//}
 
 void CustomLink::setPen(QPen p) {
   strike_pen = p;

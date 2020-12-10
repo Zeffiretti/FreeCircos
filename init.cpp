@@ -416,8 +416,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
           this, &FreeCircos::onComboboxTextChanged);
   connect(link_lty_combobox, &QComboBox::currentTextChanged,
           this, &FreeCircos::onComboboxTextChanged);
-  connect(link_colfun_combobox, &QComboBox::currentTextChanged,
-          this, &FreeCircos::onComboboxTextChanged);
+//  connect(link_colfun_combobox, &QComboBox::currentTextChanged,
+//          this, &FreeCircos::onComboboxTextChanged);
   connect(line_stre_combobox, &QComboBox::currentTextChanged,
           this, &FreeCircos::onComboboxTextChanged);
   connect(link_directional_checkbox, &QCheckBox::stateChanged,

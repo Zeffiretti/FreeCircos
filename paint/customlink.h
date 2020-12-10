@@ -42,12 +42,6 @@ class CustomLink {
     EndBoardCurve     = 0x0008
   };
   Q_DECLARE_FLAGS(LinkCurveType, CurveType)
-  enum ColorFun {
-    Ramp,
-    Rainbow,
-    None
-  };
-  Q_DECLARE_FLAGS(ColorFuns, ColorFun)
 //    enum RainbowColor
 
   CustomLink();
@@ -63,7 +57,7 @@ class CustomLink {
   LinkClasses getLinkClass(void);
   LinkTypes getLinkType(void);
   LinkDirections getLinkDirection(void);
-  ColorFuns getColFun(void);
+//  ColorFuns getColFun(void);
   QPen getPen(void);
   Qt::PenStyle getLineStyle(void);
   qreal getLineWidth(void);
@@ -81,7 +75,7 @@ class CustomLink {
   void setLinkType(CustomLink::LinkTypes lt);
   void setLinkDirection(CustomLink::LinkDirections ld);
   void setLinkCurveType(CustomLink::LinkCurveType lt);
-  void setColFun(ColorFuns c);
+//  void setColFun(ColorFuns c);
   void setPen(QPen p);
   void setLineStyle(Qt::PenStyle ps);
   void setLineWidth(qreal w);
@@ -118,7 +112,7 @@ class CustomLink {
   LinkTypes link_type = In;
   LinkDirections link_direction = NoArrow;
   LinkCurveType link_curve_type = StartLinkCurve;
-  ColorFuns col_fun = ColorFun::None;
+//  ColorFuns col_fun = ColorFun::None;
 
   QCPCurve *start_link_curve;
   QCPCurve *end_link_curve;
@@ -154,6 +148,5 @@ Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkClasses)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkDirections)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkTypes)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkCurveType)
-Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::ColorFuns)
 
 #endif // CUSTOMLINK_H

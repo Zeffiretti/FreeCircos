@@ -7,6 +7,12 @@
 
 class Link {
  public:
+  enum ColorFun {
+    Ramp,
+    Rainbow,
+    None
+  };
+  Q_DECLARE_FLAGS(ColorFuns, ColorFun)
   Link();
   // setters
   void setSGN(QString sgn);
@@ -18,7 +24,8 @@ class Link {
   void setStreCode(qreal sc);
   void setLineWidth(qreal lwd);
   void setColor(const QColor& c);
-  void setColorFun(const QString& cf);
+  void setColorFunString(const QString& cf);
+  void setColorFun(Link::ColorFuns cf);
   void setColorName(const QString& name);
 //  void setColorCode(qreal c);
 
@@ -32,7 +39,8 @@ class Link {
   qreal getStreCode(void);
   qreal getLineWidth(void);
   QColor getColor(void);
-  QString getColorFun(void);
+  QString getColorFunString(void);
+  ColorFuns getColorFun(void);
   QString getColorName(void);
 //  qreal getColorCode(void);
  private:
@@ -43,10 +51,11 @@ class Link {
   qreal stre_code;
   qreal line_width;
   QColor color = Qt::black;
-  QString color_fun = "none";
+  ColorFuns color_fun;
+  QString color_fun_s = "none";
   QString color_name = "black";
 //  qreal color_code = 10.00;
 
 };
-
+Q_DECLARE_OPERATORS_FOR_FLAGS(Link::ColorFuns)
 #endif // LINK_H

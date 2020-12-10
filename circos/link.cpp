@@ -39,7 +39,11 @@ void Link::setColor(const QColor &c) {
   color = c;
 }
 
-void Link::setColorFun(const QString &cf) {
+void Link::setColorFunString(const QString &cf) {
+  color_fun_s = cf;
+}
+
+void Link::setColorFun(Link::ColorFuns cf) {
   color_fun = cf;
 }
 
@@ -87,7 +91,11 @@ QColor Link::getColor(void) {
   return color;
 }
 
-QString Link::getColorFun(void) {
+QString Link::getColorFunString(void) {
+  return color_fun_s;
+}
+
+Link::ColorFuns Link::getColorFun(void) {
   return color_fun;
 }
 
