@@ -286,7 +286,7 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
   link_thermometer_label = new QLabel;
   link_thermometer_checkbox = new QCheckBox;
   link_stre_label = new QLabel;
-  link_stre_lineedit = new QLineEdit;
+//  link_stre_lineedit = new QLineEdit;
   line_stre_combobox = new QComboBox;
   link_lwd_label = new QLabel;
   link_lwd_lineedit = new QLineEdit;
@@ -370,17 +370,18 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
   link_stre_label->setGeometry(80, 340, 80, 60);
   link_stre_label->setFont(*major_font);
   link_stre_label->setText("Stre");
-  link_stre_lineedit->setParent(link_config_widget);
-  link_stre_lineedit->setGeometry(160, 340, 80, 60);
-  link_stre_lineedit->setValidator(new QDoubleValidator(10, 50, 2, this));
-  link_stre_lineedit->setEnabled(false);
-  link_stre_lineedit->setText("10.00");
-  link_stre_lineedit->setProperty("prefix", "link");
-  link_stre_lineedit->setProperty("function", "link-line-color");
+//  link_stre_lineedit->setParent(link_config_widget);
+//  link_stre_lineedit->setGeometry(160, 340, 80, 60);
+//  link_stre_lineedit->setValidator(new QDoubleValidator(10, 50, 2, this));
+//  link_stre_lineedit->setEnabled(false);
+//  link_stre_lineedit->setText("10.00");
+//  link_stre_lineedit->setProperty("prefix", "link");
+//  link_stre_lineedit->setProperty("function", "link-line-color");
   line_stre_combobox->setParent(link_config_widget);
   line_stre_combobox->setGeometry(160, 340, 80, 60);
   line_stre_combobox->setValidator(new QDoubleValidator(0, 100, 2, this));
-  line_stre_combobox->setVisible(false);
+//  line_stre_combobox->setVisible(false);
+  line_stre_combobox->setEnabled(false);
   QStringList rainbow_color_list;
   rainbow_color_list << "blue" << "green" << "yellow" << "red" << "darked";
   line_stre_combobox->addItems(rainbow_color_list);
@@ -426,8 +427,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
           this, &FreeCircos::onCheckboxStateChanged);
   connect(link_lwd_lineedit, &QLineEdit::textChanged,
           this, &FreeCircos::onLineEditTextChanged);
-  connect(link_stre_lineedit, &QLineEdit::textChanged,
-          this, &FreeCircos::onLineEditTextChanged);
+//  connect(link_stre_lineedit, &QLineEdit::textChanged,
+//          this, &FreeCircos::onLineEditTextChanged);
   connect(this, &FreeCircos::setLinkColor,
           circos, &Circos::onLinkColorSet);
   parent->addTab(link_widget, "Link");
