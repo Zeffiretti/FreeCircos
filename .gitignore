@@ -1,0 +1,13 @@
+*.*
+!*/
+!.gitignore
+!*.cpp
+!*.c
+!*.h
+!*.ui
+!*.pro
+!*.png
+!*.qrc
+!*.pptx
+!*.xlsx
+!LICENSE

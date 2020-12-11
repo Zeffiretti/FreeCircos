@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/internal">
+        <file>thermometer.png</file>
+    </qresource>
+    <qresource prefix="/testfiles">
+        <file>testfile/backbone file.xlsx</file>
+        <file>testfile/category file.xlsx</file>
+        <file>testfile/link file.xlsx</file>
+        <file>testfile/links.xlsx</file>
+        <file>testfile/onlylink.xlsx</file>
+        <file>testfile/track arrow file.xlsx</file>
+        <file>testfile/参数需求.pptx</file>
+    </qresource>
+</RCC>
