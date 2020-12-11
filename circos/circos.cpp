@@ -301,13 +301,42 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
 //      if(cf.testFlag(Link::ColorFun::Ramp)) {
 //      } else if(cf.testFlag(Link::ColorFun::Rainbow)) {
 //      } else {
-////                  qreal stre_code = circos->getLinkStre(index);
-////                  QColor c = QColor(link_gradient->color(stre_code,
-////                                                         QCPRange(circos->getLinkStreMin(),
-////                                                             circos->getLinkStreMax())));
-////                  emit setLinkColor(index, c);
-////          l->set
+//                  qreal stre_code = circos->getLinkStre(index);
+//                  QColor c = QColor(link_gradient->color(stre_code,
+//                                                         QCPRange(circos->getLinkStreMin(),
+//                                                             circos->getLinkStreMax())));
+//                  emit setLinkColor(index, c);
+//          l->set
 //      }
+      Link::ColorFuns cf = l->getColorFun();
+      if(cf.testFlag(Link::ColorFun::Ramp)) {
+        qreal stre_code = l->getStreCode();
+        QColor c = QColor(link_gradient->color(stre_code,
+                                               QCPRange(getLinkStreMin(), getLinkStreMax())));
+        l->setColor(c);
+      } else if(cf.testFlag(Link::ColorFun::Rainbow)) {
+        switch (qrand() % 5) {
+        case 0:
+          l->setColor(Qt::blue);
+          break;
+        case 1:
+          l->setColor(Qt::green);
+          break;
+        case 2:
+          l->setColor(Qt::yellow);
+          break;
+        case 3:
+          l->setColor(Qt::red);
+          break;
+        case 4:
+          l->setColor(Qt::darkRed);
+          break;
+        default:
+          break;
+        }
+      } else {
+        l->setColor(Qt::black);
+      }
       custom_link->setLineWidth(1);
       custom_link->setLinkClass(lc);
       custom_link->setPen(QPen(l->getColor()));

@@ -92,8 +92,8 @@ class Circos : public QObject {
   void onGeneAngleChanged(const QString& n, qreal s, qreal e);
 //  void onLinkColorSet(int index, QColor c);
   void onLinkColorFunChanged(int index);
-// public signals:
-//  void linkColorFunChanged(int index);
+ signals:
+  void linkColorFunChanged(int index);
 
  private:
   QList<Gene *> back_bone;

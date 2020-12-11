@@ -48,6 +48,7 @@ HEADERS += \
     circos/link.h \
     fileprocess/excelbase.h \
     fileprocess/qvariantlistlistmodel.h \
+    fileresource.h \
     freecircos.h \
     paint/colorgen.h \
     paint/custombezier.h \

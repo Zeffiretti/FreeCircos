@@ -27,6 +27,8 @@
 
 #include "addition/tablemovedialog.h"
 
+#include "fileresource.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class FreeCircos;

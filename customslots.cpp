@@ -23,11 +23,15 @@ void FreeCircos::onButtonClicked(bool ) {
     canvas->replot();
   }
   if(func == "openbackbonefile") {
+#ifndef FILE_RES_USED
     QString xlsFile = QFileDialog::getOpenFileName(this, QString(), QString(), "excel(*.xls *.xlsx)");
     if(xlsFile.isEmpty()) {
       return;
     }
     circos->openFile(xlsFile);
+#else
+    circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\backbone file.xlsx");
+#endif
     gene_donut->clear();
     circos->dataToBackBone();
     qDebug() << "open file finished";
@@ -35,22 +39,32 @@ void FreeCircos::onButtonClicked(bool ) {
     emit setTableEditMode(TableEditMode::EditGene);
   }
   if(func == "opencategoryfile") {
+#ifndef FILE_RES_USED
     QString xlsFile = QFileDialog::getOpenFileName(this, QString(), QString(), "excel(*.xls *.xlsx)");
-    circos->openFile(xlsFile);
     if(xlsFile.isEmpty()) {
       return;
     }
+    circos->openFile(xlsFile);
+#else
+    circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\category file.xlsx");
+#endif
     circos->dataToCategory();
     circos->setCategoryEnable(true);
 //        initBackBoneTableModel(backbone_table, backbone_model, circos);
     addCategoryToTable(backbone_model, circos);
   }
   if(func == "openlinkfile") {
+#ifndef FILE_RES_USED
     QString xlsFile = QFileDialog::getOpenFileName(this, QString(), QString(), "excel(*.xls *.xlsx)");
-    circos->openFile(xlsFile);
     if(xlsFile.isEmpty()) {
       return;
     }
+    circos->openFile(xlsFile);
+#else
+    circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\link file.xlsx");
+#endif
+    connect(circos, &Circos::linkColorFunChanged,
+            circos, &Circos::onLinkColorFunChanged);
     circos->dataToLink();
     circos->setLinkEnable(true);
     //addCategoryToTable(backbone_table, backbone_model, circos);
