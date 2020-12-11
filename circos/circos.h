@@ -7,6 +7,7 @@
 #include "gene.h"
 #include "category.h"
 #include "link.h"
+#include "trackarrow.h"
 #include "paint/customdonut.h"
 #include "paint/customslice.h"
 #include "paint/customlink.h"
@@ -24,6 +25,7 @@ class Circos : public QObject {
   void dataToBackBone(void);
   void dataToCategory(void);
   void dataToLink(void);
+  void dataToTrackArrow(void);
   int indexOfGene(const QString&);
   int indexOfCategory(const QString&);
   void buildBackBoneSequence(QStandardItemModel *model);
@@ -109,6 +111,7 @@ class Circos : public QObject {
   Qt::PenStyle link_line_style = Qt::PenStyle::SolidLine;
   qreal link_line_width = 1;
   qreal link_stre_min = 0, link_stre_max = 10;
+  QList<TrackArrow *> track_arrow;
 
   QScopedPointer<ExcelBase> m_xls;
   QList<QList<QVariant> > m_datas;

@@ -7,6 +7,7 @@ Circos::Circos(QObject *parent) : QObject(parent) {
   category.clear();
   category_sequence.clear();
   category_enabled = false;
+  track_arrow.clear();
 }
 
 Circos::~Circos() {
@@ -137,6 +138,27 @@ void Circos::dataToLink(void) {
     links.append(l);
 //    connect(l,&Link::setColorFun
 //        qDebug() << l->getSGN() << "---" << l->getDGN();
+  }
+}
+
+void Circos::dataToTrackArrow(void) {
+  track_arrow.clear();
+  QList<QVariant> data;
+  foreach (data, m_datas) {
+    TrackArrow* ta = new TrackArrow;
+    if(data.at(3).isNull()) {
+      ta->setDirections(TrackArrow::Direction::None);
+    } else {
+      if(data.at(3).toString().compare("+") == 0) {
+        ta->setDirections(TrackArrow::Direction::ClockWise);
+      } else {
+        ta->setDirections(TrackArrow::Direction::AntiClockWise);
+      }
+    }
+    ta->setName(data.at(2).toString());
+    ta->setEnd(data.at(1).toInt());
+    ta->setStart(data.at(0).toInt());
+    track_arrow.append(ta);
   }
 }
 
