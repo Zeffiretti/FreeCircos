@@ -36,6 +36,7 @@ SOURCES += \
     paint/customlink.cpp \
     paint/customlinkcanvas.cpp \
     paint/customslice.cpp \
+    paint/customtrack.cpp \
     paint/qcustomplot.cpp \
     paint/smoothcurvegenerator.cpp \
     tool/customtool.cpp
@@ -58,6 +59,7 @@ HEADERS += \
     paint/customlink.h \
     paint/customlinkcanvas.h \
     paint/customslice.h \
+    paint/customtrack.h \
     paint/qcustomplot.h \
     paint/smoothcurvegenerator.h \
     tool/customtool.h
