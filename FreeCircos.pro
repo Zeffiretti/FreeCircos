@@ -77,3 +77,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resource/resource.qrc
+
+DISTFILES += \
+    LICENSE
