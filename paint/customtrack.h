@@ -2,10 +2,9 @@
 #define CUSTOMTRACK_H
 
 
-class CustomTrack
-{
-public:
-    CustomTrack();
+class CustomTrack {
+ public:
+  CustomTrack();
 };
 
 #endif // CUSTOMTRACK_H
