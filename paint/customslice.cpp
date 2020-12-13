@@ -187,3 +187,11 @@ QString CustomSlice::getName(void) {
 void CustomSlice::setName(QString n) {
   name = n;
 }
+
+void CustomSlice::buildTrack(void) {
+  if(track_enabled) {
+    track->setStart(track_start);
+    track->setEnd(track_end);
+    track->setBoundary(track_head_ratio * track_end + (1 - track_head_ratio)*track_start);
+  }
+}
