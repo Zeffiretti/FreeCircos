@@ -207,8 +207,10 @@ void Circos::buildBackBoneDonut(CustomDonut *donut) {
     slice->setPen(QPen(g->getStrikeColor()));
     slice->setLabelPosition(g->getLabelPosition());
     slice->setLabelState(g->getLabelState());
+//    slice->setSize(back_bone_inner_radius, back_bone_outer_radius);
     donut->addSlice(slice);
   }
+  donut->setSize(back_bone_inner_radius, back_bone_outer_radius);
 }
 
 void Circos::buildCategorySequence(QStandardItemModel *model) {
@@ -244,6 +246,7 @@ void Circos::buildCategorySequence(QStandardItemModel *model) {
 
 void Circos::buildCategoryDonut(CustomDonut *donut) {
   donut->clear();
+//  donut->setSize(category_inner_raidus, category_outer_radius);
   for(int i = 0; i < category_sequence.size(); ++i) {
     int index = category_sequence.at(i);
     Category* c = category.at(index);
@@ -259,6 +262,7 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
     slice->setLabelState(c->getLabelState());
     donut->addSlice(slice);
   }
+  donut->setSize(category_inner_raidus, category_outer_radius);
 }
 
 void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
@@ -370,6 +374,34 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
       custom_link->setSEA(source_end_angle);
       custom_link->setDEA(dest_end_angle);
       custom_links->addCustomLink(custom_link);
+    }
+  }
+}
+
+void Circos::buildCustomTrack(CustomTrackArrow *track) {
+  track->setType(CustomTrackArrow::Type::Arrow);
+  foreach (TrackArrow *it, track_arrow) {
+    CustomTrack *tr = new CustomTrack;
+    Gene *g = findGene(it->getName());
+    track->addArrow(tr);
+    int int_min = g->getStart();
+    int int_max = g->getEnd();
+    qreal real_min = g->getStartAngle();
+    qreal real_max = g->getEndAngle();
+    qreal start = CustomTool::mapInt2Real(int_min, int_max,
+                                          real_min, real_max,
+                                          tr->getStart());
+    qreal end = CustomTool::mapInt2Real(int_min, int_max,
+                                        real_min, real_max,
+                                        tr->getEnd());
+    tr->setStart(start);
+    tr->setEnd(end);
+    switch (it->getDirections()) {
+    case TrackArrow::Direction::ClockWise:
+//        tr->set
+      break;
+    default:
+      break;
     }
   }
 }

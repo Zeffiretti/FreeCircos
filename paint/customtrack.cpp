@@ -57,11 +57,69 @@ void CustomTrack::buildData(void) {
   }
   // arrow data
   if(type.testFlag(CustomTrack::Type::Arrow)) {
+    if(qAbs(start_angle - end_angle) > 0.003) {
+      if(start_angle < end_angle) {
+        int i = 0;
+        qreal angle = start_angle;
+        qreal radius = outer_radius;
+        while (angle <= boundary_angle) {
+          track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
+          ++i;
+          angle += angle_offset;
+        }
+        angle = boundary_angle;
+        track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
+        ++i;
+        angle = end_angle;
+        radius = (inner_radius + outer_radius) / 2;
+        track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
+        ++i;
+//        while (radius >= inner_radius) {
+//          track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
+//          ++i;
+//          radius -= radius_offset;
+//        }
+        angle = boundary_angle;
+        radius = inner_radius;
+        track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
+        ++i;
+        while (angle >= qMin(start_angle, end_angle)) {
+          track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
+          ++i;
+          angle -= angle_offset;
+        }
+        angle = qMin(start_angle, end_angle);
+        track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
+        ++i;
+        while (radius <= outer_radius) {
+          track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
+          ++i;
+          radius += radius_offset;
+        }
+        radius = outer_radius;
+        track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
+      }
+    } else {
+      int i = 0;
+      qreal angle = qMin(start_angle, end_angle);
+      qreal radius = outer_radius;
+      while (radius >= inner_radius) {
+        track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
+        radius -= radius_offset;
+        ++i;
+      }
+      radius = inner_radius;
+      track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
+    }
   }
 }
 
 void CustomTrack::drawTrack(QCustomPlot *canvas) {
+  buildData();
   track_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
   track_curve->setPen(QPen(color));
   track_curve->setBrush(QBrush(color));
+  foreach (QCPCurveData *data, track_data) {
+    track_curve->data()->add(*data);
+  }
 }

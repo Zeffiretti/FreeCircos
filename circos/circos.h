@@ -12,6 +12,8 @@
 #include "paint/customslice.h"
 #include "paint/customlink.h"
 #include "paint/customlinkcanvas.h"
+#include "paint/customtrack.h"
+#include "paint/customtrackarrow.h"
 #include "fileprocess/excelbase.h"
 #include "fileprocess/qvariantlistlistmodel.h"
 #include "tool/customtool.h"
@@ -33,6 +35,7 @@ class Circos : public QObject {
   void buildCategorySequence(QStandardItemModel *model);
   void buildCategoryDonut(CustomDonut*);
   void buildCustomLink(CustomLinkCanvas*);
+  void buildCustomTrack(CustomTrackArrow*);
 
   Gene* findGene(const QString name);
   Category* findCategory(const QString name);
@@ -99,9 +102,13 @@ class Circos : public QObject {
 
  private:
   QList<Gene *> back_bone;
+  qreal back_bone_inner_radius = 0.7;
+  qreal back_bone_outer_radius = 0.8;
   QList<int> back_bone_sequence;
   bool category_enabled = false;
   QList<Category *> category;
+  qreal category_inner_raidus = 0.81;
+  qreal category_outer_radius = 0.85;
   QList<int> category_sequence;
   bool link_enabled = false;
   QList<Link *> links;

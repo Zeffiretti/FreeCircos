@@ -60,9 +60,9 @@ class TrackArrow : public QObject {
   QColor color = Qt::gray;
   Types type = Type::Arrow;
   // Arrow Arguments
-  qreal head_width = 0.6;
+  qreal head_width = 1;
   qreal head_ratio = 0.2;
-  qreal tail_width = 0.6;
+  qreal tail_width = 1;
   Directions direction = Direction::None;
   // Tile Arguments
   qreal width = 0.6;

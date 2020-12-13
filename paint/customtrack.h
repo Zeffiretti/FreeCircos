@@ -44,6 +44,8 @@ class CustomTrack {
   qreal start_angle;
   qreal end_angle;
   qreal boundary_angle;
+//  qreal head_inner_radius;
+//  qreal head_outer_radius;
   qreal inner_radius;
   qreal outer_radius;
 };
