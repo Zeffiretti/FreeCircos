@@ -62,8 +62,15 @@ class CustomTrack {
     return direction;
   }
 
+  void setType(Types t) {
+    type = t;
+  }
+  Types getType(void) {
+    return type;
+  }
+
   QCPCurve *track_curve;
-  QColor color = Qt::lightGray;
+  QColor color = QColor(204, 204, 204);
   QList<QCPCurveData *> track_data;
 
   Types type;

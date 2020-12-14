@@ -121,10 +121,12 @@ void CustomTrack::buildData(void) {
 void CustomTrack::drawTrack(QCustomPlot *canvas) {
   buildData();
   track_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
-  track_curve->setPen(QPen(color));
+  track_curve->setPen(QPen(Qt::darkGray));
+  color.setAlphaF(0.7);
   track_curve->setBrush(QBrush(color));
   foreach (QCPCurveData *data, track_data) {
     track_curve->data()->add(*data);
   }
+  track_curve->setSmooth(false);
 //  qDebug("drawing...");
 }

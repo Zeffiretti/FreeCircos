@@ -148,6 +148,7 @@ void Circos::dataToTrackArrow(void) {
   foreach (data, m_datas) {
     TrackArrow* ta = new TrackArrow;
     if(data.at(3).isNull()) {
+//      qDebug("this is tile file.");
       ta->setDirections(TrackArrow::Direction::None);
       ta->setTypes(TrackArrow::Type::Tile);
     } else {
@@ -419,8 +420,11 @@ void Circos::buildCustomTrack(CustomTrackArrow *track) {
         track->setType(CustomTrackArrow::Type::Arrow);
         qreal boud = CustomTool::mapInt2Real(100, 0, start, end, 100 * it->getHeadRatio());
         tr->setBoundary(boud);
+        tr->setType(CustomTrack::Type::Arrow);
       } else {
+        tr->setType(CustomTrack::Type::Tile);
         track->setType(CustomTrackArrow::Type::Tile);
+//        qDebug("this is tile");
       }
       tr->setHoleSize(back_bone_inner_radius);
       tr->setPieSize(back_bone_outer_radius);
