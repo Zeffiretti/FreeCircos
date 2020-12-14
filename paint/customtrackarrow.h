@@ -19,21 +19,13 @@ class CustomTrackArrow {
   Types getType(void) {
     return type;
   }
-//  void setDirection(ArrowDirections d) {
-//    direction = d;
-//  }
-//  ArrowDirections getDirection(void) {
-//    return direction;
-//  }
   void addArrow(CustomTrack* a);
   void clearArrow(void);
   void drawTracks(QCustomPlot*);
 
   Types type;
-//  ArrowDirections direction;
   QList<CustomTrack* > track_list;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomTrackArrow::Types)
-//Q_DECLARE_OPERATORS_FOR_FLAGS(CustomTrackArrow::ArrowDirections)
 
 #endif // CUSTOMTRACKARROW_H

@@ -12,6 +12,11 @@ class CustomTrack {
     Tile
   };
   Q_DECLARE_FLAGS(Types, Type)
+  enum ArrowDirection {
+    ClockWise,
+    AntiClockWise
+  };
+  Q_DECLARE_FLAGS(ArrowDirections, ArrowDirection)
 
   void drawTrack(QCustomPlot *canvas);
   void buildData(void);
@@ -50,11 +55,19 @@ class CustomTrack {
     return outer_radius;
   }
 
+  void setDirection(ArrowDirections d) {
+    direction = d;
+  }
+  ArrowDirections getDirection(void) {
+    return direction;
+  }
+
   QCPCurve *track_curve;
-  QColor color = Qt::gray;
+  QColor color = Qt::lightGray;
   QList<QCPCurveData *> track_data;
 
   Types type;
+  ArrowDirections direction = ArrowDirection::ClockWise;
   qreal start_angle;
   qreal end_angle;
   qreal boundary_angle;
@@ -64,5 +77,6 @@ class CustomTrack {
   qreal outer_radius;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomTrack::Types)
+Q_DECLARE_OPERATORS_FOR_FLAGS(CustomTrack::ArrowDirections)
 
 #endif // CUSTOMTRACK_H

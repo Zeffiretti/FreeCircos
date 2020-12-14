@@ -22,7 +22,7 @@ void FreeCircos::onButtonClicked(bool ) {
     }
     if(circos->getTrackEnabled()) {
       circos->buildCustomTrack(track_canvas);
-//        track_canvas->dr
+      track_canvas->drawTracks(canvas);
     }
     canvas->replot();
   }

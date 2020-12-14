@@ -144,11 +144,14 @@ void Circos::dataToLink(void) {
 void Circos::dataToTrackArrow(void) {
   track_arrow.clear();
   QList<QVariant> data;
+  m_datas.removeAt(0);
   foreach (data, m_datas) {
     TrackArrow* ta = new TrackArrow;
     if(data.at(3).isNull()) {
       ta->setDirections(TrackArrow::Direction::None);
+      ta->setTypes(TrackArrow::Type::Tile);
     } else {
+      ta->setTypes(TrackArrow::Type::Arrow);
       if(data.at(3).toString().compare("+") == 0) {
         ta->setDirections(TrackArrow::Direction::ClockWise);
       } else {
@@ -379,41 +382,50 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
 }
 
 void Circos::buildCustomTrack(CustomTrackArrow *track) {
+  track->clearArrow();
   track->setType(CustomTrackArrow::Type::Arrow);
   foreach (TrackArrow *it, track_arrow) {
     CustomTrack *tr = new CustomTrack;
     Gene *g = findGene(it->getName());
-    track->addArrow(tr);
-    int int_min = g->getStart();
-    int int_max = g->getEnd();
-    qreal real_min = g->getStartAngle();
-    qreal real_max = g->getEndAngle();
-    qreal start = CustomTool::mapInt2Real(int_min, int_max,
+    if(g->getOnCanvas()) {
+//      track->addArrow(tr);
+      int int_min = g->getStart();
+      int int_max = g->getEnd();
+      qreal real_min = g->getStartAngle();
+      qreal real_max = g->getEndAngle();
+      qreal start = CustomTool::mapInt2Real(int_min, int_max,
+                                            real_min, real_max,
+                                            it->getStart());
+      qreal end = CustomTool::mapInt2Real(int_min, int_max,
                                           real_min, real_max,
-                                          tr->getStart());
-    qreal end = CustomTool::mapInt2Real(int_min, int_max,
-                                        real_min, real_max,
-                                        tr->getEnd());
-    tr->setStart(start);
-    tr->setEnd(end);
-    switch (it->getDirections()) {
-    case TrackArrow::Direction::ClockWise:
-//        tr->set
-      break;
-    case TrackArrow::Direction::AntiClockWise:
-      break;
-    case TrackArrow::Direction::None:
-    default:
-      break;
+                                          it->getEnd());
+//      qDebug("int_min:%d, int_max:%d, real_min:%.3f, real_max:%.3f", int_min, int_max, real_min, real_max);
+//      qDebug("values:%d, valuee:%d, start:%.4f, end:%.4f", it->getStart(), it->getEnd(), start, end);
+      tr->setStart(start);
+      tr->setEnd(end);
+      switch (it->getDirections()) {
+      case TrackArrow::Direction::ClockWise:
+        tr->setDirection(CustomTrack::ArrowDirection::ClockWise);
+        break;
+      case TrackArrow::Direction::AntiClockWise:
+        tr->setDirection(CustomTrack::ArrowDirection::AntiClockWise);
+        break;
+      case TrackArrow::Direction::None:
+      default:
+        //      tr->setType(CustomTrack::Type::Tile);
+        break;
+      }
+      if(it->getTypes().testFlag(TrackArrow::Type::Arrow)) {
+        track->setType(CustomTrackArrow::Type::Arrow);
+        qreal boud = CustomTool::mapInt2Real(100, 0, start, end, 100 * it->getHeadRatio());
+        tr->setBoundary(boud);
+      } else {
+        track->setType(CustomTrackArrow::Type::Tile);
+      }
+      tr->setHoleSize(back_bone_inner_radius);
+      tr->setPieSize(back_bone_outer_radius);
+      track->addArrow(tr);
     }
-    if(it->getTypes().testFlag(TrackArrow::Type::Arrow)) {
-      track->setType(CustomTrackArrow::Type::Arrow);
-      qreal boud = CustomTool::mapInt2Real(0, 100, end, start, 100 * it->getHeadRatio());
-      tr->setBoundary(boud);
-    } else {
-      track->setType(CustomTrackArrow::Type::Tile);
-    }
-    track->addArrow(tr);
   }
 }
 
@@ -425,11 +437,6 @@ Gene* Circos::findGene(const QString name) {
       return g;
     }
   }
-//    for(int i = 0; i < back_bone.size(); ++i) {
-//        if(back_bone.at(i)->name == name) {
-//            return back_bone.at(i);
-//        }
-//    }
   return new Gene;
 }
 
