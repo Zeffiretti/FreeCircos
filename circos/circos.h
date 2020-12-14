@@ -93,6 +93,9 @@ class Circos : public QObject {
   Link* getLink(int index);
   int getLinkNum(void);
 
+  void setTrackEnabled(bool b);
+  bool getTrackEnabled(void);
+
  public slots:
   void onGeneAngleChanged(const QString& n, qreal s, qreal e);
 //  void onLinkColorSet(int index, QColor c);
@@ -119,6 +122,7 @@ class Circos : public QObject {
   qreal link_line_width = 1;
   qreal link_stre_min = 0, link_stre_max = 10;
   QList<TrackArrow *> track_arrow;
+  bool track_enabled = false;
 
   QScopedPointer<ExcelBase> m_xls;
   QList<QList<QVariant> > m_datas;

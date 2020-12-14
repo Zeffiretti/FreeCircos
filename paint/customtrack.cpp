@@ -1,6 +1,7 @@
 #include "customtrack.h"
 
 CustomTrack::CustomTrack() {
+  track_data.clear();
 }
 
 void CustomTrack::buildData(void) {

@@ -37,6 +37,9 @@ class TrackArrow : public QObject {
   void setTypes(Types t) {
     type = t;
   }
+  void setHeadRatio(qreal r) {
+    head_ratio = r;
+  }
   // getters
   QString getName(void) {
     return gene_name;
@@ -52,6 +55,9 @@ class TrackArrow : public QObject {
   }
   Types getTypes(void) {
     return type;
+  }
+  qreal getHeadRatio(void) {
+    return head_ratio;
   }
 
   QString gene_name;

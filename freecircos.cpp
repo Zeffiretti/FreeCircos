@@ -3,57 +3,58 @@
 #include "ui_freecircos.h"
 
 FreeCircos::FreeCircos(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::FreeCircos) {
-    ui->setupUi(this);
-    this->setGeometry(40, 40, 1610, 650);
-    major_font = new QFont;
-    major_font->setFamily("Source Code Pro");
-    major_font->setPixelSize(16);
+  : QMainWindow(parent), ui(new Ui::FreeCircos) {
+  ui->setupUi(this);
+  this->setGeometry(40, 40, 1610, 650);
+  major_font = new QFont;
+  major_font->setFamily("Source Code Pro");
+  major_font->setPixelSize(16);
 //  major_font->setPointSize(10);
-    major_font->setBold(true);
-    //init canvas
-    initCanvas();
-    //init generate button
-    initGenerateButton();
-    gene_donut = new CustomDonut;
-    category_donut = new CustomDonut;
-    link_canvas = new CustomLinkCanvas;
-    circos = new Circos;
-    table_edit_mode = EditGene;
-    connect(gene_donut, &CustomDonut::sliceAngleChanged,
-            circos, &Circos::onGeneAngleChanged);
-    QPushButton *backbone_button = new QPushButton;
-    backbone_button->setParent(this);
-    backbone_button->setText("backbone");
-    backbone_button->setGeometry(10, 10, 100, 40);
-    backbone_button->setProperty("function", "openbackbonefile");
-    backbone_button->setVisible(true);
-    connect(backbone_button, &QPushButton::clicked,
-            this, &FreeCircos::onButtonClicked);
-    QPushButton *category_button = new QPushButton;
-    category_button->setParent(this);
-    category_button->setText("category");
-    category_button->setGeometry(120, 10, 100, 40);
-    category_button->setProperty("function", "opencategoryfile");
-    category_button->setVisible(true);
-    connect(category_button, &QPushButton::clicked,
-            this, &FreeCircos::onButtonClicked);
-    QPushButton *link_button = new QPushButton;
-    link_button->setParent(this);
-    link_button->setText("link");
-    link_button->setGeometry(10, 60, 100, 40);
-    link_button->setProperty("function", "openlinkfile");
-    link_button->setVisible(true);
-    connect(link_button, &QPushButton::clicked,
-            this, &FreeCircos::onButtonClicked);
-    QPushButton *trackarrow_button = new QPushButton;
-    trackarrow_button->setParent(this);
-    trackarrow_button->setText("trackarrow");
-    trackarrow_button->setGeometry(120, 60, 100, 40);
-    trackarrow_button->setProperty("function", "opentrackarrowfile");
-    trackarrow_button->setVisible(true);
-    connect(trackarrow_button, &QPushButton::clicked,
-            this, &FreeCircos::onButtonClicked);
+  major_font->setBold(true);
+  //init canvas
+  initCanvas();
+  //init generate button
+  initGenerateButton();
+  gene_donut = new CustomDonut;
+  category_donut = new CustomDonut;
+  link_canvas = new CustomLinkCanvas;
+  track_canvas = new CustomTrackArrow;
+  circos = new Circos;
+  table_edit_mode = EditGene;
+  connect(gene_donut, &CustomDonut::sliceAngleChanged,
+          circos, &Circos::onGeneAngleChanged);
+  QPushButton *backbone_button = new QPushButton;
+  backbone_button->setParent(this);
+  backbone_button->setText("backbone");
+  backbone_button->setGeometry(10, 10, 100, 40);
+  backbone_button->setProperty("function", "openbackbonefile");
+  backbone_button->setVisible(true);
+  connect(backbone_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  QPushButton *category_button = new QPushButton;
+  category_button->setParent(this);
+  category_button->setText("category");
+  category_button->setGeometry(120, 10, 100, 40);
+  category_button->setProperty("function", "opencategoryfile");
+  category_button->setVisible(true);
+  connect(category_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  QPushButton *link_button = new QPushButton;
+  link_button->setParent(this);
+  link_button->setText("link");
+  link_button->setGeometry(10, 60, 100, 40);
+  link_button->setProperty("function", "openlinkfile");
+  link_button->setVisible(true);
+  connect(link_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  QPushButton *trackarrow_button = new QPushButton;
+  trackarrow_button->setParent(this);
+  trackarrow_button->setText("trackarrow");
+  trackarrow_button->setGeometry(120, 60, 100, 40);
+  trackarrow_button->setProperty("function", "opentrackarrowfile");
+  trackarrow_button->setVisible(true);
+  connect(trackarrow_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
 //    QElapsedTimer timer;
 //    timer.start();
 //    int size = 50;
@@ -79,15 +80,15 @@ FreeCircos::FreeCircos(QWidget *parent)
 //    canvas->replot();
 //    qDebug() << "Elapsed time3: " << timer.elapsed() << " ms";
 //    timer.restart();
-    control_panel = new QTabWidget;
-    control_panel->setParent(this);
-    control_panel->setGeometry(600, 30, 1000, 600);
-    initBackBoneWidget(control_panel);
-    initLinkWidget(control_panel);
-    //qDebug() << CustomTool::mapInt2Real(202293916, 202585582, 0, 1, 202417563);
+  control_panel = new QTabWidget;
+  control_panel->setParent(this);
+  control_panel->setGeometry(600, 30, 1000, 600);
+  initBackBoneWidget(control_panel);
+  initLinkWidget(control_panel);
+  //qDebug() << CustomTool::mapInt2Real(202293916, 202585582, 0, 1, 202417563);
 //    qDebug() << QColor(Qt::red).name();
 }
 
 FreeCircos::~FreeCircos() {
-    delete ui;
+  delete ui;
 }

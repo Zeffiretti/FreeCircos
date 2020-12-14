@@ -97,6 +97,7 @@ class FreeCircos : public QMainWindow {
   CustomDonut *gene_donut;
   CustomDonut *category_donut;
   CustomLinkCanvas *link_canvas;
+  CustomTrackArrow *track_canvas;
   Circos *circos;
 
   QPushButton *generate_button;

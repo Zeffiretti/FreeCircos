@@ -36,6 +36,20 @@ class CustomTrack {
     return boundary_angle;
   }
 
+  void setHoleSize(qreal inner) {
+    inner_radius = inner;
+  }
+  qreal getHoleSize(void) {
+    return inner_radius;
+  }
+
+  void setPieSize(qreal outer) {
+    outer_radius = outer;
+  }
+  qreal getPieSize(void) {
+    return outer_radius;
+  }
+
   QCPCurve *track_curve;
   QColor color = Qt::gray;
   QList<QCPCurveData *> track_data;

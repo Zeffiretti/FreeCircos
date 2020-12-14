@@ -27,6 +27,7 @@ class CustomTrackArrow {
 //  }
   void addArrow(CustomTrack* a);
   void clearArrow(void);
+  void drawTracks(QCustomPlot*);
 
   Types type;
 //  ArrowDirections direction;

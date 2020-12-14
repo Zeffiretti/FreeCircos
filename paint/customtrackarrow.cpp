@@ -10,3 +10,12 @@ void CustomTrackArrow::addArrow(CustomTrack *a) {
 void CustomTrackArrow::clearArrow(void) {
   track_list.clear();
 }
+
+void CustomTrackArrow::drawTracks(QCustomPlot *canvas) {
+  foreach (CustomTrack* it, track_list) {
+    if(type.testFlag(CustomTrackArrow::Type::Arrow)) {
+//        it->
+    }
+    it->drawTrack(canvas);
+  }
+}

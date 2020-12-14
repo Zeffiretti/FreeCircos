@@ -400,9 +400,20 @@ void Circos::buildCustomTrack(CustomTrackArrow *track) {
     case TrackArrow::Direction::ClockWise:
 //        tr->set
       break;
+    case TrackArrow::Direction::AntiClockWise:
+      break;
+    case TrackArrow::Direction::None:
     default:
       break;
     }
+    if(it->getTypes().testFlag(TrackArrow::Type::Arrow)) {
+      track->setType(CustomTrackArrow::Type::Arrow);
+      qreal boud = CustomTool::mapInt2Real(0, 100, end, start, 100 * it->getHeadRatio());
+      tr->setBoundary(boud);
+    } else {
+      track->setType(CustomTrackArrow::Type::Tile);
+    }
+    track->addArrow(tr);
   }
 }
 
@@ -595,6 +606,14 @@ Link* Circos::getLink(int index) {
 
 int Circos::getLinkNum(void) {
   return links.size();
+}
+
+void Circos::setTrackEnabled(bool b) {
+  track_enabled = b;
+}
+
+bool Circos::getTrackEnabled(void) {
+  return track_enabled;
 }
 
 void Circos::onGeneAngleChanged(const QString& n, qreal s, qreal e) {

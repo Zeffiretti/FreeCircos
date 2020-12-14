@@ -20,6 +20,10 @@ void FreeCircos::onButtonClicked(bool ) {
 //            link_canvas->setLinkType(CustomLinkCanvas::LinkType::AllOut);
       link_canvas->drawLinks(canvas);
     }
+    if(circos->getTrackEnabled()) {
+      circos->buildCustomTrack(track_canvas);
+//        track_canvas->dr
+    }
     canvas->replot();
   }
   if(func == "openbackbonefile") {
@@ -80,6 +84,8 @@ void FreeCircos::onButtonClicked(bool ) {
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\track arrow file.xlsx");
 #endif
+    circos->dataToTrackArrow();
+    circos->setTrackEnabled(true);
   }
   if(func == "backboneconfig") {
     moveTableRow(backbone_table, backbone_model, 4, 0);
