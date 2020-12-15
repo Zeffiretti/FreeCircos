@@ -81,4 +81,8 @@ RESOURCES += \
     resource/resource.qrc
 
 DISTFILES += \
-    LICENSE
+    LICENSE \
+    icon.rc
+
+#RC_FILE += qrc:/icon/icon.ico
+RC_ICONS = resource/icon.ico
