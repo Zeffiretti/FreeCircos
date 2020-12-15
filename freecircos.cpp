@@ -5,7 +5,10 @@
 FreeCircos::FreeCircos(QWidget *parent)
   : QMainWindow(parent), ui(new Ui::FreeCircos) {
   ui->setupUi(this);
-  this->setGeometry(40, 40, 1610, 650);
+//  setWindowFlags(flags);
+  setMinimumSize(1610, 650);
+  setMaximumSize(1610, 650);
+  this->setGeometry(200, 200, 1610, 650);
   major_font = new QFont;
   major_font->setFamily("Source Code Pro");
   major_font->setPixelSize(16);

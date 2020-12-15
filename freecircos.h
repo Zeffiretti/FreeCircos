@@ -91,6 +91,7 @@ class FreeCircos : public QMainWindow {
  private:
 
   Ui::FreeCircos *ui;
+//  Qt::WindowFlags flags = Qt::WindowMaximizeButtonHint;
   QFont *major_font;
 
   QCustomPlot *canvas;
