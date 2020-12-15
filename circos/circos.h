@@ -105,13 +105,13 @@ class Circos : public QObject {
 
  private:
   QList<Gene *> back_bone;
-  qreal back_bone_inner_radius = 0.7;
-  qreal back_bone_outer_radius = 0.8;
+  qreal back_bone_inner_radius = 0.6;
+  qreal back_bone_outer_radius = 0.7;
   QList<int> back_bone_sequence;
   bool category_enabled = false;
   QList<Category *> category;
-  qreal category_inner_raidus = 0.81;
-  qreal category_outer_radius = 0.85;
+  qreal category_inner_raidus = 0.7;
+  qreal category_outer_radius = 0.8;
   QList<int> category_sequence;
   bool link_enabled = false;
   QList<Link *> links;

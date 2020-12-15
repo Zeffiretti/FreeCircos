@@ -56,6 +56,7 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
   slice_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
   slice_curve->setPen(strike_pen);
   slice_curve->setBrush(fill_brush);
+//  slice_curve->setPen();
   qreal e = end_angle - gap_angle;
   if(qAbs(e - start_angle) > 0.003) {
     int i = 0;
@@ -131,7 +132,8 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
     text->position->setType(QCPItemPosition::ptPlotCoords);
     text->position->setCoords(left_radius * qCos(center_angle), left_radius * qSin(center_angle));
     text->setPositionAlignment(Qt::AlignLeft | Qt::AlignBottom);
-    text->setRotation(-center_angle * 180 / M_PI);
+    qreal rotate_angle = (center_angle > M_PI_2 && center_angle < M_PI_2 * 3) ? (M_PI - center_angle) : -center_angle;
+    text->setRotation(rotate_angle * 180 / M_PI);
     text->setText(name);
     break;
   }
@@ -144,7 +146,8 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
       text->position->setType(QCPItemPosition::ptPlotCoords);
       text->setPositionAlignment(Qt::AlignTop | Qt::AlignHCenter);
       text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
-      text->setRotation( (M_PI_2 - center_angle) * 180 / M_PI);
+      qreal rotate_angle = (center_angle > M_PI) ? (-M_PI_2 - center_angle) : (M_PI_2 - center_angle);
+      text->setRotation( rotate_angle * 180 / M_PI);
       text->setText(name);
       break;
     }
@@ -155,7 +158,8 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
       text->position->setType(QCPItemPosition::ptPlotCoords);
       text->setPositionAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
       text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
-      text->setRotation( (M_PI_2 - center_angle) * 180 / M_PI);
+      qreal rotate_angle = (center_angle > M_PI) ? (-M_PI_2 - center_angle) : (M_PI_2 - center_angle);
+      text->setRotation( rotate_angle * 180 / M_PI);
       text->setText(name);
       break;
     }
@@ -166,7 +170,8 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
       text->position->setType(QCPItemPosition::ptPlotCoords);
       text->setPositionAlignment(Qt::AlignBottom | Qt::AlignHCenter);
       text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
-      text->setRotation( (M_PI_2 - center_angle) * 180 / M_PI);
+      qreal rotate_angle = (center_angle > M_PI) ? (-M_PI_2 - center_angle) : (M_PI_2 - center_angle);
+      text->setRotation( rotate_angle * 180 / M_PI);
       text->setText(name);
       break;
     }

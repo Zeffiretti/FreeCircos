@@ -207,8 +207,10 @@ void Circos::buildBackBoneDonut(CustomDonut *donut) {
     g->setOnCanvas(true);
     CustomSlice *slice = new CustomSlice(g->getName(),
                                          g->getLength());
-    slice->setBrush(QBrush(g->getFillColor()));
-    slice->setPen(QPen(g->getStrikeColor()));
+//    slice->setBrush(QBrush(g->getFillColor()));
+//    slice->setPen(QPen(g->getStrikeColor()));
+    slice->setBrush(QBrush(Qt::white));
+    slice->setPen(QPen(Qt::black));
     slice->setLabelPosition(g->getLabelPosition());
     slice->setLabelState(g->getLabelState());
 //    slice->setSize(back_bone_inner_radius, back_bone_outer_radius);
@@ -402,23 +404,21 @@ void Circos::buildCustomTrack(CustomTrackArrow *track) {
                                           it->getEnd());
 //      qDebug("int_min:%d, int_max:%d, real_min:%.3f, real_max:%.3f", int_min, int_max, real_min, real_max);
 //      qDebug("values:%d, valuee:%d, start:%.4f, end:%.4f", it->getStart(), it->getEnd(), start, end);
-      tr->setStart(start);
-      tr->setEnd(end);
-      switch (it->getDirections()) {
-      case TrackArrow::Direction::ClockWise:
-        tr->setDirection(CustomTrack::ArrowDirection::ClockWise);
-        break;
-      case TrackArrow::Direction::AntiClockWise:
-        tr->setDirection(CustomTrack::ArrowDirection::AntiClockWise);
-        break;
-      case TrackArrow::Direction::None:
-      default:
-        //      tr->setType(CustomTrack::Type::Tile);
-        break;
-      }
+//      tr->setStart(start);
+//      tr->setEnd(end);
       if(it->getTypes().testFlag(TrackArrow::Type::Arrow)) {
         track->setType(CustomTrackArrow::Type::Arrow);
         qreal boud = CustomTool::mapInt2Real(100, 0, start, end, 100 * it->getHeadRatio());
+        if(it->getDirections().testFlag(TrackArrow::Direction::ClockWise)) {
+          tr->setDirection(CustomTrack::ArrowDirection::ClockWise);
+          tr->setStart(qMin(start, end));
+          tr->setEnd(qMax(start, end));
+        } else {
+          boud = CustomTool::mapInt2Real(100, 0, end, start, 100 * it->getHeadRatio());
+          tr->setDirection(CustomTrack::ArrowDirection::AntiClockWise);
+          tr->setStart(qMax(start, end));
+          tr->setEnd(qMin(start, end));
+        }
         tr->setBoundary(boud);
         tr->setType(CustomTrack::Type::Arrow);
       } else {
