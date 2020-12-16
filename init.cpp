@@ -3,7 +3,7 @@
 void FreeCircos::initGenerateButton(void) {
   generate_button = new QPushButton("Generate!");
   generate_button->setParent(this);
-  generate_button->setGeometry(230, 10, 100, 40);
+  generate_button->setGeometry(340, 10, 150, 90);
   generate_button->setProperty("function", "generate");
   connect(generate_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
@@ -407,6 +407,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
   link_thermometer_checkbox->setProperty("prefix", "link");
   link_thermometer_checkbox->setProperty("function", "link-thermometer");
   initLinkColorScale(link_thermometer_colormap_onpanel_plot, link_thermometer_colormap_oncanvas_plot);
+  link_thermometer_colormap_oncanvas_plot->setVisible(false);
+//  initLinkColorScale(link_thermometer_colormap_onpanel_plot, canvas);
   connect(link_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
           this, &FreeCircos::onTableSelectedChanged);
   connect(link_type_combobox, &QComboBox::currentTextChanged,
@@ -456,7 +458,7 @@ void FreeCircos::initLinkColorScale(QCustomPlot *parent1, QCustomPlot *parent2) 
     link_thermometer_onpanel_color_map->data()->setData(value, 0, i);
     link_thermometer_oncanvas_color_map->data()->setData(0, value, i);
   }
-  parent2->setParent(canvas);
+//  parent2->setParent(canvas);
   parent2->xAxis->setVisible(false);
 //    parent2->yAxis->setTickLength(5);
 //    parent2->yAxis->setTicker();
@@ -476,6 +478,7 @@ void FreeCircos::initLinkColorScale(QCustomPlot *parent1, QCustomPlot *parent2) 
   parent1->rescaleAxes();
   parent2->rescaleAxes();
 //    link_thermometer_color_scale->setVisible(false);
+  parent2->setParent(canvas);
   parent2->setVisible(true);
   link_cm_button1->setParent(link_config_widget);
   link_cm_button1->setGeometry(90, 520, 18, 30);

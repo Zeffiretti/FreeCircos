@@ -230,6 +230,17 @@ void FreeCircos::onButtonClicked(bool ) {
     sel_model->select(*selection, QItemSelectionModel::Select);
     emit backbone_table->selectionModel()->currentRowChanged(l_index, r_index);
   }
+  if(func.compare("saveimage") == 0) {
+    QString fileName;
+    fileName = QFileDialog::getSaveFileName(this,
+                                            tr("Open Config"), "FreeCircos.png", tr("Image Files (*.png *.jpg *.bmp)"));
+    if (!fileName.isNull()) {
+      //fileName是文件名
+      qDebug() << fileName;
+      canvas->savePng(fileName);
+    } else {
+    }
+  }
 }
 
 void FreeCircos::onActionTriggered(bool ) {
@@ -615,8 +626,10 @@ void FreeCircos::onCheckboxStateChanged(int state) {
     if(func.compare("link-thermometer") == 0) {
       switch (state) {
       case Qt::CheckState::Checked:
+        link_thermometer_colormap_oncanvas_plot->setVisible(true);
         break;
       case Qt::CheckState::Unchecked:
+        link_thermometer_colormap_oncanvas_plot->setVisible(false);
         break;
       default:
         break;
