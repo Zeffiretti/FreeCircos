@@ -58,6 +58,20 @@ FreeCircos::FreeCircos(QWidget *parent)
   trackarrow_button->setVisible(true);
   connect(trackarrow_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
+  QPushButton *setting_button = new QPushButton;
+  setting_button->setParent(this);
+  setting_button->setText("Global Setting");
+  setting_button->setGeometry(230, 10, 100, 40);
+  setting_button->setProperty("function", "globalsetting");
+  connect(setting_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  QPushButton *save_button = new QPushButton;
+  save_button->setParent(this);
+  save_button->setText("Save");
+  save_button->setProperty("function", "saveimage");
+  save_button->setGeometry(230, 60, 100, 40);
+  connect(save_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
 //    QElapsedTimer timer;
 //    timer.start();
 //    int size = 50;
