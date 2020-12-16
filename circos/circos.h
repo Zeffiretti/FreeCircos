@@ -104,14 +104,16 @@ class Circos : public QObject {
   void linkColorFunChanged(int index);
 
  private:
-  QList<Gene *> back_bone;
+  // global paremater
   qreal back_bone_inner_radius = 0.6;
   qreal back_bone_outer_radius = 0.7;
+  qreal category_inner_raidus = 0.7;
+  qreal category_outer_radius = 0.8;
+
+  QList<Gene *> back_bone;
   QList<int> back_bone_sequence;
   bool category_enabled = false;
   QList<Category *> category;
-  qreal category_inner_raidus = 0.7;
-  qreal category_outer_radius = 0.8;
   QList<int> category_sequence;
   bool link_enabled = false;
   QList<Link *> links;
