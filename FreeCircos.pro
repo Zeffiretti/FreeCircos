@@ -24,9 +24,11 @@ SOURCES += \
     circos/link.cpp \
     circos/trackarrow.cpp \
     customslots.cpp \
+    extension/extdoubleslider.cpp \
     fileprocess/excelbase.cpp \
     fileprocess/qvariantlistlistmodel.cpp \
     functions.cpp \
+    globalsetwin.cpp \
     init.cpp \
     main.cpp \
     freecircos.cpp \
@@ -50,10 +52,13 @@ HEADERS += \
     circos/gene.h \
     circos/link.h \
     circos/trackarrow.h \
+    extension/extdoubleslider.h \
+    extension/extdoublesliderprivate.h \
     fileprocess/excelbase.h \
     fileprocess/qvariantlistlistmodel.h \
     fileresource.h \
     freecircos.h \
+    globalsetwin.h \
     paint/colorgen.h \
     paint/custombezier.h \
     paint/customdonut.h \

@@ -11,6 +11,8 @@
 #include <QLineEdit>
 #include <QFont>
 
+#include "extension/extdoubleslider.h"
+
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
 #include "paint/customslice.h"
@@ -27,7 +29,7 @@
 #include "circos/gene.h"
 
 #include "addition/tablemovedialog.h"
-
+#include "globalsetwin.h"
 #include "fileresource.h"
 
 QT_BEGIN_NAMESPACE
@@ -42,6 +44,7 @@ class FreeCircos : public QMainWindow {
 
  public:
   FreeCircos(QWidget *parent = nullptr);
+  GlobalSetWin *gbset_win;
 
   enum TableEditMode {
     EditGene,

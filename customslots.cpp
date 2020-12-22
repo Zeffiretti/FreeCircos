@@ -26,6 +26,10 @@ void FreeCircos::onButtonClicked(bool ) {
     }
     canvas->replot();
   }
+  if(func.compare("globalsetting") == 0) {
+    gbset_win = new GlobalSetWin(this);
+    gbset_win->show();
+  }
   if(func == "openbackbonefile") {
 #ifndef FILE_RES_USED
     QString xlsFile = QFileDialog::getOpenFileName(this, QString(), QString(), "excel(*.xls *.xlsx)");

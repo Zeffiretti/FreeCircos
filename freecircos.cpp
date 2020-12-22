@@ -62,6 +62,7 @@ FreeCircos::FreeCircos(QWidget *parent)
   setting_button->setParent(this);
   setting_button->setText("Global Setting");
   setting_button->setGeometry(230, 10, 100, 40);
+  setting_button->setProperty("prefix", "global");
   setting_button->setProperty("function", "globalsetting");
   connect(setting_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
