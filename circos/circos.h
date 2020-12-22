@@ -96,6 +96,34 @@ class Circos : public QObject {
   void setTrackEnabled(bool b);
   bool getTrackEnabled(void);
 
+  void setBBHole(qreal bbh) {
+    back_bone_inner_radius = bbh;
+  }
+  qreal getBBHole(void) {
+    return back_bone_inner_radius;
+  }
+
+  void setBBPie(qreal bbp) {
+    back_bone_outer_radius = bbp;
+  }
+  qreal getBBPie(void) {
+    return back_bone_outer_radius;
+  }
+
+  void setCGHole(qreal cgh) {
+    category_inner_raidus = cgh;
+  }
+  qreal getCGHole(void) {
+    return category_inner_raidus;
+  }
+
+  void setCGPie(qreal cgp) {
+    category_outer_radius = cgp;
+  }
+  qreal getCGPie(void) {
+    return category_outer_radius;
+  }
+
  public slots:
   void onGeneAngleChanged(const QString& n, qreal s, qreal e);
 //  void onLinkColorSet(int index, QColor c);
