@@ -14,15 +14,20 @@ class GlobalSetWin : public QMainWindow {
   ExtDoubleSlider *category_dslider;
 
 //  QSlider *slider;
-  QLabel *bbs_label;
-  QLabel *cgs_label;
-  QLabel *trk_label;
+  QLabel *bbs_name_label;
+  QLabel *bbs_value_label;
+  QLabel *cgs_name_label;
+  QLabel *cgs_value_label;
+  QLabel *trk_name_label;
 
 
  signals:
+  void BBInnerRadiusChanged(qreal);
+  void BBOuterRadiusChanged(qreal);
 
  public slots:
-  void onLowerValueChanged(int i);
+  void onDoubleSliderLowerValueChanged(int i);
+  void onDoubleSliderUpperValueChanged(int i);
 };
 
 #endif // GLOBALSETWIN_H
