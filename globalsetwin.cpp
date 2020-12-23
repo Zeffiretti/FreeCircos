@@ -61,7 +61,7 @@ void GlobalSetWin::onDoubleSliderLowerValueChanged(int i) {
       bbs_value_label->setText(QString::number(back_bone_dslider->lowerValue()) + "--" + QString::number(back_bone_dslider->upperValue()));
     }
     if(func.compare("category_dslider") == 0) {
-//      emit BBInnerRadiusChanged(i / 100.0);
+      emit CatInnerRadiusChanged(i / 100.0);
       cgs_value_label->setText(QString::number(category_dslider->lowerValue()) + "--" + QString::number(category_dslider->upperValue()));
     }
   }
@@ -77,7 +77,7 @@ void GlobalSetWin::onDoubleSliderUpperValueChanged(int i) {
       bbs_value_label->setText(QString::number(back_bone_dslider->lowerValue()) + "--" + QString::number(back_bone_dslider->upperValue()));
     }
     if(func.compare("category_dslider") == 0) {
-//      emit BBInnerRadiusChanged(i / 100.0);
+      emit CatOuterRadiusChanged(i / 100.0);
       cgs_value_label->setText(QString::number(category_dslider->lowerValue()) + "--" + QString::number(category_dslider->upperValue()));
     }
   }

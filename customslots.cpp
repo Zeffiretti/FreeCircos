@@ -29,6 +29,14 @@ void FreeCircos::onButtonClicked(bool ) {
   if(func.compare("globalsetting") == 0) {
     gbset_win = new GlobalSetWin(this);
     gbset_win->show();
+    connect(gbset_win, &GlobalSetWin::BBInnerRadiusChanged,
+            circos, &Circos::setBBHole);
+    connect(gbset_win, &GlobalSetWin::BBOuterRadiusChanged,
+            circos, &Circos::setBBPie);
+    connect(gbset_win, &GlobalSetWin::CatInnerRadiusChanged,
+            circos, &Circos::setCGHole);
+    connect(gbset_win, &GlobalSetWin::CatOuterRadiusChanged,
+            circos, &Circos::setCGPie);
   }
   if(func == "openbackbonefile") {
 #ifndef FILE_RES_USED

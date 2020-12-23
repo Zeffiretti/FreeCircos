@@ -24,6 +24,8 @@ class GlobalSetWin : public QMainWindow {
  signals:
   void BBInnerRadiusChanged(qreal);
   void BBOuterRadiusChanged(qreal);
+  void CatInnerRadiusChanged(qreal);
+  void CatOuterRadiusChanged(qreal);
 
  public slots:
   void onDoubleSliderLowerValueChanged(int i);
