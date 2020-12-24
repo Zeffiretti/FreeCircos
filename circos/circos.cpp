@@ -371,6 +371,8 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
       }
       custom_link->setLineWidth(1);
       custom_link->setLinkClass(lc);
+      custom_link->setHoleSize(getLKHole());
+      custom_link->setPieSize(getLKPie());
       custom_link->setPen(QPen(l->getColor()));
       custom_link->setBrush(QBrush(l->getColor()));
       custom_link->setSGN(sg->getName());
