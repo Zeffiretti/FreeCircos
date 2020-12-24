@@ -12,6 +12,8 @@ class GlobalSetWin : public QMainWindow {
   explicit GlobalSetWin(QWidget *parent = nullptr);
   ExtDoubleSlider *back_bone_dslider;
   ExtDoubleSlider *category_dslider;
+  ExtDoubleSlider *trackarrow_dslider;
+  ExtDoubleSlider *link_dslider;
 
 //  QSlider *slider;
   QLabel *bbs_name_label;
@@ -19,6 +21,10 @@ class GlobalSetWin : public QMainWindow {
   QLabel *cgs_name_label;
   QLabel *cgs_value_label;
   QLabel *trk_name_label;
+  QLabel *arw_name_label;
+  QLabel *arw_value_label;
+  QLabel *link_name_label;
+  QLabel *link_value_label;
 
 
  signals:
@@ -26,6 +32,10 @@ class GlobalSetWin : public QMainWindow {
   void BBOuterRadiusChanged(qreal);
   void CatInnerRadiusChanged(qreal);
   void CatOuterRadiusChanged(qreal);
+  void ARWOuterRadiusChanged(qreal);
+  void ARWInnerRadiusChanged(qreal);
+  void LinkInnerRadiusChanged(qreal);
+  void LinkOuterRadiusChanged(qreal);
 
  public slots:
   void onDoubleSliderLowerValueChanged(int i);

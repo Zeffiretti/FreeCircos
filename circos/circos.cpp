@@ -426,8 +426,8 @@ void Circos::buildCustomTrack(CustomTrackArrow *track) {
         track->setType(CustomTrackArrow::Type::Tile);
 //        qDebug("this is tile");
       }
-      tr->setHoleSize(back_bone_inner_radius);
-      tr->setPieSize(back_bone_outer_radius);
+      tr->setHoleSize(getTAHole());
+      tr->setPieSize(getTAPie());
       track->addArrow(tr);
     }
   }

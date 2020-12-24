@@ -112,6 +112,21 @@ class Circos : public QObject {
     return category_outer_radius;
   }
 
+  qreal getTAHole(void) {
+    return trackarrow_inner_radius;
+  }
+
+  qreal getTAPie(void) {
+    return trackarrow_outer_radius;
+  }
+
+  qreal getLKHole(void) {
+    return link_inner_radius;
+  }
+  qreal getLKPie(void) {
+    return link_outer_radius;
+  }
+
  public slots:
   void onGeneAngleChanged(const QString& n, qreal s, qreal e);
 //  void onLinkColorSet(int index, QColor c);
@@ -128,6 +143,18 @@ class Circos : public QObject {
   void setCGPie(qreal cgp) {
     category_outer_radius = cgp;
   }
+  void setTAHole(qreal tah) {
+    trackarrow_inner_radius = tah;
+  }
+  void setTAPie(qreal tap) {
+    trackarrow_outer_radius = tap;
+  }
+  void setLKHole(qreal lkh) {
+    link_inner_radius = lkh;
+  }
+  void setLKPie(qreal lkp) {
+    link_outer_radius = lkp;
+  }
  signals:
   void linkColorFunChanged(int index);
 
@@ -137,6 +164,10 @@ class Circos : public QObject {
   qreal back_bone_outer_radius = 0.7;
   qreal category_inner_raidus = 0.7;
   qreal category_outer_radius = 0.8;
+  qreal trackarrow_inner_radius = back_bone_inner_radius;
+  qreal trackarrow_outer_radius = back_bone_outer_radius;
+  qreal link_inner_radius = back_bone_inner_radius;
+  qreal link_outer_radius = category_outer_radius;
 
   QList<Gene *> back_bone;
   QList<int> back_bone_sequence;

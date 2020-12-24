@@ -37,6 +37,14 @@ void FreeCircos::onButtonClicked(bool ) {
             circos, &Circos::setCGHole);
     connect(gbset_win, &GlobalSetWin::CatOuterRadiusChanged,
             circos, &Circos::setCGPie);
+    connect(gbset_win, &GlobalSetWin::ARWInnerRadiusChanged,
+            circos, &Circos::setTAHole);
+    connect(gbset_win, &GlobalSetWin::ARWOuterRadiusChanged,
+            circos, &Circos::setTAPie);
+    connect(gbset_win, &GlobalSetWin::LinkInnerRadiusChanged,
+            circos, &Circos::setLKHole);
+    connect(gbset_win, &GlobalSetWin::LinkOuterRadiusChanged,
+            circos, &Circos::setLKPie);
   }
   if(func == "openbackbonefile") {
 #ifndef FILE_RES_USED
