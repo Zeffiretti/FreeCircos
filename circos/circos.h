@@ -155,6 +155,10 @@ class Circos : public QObject {
   void setLKPie(qreal lkp) {
     link_outer_radius = lkp;
   }
+  void setGradientColor(int i, QColor c) {
+    qreal pos = CustomTool::mapInt2Real(0, 4, 0, 1.0, i);
+    getLinkGradient()->setColorStopAt(pos, c);
+  }
  signals:
   void linkColorFunChanged(int index);
 

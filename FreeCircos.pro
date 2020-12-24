@@ -25,6 +25,7 @@ SOURCES += \
     circos/trackarrow.cpp \
     customslots.cpp \
     extension/extdoubleslider.cpp \
+    extension/extgradientbutton.cpp \
     fileprocess/excelbase.cpp \
     fileprocess/qvariantlistlistmodel.cpp \
     functions.cpp \
@@ -54,6 +55,7 @@ HEADERS += \
     circos/trackarrow.h \
     extension/extdoubleslider.h \
     extension/extdoublesliderprivate.h \
+    extension/extgradientbutton.h \
     fileprocess/excelbase.h \
     fileprocess/qvariantlistlistmodel.h \
     fileresource.h \

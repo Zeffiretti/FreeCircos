@@ -12,6 +12,7 @@
 #include <QFont>
 
 #include "extension/extdoubleslider.h"
+#include "extension/extgradientbutton.h"
 
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
@@ -131,6 +132,7 @@ class FreeCircos : public QMainWindow {
   QPushButton *backbone_movedown_button;
   QPushButton *backbone_move_button;
   QLineEdit *backbone_move_lineedit;
+  QPushButton *switch_button;
   /// some configurations on category donut
   QWidget *category_config_widget;
   int cat_begin_row;
@@ -173,11 +175,11 @@ class FreeCircos : public QMainWindow {
   QCPColorMap *link_thermometer_oncanvas_color_map;
 //    QCPColorScale *link_thermometer_color_scale;
   QCPColorGradient *link_gradient;
-  QPushButton *link_cm_button1;
-  QPushButton *link_cm_button2;
-  QPushButton *link_cm_button3;
-  QPushButton *link_cm_button4;
-  QPushButton *link_cm_button5;
+  ExtGradientButton *link_cm_button1;
+  ExtGradientButton *link_cm_button2;
+  ExtGradientButton *link_cm_button3;
+  ExtGradientButton *link_cm_button4;
+  ExtGradientButton *link_cm_button5;
 
   QStringList link_header_list;
 

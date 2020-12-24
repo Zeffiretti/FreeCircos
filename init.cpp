@@ -154,6 +154,7 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
   backbone_move_lineedit->setParent(backbone_config_widget);
   backbone_move_lineedit->setGeometry(440, 400 / 2, 110, 40 / 2);
   backbone_move_lineedit->setValidator(new QIntValidator(0, 10000, this));
+  backbone_move_lineedit->setEnabled(false);
   /// Category configuration
   category_config_widget = new QWidget;
   category_config_widget->setParent(backbone_widget);
@@ -218,6 +219,13 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
   category_move_lineedit->setValidator(new QIntValidator(0, 10000, this));
   backbone_config_widget->setEnabled(false);
   category_config_widget->setEnabled(false);
+  switch_button = new QPushButton;
+  switch_button->setParent(backbone_widget);
+  switch_button->setGeometry(380, 260, 600, 30);
+  switch_button->setText("SWITCH");
+  switch_button->setProperty("function", "switch");
+  switch_button->setProperty("prefix", "backbone");
+  switch_button->setEnabled(false);
   parent->addTab(backbone_widget, "BackBone");
   //signal----slot
   connect(this, &FreeCircos::setTableEditMode, this, &FreeCircos::onTableEditModeChanged);
@@ -248,6 +256,8 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
   connect(category_movedown_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
   connect(category_move_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  connect(switch_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
   connect(backbone_table->horizontalHeader(), &QHeaderView::sectionClicked,
           this, &FreeCircos::onTableHeaderViewClicked);
@@ -440,11 +450,11 @@ void FreeCircos::initLinkColorScale(QCustomPlot *parent1, QCustomPlot *parent2) 
   link_thermometer_onpanel_color_map = new QCPColorMap(parent1->xAxis, parent1->yAxis);
   link_thermometer_oncanvas_color_map = new QCPColorMap(parent2->xAxis, parent2->yAxis);
 //    link_thermometer_color_scale = new QCPColorScale(canvas);
-  link_cm_button1 = new QPushButton;
-  link_cm_button2 = new QPushButton;
-  link_cm_button3 = new QPushButton;
-  link_cm_button4 = new QPushButton;
-  link_cm_button5 = new QPushButton;
+  link_cm_button1 = new ExtGradientButton(0);
+  link_cm_button2 = new ExtGradientButton(1);
+  link_cm_button3 = new ExtGradientButton(2);
+  link_cm_button4 = new ExtGradientButton(3);
+  link_cm_button5 = new ExtGradientButton(4);
   link_gradient = new QCPColorGradient;
   parent1->setParent(link_config_widget);
   parent1->setGeometry(80, 500, 420, 20);
@@ -473,6 +483,7 @@ void FreeCircos::initLinkColorScale(QCustomPlot *parent1, QCustomPlot *parent2) 
   link_thermometer_onpanel_color_map->setGradient(*link_gradient);
   circos->setLinkGradient(link_gradient);
   link_thermometer_onpanel_color_map->rescaleDataRange();
+  link_thermometer_onpanel_color_map->setVisible(true);
   link_thermometer_oncanvas_color_map->rescaleDataRange();
   link_thermometer_oncanvas_color_map->setVisible(true);
   parent1->rescaleAxes();
@@ -490,6 +501,31 @@ void FreeCircos::initLinkColorScale(QCustomPlot *parent1, QCustomPlot *parent2) 
   link_cm_button4->setGeometry(375, 520, 18, 30);
   link_cm_button5->setParent(link_config_widget);
   link_cm_button5->setGeometry(470, 520, 18, 30);
+//  link_cm_button1->setColor(QColor(Qt::blue));
+//  link_cm_button2->setColor(QColor(Qt::green));
+//  link_cm_button3->setColor(QColor(Qt::yellow));
+//  link_cm_button4->setColor(QColor(Qt::red));
+//  link_cm_button5->setColor(QColor(Qt::darkRed));
+  connect(link_cm_button1, &ExtGradientButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  connect(link_cm_button2, &ExtGradientButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  connect(link_cm_button3, &ExtGradientButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  connect(link_cm_button4, &ExtGradientButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  connect(link_cm_button5, &ExtGradientButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  connect(link_cm_button1, &ExtGradientButton::colorChanged,
+          circos, &Circos::setGradientColor);
+  connect(link_cm_button2, &ExtGradientButton::colorChanged,
+          circos, &Circos::setGradientColor);
+  connect(link_cm_button3, &ExtGradientButton::colorChanged,
+          circos, &Circos::setGradientColor);
+  connect(link_cm_button4, &ExtGradientButton::colorChanged,
+          circos, &Circos::setGradientColor);
+  connect(link_cm_button5, &ExtGradientButton::colorChanged,
+          circos, &Circos::setGradientColor);
 }
 
 void FreeCircos::initLinkTableModel(QStandardItemModel *model, Circos *c) {

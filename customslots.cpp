@@ -74,6 +74,7 @@ void FreeCircos::onButtonClicked(bool ) {
 #endif
     circos->dataToCategory();
     circos->setCategoryEnable(true);
+    switch_button->setEnabled(true);
 //        initBackBoneTableModel(backbone_table, backbone_model, circos);
     addCategoryToTable(backbone_model, circos);
   }
@@ -163,6 +164,20 @@ void FreeCircos::onButtonClicked(bool ) {
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
     qDebug() << "Selected Row is: " << sel_row;
     moveTableRow(backbone_table, backbone_model, sel_row, sel_row + 1);
+  }
+  if(func.compare("backbone-moveto") == 0) {
+    int sel_row = backbone_table->selectionModel()->currentIndex().row();
+    int index_to = backbone_move_lineedit->text().toInt();
+    moveTableRow(backbone_table, backbone_model, sel_row, index_to);
+  }
+  if(func.compare("switch") == 0) {
+    if(!backbone_config_widget->isEnabled()) {
+      backbone_config_widget->setEnabled(true);
+      category_config_widget->setEnabled(false);
+    } else {
+      backbone_config_widget->setEnabled(false);
+      category_config_widget->setEnabled(true);
+    }
   }
   if(func == "category-strike-color") {
     qDebug() << "select a color";
@@ -259,6 +274,37 @@ void FreeCircos::onButtonClicked(bool ) {
       qDebug() << fileName;
       canvas->savePng(fileName);
     } else {
+    }
+  }
+  if(func.compare("gradient-color") == 0) {
+    ExtGradientButton* ext_btn = qobject_cast<ExtGradientButton*>(sender());
+    qDebug() << "select a color";
+    QColor color = QColorDialog::getColor(Qt::white, link_config_widget, "Link Color");
+    if(color.isValid()) {
+      ext_btn->setColor(color);
+      link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
+      link_thermometer_onpanel_color_map->setGradient(*circos->getLinkGradient());
+      link_thermometer_oncanvas_color_map->rescaleDataRange();
+      link_thermometer_onpanel_color_map->rescaleDataRange();
+      link_thermometer_colormap_onpanel_plot->replot();
+      link_thermometer_colormap_oncanvas_plot->replot();
+//      circos->setLinkGradient(link_gradient);
+//      link_thermometer_onpanel_color_map->rescaleDataRange();
+//      link_thermometer_oncanvas_color_map->rescaleDataRange();
+//      link_thermometer_oncanvas_color_map->setVisible(true);
+//      QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
+//      circos->getGene(index)->setStrikeColor(color);
+//      pal.setColor(QPalette::Button, color);
+//      btn->setPalette(pal);
+//      btn->setAutoDefault(true);
+//      btn->setFlat(true);
+//      switch (ext_btn->getID()) {
+//      case 0:
+//          ext_btn->setColor();
+//        break;
+//      default:
+//        break;
+//      }
     }
   }
 }
