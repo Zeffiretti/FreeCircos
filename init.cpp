@@ -538,4 +538,5 @@ void FreeCircos::initLinkTableModel(QStandardItemModel *model, Circos *c) {
     model->setItem(i, 1, new QStandardItem(c->getLink(i)->getSGN()));
     model->setItem(i, 2, new QStandardItem(c->getLink(i)->getDGN()));
   }
+  
 }
