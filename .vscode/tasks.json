@@ -1,0 +1,24 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "qmake build makefile",
+            "command": "D:\\Apps\\Qt5129\\5.12.9\\msvc2017_64\\bin\\qmake.exe",
+            "args": [],
+            "options": {},
+            "problemMatcher": [],
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "make build activefile",
+            "command": "C:\\ProgramData\\chocolatey\\bin\\make.exe",
+            "args": [],
+            "options": {},
+            "problemMatcher": [],
+            "group": "build",
+            "dependsOn": ["qmake build makefile"]
+        }
+    ]
+}
