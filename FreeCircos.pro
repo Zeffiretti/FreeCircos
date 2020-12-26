@@ -23,6 +23,8 @@ SOURCES += \
     circos/gene.cpp \
     circos/link.cpp \
     circos/trackarrow.cpp \
+    component/bbwidget.cpp \
+    component/linkwidget.cpp \
     customslots.cpp \
     extension/extdoubleslider.cpp \
     extension/extgradientbutton.cpp \

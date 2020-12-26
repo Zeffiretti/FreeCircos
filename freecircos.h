@@ -61,8 +61,14 @@ class FreeCircos : public QMainWindow {
   void initBackBoneTableModel(QStandardItemModel *model,
                               Circos *c);
   void initBackBoneWidget(QTabWidget *parent = nullptr);
+  void initBBTable(void);
+  void initBBConfigWidget(void);
+  void initCatConfigWidget(void);
+  void initBCSwitch(void);
+  void connectBCSingalSlot(void);
   void addCategoryToTable(QStandardItemModel *model,
                           Circos *c);
+  void connectLKSignalSlot(void);
   void moveTableRow(QTableView *table,
                     QStandardItemModel *model,
                     int from_row,
@@ -71,7 +77,9 @@ class FreeCircos : public QMainWindow {
                                Circos *c);
 
   void initLinkWidget(QTabWidget *parent = nullptr);
-  void initLinkColorScale(QCustomPlot *parent1 = nullptr, QCustomPlot *parent2 = nullptr);
+  void initLKTable(void);
+  void initLKConfigWidget(void);
+  void initLKColorScale(QCustomPlot *parent1 = nullptr, QCustomPlot *parent2 = nullptr);
   void initLinkTableModel(QStandardItemModel*, Circos*);
 
   bool eventFilter(QObject *watched, QEvent *event);
@@ -120,6 +128,8 @@ class FreeCircos : public QMainWindow {
   QStringList backbone_header_list;
   QStringList backbone_index_list;
   TableMoveDialog *table_move_dialog;
+  QStringList label_state_combobox_items;
+  QStringList label_position_combobox_items;
   /// some configurations on backbone donut
   QWidget *backbone_config_widget;
   QPushButton *backbone_strike_color_button;
