@@ -80,7 +80,7 @@ class FreeCircos : public QMainWindow {
   void initLKTable(void);
   void initLKConfigWidget(void);
   void initLKColorScale(QCustomPlot *parent1 = nullptr, QCustomPlot *parent2 = nullptr);
-  void initLinkTableModel(QStandardItemModel*, Circos*);
+  void initLKTableModel(QStandardItemModel*, Circos*);
 
   bool eventFilter(QObject *watched, QEvent *event);
 

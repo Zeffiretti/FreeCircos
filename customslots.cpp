@@ -93,7 +93,7 @@ void FreeCircos::onButtonClicked(bool ) {
     circos->dataToLink();
     circos->setLinkEnable(true);
     //addCategoryToTable(backbone_table, backbone_model, circos);
-    initLinkTableModel(link_model, circos);
+    initLKTableModel(link_model, circos);
   }
   if(func.compare("opentrackarrowfile") == 0) {
 #ifndef FILE_RES_USED
