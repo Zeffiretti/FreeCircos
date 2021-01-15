@@ -15,8 +15,10 @@ void FreeCircos::initLKTable(void) {
   link_table->setProperty("prefix", "link");
   link_table->setProperty("funciton", "link-table");
   link_header_list << "Index"
-                   << "From"
-                   << "To";
+                   << "Start"
+                   << "StartBlock"
+                   << "End"
+                   << "EndBlock";
   link_model->setHorizontalHeaderLabels(link_header_list);
 }
 
@@ -268,12 +270,27 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
 
 void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c) {
   for (qint8 i = 0; i < c->getLinkNum(); ++i) {
+    //Link*
+    Link* l = c->getLink(i);
     //index
     QStandardItem *index_item = new QStandardItem;
     index_item->setData(i + 1, Qt::EditRole);
     model->setItem(i, 0, index_item);
-    //name
-    model->setItem(i, 1, new QStandardItem(c->getLink(i)->getSGN()));
-    model->setItem(i, 2, new QStandardItem(c->getLink(i)->getDGN()));
+    //start name
+    model->setItem(i, 1, new QStandardItem(l->getSGN()));
+    //startblock
+    QString startblock = QString::number(l->getSourceStart());
+    if(l->getSourceEnd() > 0) {
+      startblock = startblock + "---" + QString::number(l->getSourceEnd());
+    }
+    model->setItem(i, 2, new QStandardItem(startblock));
+    //end name
+    model->setItem(i, 3, new QStandardItem(l->getDGN()));
+    // endblock
+    QString endblock = QString::number(l->getDestStart());
+    if(l->getDestEnd() > 0) {
+      endblock = endblock + "---" + QString::number(l->getDestEnd());
+    }
+    model->setItem(i, 4, new QStandardItem(endblock));
   }
 }
