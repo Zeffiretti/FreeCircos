@@ -9,13 +9,28 @@
 class GlobalSetWin : public QMainWindow {
   Q_OBJECT
  public:
+  enum ComponentEnable {
+    AllDisable = 0x00,
+    BackBone = 0x01,
+    Catgory = 0x02,
+    TrackArrow = 0x04,
+    Link = 0x08,
+    AllAble = BackBone | Catgory | TrackArrow | Link
+  };
+  Q_DECLARE_FLAGS(Component, ComponentEnable)
+
   explicit GlobalSetWin(QWidget *parent = nullptr);
+  void setBbPos(qreal _max, qreal _min);
+  void setCatPos(qreal _max, qreal _min);
+  void setTrkPos(qreal _max, qreal _min);
+  void setLinkPos(qreal _max, qreal _min);
+  void setComponents(Component c);
+
   ExtDoubleSlider *back_bone_dslider;
   ExtDoubleSlider *category_dslider;
   ExtDoubleSlider *trackarrow_dslider;
   ExtDoubleSlider *link_dslider;
 
-//  QSlider *slider;
   QLabel *bbs_name_label;
   QLabel *bbs_value_label;
   QLabel *cgs_name_label;
@@ -25,7 +40,6 @@ class GlobalSetWin : public QMainWindow {
   QLabel *arw_value_label;
   QLabel *link_name_label;
   QLabel *link_value_label;
-
 
  signals:
   void BBInnerRadiusChanged(qreal);
@@ -41,5 +55,6 @@ class GlobalSetWin : public QMainWindow {
   void onDoubleSliderLowerValueChanged(int i);
   void onDoubleSliderUpperValueChanged(int i);
 };
+Q_DECLARE_OPERATORS_FOR_FLAGS(GlobalSetWin::Component)
 
 #endif // GLOBALSETWIN_H

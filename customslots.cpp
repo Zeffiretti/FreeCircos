@@ -28,6 +28,18 @@ void FreeCircos::onButtonClicked(bool ) {
   }
   if(func.compare("globalsetting") == 0) {
     gbset_win = new GlobalSetWin(this);
+    GlobalSetWin::Component component = GlobalSetWin::ComponentEnable::AllDisable;
+    component |= GlobalSetWin::ComponentEnable::BackBone;
+    if(circos->getCategoryEnable()) {
+      component |= GlobalSetWin::ComponentEnable::Catgory;
+    }
+    if(circos->getTrackEnabled()) {
+      component |= GlobalSetWin::ComponentEnable::TrackArrow;
+    }
+    if(circos->getLinkEnable()) {
+      component |= GlobalSetWin::ComponentEnable::Link;
+    }
+    gbset_win->setComponents(component);
     gbset_win->show();
     connect(gbset_win, &GlobalSetWin::BBInnerRadiusChanged,
             circos, &Circos::setBBHole);

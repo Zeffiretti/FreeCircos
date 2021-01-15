@@ -209,8 +209,8 @@ void Circos::buildBackBoneDonut(CustomDonut *donut) {
                                          g->getLength());
 //    slice->setBrush(QBrush(g->getFillColor()));
 //    slice->setPen(QPen(g->getStrikeColor()));
-    slice->setBrush(QBrush(Qt::white));
-    slice->setPen(QPen(Qt::black));
+    slice->setBrush(QBrush(g->getFillColor()));
+    slice->setPen(QPen(g->getStrikeColor()));
     slice->setLabelPosition(g->getLabelPosition());
     slice->setLabelState(g->getLabelState());
 //    slice->setSize(back_bone_inner_radius, back_bone_outer_radius);

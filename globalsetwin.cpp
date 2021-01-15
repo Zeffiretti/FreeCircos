@@ -97,6 +97,56 @@ GlobalSetWin::GlobalSetWin(QWidget *parent) : QMainWindow(parent) {
           this, &GlobalSetWin::onDoubleSliderUpperValueChanged);
 }
 
+void GlobalSetWin::setBbPos(qreal _max, qreal _min) {
+  back_bone_dslider->setUpperValue(100 * _max);
+  back_bone_dslider->setLowerValue(100 * _min);
+}
+
+void GlobalSetWin::setCatPos(qreal _max, qreal _min) {
+  category_dslider->setUpperValue(100 * _max);
+  category_dslider->setLowerValue(100 * _min);
+}
+
+void GlobalSetWin::setTrkPos(qreal _max, qreal _min) {
+  trackarrow_dslider->setUpperValue(100 * _max);
+  trackarrow_dslider->setLowerValue(100 * _min);
+}
+
+void GlobalSetWin::setLinkPos(qreal _max, qreal _min) {
+  link_dslider->setUpperValue(100 * _max);
+  link_dslider->setLowerValue(100 * _min);
+}
+
+void GlobalSetWin::setComponents(Component c) {
+  if(c.testFlag(ComponentEnable::AllDisable)) {
+    back_bone_dslider->setEnabled(false);
+    category_dslider->setEnabled(false);
+    trackarrow_dslider->setEnabled(false);
+    link_dslider->setEnabled(false);
+  } else {
+    if(c.testFlag(ComponentEnable::BackBone)) {
+      back_bone_dslider->setEnabled(true);
+    } else {
+      back_bone_dslider->setEnabled(false);
+    }
+    if(c.testFlag(ComponentEnable::Catgory)) {
+      category_dslider->setEnabled(true);
+    } else {
+      category_dslider->setEnabled(false);
+    }
+    if(c.testFlag(ComponentEnable::TrackArrow)) {
+      trackarrow_dslider->setEnabled(true);
+    } else {
+      trackarrow_dslider->setEnabled(false);
+    }
+    if(c.testFlag(ComponentEnable::Link)) {
+      link_dslider->setEnabled(true);
+    } else {
+      link_dslider->setEnabled(false);
+    }
+  }
+}
+
 void GlobalSetWin::onDoubleSliderLowerValueChanged(int i) {
   ExtDoubleSlider *dslider = qobject_cast<ExtDoubleSlider*>(sender());
   QString prefix = dslider->property("prefix").toString();
