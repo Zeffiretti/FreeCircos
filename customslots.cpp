@@ -40,6 +40,10 @@ void FreeCircos::onButtonClicked(bool ) {
       component |= GlobalSetWin::ComponentEnable::Link;
     }
     gbset_win->setComponents(component);
+    gbset_win->setBbPos(circos->getBBPie(), circos->getBBHole());
+    gbset_win->setCatPos(circos->getCGPie(), circos->getCGHole());
+    gbset_win->setTrkPos(circos->getTAPie(), circos->getTAHole());
+    gbset_win->setLinkPos(circos->getLKPie(), circos->getLKHole());
     gbset_win->show();
     connect(gbset_win, &GlobalSetWin::BBInnerRadiusChanged,
             circos, &Circos::setBBHole);
