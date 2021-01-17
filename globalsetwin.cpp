@@ -178,19 +178,27 @@ void GlobalSetWin::onDoubleSliderUpperValueChanged(int i) {
     QString func = dslider->property("function").toString();
     if(func.compare("back_bone_dslider") == 0) {
       emit BBOuterRadiusChanged(i / 100.0);
-      bbs_value_label->setText(QString::number(back_bone_dslider->lowerValue()) + "--" + QString::number(back_bone_dslider->upperValue()));
+      bbs_value_label->setText(QString::number(back_bone_dslider->lowerValue())
+                               + "--"
+                               + QString::number(back_bone_dslider->upperValue()));
     }
     if(func.compare("category_dslider") == 0) {
       emit CatOuterRadiusChanged(i / 100.0);
-      cgs_value_label->setText(QString::number(category_dslider->lowerValue()) + "--" + QString::number(category_dslider->upperValue()));
+      cgs_value_label->setText(QString::number(category_dslider->lowerValue())
+                               + "--"
+                               + QString::number(category_dslider->upperValue()));
     }
     if(func.compare("trackarrow_dslider") == 0) {
       emit ARWOuterRadiusChanged(i / 100.0);
-      arw_value_label->setText(QString::number(trackarrow_dslider->lowerValue()) + "--" + QString::number(trackarrow_dslider->upperValue()));
+      arw_value_label->setText(QString::number(trackarrow_dslider->lowerValue())
+                               + "--"
+                               + QString::number(trackarrow_dslider->upperValue()));
     }
     if(func.compare("link_dslider") == 0) {
       emit LinkOuterRadiusChanged(i / 100.0);
-      link_value_label->setText(QString::number(link_dslider->lowerValue()) + "--" + QString::number(link_dslider->upperValue()));
+      link_value_label->setText(QString::number(link_dslider->lowerValue())
+                                + "--"
+                                + QString::number(link_dslider->upperValue()));
     }
   }
 }
