@@ -36,9 +36,10 @@ void FreeCircos::initLKConfigWidget(void) {
   link_lty_combobox = new QComboBox;
   link_thermometer_label = new QLabel;
   link_thermometer_checkbox = new QCheckBox;
-  link_stre_label = new QLabel;
-//  link_stre_lineedit = new QLineEdit;
-  line_stre_combobox = new QComboBox;
+  link_color_label = new QLabel;
+  link_color_lineedit = new QLineEdit;
+  line_color_combobox = new QComboBox;
+  link_color_completer = new QCompleter;
   link_lwd_label = new QLabel;
   link_lwd_lineedit = new QLineEdit;
   link_thermometer_colormap_onpanel_plot = new QCustomPlot;
@@ -117,27 +118,38 @@ void FreeCircos::initLKConfigWidget(void) {
   link_colfun_combobox->setProperty("function", "link-colfun");
   link_colfun_combobox->setProperty("prefix", "link");
   link_colfun_combobox->setEnabled(false);
-  link_stre_label->setParent(link_config_widget);
-  link_stre_label->setGeometry(80, 340, 80, 60);
-  link_stre_label->setFont(*major_font);
-  link_stre_label->setText("Stre");
-//  link_stre_lineedit->setParent(link_config_widget);
-//  link_stre_lineedit->setGeometry(160, 340, 80, 60);
-//  link_stre_lineedit->setValidator(new QDoubleValidator(10, 50, 2, this));
-//  link_stre_lineedit->setEnabled(false);
-//  link_stre_lineedit->setText("10.00");
-//  link_stre_lineedit->setProperty("prefix", "link");
-//  link_stre_lineedit->setProperty("function", "link-line-color");
-  line_stre_combobox->setParent(link_config_widget);
-  line_stre_combobox->setGeometry(160, 340, 80, 60);
-  line_stre_combobox->setValidator(new QDoubleValidator(0, 100, 2, this));
+  link_color_label->setParent(link_config_widget);
+  link_color_label->setGeometry(80, 340, 80, 60);
+  link_color_label->setFont(*major_font);
+  link_color_label->setText("Color");
+  link_color_lineedit->setParent(link_config_widget);
+  link_color_lineedit->setGeometry(160, 340, 80, 60);
+  link_color_lineedit->setValidator(new QDoubleValidator(10, 50, 2, this));
+  link_color_lineedit->setEnabled(true);
+  link_color_lineedit->setText("10.00");
+  link_color_lineedit->setProperty("prefix", "link");
+  link_color_lineedit->setProperty("function", "link-line-color");
+  line_color_combobox->setParent(link_config_widget);
+  line_color_combobox->setGeometry(160, 340, 80, 60);
+  line_color_combobox->setValidator(new QDoubleValidator(0, 100, 2, this));
 //  line_stre_combobox->setVisible(false);
-  line_stre_combobox->setEnabled(false);
+  line_color_combobox->setEnabled(false);
   QStringList rainbow_color_list;
   rainbow_color_list << "blue" << "green" << "yellow" << "red" << "darked";
-  line_stre_combobox->addItems(rainbow_color_list);
-  line_stre_combobox->setProperty("prefix", "link");
-  line_stre_combobox->setProperty("function", "link-line-color");
+  line_color_combobox->addItems(rainbow_color_list);
+  line_color_combobox->setProperty("prefix", "link");
+  line_color_combobox->setProperty("function", "link-line-color");
+  QStringList link_color_indicator = rainbow_color_list;
+  QStringListModel *link_color_listmodel = new QStringListModel;
+  link_color_listmodel->setStringList(link_color_indicator);
+  link_color_completer->setModel(link_color_listmodel);
+  link_color_completer->setCaseSensitivity(Qt::CaseInsensitive);
+  link_color_completer->setFilterMode(Qt::MatchRecursive);
+  line_color_combobox->setEditable(true);
+  line_color_combobox->setCompleter(link_color_completer);
+  line_color_combobox->setToolTip("remind");
+  line_color_combobox->setLineEdit(link_color_lineedit);
+//  link_color_indicator << QString(tr"blue") << QString(tr"green") << QString(tr"yellow");
   link_lwd_label->setParent(link_config_widget);
   link_lwd_label->setParent(link_config_widget);
   link_lwd_label->setGeometry(340, 340, 80, 60);
@@ -172,7 +184,7 @@ void FreeCircos::connectLKSignalSlot(void) {
           this, &FreeCircos::onComboboxTextChanged);
 //  connect(link_colfun_combobox, &QComboBox::currentTextChanged,
 //          this, &FreeCircos::onComboboxTextChanged);
-  connect(line_stre_combobox, &QComboBox::currentTextChanged,
+  connect(line_color_combobox, &QComboBox::currentTextChanged,
           this, &FreeCircos::onComboboxTextChanged);
   connect(link_directional_checkbox, &QCheckBox::stateChanged,
           this, &FreeCircos::onCheckboxStateChanged);
@@ -180,8 +192,8 @@ void FreeCircos::connectLKSignalSlot(void) {
           this, &FreeCircos::onCheckboxStateChanged);
   connect(link_lwd_lineedit, &QLineEdit::textChanged,
           this, &FreeCircos::onLineEditTextChanged);
-//  connect(link_stre_lineedit, &QLineEdit::textChanged,
-//          this, &FreeCircos::onLineEditTextChanged);
+  connect(link_color_lineedit, &QLineEdit::textChanged,
+          this, &FreeCircos::onLineEditTextChanged);
 //  connect(this, &FreeCircos::setLinkColor,
 //          circos, &Circos::onLinkColorSet);
 }

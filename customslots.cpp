@@ -485,25 +485,25 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
     if(func.compare("link-table-model") == 0) {
       link_colfun_combobox->setEnabled(true);
 //      link_stre_lineedit->setEnabled(true);
-      line_stre_combobox->setEnabled(true);
+      line_color_combobox->setEnabled(true);
       int index = link_model->item(sel_row, 0)->text().toInt() - 1;
       QString colfun = circos->getLinkColorFunStr(index);
       link_colfun_combobox->setCurrentText(colfun);
       if(colfun.compare("ramp") == 0) {
 //        link_stre_lineedit->setVisible(true);
 //        link_stre_lineedit->setEnabled(true);
-        line_stre_combobox->setEnabled(false);
+        line_color_combobox->setEnabled(false);
 //        line_stre_combobox->setVisible(false);
 //        link_stre_lineedit->setText(QString::number(circos->getLinkStre(index)));
       } else if(colfun.compare("rainbow") == 0) {
 //        link_stre_lineedit->setVisible(false);
 //        link_stre_lineedit->setEnabled(false);
-        line_stre_combobox->setEnabled(true);
+        line_color_combobox->setEnabled(true);
 //        line_stre_combobox->setVisible(true);
-        line_stre_combobox->setCurrentText(circos->getLinkColorName(index));
+        line_color_combobox->setCurrentText(circos->getLinkColorName(index));
       } else {
 //        link_stre_lineedit->setEnabled(false);
-        line_stre_combobox->setEnabled(false);
+        line_color_combobox->setEnabled(false);
       }
     }
   }/*else{
@@ -594,7 +594,7 @@ void FreeCircos::onComboboxTextChanged(const QString & text) {
 //        link_stre_lineedit->setEnabled(true);
 //        line_stre_combobox->setVisible(false);
 //          circos->setlink
-        line_stre_combobox->setEnabled(false);
+        line_color_combobox->setEnabled(false);
         circos->setLinkColorFun(index, Link::ColorFun::Ramp);
 //                emit link_stre_lineedit->textChanged(
 //                    link_stre_lineedit->text());
@@ -603,9 +603,9 @@ void FreeCircos::onComboboxTextChanged(const QString & text) {
 //        link_stre_lineedit->setEnabled(false);
 //        line_stre_combobox->setVisible(true);
         circos->setLinkColorFun(index, Link::ColorFun::Rainbow);
-        line_stre_combobox->setEnabled(true);
-        emit line_stre_combobox->currentTextChanged(
-          line_stre_combobox->currentText());
+        line_color_combobox->setEnabled(true);
+        emit line_color_combobox->currentTextChanged(
+          line_color_combobox->currentText());
       } else {
 //                //link_stre_lineedit->setVisible(false);
 //                link_stre_lineedit->setEnabled(false);

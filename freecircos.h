@@ -6,6 +6,7 @@
 #include <QStandardItem>
 #include <QTableView>
 #include <QComboBox>
+#include <QCompleter>
 #include <QCheckBox>
 #include <QDialog>
 #include <QLineEdit>
@@ -174,9 +175,10 @@ class FreeCircos : public QMainWindow {
   QComboBox *link_lty_combobox;
   QLabel *link_thermometer_label;
   QCheckBox *link_thermometer_checkbox;
-  QLabel *link_stre_label;
-//  QLineEdit *link_stre_lineedit;
-  QComboBox *line_stre_combobox;
+  QLabel *link_color_label;
+  QLineEdit *link_color_lineedit;
+  QComboBox *line_color_combobox;
+  QCompleter *link_color_completer;
   QLabel *link_lwd_label;
   QLineEdit *link_lwd_lineedit;
   QCustomPlot *link_thermometer_colormap_onpanel_plot;
