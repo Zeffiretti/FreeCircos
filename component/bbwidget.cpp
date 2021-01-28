@@ -3,6 +3,7 @@
 void FreeCircos::initBBTable(void) {
   backbone_model = new QStandardItemModel;
   backbone_table = new QTableView;
+  backbone_table_header = new ExtCheckBoxHeaderView;
   backbone_table->setSortingEnabled(true);
   backbone_table->setGeometry(0, 0, 360, 580);
   backbone_table->setParent(backbone_widget);
@@ -29,6 +30,9 @@ void FreeCircos::initBBTable(void) {
                        << "Gene Name"
                        << "Length"
                        << "Category";
+  backbone_table_header->addBoxAt(2);
+  backbone_table_header->addBoxAt(1);
+  backbone_table->setHorizontalHeader(backbone_table_header);
   backbone_model->setHorizontalHeaderLabels(backbone_header_list);
 }
 

@@ -14,6 +14,7 @@
 
 #include "extension/extdoubleslider.h"
 #include "extension/extgradientbutton.h"
+#include "extension/extcheckboxheaderview.h"
 
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
@@ -121,6 +122,7 @@ class FreeCircos : public QMainWindow {
   QTableView *backbone_table;
   QStandardItemModel *backbone_model;
   TableEditMode table_edit_mode;
+  ExtCheckBoxHeaderView *backbone_table_header;
 
   QPushButton *backbone_config_button;
   QPushButton *move_panel_button;       //removed
