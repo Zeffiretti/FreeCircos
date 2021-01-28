@@ -58,7 +58,7 @@ void ExtCheckBoxHeaderView::paintSection(QPainter *painter, const QRect &rect, i
 //  }
 //  box_list.
 //  box_list.append(1);
-  qDebug() << box_list;
+//  qDebug() << box_list;
   if (logicalIndex == 0) {
     m_checkbox->setProperty("prefix", "table");
     m_checkbox->setProperty("function", "All");
