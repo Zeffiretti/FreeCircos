@@ -26,6 +26,7 @@ SOURCES += \
     component/bbwidget.cpp \
     component/linkwidget.cpp \
     customslots.cpp \
+    extension/extcheckboxheaderview.cpp \
     extension/extdoubleslider.cpp \
     extension/extgradientbutton.cpp \
     fileprocess/excelbase.cpp \
@@ -55,6 +56,7 @@ HEADERS += \
     circos/gene.h \
     circos/link.h \
     circos/trackarrow.h \
+    extension/extcheckboxheaderview.h \
     extension/extdoubleslider.h \
     extension/extdoublesliderprivate.h \
     extension/extgradientbutton.h \
