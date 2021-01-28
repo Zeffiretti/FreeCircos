@@ -5,6 +5,8 @@ ExtCheckBoxHeaderView::ExtCheckBoxHeaderView()
   box_list.clear();
   m_checkbox = new QCheckBox;
   m_checkbox->setParent(this);
+  connect(m_checkbox, &QCheckBox::stateChanged,
+          this, &ExtCheckBoxHeaderView::onCheckBoxStateChanged);
 }
 
 ExtCheckBoxHeaderView::ExtCheckBoxHeaderView(Qt::Orientation orientation, QWidget *parent)
@@ -25,6 +27,15 @@ void ExtCheckBoxHeaderView::setBoxPos(QList<int> list) {
 void ExtCheckBoxHeaderView::addBoxAt(int pos) {
   box_list.append(pos);
   this->update();
+}
+
+//void ExtCheckBoxHeaderView::setProperty(const char *name, const QVariant &value) {
+//  m_checkbox->setProperty(name, value);
+//}
+
+void ExtCheckBoxHeaderView::onCheckBoxStateChanged(int i) {
+  qDebug("entering slot: ExtCheckBoxHeaderView::onCheckBoxStateChanged(int i)");
+  emit headerCheckBoxStateChanged(i);
 }
 
 //根据表头鼠标事件控制checkbox的状态，此事件在绘制之前触发

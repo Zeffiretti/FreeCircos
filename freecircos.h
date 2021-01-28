@@ -101,6 +101,7 @@ class FreeCircos : public QMainWindow {
   void onTableEditModeChanged(TableEditMode tem);
   void onCheckboxStateChanged(int state);
   void onLineEditTextChanged(const QString& text);
+  void onHeaderCheckBoxStateChanged(int state);
 
  private:
 

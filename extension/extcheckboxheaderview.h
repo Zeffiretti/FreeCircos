@@ -17,13 +17,16 @@ class ExtCheckBoxHeaderView : public QHeaderView {
   virtual ~ExtCheckBoxHeaderView();
   void setBoxPos(QList<int> list);
   void addBoxAt(int pos);
+//  void setProperty(const char *name, const QVariant &value);
  protected:
   void paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const; //绘制checkbox
 //  void mousePressEvent(QMouseEvent *event);      //鼠标click事件
 //  void paintEvent(QPaintEvent *event);              //绘制checkbox事件
  public slots:
 //  void setHeaderBox(bool);      //设置表头checkbox状态
+  void onCheckBoxStateChanged(int);
  signals:
+  void headerCheckBoxStateChanged(int);
   void clickRow(bool);    //向操作表第一列所有项的checkbox发送信号
  private:
 //  bool m_isOn;                //checkbox状态

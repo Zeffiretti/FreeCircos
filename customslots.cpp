@@ -133,14 +133,10 @@ void FreeCircos::onButtonClicked(bool ) {
     Qt::WindowFlags flags = table_move_dialog->windowFlags();
     table_move_dialog->setWindowFlags(flags | Qt::WindowStaysOnTopHint);
     table_move_dialog->setProperty("function", "movepanel");
-    connect(table_move_dialog,
-            &TableMoveDialog::rejected,
-            this,
-            &FreeCircos::onDialogStateChanged);
-    connect(table_move_dialog,
-            &TableMoveDialog::moveRow,
-            this,
-            &FreeCircos::onBackBoneTableMoveRequest);
+    connect(table_move_dialog, &TableMoveDialog::rejected,
+            this, &FreeCircos::onDialogStateChanged);
+    connect(table_move_dialog, &TableMoveDialog::moveRow,
+            this, &FreeCircos::onBackBoneTableMoveRequest);
     table_move_dialog->show();
   }
   if(func == "backbone-strike-color") {
@@ -688,6 +684,19 @@ void FreeCircos::onCheckboxStateChanged(int state) {
   QCheckBox *check_box = qobject_cast<QCheckBox*>(sender());
   QString prefix = check_box->property("prefix").toString();
   QString func = check_box->property("function").toString();
+//  if(prefix.compare("backbone") == 0) {
+//    if(func.compare("tableselected")) {
+//      qDebug("now entering slots backbone--tableselected--checkboxStateChanged");
+//      int rows = backbone_model->rowCount();
+//      for(int i = 0; i < rows; ++i) {
+//        backbone_model->item(i, 0)->setCheckState(Qt::Unchecked);
+//      }
+////      if(state == Qt::Checked) {
+////      } else if (state == Qt::Unchecked) {
+////      } else {
+////      }
+//    }
+//  }
   if(prefix.compare("link") == 0) {
     if(func.compare("link-directional") == 0) {
       switch (state) {
@@ -737,6 +746,26 @@ void FreeCircos::onLineEditTextChanged(const QString & text) {
 //      circos->setLinkColorCode(index, value);
       QColor c = CustomTool::colorFun("ramp", value);
       emit setLinkColor(index, c);
+    }
+  }
+}
+
+void FreeCircos::onHeaderCheckBoxStateChanged(int state) {
+//  qDebug("now entering slots backbone--tableselected");
+  ExtCheckBoxHeaderView *ext_header = qobject_cast<ExtCheckBoxHeaderView*>(sender());
+  QString prefix = ext_header->property("prefix").toString();
+  QString func = ext_header->property("function").toString();
+  if(prefix.compare("backbone") == 0) {
+    if(func.compare("tableselected") == 0) {
+      qDebug("now entering slots backbone--tableselected--onHeaderCheckBoxStateChanged");
+      int rows = backbone_model->rowCount();
+      for(int i = 0; i < rows; ++i) {
+        backbone_model->item(i, 0)->setCheckState(Qt::CheckState(state));
+      }
+//      if(state == Qt::Checked) {
+//      } else if (state == Qt::Unchecked) {
+//      } else {
+//      }
     }
   }
 }
