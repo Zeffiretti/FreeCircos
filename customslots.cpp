@@ -768,4 +768,17 @@ void FreeCircos::onHeaderCheckBoxStateChanged(int state) {
 //      }
     }
   }
+  if(prefix.compare("link") == 0) {
+    if(func.compare("tableselected") == 0) {
+      qDebug("now entering slots link--tableselected--onHeaderCheckBoxStateChanged");
+      int rows = link_model->rowCount();
+      for(int i = 0; i < rows; ++i) {
+        link_model->item(i, 0)->setCheckState(Qt::CheckState(state));
+      }
+//      if(state == Qt::Checked) {
+//      } else if (state == Qt::Unchecked) {
+//      } else {
+//      }
+    }
+  }
 }

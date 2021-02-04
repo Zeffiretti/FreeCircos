@@ -165,6 +165,7 @@ class FreeCircos : public QMainWindow {
   QWidget *link_widget;
   QTableView *link_table;
   QStandardItemModel *link_model;
+  ExtCheckBoxHeaderView *link_table_header;
   QWidget *link_config_widget;
   QLabel *link_type_label;
   QComboBox *link_type_combobox;

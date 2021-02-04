@@ -3,6 +3,7 @@
 void FreeCircos::initLKTable(void) {
   link_model = new QStandardItemModel;
   link_table = new QTableView;
+  link_table_header = new ExtCheckBoxHeaderView;
   link_table->setSortingEnabled(false);
   link_table->setGeometry(0, 0, 360, 580);
   link_table->setParent(link_widget);
@@ -19,6 +20,9 @@ void FreeCircos::initLKTable(void) {
                    << "StartBlock"
                    << "End"
                    << "EndBlock";
+  link_table_header->setProperty("prefix", "link");
+  link_table_header->setProperty("function", "tableselected");
+  link_table->setHorizontalHeader(link_table_header);
   link_model->setHorizontalHeaderLabels(link_header_list);
 }
 
@@ -174,6 +178,8 @@ void FreeCircos::initLKConfigWidget(void) {
 void FreeCircos::connectLKSignalSlot(void) {
   connect(link_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
           this, &FreeCircos::onTableSelectedChanged);
+  connect(link_table_header, &ExtCheckBoxHeaderView::headerCheckBoxStateChanged,
+          this, &FreeCircos::onHeaderCheckBoxStateChanged);
   connect(link_type_combobox, &QComboBox::currentTextChanged,
           this, &FreeCircos::onComboboxTextChanged);
   connect(link_direction_combobox, &QComboBox::currentTextChanged,
