@@ -1,5 +1,7 @@
 *.*
 !*/
+*build*/
+.*/
 !.gitignore
 !*.cpp
 !*.c
@@ -12,6 +14,7 @@
 !*.xlsx
 !*.ico
 !*.rc
+!CMakeLists.txt
 !LICENSE
 !README.md
 !*.json
