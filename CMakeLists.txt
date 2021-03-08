@@ -21,30 +21,35 @@ find_package(Qt5 COMPONENTS
     AxContainer
     Widgets
     PrintSupport REQUIRED)
-
-add_executable(FreeCircos
+set(ROOT_FILES
     freecircos.cpp
     freecircos.ui
     customslots.cpp
     functions.cpp
     globalsetwin.cpp
     init.cpp
-    main.cpp
-    addition/tablemovedialog.cpp
+    main.cpp)
+set(CIRCOS_FILES
     circos/backbone.cpp
     circos/category.cpp
     circos/circos.cpp
     circos/gene.cpp
     circos/link.cpp
-    circos/trackarrow.cpp
+    circos/trackarrow.cpp)
+set(ADD_FILES
+    addition/tablemovedialog.cpp)
+set(COMPONENT_FILES
     component/bbwidget.cpp
-    component/linkwidget.cpp
+    component/linkwidget.cpp)
+set(EXT_FILES
     extension/extcheckboxheaderview.cpp
     extension/extdoubleslider.cpp
     extension/extdoublesliderprivate.h
-    extension/extgradientbutton.cpp
+    extension/extgradientbutton.cpp)
+set(FILEPROS_FILES
     fileprocess/excelbase.cpp
-    fileprocess/qvariantlistlistmodel.cpp
+    fileprocess/qvariantlistlistmodel.cpp)
+set(PAINT_FILES
     paint/colorgen.cpp
     paint/custombezier.cpp
     paint/customdonut.cpp
@@ -54,11 +59,23 @@ add_executable(FreeCircos
     paint/customtrack.cpp
     paint/customtrackarrow.cpp
     paint/qcustomplot.cpp
-    paint/smoothcurvegenerator.cpp
+    paint/smoothcurvegenerator.cpp)
+set(RESOURCE_FILES
     resource/icon.ico
     resource/resource.qrc
-    resource/thermometer.png
+    resource/thermometer.png)
+set(TOOL_FILES
     tool/customtool.cpp)
+add_executable(FreeCircos
+    ${ROOT_FILES}
+    ${CIRCOS_FILES}
+    ${ADD_FILES}
+    ${COMPONENT_FILES}
+    ${EXT_FILES}
+    ${FILEPROS_FILES}
+    ${PAINT_FILES}
+    ${RESOURCE_FILES}
+    ${TOOL_FILES})
 
 include_directories(./
     ENV{Qt5129}/mingw73_64/include
