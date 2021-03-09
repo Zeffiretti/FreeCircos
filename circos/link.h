@@ -23,10 +23,11 @@ class Link {
   void setDestEnd(int de);
   void setStreCode(qreal sc);
   void setLineWidth(qreal lwd);
-  void setColor(const QColor& c);
-  void setColorFunString(const QString& cf);
+  void setColor(const QColor &c);
+  void setColorFunString(const QString &cf);
   void setColorFun(Link::ColorFuns cf);
-  void setColorName(const QString& name);
+  void setColorName(const QString &name);
+  void setEnable(bool b);
 //  void setColorCode(qreal c);
 
   // getters
@@ -42,6 +43,7 @@ class Link {
   QString getColorFunString(void);
   ColorFuns getColorFun(void);
   QString getColorName(void);
+  bool getEnable(void);
 //  qreal getColorCode(void);
 // public slots:
 //  void onColorFunChanged(ColorFuns cf);
@@ -56,6 +58,7 @@ class Link {
   ColorFuns color_fun = ColorFun::Ramp;
   QString color_fun_s = "none";
   QString color_name = "black";
+  bool is_active;
 //  qreal color_code = 10.00;
 
 };

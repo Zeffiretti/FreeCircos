@@ -1,7 +1,7 @@
 #include <freecircos.h>
 
 void FreeCircos::initLKTable(void) {
-  link_model = new QStandardItemModel;
+  link_model = new ExtStandardItemModel;
   link_table = new QTableView;
   link_table_header = new ExtCheckBoxHeaderView;
   link_table->setSortingEnabled(false);
@@ -221,7 +221,7 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
   link_thermometer_onpanel_color_map->data()->setRange(QCPRange(10, 50), QCPRange(0, 1));
   link_thermometer_oncanvas_color_map->data()->setSize(1, 40);
   link_thermometer_oncanvas_color_map->data()->setRange(QCPRange(0, 1), QCPRange(10, 50));
-  for(int i = 0; i < 40; ++i) {
+  for (int i = 0; i < 40; ++i) {
     qreal value = CustomTool::mapInt2Real(0, 39, 10, 50, i);
     link_thermometer_onpanel_color_map->data()->setData(value, 0, i);
     link_thermometer_oncanvas_color_map->data()->setData(0, value, i);
@@ -286,19 +286,23 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
           circos, &Circos::setGradientColor);
 }
 
-void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c) {
+void FreeCircos::initLKTableModel(ExtStandardItemModel *model, Circos *c) {
   for (qint8 i = 0; i < c->getLinkNum(); ++i) {
     //Link*
-    Link* l = c->getLink(i);
+    Link *l = c->getLink(i);
     //index
     QStandardItem *index_item = new QStandardItem;
     index_item->setData(i + 1, Qt::EditRole);
     model->setItem(i, 0, index_item);
+    index_item->setCheckState(Qt::Checked);
+    index_item->setCheckable(true);
+//    connect(index_item, &QStandardItem:
+//            this, &FreeCircos::onCheckboxStateChanged);
     //start name
     model->setItem(i, 1, new QStandardItem(l->getSGN()));
     //startblock
     QString startblock = QString::number(l->getSourceStart());
-    if(l->getSourceEnd() > 0) {
+    if (l->getSourceEnd() > 0) {
       startblock = startblock + "---" + QString::number(l->getSourceEnd());
     }
     model->setItem(i, 2, new QStandardItem(startblock));
@@ -306,9 +310,14 @@ void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c) {
     model->setItem(i, 3, new QStandardItem(l->getDGN()));
     // endblock
     QString endblock = QString::number(l->getDestStart());
-    if(l->getDestEnd() > 0) {
+    if (l->getDestEnd() > 0) {
       endblock = endblock + "---" + QString::number(l->getDestEnd());
     }
     model->setItem(i, 4, new QStandardItem(endblock));
+    model->stateSet(i, Qt::Checked);
   }
+//  connect(model, &ExtStandardItemModel::stateSet,
+//          this, &FreeCircos::onExtStandardItemStateSet);
+  connect(model, &ExtStandardItemModel::itemChanged,
+          this, &FreeCircos::onStandardItemChanged);
 }

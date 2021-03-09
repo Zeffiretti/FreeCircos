@@ -51,6 +51,10 @@ void Link::setColorName(const QString &name) {
   color_name = name;
 }
 
+void Link::setEnable(bool b) {
+  is_active = b;
+}
+
 //void Link::setColorCode(qreal c) {
 //  color_code = c;
 //}
@@ -101,6 +105,10 @@ Link::ColorFuns Link::getColorFun(void) {
 
 QString Link::getColorName(void) {
   return color_name;
+}
+
+bool Link::getEnable(void) {
+  return is_active;
 }
 
 //void Link::onColorFunChanged(ColorFuns cf) {

@@ -29,6 +29,7 @@ SOURCES += \
     extension/extcheckboxheaderview.cpp \
     extension/extdoubleslider.cpp \
     extension/extgradientbutton.cpp \
+    extension/extstandarditemmodel.cpp \
     fileprocess/excelbase.cpp \
     fileprocess/qvariantlistlistmodel.cpp \
     functions.cpp \
