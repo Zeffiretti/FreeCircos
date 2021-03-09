@@ -57,61 +57,60 @@ vector<QPointF> CustomTool::bezierCurve(vector<QPointF> src) {
 }
 
 QColor CustomTool::colorFun(const QString &type, qreal index) {
-  if(type.compare("none") == 0) {
+  if (type.compare("none") == 0) {
     return QColor(Qt::GlobalColor::black);
-  } else if(type.compare("ramp") == 0) {
+  } else if (type.compare("ramp") == 0) {
     int r = 0, g = 0, b = 0;
     int phase = index / 10;
     int bound = phase * 10;
     switch (phase) {
-    case 1:
-      r = 0;
-      g = qRound((index - bound) * 25.5);
-      b = 255;
-      break;
-    case 2:
-      r = 0;
-      g = 255;
-      b = 255 - qRound((index - bound) * 25.5);
-      break;
-    case 3:
-      r = qRound((index - bound) * 25.5);
-      g = 255;
-      b = 0;
-      break;
-    case 4:
-      r = 255;
-      g = 255 - qRound((index - bound) * 25.5);
-      b = 0;
-      break;
-    case 5:
-    default:
-      r = 255;
-      g = 0;
-      b = 0;
-      break;
+      case 1: {
+        r = 0;
+        g = qRound((index - bound) * 25.5);
+        b = 255;
+        break;
+      }
+      case 2: {
+        r = 0;
+        g = 255;
+        b = 255 - qRound((index - bound) * 25.5);
+        break;
+      }
+      case 3: {
+        r = qRound((index - bound) * 25.5);
+        g = 255;
+        b = 0;
+        break;
+      }
+      case 4: {
+        r = 255;
+        g = 255 - qRound((index - bound) * 25.5);
+        b = 0;
+        break;
+      }
+      case 5:
+      default: {
+        r = 255;
+        g = 0;
+        b = 0;
+        break;
+      }
     }
     return QColor(r, g, b);
-  } else if(type.compare("rainbow") == 0) {
+  } else if (type.compare("rainbow") == 0) {
     switch (qRound(index)) {
-    case 0:
-      return QColor(Qt::GlobalColor::blue);
-      break;
-    case 1:
-      return QColor(Qt::GlobalColor::green);
-      break;
-    case 2:
-      return QColor(Qt::GlobalColor::yellow);
-      break;
-    case 3:
-      return QColor(Qt::GlobalColor::red);
-      break;
-    case 4:
-      return QColor(Qt::GlobalColor::darkGray);
-      break;
-    default:
-      return QColor(Qt::GlobalColor::darkGray);
-      break;
+      case 0:return QColor(Qt::GlobalColor::blue);
+        break;
+      case 1:return QColor(Qt::GlobalColor::green);
+        break;
+      case 2:return QColor(Qt::GlobalColor::yellow);
+        break;
+      case 3:return QColor(Qt::GlobalColor::red);
+        break;
+      case 4:return QColor(Qt::GlobalColor::darkGray);
+        break;
+      default:return QColor(Qt::GlobalColor::darkGray);
+        break;
     }
   }
 }
