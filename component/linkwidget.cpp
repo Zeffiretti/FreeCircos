@@ -1,7 +1,7 @@
 #include <freecircos.h>
 
 void FreeCircos::initLKTable(void) {
-  link_model = new ExtStandardItemModel;
+  link_model = new QStandardItemModel;
   link_table = new QTableView;
   link_table_header = new ExtCheckBoxHeaderView;
   link_table->setSortingEnabled(false);
@@ -200,6 +200,8 @@ void FreeCircos::connectLKSignalSlot(void) {
           this, &FreeCircos::onLineEditTextChanged);
   connect(link_color_lineedit, &QLineEdit::textChanged,
           this, &FreeCircos::onLineEditTextChanged);
+  connect(link_model, &QStandardItemModel::itemChanged,
+          this, &FreeCircos::onStandardItemChanged);
 //  connect(this, &FreeCircos::setLinkColor,
 //          circos, &Circos::onLinkColorSet);
 }
@@ -286,7 +288,7 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
           circos, &Circos::setGradientColor);
 }
 
-void FreeCircos::initLKTableModel(ExtStandardItemModel *model, Circos *c) {
+void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c) {
   for (qint8 i = 0; i < c->getLinkNum(); ++i) {
     //Link*
     Link *l = c->getLink(i);
@@ -314,10 +316,7 @@ void FreeCircos::initLKTableModel(ExtStandardItemModel *model, Circos *c) {
       endblock = endblock + "---" + QString::number(l->getDestEnd());
     }
     model->setItem(i, 4, new QStandardItem(endblock));
-    model->stateSet(i, Qt::Checked);
   }
 //  connect(model, &ExtStandardItemModel::stateSet,
 //          this, &FreeCircos::onExtStandardItemStateSet);
-  connect(model, &ExtStandardItemModel::itemChanged,
-          this, &FreeCircos::onStandardItemChanged);
 }

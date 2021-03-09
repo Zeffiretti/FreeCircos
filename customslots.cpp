@@ -754,7 +754,8 @@ void FreeCircos::onHeaderCheckBoxStateChanged(int state) {
       qDebug("now entering slots link--tableselected--onHeaderCheckBoxStateChanged");
       int rows = link_model->rowCount();
       for (int i = 0; i < rows; ++i) {
-        link_model->setState(i, Qt::CheckState(state));
+        link_model->item(i, 0)->setCheckState(Qt::CheckState(state));
+//        link_model->setState(i, Qt::CheckState(state));
 //        circos.getLi
       }
 //      if(state == Qt::Checked) {
@@ -766,7 +767,6 @@ void FreeCircos::onHeaderCheckBoxStateChanged(int state) {
 }
 
 void FreeCircos::onExtStandardItemStateSet(int index, Qt::CheckState state) {
-
   qDebug("Index Item %d State Changed.\n", index);
 }
 

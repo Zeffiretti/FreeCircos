@@ -45,8 +45,7 @@ set(EXT_FILES
     extension/extcheckboxheaderview.cpp
     extension/extdoubleslider.cpp
     extension/extdoublesliderprivate.h
-    extension/extgradientbutton.cpp
-    extension/extstandarditemmodel.cpp)
+    extension/extgradientbutton.cpp)
 set(FILEPROS_FILES
     fileprocess/excelbase.cpp
     fileprocess/qvariantlistlistmodel.cpp)

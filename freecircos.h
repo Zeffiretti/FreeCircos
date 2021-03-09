@@ -15,7 +15,6 @@
 #include "extension/extdoubleslider.h"
 #include "extension/extgradientbutton.h"
 #include "extension/extcheckboxheaderview.h"
-#include "extension/extstandarditemmodel.h"
 
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
@@ -83,7 +82,7 @@ class FreeCircos : public QMainWindow {
   void initLKTable(void);
   void initLKConfigWidget(void);
   void initLKColorScale(QCustomPlot *parent1 = nullptr, QCustomPlot *parent2 = nullptr);
-  void initLKTableModel(ExtStandardItemModel *model, Circos*);
+  void initLKTableModel(QStandardItemModel *model, Circos*);
 
   bool eventFilter(QObject *watched, QEvent *event);
 
@@ -167,7 +166,7 @@ class FreeCircos : public QMainWindow {
 
   QWidget *link_widget;
   QTableView *link_table;
-  ExtStandardItemModel *link_model;
+  QStandardItemModel *link_model;
   ExtCheckBoxHeaderView *link_table_header;
   QWidget *link_config_widget;
   QLabel *link_type_label;
