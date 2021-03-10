@@ -10,8 +10,8 @@ FreeCircos::FreeCircos(QWidget *parent)
   setMaximumSize(1610, 650);
   this->setGeometry(200, 200, 1610, 650);
   major_font = new QFont;
-  major_font->setFamily("Source Code Pro");
-  major_font->setPixelSize(16);
+  major_font->setFamily("Microsoft Yahei UI");
+  major_font->setPointSizeF(16);
 //  major_font->setPointSize(10);
   major_font->setBold(true);
   //init canvas
