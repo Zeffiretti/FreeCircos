@@ -2,7 +2,12 @@ cmake_minimum_required(VERSION 3.1.0)
 
 project(FreeCircos VERSION 0.3.0 LANGUAGES CXX)
 message("CMake Info: Project: [${PROJECT_NAME}_${PROJECT_VERSION}]")
-
+if(WIN32)
+        ADD_DEFINITIONS(-DWINDOWS_H_)
+endif()
+if(UNIX)
+        ADD_DEFINITIONS(-DUNIX_H_)
+endif()
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -14,7 +19,7 @@ if (NOT DEFINED ENV{Qt5_Dir})
 else ()
   message("Environment variable Qt5_Dir at $ENV{Qt5_Dir}")
 endif ()
-set(CMAKE_PREFIX_PATH $ENV{Qt5_Dir}}/mingw73_64/lib/cmake)
+set(CMAKE_PREFIX_PATH $ENV{Qt5_Dir}/mingw73_64/lib/cmake)
 #set(Qt5_DIR "D:/Apps/Qt5129/5.12.9/mingw73_64/lib/cmake")
 message("CMake at ${CMAKE_PREFIX_PATH}")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -36,6 +41,8 @@ add_definitions(${Qt5Widgets_DEFINITIONS})
 include_directories(
     ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Widgets_LIBRARIES})
+message("${Qt5Widgets_DEFINITIONS}")
+message("${Qt5Widgets_INCLUDE_DIRS}")
 add_definitions(${Qt5Core_DEFINITIONS})
 include_directories(
     ${Qt5Core_INCLUDE_DIRS}
