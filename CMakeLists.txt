@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.1.0)
 
 project(FreeCircos VERSION 0.3.0 LANGUAGES CXX)
+message("CMake Info: Project: [${PROJECT_NAME}_${PROJECT_VERSION}]")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -66,7 +67,7 @@ set(RESOURCE_FILES
     resource/thermometer.png)
 set(TOOL_FILES
     tool/customtool.cpp)
-add_executable(FreeCircos
+add_executable(${PROJECT_NAME}
     ${ROOT_FILES}
     ${CIRCOS_FILES}
     ${ADD_FILES}
@@ -82,7 +83,7 @@ include_directories(./
     ${Qt5AxContainer_INCLUDE_DIRS}
     ${Qt5AxContainer_LIBRARIES})
 add_definitions(${Qt5AxContainer_DEFINITIONS})
-target_link_libraries(FreeCircos
+target_link_libraries(${PROJECT_NAME}
     Qt5::Core
     Qt5::Gui
     Qt5::AxContainer
