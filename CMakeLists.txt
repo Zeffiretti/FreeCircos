@@ -27,19 +27,24 @@ find_package(Qt5 COMPONENTS
     PrintSupport REQUIRED)
 
 include_directories(./)
+add_definitions(${Qt5AxContainer_DEFINITIONS})
 include_directories(
     ENV{Qt5129}/mingw73_64/include
     ${Qt5AxContainer_INCLUDE_DIRS}
     ${Qt5AxContainer_LIBRARIES})
+add_definitions(${Qt5Widgets_DEFINITIONS})
 include_directories(
     ${Qt5Widgets_INCLUDE_DIRS}
     ${Qt5Widgets_LIBRARIES})
+add_definitions(${Qt5Core_DEFINITIONS})
 include_directories(
     ${Qt5Core_INCLUDE_DIRS}
     ${Qt5Core_LIBRARIES})
+add_definitions(${Qt5Gui_DEFINITIONS})
 include_directories(
     ${Qt5Gui_INCLUDE_DIRS}
     ${Qt5Gui_LIBRARIES})
+add_definitions(${Qt5PrintSupport_DEFINITIONS})
 include_directories(
     ${Qt5PrintSupport_INCLUDE_DIRS}
     ${Qt5PrintSupport_LIBRARIES})
@@ -102,7 +107,7 @@ add_executable(${PROJECT_NAME}
 
 #include(${QT_USE_FILE})
 #link_directories($)
-add_definitions(${Qt5AxContainer_DEFINITIONS})
+
 target_link_libraries(${PROJECT_NAME}
     Qt5::Core
     Qt5::Gui
