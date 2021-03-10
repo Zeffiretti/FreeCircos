@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.1.0)
 
 project(FreeCircos VERSION 0.3.0 LANGUAGES CXX)
 message("CMake Info: Project: [${PROJECT_NAME}_${PROJECT_VERSION}]")
-if(WIN32)
-        ADD_DEFINITIONS(-DWINDOWS_H_)
-endif()
-if(UNIX)
-        ADD_DEFINITIONS(-DUNIX_H_)
-endif()
+if (WIN32)
+  ADD_DEFINITIONS(-DWINDOWS_H_)
+endif ()
+if (UNIX)
+  ADD_DEFINITIONS(-DUNIX_H_)
+endif ()
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -31,30 +31,53 @@ find_package(Qt5 COMPONENTS
     Widgets
     PrintSupport REQUIRED)
 
-include_directories(./)
-add_definitions(${Qt5AxContainer_DEFINITIONS})
-include_directories(
-    ENV{Qt5129}/mingw73_64/include
-    ${Qt5AxContainer_INCLUDE_DIRS}
-    ${Qt5AxContainer_LIBRARIES})
-add_definitions(${Qt5Widgets_DEFINITIONS})
-include_directories(
-    ${Qt5Widgets_INCLUDE_DIRS}
-    ${Qt5Widgets_LIBRARIES})
-message("${Qt5Widgets_DEFINITIONS}")
-message("${Qt5Widgets_INCLUDE_DIRS}")
-add_definitions(${Qt5Core_DEFINITIONS})
-include_directories(
-    ${Qt5Core_INCLUDE_DIRS}
-    ${Qt5Core_LIBRARIES})
-add_definitions(${Qt5Gui_DEFINITIONS})
-include_directories(
-    ${Qt5Gui_INCLUDE_DIRS}
-    ${Qt5Gui_LIBRARIES})
-add_definitions(${Qt5PrintSupport_DEFINITIONS})
-include_directories(
-    ${Qt5PrintSupport_INCLUDE_DIRS}
-    ${Qt5PrintSupport_LIBRARIES})
+include_directories(./
+    ENV{Qt5129}/mingw73_64/include)
+if (${Qt5AxContainer_FOUND})
+  message("Qt5AxContainer Found Successfully.")
+  add_definitions(${Qt5AxContainer_DEFINITIONS})
+  include_directories(
+      ${Qt5AxContainer_INCLUDE_DIRS}
+      ${Qt5AxContainer_LIBRARIES})
+else ()
+  message(FATAL_ERROR "NO Qt5AxContainer")
+endif ()
+if (${Qt5Widgets_FOUND})
+  message("Qt5Widgets Found Successfully.")
+  add_definitions(${Qt5Widgets_DEFINITIONS})
+  include_directories(
+      ${Qt5Widgets_INCLUDE_DIRS}
+      ${Qt5Widgets_LIBRARIES})
+else ()
+  message(FATAL_ERROR "NO Qt5Widgets")
+endif ()
+if (${Qt5Core_FOUND})
+  message("Qt5Core Found Successfully.")
+  add_definitions(${Qt5Core_DEFINITIONS})
+  include_directories(
+      ${Qt5Core_INCLUDE_DIRS}
+      ${Qt5Core_LIBRARIES})
+else ()
+  message(FATAL_ERROR "NO QT5Core")
+endif ()
+if (${Qt5Gui_FOUND})
+  message("Qt5Gui Found Successfully.")
+  add_definitions(${Qt5Gui_DEFINITIONS})
+  include_directories(
+      ${Qt5Gui_INCLUDE_DIRS}
+      ${Qt5Gui_LIBRARIES})
+else ()
+  message(FATAL_ERROR "No Qt5Core")
+endif ()
+if (${Qt5PrintSupport_FOUND})
+  message("Qt5PrintSupport Found Successfully.")
+  add_definitions(${Qt5PrintSupport_DEFINITIONS})
+  include_directories(
+      ${Qt5PrintSupport_INCLUDE_DIRS}
+      ${Qt5PrintSupport_LIBRARIES})
+else ()
+  message(FATAL_ERROR "NO Qt5PrintSupport")
+endif ()
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 set(ROOT_FILES
     freecircos.cpp
