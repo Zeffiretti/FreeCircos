@@ -121,7 +121,12 @@ void Circos::dataToLink(void) {
 //            qDebug() << source_gene_name << "----" << dest_gene_name << " empty";
         dest_gene_end = -1;
       }
-      stre = data.at(6).toReal();
+      if (data.at(6).isValid()) {
+        stre = data.at(6).toReal();
+      } else {
+        stre = 1.0;
+      }
+
       if (stre <= link_stre_min) {
         setLinkStre(stre, link_stre_max);
       }
