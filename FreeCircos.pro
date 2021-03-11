@@ -32,7 +32,7 @@ SOURCES += \
     fileprocess/excelbase.cpp \
     fileprocess/qvariantlistlistmodel.cpp \
     functions.cpp \
-    globalsetwin.cpp \
+    component/globalsetwin.cpp \
     init.cpp \
     main.cpp \
     freecircos.cpp \
@@ -64,7 +64,7 @@ HEADERS += \
     fileprocess/qvariantlistlistmodel.h \
     fileresource.h \
     freecircos.h \
-    globalsetwin.h \
+    component/globalsetwin.h \
     paint/colorgen.h \
     paint/custombezier.h \
     paint/customdonut.h \
