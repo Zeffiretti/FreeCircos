@@ -3,7 +3,7 @@
 void FreeCircos::initGenerateButton(void) {
   generate_button = new QPushButton("Generate!");
   generate_button->setParent(this);
-  generate_button->setGeometry(340, 10, 150, 90);
+  generate_button->setGeometry(340, 10, 150, 40);
   generate_button->setProperty("function", "generate");
   connect(generate_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);

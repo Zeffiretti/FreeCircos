@@ -3,7 +3,7 @@
 #include "ui_freecircos.h"
 
 FreeCircos::FreeCircos(QWidget *parent)
-  : QMainWindow(parent), ui(new Ui::FreeCircos) {
+    : QMainWindow(parent), ui(new Ui::FreeCircos) {
   ui->setupUi(this);
 //  setWindowFlags(flags);
   setMinimumSize(1610, 650);
@@ -72,6 +72,13 @@ FreeCircos::FreeCircos(QWidget *parent)
   save_button->setProperty("function", "saveimage");
   save_button->setGeometry(230, 60, 100, 40);
   connect(save_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  QPushButton *reset_button = new QPushButton;
+  reset_button->setParent(this);
+  reset_button->setText("Reset");
+  reset_button->setProperty("function", "reset");
+  reset_button->setGeometry(340, 60, 150, 40);
+  connect(reset_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
 //    QElapsedTimer timer;
 //    timer.start();

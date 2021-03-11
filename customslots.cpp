@@ -26,6 +26,13 @@ void FreeCircos::onButtonClicked(bool) {
     }
     canvas->replot();
   }
+  if (func.compare("reset") == 0) {
+    circos->reset();
+    backbone_model->clear();
+    initBBTable();
+    link_model->clear();
+    initLKTable();
+  }
   if (func.compare("globalsetting") == 0) {
     gbset_win = new GlobalSetWin(circos, this);
     GlobalSetWin::Component component = GlobalSetWin::ComponentEnable::AllDisable;

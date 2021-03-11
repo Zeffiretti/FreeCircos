@@ -36,6 +36,7 @@ class Circos : public QObject {
   void buildCategoryDonut(CustomDonut *);
   void buildCustomLink(CustomLinkCanvas *);
   void buildCustomTrack(CustomTrackArrow *);
+  void reset(void);
 
   Gene *findGene(const QString name);
   Category *findCategory(const QString name);
@@ -44,6 +45,8 @@ class Circos : public QObject {
   int takeCategoryAt(int index);
   void insertCategory(int index, int value);
   void adjustBackBoneToCategory(void);
+  void clearCategory(void);
+  void clearCategorySequence(void);
 
   void setCategoryEnable(bool b);
   bool getCategoryEnable(void);
@@ -92,9 +95,11 @@ class Circos : public QObject {
 
   Link *getLink(int index);
   int getLinkNum(void);
+  void clearLink(void);
 
   void setTrackEnabled(bool b);
   bool getTrackEnabled(void);
+  void clearTrackArrow(void);
 
   qreal getBBHole(void) {
     return back_bone_inner_radius;

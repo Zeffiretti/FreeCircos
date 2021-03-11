@@ -35,27 +35,30 @@ void Circos::openFile(const QString &xlsFile) {
 void Circos::dataToBackBone(void) {
   back_bone.clear();
   back_bone_sequence.clear();
-  if (m_datas.at(0).at(2) != "") {
-    for (int i = 1; i < m_datas.size(); ++i) {
-      Gene *g = new Gene(m_datas.at(i).at(0).toString(),
-                         m_datas.at(i).at(1).toUInt(),
-                         m_datas.at(i).at(2).toUInt());
-      g->setFillColor(QColor(Qt::white));
-      g->setStrikeColor(QColor(Qt::black));
-      g->setLabelState(CustomSlice::LabelSleep);
-      g->setLabelPosition(CustomSlice::LabelOnDonut);
-      back_bone.append(g);
-      back_bone_sequence.append(i - 1);
+  if (!m_datas.empty()) {
+    if (m_datas.at(0).at(2) != "") {
+      for (int i = 1; i < m_datas.size(); ++i) {
+        Gene *g = new Gene(m_datas.at(i).at(0).toString(),
+                           m_datas.at(i).at(1).toUInt(),
+                           m_datas.at(i).at(2).toUInt());
+        g->setFillColor(QColor(Qt::white));
+        g->setStrikeColor(QColor(Qt::black));
+        g->setLabelState(CustomSlice::LabelSleep);
+        g->setLabelPosition(CustomSlice::LabelOnDonut);
+        back_bone.append(g);
+        back_bone_sequence.append(i - 1);
+      }
+    } else {
+      for (int i = 1; i < m_datas.size(); ++i) {
+        Gene *g = new Gene(m_datas.at(i).at(0).toString(),
+                           m_datas.at(i).at(1).toUInt());
+        g->setFillColor(QColor(Qt::white));
+        g->setStrikeColor(QColor(Qt::black));
+        back_bone.append(g);
+        back_bone_sequence.append(i - 1);
+      }
     }
-  } else {
-    for (int i = 1; i < m_datas.size(); ++i) {
-      Gene *g = new Gene(m_datas.at(i).at(0).toString(),
-                         m_datas.at(i).at(1).toUInt());
-      g->setFillColor(QColor(Qt::white));
-      g->setStrikeColor(QColor(Qt::black));
-      back_bone.append(g);
-      back_bone_sequence.append(i - 1);
-    }
+
   }
 }
 
@@ -65,24 +68,27 @@ void Circos::dataToCategory(void) {
   category_sequence.clear();
   QString category_name;
   QString gene_name;
-  for (int i = 1, cnt = 0; i < m_datas.size(); ++i) {
-    gene_name = m_datas.at(i).at(0).toString();
-    if (!m_datas.at(i).at(1).isNull()) {
-      category_name = m_datas.at(i).at(1).toString();
-      Category *new_category = new Category(category_name);
-      new_category->addGene(gene_name);
-      new_category->setFillColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
-      new_category->setStrikeColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
-      new_category->setLabelState(CustomSlice::LabelSleep);
-      new_category->setLabelPosition(CustomSlice::LabelOnDonut);
-      findGene(gene_name)->setCategory(new_category);
-      category.append(new_category);
-      category_sequence.append(cnt);
-      cnt++;
-    } else {
-      findCategory(category_name)->addGene(gene_name);
-      findGene(gene_name)->setCategory(findCategory(category_name));
+  if (!m_datas.empty()) {
+    for (int i = 1, cnt = 0; i < m_datas.size(); ++i) {
+      gene_name = m_datas.at(i).at(0).toString();
+      if (!m_datas.at(i).at(1).isNull()) {
+        category_name = m_datas.at(i).at(1).toString();
+        Category *new_category = new Category(category_name);
+        new_category->addGene(gene_name);
+        new_category->setFillColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+        new_category->setStrikeColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+        new_category->setLabelState(CustomSlice::LabelSleep);
+        new_category->setLabelPosition(CustomSlice::LabelOnDonut);
+        findGene(gene_name)->setCategory(new_category);
+        category.append(new_category);
+        category_sequence.append(cnt);
+        cnt++;
+      } else {
+        findCategory(category_name)->addGene(gene_name);
+        findGene(gene_name)->setCategory(findCategory(category_name));
+      }
     }
+
   }
 }
 
@@ -92,78 +98,83 @@ void Circos::dataToLink(void) {
   QString source_gene_name, dest_gene_name;
   int source_gene_start, source_gene_end, dest_gene_start, dest_gene_end;
   qreal stre, lwd;
-  QListIterator<QList<QVariant> > it(m_datas);
+  if (!m_datas.empty()) {
+    QListIterator<QList<QVariant> > it(m_datas);
 //    it.peekNext();
-  QList<QVariant> data = it.next();
-  while (it.hasNext()) {
-    data = it.next();
-    source_gene_name = data.at(0).toString();
-    dest_gene_name = data.at(3).toString();
-    source_gene_start = data.at(1).toInt();
-    if (!data.at(2).isNull()) {
-      source_gene_start = qMin(data.at(1).toInt(), data.at(2).toInt());
-      source_gene_end = qMax(data.at(1).toInt(), data.at(2).toInt());
-    } else {
-      source_gene_end = -1;
-    }
-    dest_gene_start = data.at(4).toInt();
-    if (!data.at(5).isNull()) {
-      dest_gene_start = qMax(data.at(4).toInt(), data.at(5).toInt());
-      dest_gene_end = qMin(data.at(4).toInt(), data.at(5).toInt());
-    } else {
+    QList<QVariant> data = it.next();
+    while (it.hasNext()) {
+      data = it.next();
+      source_gene_name = data.at(0).toString();
+      dest_gene_name = data.at(3).toString();
+      source_gene_start = data.at(1).toInt();
+      if (!data.at(2).isNull()) {
+        source_gene_start = qMin(data.at(1).toInt(), data.at(2).toInt());
+        source_gene_end = qMax(data.at(1).toInt(), data.at(2).toInt());
+      } else {
+        source_gene_end = -1;
+      }
+      dest_gene_start = data.at(4).toInt();
+      if (!data.at(5).isNull()) {
+        dest_gene_start = qMax(data.at(4).toInt(), data.at(5).toInt());
+        dest_gene_end = qMin(data.at(4).toInt(), data.at(5).toInt());
+      } else {
 //            qDebug() << source_gene_name << "----" << dest_gene_name << " empty";
-      dest_gene_end = -1;
-    }
-    stre = data.at(6).toReal();
-    if (stre <= link_stre_min) {
-      setLinkStre(stre, link_stre_max);
-    }
-    if (stre >= link_stre_max) {
-      setLinkStre(link_stre_min, stre);
-    }
-    lwd = data.at(7).toReal();
-    Link *l = new Link;
-    l->setSGN(source_gene_name);
-    l->setDGN(dest_gene_name);
-    l->setSourceStart(source_gene_start);
-    if (source_gene_end > 0) {
-      l->setSourceEnd(source_gene_end);
-    }
-    l->setDestStart(dest_gene_start);
-    if (dest_gene_end > 0) {
-      l->setDestEnd(dest_gene_end);
-    }
-    l->setStreCode(stre);
-    l->setLineWidth(lwd);
-    links.append(l);
+        dest_gene_end = -1;
+      }
+      stre = data.at(6).toReal();
+      if (stre <= link_stre_min) {
+        setLinkStre(stre, link_stre_max);
+      }
+      if (stre >= link_stre_max) {
+        setLinkStre(link_stre_min, stre);
+      }
+      lwd = data.at(7).toReal();
+      Link *l = new Link;
+      l->setSGN(source_gene_name);
+      l->setDGN(dest_gene_name);
+      l->setSourceStart(source_gene_start);
+      if (source_gene_end > 0) {
+        l->setSourceEnd(source_gene_end);
+      }
+      l->setDestStart(dest_gene_start);
+      if (dest_gene_end > 0) {
+        l->setDestEnd(dest_gene_end);
+      }
+      l->setStreCode(stre);
+      l->setLineWidth(lwd);
+      links.append(l);
 //    connect(l,&Link::setColorFun
 //        qDebug() << l->getSGN() << "---" << l->getDGN();
+    }
+
   }
 }
 
 void Circos::dataToTrackArrow(void) {
   track_arrow.clear();
-  QList<QVariant> data;
-  m_datas.removeAt(0);
-      foreach (data, m_datas) {
-      TrackArrow *ta = new TrackArrow;
-      if (data.at(3).isNull()) {
+  if (!m_datas.empty()) {
+    QList<QVariant> data;
+    m_datas.removeAt(0);
+        foreach (data, m_datas) {
+        TrackArrow *ta = new TrackArrow;
+        if (data.at(3).isNull()) {
 //      qDebug("this is tile file.");
-        ta->setDirections(TrackArrow::Direction::None);
-        ta->setTypes(TrackArrow::Type::Tile);
-      } else {
-        ta->setTypes(TrackArrow::Type::Arrow);
-        if (data.at(3).toString().compare("+") == 0) {
-          ta->setDirections(TrackArrow::Direction::ClockWise);
+          ta->setDirections(TrackArrow::Direction::None);
+          ta->setTypes(TrackArrow::Type::Tile);
         } else {
-          ta->setDirections(TrackArrow::Direction::AntiClockWise);
+          ta->setTypes(TrackArrow::Type::Arrow);
+          if (data.at(3).toString().compare("+") == 0) {
+            ta->setDirections(TrackArrow::Direction::ClockWise);
+          } else {
+            ta->setDirections(TrackArrow::Direction::AntiClockWise);
+          }
         }
+        ta->setName(data.at(2).toString());
+        ta->setEnd(data.at(1).toInt());
+        ta->setStart(data.at(0).toInt());
+        track_arrow.append(ta);
       }
-      ta->setName(data.at(2).toString());
-      ta->setEnd(data.at(1).toInt());
-      ta->setStart(data.at(0).toInt());
-      track_arrow.append(ta);
-    }
+  }
 }
 
 int Circos::indexOfGene(const QString &n) {
@@ -432,6 +443,15 @@ void Circos::buildCustomTrack(CustomTrackArrow *track) {
     }
 }
 
+void Circos::reset() {
+  clearBackBone();
+  clearBackBoneSequence();
+  clearCategory();
+  clearCategorySequence();
+  clearLink();
+  clearTrackArrow();
+}
+
 Gene *Circos::findGene(const QString name) {
   QListIterator<Gene *> it(back_bone);
   while (it.hasNext()) {
@@ -475,6 +495,15 @@ void Circos::adjustBackBoneToCategory(void) {
       back_bone_sequence.append(indexOfGene(*it2));
     }
   }
+}
+
+void Circos::clearCategory(void) {
+  category.clear();
+  category_enabled = false;
+}
+
+void Circos::clearCategorySequence(void) {
+  category_sequence.clear();
 }
 
 void Circos::setCategoryEnable(bool b) {
@@ -619,12 +648,22 @@ int Circos::getLinkNum(void) {
   return links.size();
 }
 
+void Circos::clearLink(void) {
+  links.clear();
+  link_enabled = false;
+}
+
 void Circos::setTrackEnabled(bool b) {
   track_enabled = b;
 }
 
 bool Circos::getTrackEnabled(void) {
   return track_enabled;
+}
+
+void Circos::clearTrackArrow(void) {
+  track_arrow.clear();
+  track_enabled = false;
 }
 
 void Circos::onGeneAngleChanged(const QString &n, qreal s, qreal e) {
