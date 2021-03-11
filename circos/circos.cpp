@@ -40,8 +40,8 @@ void Circos::dataToBackBone(void) {
       Gene *g = new Gene(m_datas.at(i).at(0).toString(),
                          m_datas.at(i).at(1).toUInt(),
                          m_datas.at(i).at(2).toUInt());
-      g->setFillColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
-      g->setStrikeColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+      g->setFillColor(QColor(Qt::white));
+      g->setStrikeColor(QColor(Qt::black));
       g->setLabelState(CustomSlice::LabelSleep);
       g->setLabelPosition(CustomSlice::LabelOnDonut);
       back_bone.append(g);
@@ -51,8 +51,8 @@ void Circos::dataToBackBone(void) {
     for (int i = 1; i < m_datas.size(); ++i) {
       Gene *g = new Gene(m_datas.at(i).at(0).toString(),
                          m_datas.at(i).at(1).toUInt());
-      g->setFillColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
-      g->setStrikeColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+      g->setFillColor(QColor(Qt::white));
+      g->setStrikeColor(QColor(Qt::black));
       back_bone.append(g);
       back_bone_sequence.append(i - 1);
     }

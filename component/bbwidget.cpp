@@ -20,10 +20,10 @@ void FreeCircos::initBBTable(void) {
   backbone_table->setProperty("prefix", "backbone");
   backbone_table->setProperty("function", "backbone-table");
   backbone_table_rightclick_menu = new QMenu;
-  backbone_table_rightclick_action_moveto = new QAction("MoveTo");
-  backbone_table_rightclick_action_moveto->setProperty("function", "backbonemove");
-  backbone_table_rightclick_action_moveto->setProperty("prefix", "backbone");
-  backbone_table_rightclick_menu->addAction(backbone_table_rightclick_action_moveto);
+//  backbone_table_rightclick_action_moveto = new QAction("MoveTo");
+//  backbone_table_rightclick_action_moveto->setProperty("function", "backbonemove");
+//  backbone_table_rightclick_action_moveto->setProperty("prefix", "backbone");
+//  backbone_table_rightclick_menu->addAction(backbone_table_rightclick_action_moveto);
   backbone_header_list << "Index(Visable)"
                        << "Gene Name"
                        << "Length"
@@ -191,8 +191,8 @@ void FreeCircos::initBCSwitch(void) {
 
 void FreeCircos::connectBCSingalSlot(void) {
   //signal----slot
-  connect(backbone_table_rightclick_action_moveto, &QAction::triggered,
-          this, &FreeCircos::onActionTriggered);
+//  connect(backbone_table_rightclick_action_moveto, &QAction::triggered,
+//          this, &FreeCircos::onActionTriggered);
   connect(backbone_table_header, &ExtCheckBoxHeaderView::headerCheckBoxStateChanged,
           this, &FreeCircos::onHeaderCheckBoxStateChanged);
   connect(this, &FreeCircos::setTableEditMode, this, &FreeCircos::onTableEditModeChanged);

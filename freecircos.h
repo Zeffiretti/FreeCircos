@@ -130,7 +130,7 @@ class FreeCircos : public QMainWindow {
   QPushButton *backbone_config_button;
   QPushButton *move_panel_button;       //removed
   QMenu *backbone_table_rightclick_menu;
-  QAction *backbone_table_rightclick_action_moveto;
+//  QAction *backbone_table_rightclick_action_moveto;
   QStringList backbone_header_list;
   QStringList backbone_index_list;
   TableMoveDialog *table_move_dialog;
