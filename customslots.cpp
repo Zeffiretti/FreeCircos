@@ -150,7 +150,7 @@ void FreeCircos::onButtonClicked(bool) {
     qDebug() << "select a color";
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
-    QColor color = QColorDialog::getColor(Qt::white, backbone_config_widget, "Strike Color");
+    QColor color = QColorDialog::getColor(Qt::white, backbone_config_widget, "Strike Color",QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->setStrikeColor(color);
@@ -164,7 +164,7 @@ void FreeCircos::onButtonClicked(bool) {
     qDebug() << "select a color";
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
-    QColor color = QColorDialog::getColor(Qt::white, backbone_config_widget, "Strike Color");
+    QColor color = QColorDialog::getColor(Qt::white, backbone_config_widget, "Strike Color",QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->setFillColor(color);
@@ -202,7 +202,7 @@ void FreeCircos::onButtonClicked(bool) {
     qDebug() << "select a color";
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
-    QColor color = QColorDialog::getColor(Qt::white, category_config_widget, "Strike Color");
+    QColor color = QColorDialog::getColor(Qt::white, category_config_widget, "Strike Color",QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->getCategory()->setStrikeColor(color);
@@ -216,7 +216,7 @@ void FreeCircos::onButtonClicked(bool) {
     qDebug() << "select a color";
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
-    QColor color = QColorDialog::getColor(Qt::white, category_config_widget, "Strike Color");
+    QColor color = QColorDialog::getColor(Qt::white, category_config_widget, "Strike Color",QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->getCategory()->setFillColor(color);
@@ -298,7 +298,7 @@ void FreeCircos::onButtonClicked(bool) {
   if (func.compare("gradient-color") == 0) {
     ExtGradientButton *ext_btn = qobject_cast<ExtGradientButton *>(sender());
     qDebug() << "select a color";
-    QColor color = QColorDialog::getColor(Qt::white, link_config_widget, "Link Color");
+    QColor color = QColorDialog::getColor(Qt::white, link_config_widget, "Link Color",QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       ext_btn->setColor(color);
       link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
