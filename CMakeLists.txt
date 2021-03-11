@@ -85,7 +85,6 @@ set(ROOT_FILES
     freecircos.ui
     customslots.cpp
     functions.cpp
-    globalsetwin.cpp
     init.cpp
     main.cpp)
 set(CIRCOS_FILES
@@ -99,7 +98,8 @@ set(ADD_FILES
     addition/tablemovedialog.cpp)
 set(COMPONENT_FILES
     component/bbwidget.cpp
-    component/linkwidget.cpp)
+    component/linkwidget.cpp
+    component/globalsetwin.cpp)
 set(EXT_FILES
     extension/extcheckboxheaderview.cpp
     extension/extdoubleslider.cpp

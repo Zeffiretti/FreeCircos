@@ -27,7 +27,7 @@ void FreeCircos::onButtonClicked(bool) {
     canvas->replot();
   }
   if (func.compare("globalsetting") == 0) {
-    gbset_win = new GlobalSetWin(this);
+    gbset_win = new GlobalSetWin(circos, this);
     GlobalSetWin::Component component = GlobalSetWin::ComponentEnable::AllDisable;
     component |= GlobalSetWin::ComponentEnable::BackBone;
     if (circos->getCategoryEnable()) {

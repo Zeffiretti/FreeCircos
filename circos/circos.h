@@ -18,27 +18,27 @@
 #include "fileprocess/qvariantlistlistmodel.h"
 #include "tool/customtool.h"
 class Circos : public QObject {
-  Q_OBJECT
+ Q_OBJECT
  public:
   Circos(QObject *parent = nullptr);
   ~Circos();
 
-  void openFile(const QString&);
+  void openFile(const QString &);
   void dataToBackBone(void);
   void dataToCategory(void);
   void dataToLink(void);
   void dataToTrackArrow(void);
-  int indexOfGene(const QString&);
-  int indexOfCategory(const QString&);
+  int indexOfGene(const QString &);
+  int indexOfCategory(const QString &);
   void buildBackBoneSequence(QStandardItemModel *model);
-  void buildBackBoneDonut(CustomDonut*);
+  void buildBackBoneDonut(CustomDonut *);
   void buildCategorySequence(QStandardItemModel *model);
-  void buildCategoryDonut(CustomDonut*);
-  void buildCustomLink(CustomLinkCanvas*);
-  void buildCustomTrack(CustomTrackArrow*);
+  void buildCategoryDonut(CustomDonut *);
+  void buildCustomLink(CustomLinkCanvas *);
+  void buildCustomTrack(CustomTrackArrow *);
 
-  Gene* findGene(const QString name);
-  Category* findCategory(const QString name);
+  Gene *findGene(const QString name);
+  Category *findCategory(const QString name);
   int takeGeneAt(int index);
   void insertGene(int index, int value);
   int takeCategoryAt(int index);
@@ -51,12 +51,12 @@ class Circos : public QObject {
   void setLinkEnable(bool b);
   bool getLinkEnable(void);
 
-  void setLinkColorFunStr(int index, const QString& cf);
+  void setLinkColorFunStr(int index, const QString &cf);
   QString getLinkColorFunStr(int index);
   void setLinkColorFun(int index, Link::ColorFuns cf);
   Link::ColorFuns getLinkColorFun(int index);
 
-  void setLinkColorName(int index, const QString& name);
+  void setLinkColorName(int index, const QString &name);
   QString getLinkColorName(int index);
 
 //  void setLinkColorCode(int index, qreal code);
@@ -78,19 +78,19 @@ class Circos : public QObject {
   qreal getLinkStre(int index);
   qreal getLinkStreMin(void);
   qreal getLinkStreMax(void);
-  QCPRange* getLinkStreRange(void);
+  QCPRange *getLinkStreRange(void);
 
-  void setLinkGradient(QCPColorGradient* g);
-  QCPColorGradient* getLinkGradient(void);
+  void setLinkGradient(QCPColorGradient *g);
+  QCPColorGradient *getLinkGradient(void);
 
-  Gene* getGene(int index);
+  Gene *getGene(int index);
   void clearBackBone(void);
   void clearBackBoneSequence(void);
   void appendBackBoneSequence(int index);
   int getBackBoneSequence(int index);
   int getGeneNum(void);
 
-  Link* getLink(int index);
+  Link *getLink(int index);
   int getLinkNum(void);
 
   void setTrackEnabled(bool b);
@@ -128,7 +128,7 @@ class Circos : public QObject {
   }
 
  public slots:
-  void onGeneAngleChanged(const QString& n, qreal s, qreal e);
+  void onGeneAngleChanged(const QString &n, qreal s, qreal e);
 //  void onLinkColorSet(int index, QColor c);
   void onLinkColorFunChanged(int index);
   void setBBHole(qreal bbh) {
@@ -159,6 +159,12 @@ class Circos : public QObject {
     qreal pos = CustomTool::mapInt2Real(0, 4, 0, 1.0, i);
     getLinkGradient()->setColorStopAt(pos, c);
   }
+  void setBBGap(qreal g) {
+    back_bone_gap = g;
+  }
+  qreal getBBGap(void) {
+    return back_bone_gap;
+  }
  signals:
   void linkColorFunChanged(int index);
 
@@ -175,6 +181,7 @@ class Circos : public QObject {
 
   QList<Gene *> back_bone;
   QList<int> back_bone_sequence;
+  qreal back_bone_gap = 0.2;
   bool category_enabled = false;
   QList<Category *> category;
   QList<int> category_sequence;
@@ -191,7 +198,6 @@ class Circos : public QObject {
 
   QScopedPointer<ExcelBase> m_xls;
   QList<QList<QVariant> > m_datas;
-
 
 };
 

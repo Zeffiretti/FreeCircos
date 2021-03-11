@@ -8,7 +8,7 @@ To Develop A Program for Painting Circos Figure.
 
 ## TODO List:
 1. ~~backbone 默认配色改为白底黑框~~
-2. 需要增加一个backbone 基因之间间距的参数
+2. ~~需要增加一个backbone 基因之间间距的参数~~
 3. 配色需要增加透明度参数
 4. moveto 后面的输入信息的框不可用
 5. ~~backbone 信息列表右键的moveto需要删除~~

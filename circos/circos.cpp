@@ -216,6 +216,7 @@ void Circos::buildBackBoneDonut(CustomDonut *donut) {
 //    slice->setSize(back_bone_inner_radius, back_bone_outer_radius);
     donut->addSlice(slice);
   }
+  donut->setGaps(back_bone_gap);
   donut->setSize(back_bone_inner_radius, back_bone_outer_radius);
 }
 
@@ -533,8 +534,8 @@ Qt::PenStyle Circos::getLinkLineStyle(void) {
 }
 
 void Circos::setLinkType(CustomLinkCanvas::LinkTypes
-lt) {
-link_type = lt;
+                         lt) {
+  link_type = lt;
 }
 
 CustomLinkCanvas::LinkTypes Circos::getLinkType(void) {

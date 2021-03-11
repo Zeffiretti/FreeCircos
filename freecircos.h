@@ -32,7 +32,7 @@
 #include "circos/gene.h"
 
 #include "addition/tablemovedialog.h"
-#include "globalsetwin.h"
+#include "component/globalsetwin.h"
 #include "fileresource.h"
 
 QT_BEGIN_NAMESPACE
