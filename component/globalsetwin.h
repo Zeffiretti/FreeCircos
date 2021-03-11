@@ -6,6 +6,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QCheckBox>
 #include "extension/extdoubleslider.h"
 #include "circos/circos.h"
 
@@ -48,6 +49,7 @@ class GlobalSetWin : public QMainWindow {
   QLabel *link_name_label;
   QLabel *link_value_label;
   QLineEdit *gene_gap_edit;
+  QCheckBox *cgs_enable_checkbox;
 
  signals:
   void BBInnerRadiusChanged(qreal);
@@ -64,7 +66,8 @@ class GlobalSetWin : public QMainWindow {
   void onDoubleSliderLowerValueChanged(int i);
   void onDoubleSliderUpperValueChanged(int i);
   void onButtonClicked(bool);
-  void onLineEditTextChanged(const QString& text);
+  void onLineEditTextChanged(const QString &text);
+  void onCheckboxStateChanged(int state);
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(GlobalSetWin::Component)
 

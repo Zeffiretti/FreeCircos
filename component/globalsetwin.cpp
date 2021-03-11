@@ -64,6 +64,12 @@ void GlobalSetWin::initPanel() {
   cgs_name_label->setGeometry(110, 420, 110, 30);
   cgs_name_label->setText("Category");
   cgs_name_label->setAlignment(Qt::AlignCenter);
+  cgs_enable_checkbox = new QCheckBox;
+  cgs_enable_checkbox->setParent(this);
+  cgs_enable_checkbox->setGeometry(100, 430, 10, 10);
+  cgs_enable_checkbox->setProperty("prefix", "category");
+  cgs_enable_checkbox->setProperty("function", "set-enable");
+  cgs_enable_checkbox->setCheckState(c_ptr->getCategoryEnable() ? Qt::Checked : Qt::Unchecked);
   cgs_value_label = new QLabel;
   cgs_value_label->setParent(this);
   cgs_value_label->setGeometry(110, 450, 110, 30);
@@ -115,6 +121,8 @@ void GlobalSetWin::initPanel() {
           this, &GlobalSetWin::onDoubleSliderLowerValueChanged);
   connect(link_dslider, &ExtDoubleSlider::upperValueChanged,
           this, &GlobalSetWin::onDoubleSliderUpperValueChanged);
+  connect(cgs_enable_checkbox, &QCheckBox::stateChanged,
+          this, &GlobalSetWin::onCheckboxStateChanged);
   connect(gene_gap_edit, &QLineEdit::textChanged,
           this, &GlobalSetWin::onLineEditTextChanged);
 }
@@ -247,6 +255,20 @@ void GlobalSetWin::onLineEditTextChanged(const QString &text) {
   if (prefix.compare("gene") == 0) {
     if (func.compare("set-gap") == 0) {
       c_ptr->setBBGap(text.toDouble());
+    }
+  }
+}
+
+void GlobalSetWin::onCheckboxStateChanged(int state) {
+  QCheckBox *check_box = qobject_cast<QCheckBox *>(sender());
+  QString prefix = check_box->property("prefix").toString();
+  QString func = check_box->property("function").toString();
+  if (prefix.compare("gene") == 0) {
+
+  }
+  if (prefix.compare("category") == 0) {
+    if (func.compare("set-enable") == 0) {
+      c_ptr->setCategoryEnable(state == Qt::Checked);
     }
   }
 }
