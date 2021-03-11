@@ -98,42 +98,71 @@ void Circos::dataToLink(void) {
   QString source_gene_name, dest_gene_name;
   int source_gene_start, source_gene_end, dest_gene_start, dest_gene_end;
   qreal stre, lwd;
+  int stre_index = -1, lwd_index = -1;
+  int gene1_index = -1, gene2_index = -1;
+  int start1_index = -1, end1_index = -1;
+  int start2_index = -1, end2_index = -1;
   if (!m_datas.empty()) {
     QListIterator<QList<QVariant> > it(m_datas);
 //    it.peekNext();
     QList<QVariant> data = it.next();
+    for (int i = 0; i < data.size(); ++i) {
+      if (data.at(i).toString().compare("stre") == 0) {
+        stre_index = i;
+      } else if (data.at(i).toString().compare("lwd") == 0) {
+        lwd_index = i;
+      } else if (data.at(i).toString().compare("Gene1") == 0) {
+        gene1_index = i;
+      } else if (data.at(i).toString().compare("start1") == 0) {
+        start1_index = i;
+      } else if (data.at(i).toString().compare("end1") == 0) {
+        end1_index = i;
+      } else if (data.at(i).toString().compare("Gene2") == 0) {
+        gene2_index = i;
+      } else if (data.at(i).toString().compare("start2") == 0) {
+        start2_index = i;
+      } else if (data.at(i).toString().compare("end2") == 0) {
+        end2_index = i;
+      }
+    }
     while (it.hasNext()) {
       data = it.next();
-      source_gene_name = data.at(0).toString();
-      dest_gene_name = data.at(3).toString();
-      source_gene_start = data.at(1).toInt();
-      if (!data.at(2).isNull()) {
-        source_gene_start = qMin(data.at(1).toInt(), data.at(2).toInt());
-        source_gene_end = qMax(data.at(1).toInt(), data.at(2).toInt());
+      source_gene_name = data.at(gene1_index).toString();
+      dest_gene_name = data.at(gene2_index).toString();
+      source_gene_start = data.at(start1_index).toInt();
+      if (!data.at(end1_index).isNull()) {
+        source_gene_start = qMin(data.at(start1_index).toInt(), data.at(end1_index).toInt());
+        source_gene_end = qMax(data.at(start1_index).toInt(), data.at(end1_index).toInt());
       } else {
         source_gene_end = -1;
       }
-      dest_gene_start = data.at(4).toInt();
-      if (!data.at(5).isNull()) {
-        dest_gene_start = qMax(data.at(4).toInt(), data.at(5).toInt());
-        dest_gene_end = qMin(data.at(4).toInt(), data.at(5).toInt());
+      dest_gene_start = data.at(start2_index).toInt();
+      if (!data.at(end2_index).isNull()) {
+        dest_gene_start = qMax(data.at(start2_index).toInt(), data.at(end2_index).toInt());
+        dest_gene_end = qMin(data.at(start2_index).toInt(), data.at(end2_index).toInt());
       } else {
 //            qDebug() << source_gene_name << "----" << dest_gene_name << " empty";
         dest_gene_end = -1;
       }
-      if (data.at(6).isValid()) {
-        stre = data.at(6).toReal();
-      } else {
-        stre = 1.0;
+      if (stre_index >= 0) {
+        if (data.at(stre_index).isValid()) {
+          stre = data.at(stre_index).toReal();
+        } else {
+          stre = 1.0;
+        }
       }
-
       if (stre <= link_stre_min) {
         setLinkStre(stre, link_stre_max);
       }
       if (stre >= link_stre_max) {
         setLinkStre(link_stre_min, stre);
       }
-      lwd = data.at(7).toReal();
+      if (lwd_index >= 0) {
+        lwd = data.at(lwd_index).toReal();
+      } else {
+        lwd = 1.0;
+      }
+
       Link *l = new Link;
       l->setSGN(source_gene_name);
       l->setDGN(dest_gene_name);

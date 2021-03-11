@@ -186,7 +186,7 @@ class Circos : public QObject {
 
   QList<Gene *> back_bone;
   QList<int> back_bone_sequence;
-  qreal back_bone_gap = 0.2;
+  qreal back_bone_gap = 0.01;
   bool category_enabled = false;
   QList<Category *> category;
   QList<int> category_sequence;
