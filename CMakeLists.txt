@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.0)
 
-project(FreeCircos VERSION 0.3.0 LANGUAGES CXX)
+project(FreeCircos VERSION 0.4.0 LANGUAGES CXX)
 message("Projection Infomation: Project: [${PROJECT_NAME}_${PROJECT_VERSION}]")
 if (WIN32)
   ADD_DEFINITIONS(-DWINDOWS_H_)
@@ -80,6 +80,7 @@ else ()
   message(FATAL_ERROR "NO Qt5PrintSupport")
 endif ()
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(ICON_FILE icon.rc)
 set(ROOT_FILES
     freecircos.cpp
     freecircos.ui
@@ -126,6 +127,7 @@ set(RESOURCE_FILES
 set(TOOL_FILES
     tool/customtool.cpp)
 add_executable(${PROJECT_NAME}
+    ${ICON_FILE}
     ${ROOT_FILES}
     ${CIRCOS_FILES}
     ${ADD_FILES}
