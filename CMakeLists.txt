@@ -17,9 +17,19 @@ set(CMAKE_AUTOUIC ON)
 if (NOT DEFINED ENV{Qt5_Dir})
   message(FATAL_ERROR "not defined environment variable: Qt5_Dir")
 endif ()
-if (NOT DEFINED ENV{CMAKE_PREFIX_PATH})
-  message("set CMAKE_PREFIX_PATH maunally")
-  set(CMAKE_PREFIX_PATH $ENV{Qt5_Dir}/mingw73_64)
+if (${MINGW})
+  message("USING TOOLSET: MINGW")
+  include_directories(./
+      ENV{Qt5129}/mingw73_64/include)
+  if (NOT DEFINED ENV{CMAKE_PREFIX_PATH})
+    message("set CMAKE_PREFIX_PATH maunally")
+    set(CMAKE_PREFIX_PATH $ENV{Qt5_Dir}/mingw73_64)
+  endif ()
+elseif (${MSVC})
+  message("USING TOOLSET: MSVC-${MSVC_TOOLSET_VERSION}-${MSVC_VERSION}")
+  include_directories(./
+      ENV{Qt5129}/msvc_2017/include)
+  set(CMAKE_PREFIX_PATH $ENV{Qt5_Dir}/msvc2017_64)
 endif ()
 #set(Qt5_DIR "D:/Apps/Qt5129/5.12.9/mingw73_64/lib/cmake")
 message("CMAKE_PREFIX_PATH at ${CMAKE_PREFIX_PATH}")
@@ -32,8 +42,6 @@ find_package(Qt5 COMPONENTS
     Widgets
     PrintSupport REQUIRED)
 
-include_directories(./
-    ENV{Qt5129}/mingw73_64/include)
 if (${Qt5AxContainer_FOUND})
   message("Qt5AxContainer Found Successfully.")
   add_definitions(${Qt5AxContainer_DEFINITIONS})
@@ -55,6 +63,7 @@ endif ()
 if (${Qt5Core_FOUND})
   message("Qt5Core Found Successfully.")
   add_definitions(${Qt5Core_DEFINITIONS})
+  message("Qt5Core At ${Qt5Core_INCLUDE_DIRS}")
   include_directories(
       ${Qt5Core_INCLUDE_DIRS}
       ${Qt5Core_LIBRARIES})
