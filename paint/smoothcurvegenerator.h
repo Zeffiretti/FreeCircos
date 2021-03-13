@@ -127,6 +127,7 @@ class SmoothCurveGenerator {
         (*secondControlPoints)[i].rx() = (knots[n].x() + xs[n - 1]) / 2;
         (*secondControlPoints)[i].ry() = (knots[n].y() + ys[n - 1]) / 2;
       }
+
     }
     delete xs;
     delete ys;

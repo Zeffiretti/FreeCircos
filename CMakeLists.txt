@@ -8,7 +8,7 @@ endif ()
 if (UNIX)
   ADD_DEFINITIONS(-DUNIX_H_)
 endif ()
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_AUTOMOC ON)
@@ -130,6 +130,7 @@ set(PAINT_FILES
     paint/customtrackarrow.cpp
     paint/qcustomplot.cpp
     paint/smoothcurvegenerator.cpp)
+
 set(RESOURCE_FILES
     resource/icon.ico
     resource/resource.qrc

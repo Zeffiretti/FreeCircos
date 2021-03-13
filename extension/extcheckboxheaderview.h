@@ -10,7 +10,7 @@
 #include <QList>
 
 class ExtCheckBoxHeaderView : public QHeaderView {
-  Q_OBJECT
+ Q_OBJECT
  public:
   ExtCheckBoxHeaderView();
   ExtCheckBoxHeaderView(Qt::Orientation orientation, QWidget *parent = 0);
@@ -20,22 +20,22 @@ class ExtCheckBoxHeaderView : public QHeaderView {
 //  void setProperty(const char *name, const QVariant &value);
  protected:
   void paintSection(QPainter *painter, const QRect &rect, int logicalIndex) const; //绘制checkbox
-//  void mousePressEvent(QMouseEvent *event);      //鼠标click事件
-//  void paintEvent(QPaintEvent *event);              //绘制checkbox事件
- public slots:
-//  void setHeaderBox(bool);      //设置表头checkbox状态
+//  void mousePressEvent(QMouseEvent *event);      //
+//  void paintEvent(QPaintEvent *event);              //
+  public Q_SLOTS:
+//  void setHeaderBox(bool);      //
   void onCheckBoxStateChanged(int);
- signals:
+ Q_SIGNALS:
   void headerCheckBoxStateChanged(int);
-  void clickRow(bool);    //向操作表第一列所有项的checkbox发送信号
+  void clickRow(bool);    //
  private:
-//  bool m_isOn;                //checkbox状态
-//  int m_iX;                   //横坐标
-//  int m_iY;                   //纵坐标
-//  bool m_isMousePress;        //是否按下
+//  bool m_isOn;
+//  int m_iX;
+//  int m_iY;
+//  bool m_isMousePress;
   QCheckBox *m_checkbox;
   QList<int> box_list;
-//  QStyle::State m_Style;                //记录QStyle
+//  QStyle::State m_Style;
 };
 
 #endif // EXTCHECKBOXHEADERVIEW_H

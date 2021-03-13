@@ -1,6 +1,6 @@
 #include "colorgen.h"
 
-ColorGen::ColorGen(ulong lim): limit(lim) {
+ColorGen::ColorGen(ulong lim) : limit(lim) {
 }
 
 QColor ColorGen::operator()() {
@@ -12,7 +12,7 @@ QColor ColorGen::operator()() {
       return clr;
     }
   }
-  //如果颜色已经完全用完，则将所有颜色清空
+
   used.clear();
   return QColor();
 }

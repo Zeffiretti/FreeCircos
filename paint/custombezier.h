@@ -30,9 +30,9 @@ class CustomBezier : public QObject {
   int getKnotNum(void);
 
  private:
-  int ctrl_num_;  //控制点数量
-  int order_;     //阶数，表示曲线为几阶曲线，为控制点数-1
-  int knot_num_ = 100; //节点数是分布在0-1之间有多少个点
+  int ctrl_num_;  //
+  int order_;     //
+  int knot_num_ = 100;
   QVector<QPointF> control_points_;
   QVector<QPointF> path_points_;
 
