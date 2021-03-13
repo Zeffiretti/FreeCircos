@@ -184,7 +184,7 @@ class FreeCircos : public QMainWindow {
   QLabel *link_color_label;
   QLineEdit *link_color_lineedit;
   QComboBox *line_color_combobox;
-  QCompleter *link_color_completer;
+//  QCompleter *link_color_completer;
   QLabel *link_lwd_label;
   QLineEdit *link_lwd_lineedit;
   QCustomPlot *link_thermometer_colormap_onpanel_plot;

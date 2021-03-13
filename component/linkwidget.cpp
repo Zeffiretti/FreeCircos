@@ -43,7 +43,7 @@ void FreeCircos::initLKConfigWidget(void) {
   link_color_label = new QLabel;
   link_color_lineedit = new QLineEdit;
   line_color_combobox = new QComboBox;
-  link_color_completer = new QCompleter;
+//  link_color_completer = new QCompleter;
   link_lwd_label = new QLabel;
   link_lwd_lineedit = new QLineEdit;
   link_thermometer_colormap_onpanel_plot = new QCustomPlot;
@@ -146,11 +146,12 @@ void FreeCircos::initLKConfigWidget(void) {
   QStringList link_color_indicator = rainbow_color_list;
   QStringListModel *link_color_listmodel = new QStringListModel;
   link_color_listmodel->setStringList(link_color_indicator);
-  link_color_completer->setModel(link_color_listmodel);
-  link_color_completer->setCaseSensitivity(Qt::CaseInsensitive);
-  link_color_completer->setFilterMode(Qt::MatchRecursive);
+//  link_color_completer = new QCompleter;
+//  link_color_completer->setModel(link_color_listmodel);
+//  link_color_completer->setCaseSensitivity(Qt::CaseInsensitive);
+//  link_color_completer->setFilterMode(Qt::MatchRecursive);
   line_color_combobox->setEditable(true);
-  line_color_combobox->setCompleter(link_color_completer);
+//  line_color_combobox->setCompleter(link_color_completer);
   line_color_combobox->setToolTip("remind");
   line_color_combobox->setLineEdit(link_color_lineedit);
 //  link_color_indicator << QString(tr"blue") << QString(tr"green") << QString(tr"yellow");
