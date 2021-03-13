@@ -158,3 +158,10 @@ target_link_libraries(${PROJECT_NAME}
     Qt5::AxContainer
     Qt5::PrintSupport
     Qt5::Widgets)
+
+message("Build Type: ${CMAKE_BUILD_TYPE}")
+if (CMAKE_BUILD_TYPE MATCHES Release)
+  message("Release Project")
+  add_definitions(-DQT_NO_DEBUG_OUTPUT)
+  target_compile_definitions(${PROJECT_NAME} PUBLIC QT_NO_DEBUG_OUTPUT)
+endif ()
