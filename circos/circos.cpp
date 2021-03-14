@@ -107,21 +107,21 @@ void Circos::dataToLink(void) {
 //    it.peekNext();
     QList<QVariant> data = it.next();
     for (int i = 0; i < data.size(); ++i) {
-      if (data.at(i).toString().compare("stre") == 0) {
+      if (data.at(i).toString().toUpper().compare("STRE") == 0) {
         stre_index = i;
-      } else if (data.at(i).toString().compare("lwd") == 0) {
+      } else if (data.at(i).toString().toUpper().compare("LWD") == 0) {
         lwd_index = i;
-      } else if (data.at(i).toString().compare("Gene1") == 0) {
+      } else if (data.at(i).toString().toUpper().compare("GENE1") == 0) {
         gene1_index = i;
-      } else if (data.at(i).toString().compare("start1") == 0) {
+      } else if (data.at(i).toString().toUpper().compare("START1") == 0) {
         start1_index = i;
-      } else if (data.at(i).toString().compare("end1") == 0) {
+      } else if (data.at(i).toString().toUpper().compare("END1") == 0) {
         end1_index = i;
-      } else if (data.at(i).toString().compare("Gene2") == 0) {
+      } else if (data.at(i).toString().toUpper().compare("GENE2") == 0) {
         gene2_index = i;
-      } else if (data.at(i).toString().compare("start2") == 0) {
+      } else if (data.at(i).toString().toUpper().compare("START2") == 0) {
         start2_index = i;
-      } else if (data.at(i).toString().compare("end2") == 0) {
+      } else if (data.at(i).toString().toUpper().compare("END2") == 0) {
         end2_index = i;
       }
     }
