@@ -18,7 +18,7 @@ void FreeCircos::initCanvas(void) {
   canvas->xAxis->setVisible(false);
   canvas->yAxis->setVisible(false);
   canvas->setAntialiasedElements(QCP::AntialiasedElement::aeItems |
-                                 QCP::AntialiasedElement::aePlottables);
+      QCP::AntialiasedElement::aePlottables);
 }
 
 //BackBone Tables Method
@@ -43,7 +43,7 @@ void FreeCircos::initBackBoneTableModel(QStandardItemModel *model,
   table_edit_mode = EditGene;
 //    backbone_index_list << QString::number(c->back_bone.size());
   model->setVerticalHeaderLabels(backbone_index_list);
-  qDebug("Count Genes: %d", c->getGeneNum());
+  qDebug() << "Counted Gene Num: " << c->getGeneNum();
 }
 
 void FreeCircos::initBackBoneWidget(QTabWidget *parent) {

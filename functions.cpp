@@ -2,9 +2,9 @@
 
 //Event Filter
 bool FreeCircos::eventFilter(QObject *watched, QEvent *event) {
-  if(watched == backbone_table) {
-    if(event->type() == QEvent::ContextMenu) {
-      if(backbone_table->currentIndex().isValid()) {
+  if (watched == backbone_table) {
+    if (event->type() == QEvent::ContextMenu) {
+      if (backbone_table->currentIndex().isValid()) {
         backbone_table_rightclick_menu->exec(cursor().pos());
       }
     }
@@ -33,9 +33,9 @@ void FreeCircos::moveTableRow(QTableView *table,
 
 void FreeCircos::backBoneTableToSequence(QStandardItemModel *model, Circos *c) {
   c->clearBackBoneSequence();
-  for(int i = 0;  i < model->rowCount(); ++i) {
+  for (int i = 0; i < model->rowCount(); ++i) {
     c->appendBackBoneSequence(model->item(i, 0)->text().toInt() - 1);
-    qDebug("The %d th is %d.", i, c->getBackBoneSequence(i));
+    qDebug() << "The " << i << "th" << " is " << c->getBackBoneSequence(i);
   }
 }
 
@@ -44,8 +44,8 @@ void FreeCircos::backBoneTableToSequence(QStandardItemModel *model, Circos *c) {
 //}
 
 void FreeCircos::addCategoryToTable(QStandardItemModel *model,
-                                    Circos *c)  {
-  for(int i = 0; i < model->rowCount(); ++i) {
+                                    Circos *c) {
+  for (int i = 0; i < model->rowCount(); ++i) {
     QString gene_name = model->item(i, 1)->text();
     QString cat_name = c->findGene(gene_name)->getCategory()->getName();
     model->setItem(i, 3, new QStandardItem(cat_name));

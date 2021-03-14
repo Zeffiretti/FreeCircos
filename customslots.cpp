@@ -150,7 +150,8 @@ void FreeCircos::onButtonClicked(bool) {
     qDebug() << "select a color";
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
-    QColor color = QColorDialog::getColor(Qt::white, backbone_config_widget, "Strike Color",QColorDialog::ShowAlphaChannel);
+    QColor color =
+        QColorDialog::getColor(Qt::white, backbone_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->setStrikeColor(color);
@@ -164,7 +165,8 @@ void FreeCircos::onButtonClicked(bool) {
     qDebug() << "select a color";
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
-    QColor color = QColorDialog::getColor(Qt::white, backbone_config_widget, "Strike Color",QColorDialog::ShowAlphaChannel);
+    QColor color =
+        QColorDialog::getColor(Qt::white, backbone_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->setFillColor(color);
@@ -202,7 +204,8 @@ void FreeCircos::onButtonClicked(bool) {
     qDebug() << "select a color";
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
-    QColor color = QColorDialog::getColor(Qt::white, category_config_widget, "Strike Color",QColorDialog::ShowAlphaChannel);
+    QColor color =
+        QColorDialog::getColor(Qt::white, category_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->getCategory()->setStrikeColor(color);
@@ -216,7 +219,8 @@ void FreeCircos::onButtonClicked(bool) {
     qDebug() << "select a color";
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
-    QColor color = QColorDialog::getColor(Qt::white, category_config_widget, "Strike Color",QColorDialog::ShowAlphaChannel);
+    QColor color =
+        QColorDialog::getColor(Qt::white, category_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->getCategory()->setFillColor(color);
@@ -236,8 +240,8 @@ void FreeCircos::onButtonClicked(bool) {
         break;
       }
     }
-    qDebug("Move Source: [%d~%d].", cat_begin_row, cat_end_row);
-    qDebug("Move Destination:[%d~%d].", cat_begin_row - up_cnt, cat_end_row - up_cnt);
+    qDebug() << "Move Source:[" << cat_begin_row << ", " << cat_end_row << "]";
+    qDebug() << "Move Destination:[" << cat_begin_row - up_cnt << ", " << cat_end_row - up_cnt << "]";
     disconnect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
                this, &FreeCircos::onTableSelectedChanged);
     for (int i = cat_begin_row; i <= cat_end_row; ++i) {
@@ -265,8 +269,8 @@ void FreeCircos::onButtonClicked(bool) {
         break;
       }
     }
-    qDebug("Move Source: [%d~%d].", cat_begin_row, cat_end_row);
-    qDebug("Move Destination:[%d~%d].", cat_begin_row + down_cnt, cat_end_row + down_cnt);
+    qDebug() << "Move Source:[" << cat_begin_row << ", " << cat_end_row << "]";
+    qDebug() << "Move Destination:[" << cat_begin_row << ", " << cat_end_row << "]";
     disconnect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
                this, &FreeCircos::onTableSelectedChanged);
     for (int i = cat_end_row; i >= cat_begin_row; --i) {
@@ -298,7 +302,7 @@ void FreeCircos::onButtonClicked(bool) {
   if (func.compare("gradient-color") == 0) {
     ExtGradientButton *ext_btn = qobject_cast<ExtGradientButton *>(sender());
     qDebug() << "select a color";
-    QColor color = QColorDialog::getColor(Qt::white, link_config_widget, "Link Color",QColorDialog::ShowAlphaChannel);
+    QColor color = QColorDialog::getColor(Qt::white, link_config_widget, "Link Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       ext_btn->setColor(color);
       link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
@@ -342,13 +346,13 @@ void FreeCircos::onActionTriggered(bool) {
 void FreeCircos::onDialogStateChanged(void) {
   QDialog *dlg = qobject_cast<QDialog *>(sender());
   if (dlg->property("function").toString() == "movepanel") {
-    qDebug("Move Panel Dialog State Changed");
+    qDebug() << "Move Panel Dialog State Changed";
     move_panel_button->setEnabled(true);
   }
 }
 
 void FreeCircos::onBackBoneTableMoveRequest(int from_row, int to_row) {
-  qDebug("backbone_table moves row: %d to %d. ", from_row, to_row);
+  qDebug() << "backbone_table moves row: " << from_row << " to " << to_row;
 //    moveTableRow(backbone_table, backbone_model, from_row, to_row);
 }
 
@@ -371,7 +375,7 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
         backbone_movedown_button->setEnabled(false);
       }
       int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
-      qDebug("index: %d", index);
+      qDebug() << "Index=" << index;
       Gene *b = circos->getGene(index);
       QPalette pal = backbone_strike_color_button->palette();
       pal.setColor(QPalette::Button, b->getStrikeColor());
@@ -745,7 +749,7 @@ void FreeCircos::onHeaderCheckBoxStateChanged(int state) {
   QString func = ext_header->property("function").toString();
   if (prefix.compare("backbone") == 0) {
     if (func.compare("tableselected") == 0) {
-      qDebug("now entering slots backbone--tableselected--onHeaderCheckBoxStateChanged");
+      qDebug() << "now entering slots backbone--tableselected--onHeaderCheckBoxStateChanged";
       int rows = backbone_model->rowCount();
       for (int i = 0; i < rows; ++i) {
         backbone_model->item(i, 0)->setCheckState(Qt::CheckState(state));
@@ -758,7 +762,7 @@ void FreeCircos::onHeaderCheckBoxStateChanged(int state) {
   }
   if (prefix.compare("link") == 0) {
     if (func.compare("tableselected") == 0) {
-      qDebug("now entering slots link--tableselected--onHeaderCheckBoxStateChanged");
+      qDebug() << "now entering slots link--tableselected--onHeaderCheckBoxStateChanged";
       int rows = link_model->rowCount();
       for (int i = 0; i < rows; ++i) {
         link_model->item(i, 0)->setCheckState(Qt::CheckState(state));
@@ -774,12 +778,13 @@ void FreeCircos::onHeaderCheckBoxStateChanged(int state) {
 }
 
 void FreeCircos::onExtStandardItemStateSet(int index, Qt::CheckState state) {
-  qDebug("Index Item %d State Changed.\n", index);
+  qDebug() << "Index Item " << index << " State Changed.";
 }
 
 void FreeCircos::onStandardItemChanged(QStandardItem *item) {
   if (item->index().column() == 0) {
-    qDebug("Item at [%d,%d] index=%d changed.\n", item->row(), item->column(), item->text().toInt() - 1);
+    qDebug() << "Item at [" << item->row() << "," << item->column() << "] index=" << item->text().toInt() - 1
+             << "changed.";
     int index = item->text().toInt() - 1;
     circos->getLink(index)->setEnable(item->checkState() == Qt::Checked);
   }

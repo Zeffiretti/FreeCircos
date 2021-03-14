@@ -8,8 +8,8 @@ void CustomTrack::buildData(void) {
   track_data.clear();
   qreal angle_offset = (end_angle > start_angle) ? 0.1 : -0.1;
   qreal radius_offset = 0.02;
-  if(type.testFlag(CustomTrack::Type::Tile)) {
-    if(qAbs(end_angle - start_angle) > 0.003) {
+  if (type.testFlag(CustomTrack::Type::Tile)) {
+    if (qAbs(end_angle - start_angle) > 0.003) {
       int i = 0;
       qreal angle = start_angle;
       qreal radius = outer_radius;
@@ -58,7 +58,7 @@ void CustomTrack::buildData(void) {
     }
   }
   // arrow data
-  if(type.testFlag(CustomTrack::Type::Arrow)) {
+  if (type.testFlag(CustomTrack::Type::Arrow)) {
 //    qreal min = qMin(start_angle, end_angle);
 //    qreal max = qMax(start_angle, end_angle);
 //    qreal boud = min + end_angle - boundary_angle;
@@ -72,10 +72,10 @@ void CustomTrack::buildData(void) {
 //      boundary_angle = boud;
 //    }
     angle_offset = (end_angle > start_angle) ? 0.1 : -0.1;
-    qDebug("start angle:%.2f.", start_angle);
-    qDebug("end angle:%.2f.", end_angle);
-    qDebug("boundary angle:%.2f.", boundary_angle);
-    if(qAbs(start_angle - end_angle) > 0.003) {
+    qDebug() << "start angle:" << start_angle;
+    qDebug() << "end angle:" << end_angle;
+    qDebug()<<"boundary angle:"<<boundary_angle ;
+    if (qAbs(start_angle - end_angle) > 0.003) {
 //      if(start_angle < end_angle) {
       int i = 0;
       qreal angle = start_angle;
@@ -138,9 +138,9 @@ void CustomTrack::drawTrack(QCustomPlot *canvas) {
   track_curve->setPen(QPen(color));
 //  color.setAlphaF(0.7);
   track_curve->setBrush(QBrush(color));
-  foreach (QCPCurveData *data, track_data) {
-    track_curve->data()->add(*data);
-  }
+      foreach (QCPCurveData *data, track_data) {
+      track_curve->data()->add(*data);
+    }
   track_curve->setSmooth(false);
 //  qDebug("drawing...");
 }

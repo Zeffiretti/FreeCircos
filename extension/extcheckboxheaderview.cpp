@@ -34,7 +34,7 @@ void ExtCheckBoxHeaderView::addBoxAt(int pos) {
 //}
 
 void ExtCheckBoxHeaderView::onCheckBoxStateChanged(int i) {
-  qDebug("entering slot: ExtCheckBoxHeaderView::onCheckBoxStateChanged(int i)");
+  qDebug()<<"entering slot: ExtCheckBoxHeaderView::onCheckBoxStateChanged(int i)";
   emit headerCheckBoxStateChanged(i);
 }
 

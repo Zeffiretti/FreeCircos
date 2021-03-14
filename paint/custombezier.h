@@ -4,22 +4,23 @@
 #include <QObject>
 #include <QPointF>
 #include <QVector>
+#include <QDebug>
 
 class CustomBezier : public QObject {
-  Q_OBJECT
+ Q_OBJECT
  public:
   explicit CustomBezier(QObject *parent = nullptr);
   explicit CustomBezier(int order, int knot, QObject *parent);
 
-  const QVector<QPointF>& calculateSpline(void);
-  const QVector<QPointF>& calculateSpline(const QVector<QPointF>& control_points);
-  const QVector<QPointF>& calculateSpline(QVector<QPointF>& control_points,
-                                          const int& points_number);
+  const QVector<QPointF> &calculateSpline(void);
+  const QVector<QPointF> &calculateSpline(const QVector<QPointF> &control_points);
+  const QVector<QPointF> &calculateSpline(QVector<QPointF> &control_points,
+                                          const int &points_number);
   void calculateSecond(void);
   void calculateCubic(void);
 
   void clearCtrlPoints(void);
-  void addCtrlPoint(const QPointF& p);
+  void addCtrlPoint(const QPointF &p);
 
   // setters
   void setCtrlNum(int n);
