@@ -8,4 +8,4 @@ To Develop A Program for Painting Circos Figure.
 
 ## TODO List:
 1. moveto 后面的输入信息的框不可用
-2. Category上下移动需要重写
+2. ~~Category上下移动需要重写~~

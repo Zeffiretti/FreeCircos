@@ -194,9 +194,11 @@ void FreeCircos::onButtonClicked(bool) {
   if (func.compare("switch") == 0) {
     if (!backbone_config_widget->isEnabled()) {
       backbone_config_widget->setEnabled(true);
+      emit setTableEditMode(TableEditMode::EditGene);
       category_config_widget->setEnabled(false);
     } else {
       backbone_config_widget->setEnabled(false);
+      emit setTableEditMode(TableEditMode::EditCategory);
       category_config_widget->setEnabled(true);
     }
   }
