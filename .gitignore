@@ -1,6 +1,7 @@
 *.*
 !*/
 *build*/
+*out/*
 .*/
 !.gitignore
 !*.cpp
