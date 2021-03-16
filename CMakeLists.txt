@@ -52,15 +52,6 @@ if (${Qt5AxContainer_FOUND})
 else ()
   message(FATAL_ERROR "NO Qt5AxContainer")
 endif ()
-if (${Qt5Widgets_FOUND})
-  message("Qt5Widgets Found Successfully.")
-  add_definitions(${Qt5Widgets_DEFINITIONS})
-  include_directories(
-      ${Qt5Widgets_INCLUDE_DIRS}
-      ${Qt5Widgets_LIBRARIES})
-else ()
-  message(FATAL_ERROR "NO Qt5Widgets")
-endif ()
 if (${Qt5Core_FOUND})
   message("Qt5Core Found Successfully.")
   add_definitions(${Qt5Core_DEFINITIONS})
@@ -89,15 +80,18 @@ if (${Qt5PrintSupport_FOUND})
 else ()
   message(FATAL_ERROR "NO Qt5PrintSupport")
 endif ()
+if (${Qt5Widgets_FOUND})
+  message("Qt5Widgets Found Successfully.")
+  add_definitions(${Qt5Widgets_DEFINITIONS})
+  include_directories(
+      ${Qt5Widgets_INCLUDE_DIRS}
+      ${Qt5Widgets_LIBRARIES})
+else ()
+  message(FATAL_ERROR "NO Qt5Widgets")
+endif ()
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-set(ICON_FILE icon.rc)
-set(ROOT_FILES
-    freecircos.cpp
-    freecircos.ui
-    customslots.cpp
-    functions.cpp
-    init.cpp
-    main.cpp)
+set(ADD_FILES
+    addition/tablemovedialog.cpp)
 set(CIRCOS_FILES
     circos/backbone.cpp
     circos/category.cpp
@@ -105,8 +99,6 @@ set(CIRCOS_FILES
     circos/gene.cpp
     circos/link.cpp
     circos/trackarrow.cpp)
-set(ADD_FILES
-    addition/tablemovedialog.cpp)
 set(COMPONENT_FILES
     component/bbwidget.cpp
     component/linkwidget.cpp
@@ -119,6 +111,7 @@ set(EXT_FILES
 set(FILEPROS_FILES
     fileprocess/excelbase.cpp
     fileprocess/qvariantlistlistmodel.cpp)
+set(ICON_FILE icon.rc)
 set(PAINT_FILES
     paint/colorgen.cpp
     paint/custombezier.cpp
@@ -130,28 +123,31 @@ set(PAINT_FILES
     paint/customtrackarrow.cpp
     paint/qcustomplot.cpp
     paint/smoothcurvegenerator.cpp)
-
 set(RESOURCE_FILES
     resource/icon.ico
     resource/resource.qrc
     resource/thermometer.png)
+set(ROOT_FILES
+    freecircos.cpp
+    freecircos.ui
+    customslots.cpp
+    functions.cpp
+    init.cpp
+    main.cpp)
 set(TOOL_FILES
     tool/customtool.cpp)
+
 add_executable(${PROJECT_NAME}
-    ${ICON_FILE}
-    ${ROOT_FILES}
-    ${CIRCOS_FILES}
     ${ADD_FILES}
+    ${CIRCOS_FILES}
     ${COMPONENT_FILES}
     ${EXT_FILES}
     ${FILEPROS_FILES}
+    ${ICON_FILE}
     ${PAINT_FILES}
     ${RESOURCE_FILES}
+    ${ROOT_FILES}
     ${TOOL_FILES})
-
-#include(${QT_USE_FILE})
-#link_directories($)
-
 target_link_libraries(${PROJECT_NAME}
     Qt5::Core
     Qt5::Gui
