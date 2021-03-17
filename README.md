@@ -8,7 +8,7 @@ To Develop A Program for Painting Circos Figure.
 
 ## TODO List:
 1. ~~加UI：category 需要增加一个图形上不显示category这一圈的功能~~
-2. backbone 间距改成度数制
+2. ~~backbone 间距改成度数制~~
 3. global setting 加一个确定键，然后点击关闭是不进行操作的
 4. 点击进入配色界面时能不能默认到该位置本来的颜色信息
 5. reset 之后重新导入数据会出问题 

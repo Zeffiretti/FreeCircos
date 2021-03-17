@@ -103,7 +103,7 @@ void GlobalSetWin::initPanel() {
   gene_gap_edit = new QLineEdit;
   gene_gap_edit->setParent(this);
   gene_gap_edit->setGeometry(410, 20, 70, 20);
-  gene_gap_edit->setText(QString::number(c_ptr->getBBGap()));
+  gene_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getBBGap())));
   gene_gap_edit->setProperty("prefix", "gene");
   gene_gap_edit->setProperty("function", "set-gap");
   /// connections
@@ -256,7 +256,7 @@ void GlobalSetWin::onLineEditTextChanged(const QString &text) {
   QString func = p_line_edit->property("function").toString();
   if (prefix.compare("gene") == 0) {
     if (func.compare("set-gap") == 0) {
-      c_ptr->setBBGap(text.toDouble());
+      c_ptr->setBBGap(degreeToRadius(text.toDouble()));
     }
   }
 }
@@ -274,4 +274,12 @@ void GlobalSetWin::onCheckboxStateChanged(int state) {
       category_dslider->setEnabled(state == Qt::Checked);
     }
   }
+}
+
+qreal GlobalSetWin::degreeToRadius(qreal de) {
+  return de / 180.0 * M_PI;
+}
+
+qreal GlobalSetWin::radiusToDegree(qreal ra) {
+  return ra / M_PI * 180.0;
 }

@@ -32,6 +32,8 @@ class GlobalSetWin : public QMainWindow {
   void setComponents(Component c);
  private:
   void initPanel(void);
+  qreal degreeToRadius(qreal de);
+  qreal radiusToDegree(qreal ra);
   Circos *c_ptr;
 
   ExtDoubleSlider *back_bone_dslider;
