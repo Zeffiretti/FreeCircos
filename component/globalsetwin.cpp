@@ -28,6 +28,7 @@ void GlobalSetWin::initPanel() {
   category_dslider->setHandleMovementMode(ExtDoubleSlider::NoOverlapping);
   category_dslider->setUpperValue(90);
   category_dslider->setLowerValue(80);
+  category_dslider->setEnabled(c_ptr->getCategoryEnable());
   category_dslider->setProperty("prefix", "radius");
   category_dslider->setProperty("function", "category_dslider");
   trackarrow_dslider = new ExtDoubleSlider;
@@ -66,7 +67,8 @@ void GlobalSetWin::initPanel() {
   cgs_name_label->setAlignment(Qt::AlignCenter);
   cgs_enable_checkbox = new QCheckBox;
   cgs_enable_checkbox->setParent(this);
-  cgs_enable_checkbox->setGeometry(100, 430, 10, 10);
+  cgs_enable_checkbox->setGeometry(120, 427, 15, 15);
+  cgs_enable_checkbox->setCheckState(c_ptr->getCategoryEnable() ? Qt::Checked : Qt::Unchecked);
   cgs_enable_checkbox->setProperty("prefix", "category");
   cgs_enable_checkbox->setProperty("function", "set-enable");
   cgs_enable_checkbox->setCheckState(c_ptr->getCategoryEnable() ? Qt::Checked : Qt::Unchecked);
@@ -269,6 +271,7 @@ void GlobalSetWin::onCheckboxStateChanged(int state) {
   if (prefix.compare("category") == 0) {
     if (func.compare("set-enable") == 0) {
       c_ptr->setCategoryEnable(state == Qt::Checked);
+      category_dslider->setEnabled(state == Qt::Checked);
     }
   }
 }
