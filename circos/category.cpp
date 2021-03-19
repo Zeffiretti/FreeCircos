@@ -61,7 +61,7 @@ void Category::setFillColor(QColor c) {
   fill_color = c;
 }
 
-QColor Category::getFillColor(void) {
+QColor Category::getFillColor(void) const {
   return fill_color;
 }
 

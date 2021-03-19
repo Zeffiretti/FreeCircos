@@ -75,8 +75,12 @@ void Circos::dataToCategory(void) {
         category_name = m_datas.at(i).at(1).toString();
         Category *new_category = new Category(category_name);
         new_category->addGene(gene_name);
-        new_category->setFillColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
-        new_category->setStrikeColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+//        new_category->setFillColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+//        new_category->setStrikeColor(QColor(qrand() % 256, qrand() % 256, qrand() % 256));
+        QColor lightgray = QColor(Qt::lightGray);
+        lightgray.setAlphaF(0.3);
+        new_category->setFillColor(QColor(lightgray));
+        new_category->setStrikeColor(QColor(Qt::white));
         new_category->setLabelState(CustomSlice::LabelSleep);
         new_category->setLabelPosition(CustomSlice::LabelOnDonut);
         findGene(gene_name)->setCategory(new_category);

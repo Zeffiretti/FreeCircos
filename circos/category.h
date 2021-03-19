@@ -27,7 +27,7 @@ class Category {
 
   QColor getStrikeColor(void);
   void setStrikeColor(QColor c);
-  QColor getFillColor(void);
+  QColor getFillColor(void) const;
   void setFillColor(QColor c);
   CustomSlice::LabelPosition getLabelPosition(void);
   void setLabelPosition(CustomSlice::LabelPosition l_p);
