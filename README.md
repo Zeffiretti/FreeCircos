@@ -4,6 +4,7 @@ To Develop A Program for Painting Circos Figure.
 ## Platform & Version
 
 - Qt5: > 5.12
+- Platform: Win32
 - cmake: >=3.1.0
 - Build Toolchain: msvc x64| mingw64
 
