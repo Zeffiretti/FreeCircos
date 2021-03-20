@@ -5,6 +5,7 @@ To Develop A Program for Painting Circos Figure.
 
 - Qt5: > 5.12
 - cmake: >=3.1.0
+- Build Toolchain: msvc x64| mingw64
 
 ## TODO List:
 1. ~~加UI：category 需要增加一个图形上不显示category这一圈的功能~~
