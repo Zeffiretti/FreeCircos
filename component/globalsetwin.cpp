@@ -110,6 +110,15 @@ void GlobalSetWin::initPanel() {
   gene_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getBBGap())));
   gene_gap_edit->setProperty("prefix", "gene");
   gene_gap_edit->setProperty("function", "set-gap");
+  cgs_gap_label = new QLabel;
+  cgs_gap_label->setParent(this);
+  cgs_gap_label->setGeometry(410, 60, 110, 30);
+  cgs_gap_label->setText("Category Gap");
+  cgs_gap_edit = new QLineEdit;
+  cgs_gap_edit->setParent(this);
+  cgs_gap_edit->setGeometry(520, 65, 50, 20);
+  cgs_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getCatGap())));
+//  cgs_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getCGHole()));
   /// connections
   connect(back_bone_dslider, &ExtDoubleSlider::lowerValueChanged,
           this, &GlobalSetWin::onDoubleSliderLowerValueChanged);

@@ -132,6 +132,13 @@ class Circos : public QObject {
     return link_outer_radius;
   }
 
+  qreal getBBGap(void) {
+    return back_bone_gap;
+  }
+  qreal getCatGap(void) {
+    return category_gap;
+  }
+
  public slots:
   void onGeneAngleChanged(const QString &n, qreal s, qreal e);
 //  void onLinkColorSet(int index, QColor c);
@@ -167,8 +174,8 @@ class Circos : public QObject {
   void setBBGap(qreal g) {
     back_bone_gap = g;
   }
-  qreal getBBGap(void) {
-    return back_bone_gap;
+  void setCatGap(qreal g) {
+    category_gap = g;
   }
  signals:
   void linkColorFunChanged(int index);
@@ -190,6 +197,7 @@ class Circos : public QObject {
   bool category_enabled = false;
   QList<Category *> category;
   QList<int> category_sequence;
+  qreal category_gap = 0.01;
   bool link_enabled = false;
   QList<Link *> links;
   QCPColorGradient *link_gradient;

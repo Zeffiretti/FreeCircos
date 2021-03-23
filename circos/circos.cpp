@@ -318,6 +318,7 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
     slice->setLabelState(c->getLabelState());
     donut->addSlice(slice);
   }
+  donut->setGaps(category_gap);
   donut->setSize(category_inner_raidus, category_outer_radius);
 }
 
