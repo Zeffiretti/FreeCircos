@@ -100,9 +100,13 @@ void GlobalSetWin::initPanel() {
   link_value_label->setText(
       QString::number(link_dslider->lowerValue()) + "--" + QString::number(link_dslider->upperValue()));
   link_value_label->setAlignment(Qt::AlignCenter);
+  gene_gap_label = new QLabel;
+  gene_gap_label->setParent(this);
+  gene_gap_label->setGeometry(410, 20, 110, 30);
+  gene_gap_label->setText("Gene Gap");
   gene_gap_edit = new QLineEdit;
   gene_gap_edit->setParent(this);
-  gene_gap_edit->setGeometry(410, 20, 70, 20);
+  gene_gap_edit->setGeometry(520, 25, 50, 20);
   gene_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getBBGap())));
   gene_gap_edit->setProperty("prefix", "gene");
   gene_gap_edit->setProperty("function", "set-gap");

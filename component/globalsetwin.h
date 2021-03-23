@@ -51,6 +51,9 @@ class GlobalSetWin : public QMainWindow {
   QLabel *link_name_label;
   QLabel *link_value_label;
   QLineEdit *gene_gap_edit;
+  QLabel *gene_gap_label;
+  QLabel *cat_gap_label;
+  QLineEdit *cat_gap_edit;
   QCheckBox *cgs_enable_checkbox;
 
  signals:
