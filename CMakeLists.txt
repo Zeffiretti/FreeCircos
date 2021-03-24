@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1.0)
 
-project(FreeCircos VERSION 0.4.0 LANGUAGES CXX)
+project(FreeCircos VERSION 0.5.0 LANGUAGES CXX)
 message("Projecte Infomation: [${PROJECT_NAME}_${PROJECT_VERSION}]")
 if (WIN32)
   ADD_DEFINITIONS(-DWINDOWS_H_)
