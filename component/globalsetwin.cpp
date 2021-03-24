@@ -107,7 +107,7 @@ void GlobalSetWin::initPanel() {
   gene_gap_edit = new QLineEdit;
   gene_gap_edit->setParent(this);
   gene_gap_edit->setGeometry(520, 25, 50, 20);
-  gene_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getBBGap())));
+  gene_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getBBGap()), 'f', 2));
   gene_gap_edit->setProperty("prefix", "gene");
   gene_gap_edit->setProperty("function", "set-gap");
   cgs_gap_label = new QLabel;
@@ -117,7 +117,16 @@ void GlobalSetWin::initPanel() {
   cgs_gap_edit = new QLineEdit;
   cgs_gap_edit->setParent(this);
   cgs_gap_edit->setGeometry(520, 65, 50, 20);
-  cgs_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getCatGap())));
+  cgs_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getCatGap()), 'f', 2));
+
+  cancel_button = new QPushButton;
+  cancel_button->setParent(this);
+  cancel_button->setText("取消");
+  cancel_button->setGeometry(450, 420, 50, 20);
+  ok_button = new QPushButton;
+  ok_button->setParent(this);
+  ok_button->setText("确定");
+  ok_button->setGeometry(520, 420, 50, 20);
 //  cgs_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getCGHole()));
   /// connections
   connect(back_bone_dslider, &ExtDoubleSlider::lowerValueChanged,

@@ -55,6 +55,8 @@ class GlobalSetWin : public QMainWindow {
   QLabel *cgs_gap_label;
   QLineEdit *cgs_gap_edit;
   QCheckBox *cgs_enable_checkbox;
+  QPushButton *ok_button;
+  QPushButton *cancel_button;
 
  signals:
   void BBInnerRadiusChanged(qreal);
