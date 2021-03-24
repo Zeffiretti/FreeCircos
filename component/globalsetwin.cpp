@@ -17,8 +17,8 @@ void GlobalSetWin::initPanel() {
   back_bone_dslider->setGeometry(50, 20, 30, 400);
   back_bone_dslider->setRange(0, 100);
   back_bone_dslider->setHandleMovementMode(ExtDoubleSlider::NoOverlapping);
-  back_bone_dslider->setUpperValue(80);
-  back_bone_dslider->setLowerValue(60);
+  back_bone_dslider->setUpperValue(c_ptr->getBBPie() * back_bone_dslider->maximum());
+  back_bone_dslider->setLowerValue(c_ptr->getBBHole() * back_bone_dslider->maximum());
   back_bone_dslider->setProperty("prefix", "radius");
   back_bone_dslider->setProperty("function", "back_bone_dslider");
   category_dslider = new ExtDoubleSlider;
@@ -26,8 +26,8 @@ void GlobalSetWin::initPanel() {
   category_dslider->setGeometry(150, 20, 30, 400);
   category_dslider->setRange(0, 100);
   category_dslider->setHandleMovementMode(ExtDoubleSlider::NoOverlapping);
-  category_dslider->setUpperValue(90);
-  category_dslider->setLowerValue(80);
+  category_dslider->setUpperValue(c_ptr->getCGPie() * category_dslider->maximum());
+  category_dslider->setLowerValue(c_ptr->getCGHole() * category_dslider->maximum());
   category_dslider->setEnabled(c_ptr->getCategoryEnable());
   category_dslider->setProperty("prefix", "radius");
   category_dslider->setProperty("function", "category_dslider");
@@ -36,8 +36,8 @@ void GlobalSetWin::initPanel() {
   trackarrow_dslider->setGeometry(250, 20, 30, 400);
   trackarrow_dslider->setRange(0, 100);
   trackarrow_dslider->setHandleMovementMode(ExtDoubleSlider::NoOverlapping);
-  trackarrow_dslider->setUpperValue(80);
-  trackarrow_dslider->setLowerValue(60);
+  trackarrow_dslider->setUpperValue(c_ptr->getTAPie() * trackarrow_dslider->maximum());
+  trackarrow_dslider->setLowerValue(c_ptr->getTAHole() * trackarrow_dslider->maximum());
   trackarrow_dslider->setProperty("prefix", "radius");
   trackarrow_dslider->setProperty("function", "trackarrow_dslider");
   link_dslider = new ExtDoubleSlider;
@@ -45,8 +45,8 @@ void GlobalSetWin::initPanel() {
   link_dslider->setGeometry(350, 20, 30, 400);
   link_dslider->setRange(0, 100);
   link_dslider->setHandleMovementMode(ExtDoubleSlider::NoOverlapping);
-  link_dslider->setUpperValue(90);
-  link_dslider->setLowerValue(60);
+  link_dslider->setUpperValue(c_ptr->getLKPie() * link_dslider->maximum());
+  link_dslider->setLowerValue(c_ptr->getLKHole() * link_dslider->maximum());
   link_dslider->setProperty("prefix", "radius");
   link_dslider->setProperty("function", "link_dslider");
   bbs_name_label = new QLabel;
@@ -123,10 +123,14 @@ void GlobalSetWin::initPanel() {
   cancel_button->setParent(this);
   cancel_button->setText("取消");
   cancel_button->setGeometry(450, 420, 50, 20);
+  cancel_button->setProperty("prefix", "global");
+  cancel_button->setProperty("function", "cancel");
   ok_button = new QPushButton;
   ok_button->setParent(this);
   ok_button->setText("确定");
   ok_button->setGeometry(520, 420, 50, 20);
+  ok_button->setProperty("prefix", "global");
+  ok_button->setProperty("function", "ok");
 //  cgs_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getCGHole()));
   /// connections
   connect(back_bone_dslider, &ExtDoubleSlider::lowerValueChanged,
@@ -149,6 +153,10 @@ void GlobalSetWin::initPanel() {
           this, &GlobalSetWin::onCheckboxStateChanged);
   connect(gene_gap_edit, &QLineEdit::textChanged,
           this, &GlobalSetWin::onLineEditTextChanged);
+  connect(cancel_button, &QPushButton::clicked,
+          this, &GlobalSetWin::onButtonClicked);
+  connect(ok_button, &QPushButton::clicked,
+          this, &GlobalSetWin::onButtonClicked);
 }
 
 void GlobalSetWin::setBbPos(qreal _max, qreal _min) {
@@ -268,6 +276,35 @@ void GlobalSetWin::onButtonClicked(bool) {
   if (prefix.compare("gene") == 0) {
     if (func.compare("set-gap") == 0) {
       emit GapSet("gene", 1.0);
+    }
+  } else if (prefix.compare("global") == 0) {
+    if (func.compare("cancel") == 0) {
+      this->close();
+    } else if (func.compare("ok") == 0) {
+//      c_ptr->setBBGap(degreeToRadius(text.toDouble()));
+      qreal inner_, outer_;
+      inner_ = back_bone_dslider->lowerValue() * 1.0 / back_bone_dslider->maximum();
+      outer_ = back_bone_dslider->upperValue() * 1.0 / back_bone_dslider->maximum();
+      c_ptr->setBBHole(inner_);
+      c_ptr->setBBPie(outer_);
+      inner_ = category_dslider->lowerValue() * 1.0 / category_dslider->maximum();
+      outer_ = category_dslider->upperValue() * 1.0 / category_dslider->maximum();
+      c_ptr->setCGHole(inner_);
+      c_ptr->setCGPie(outer_);
+      inner_ = trackarrow_dslider->lowerValue() * 1.0 / trackarrow_dslider->maximum();
+      outer_ = trackarrow_dslider->upperValue() * 1.0 / trackarrow_dslider->maximum();
+      c_ptr->setTAHole(inner_);
+      c_ptr->setTAPie(outer_);
+      inner_ = link_dslider->lowerValue() * 1.0 / link_dslider->maximum();
+      outer_ = link_dslider->upperValue() * 1.0 / link_dslider->maximum();
+      c_ptr->setLKHole(inner_);
+      c_ptr->setLKPie(outer_);
+      qreal gap;
+      gap = gene_gap_edit->text().toDouble();
+      c_ptr->setBBGap(degreeToRadius(gap));
+      gap = cgs_gap_edit->text().toDouble();
+      c_ptr->setCatGap(degreeToRadius(gap));
+      this->close();
     }
   }
 }
