@@ -52,22 +52,22 @@ void FreeCircos::onButtonClicked(bool) {
     gbset_win->setTrkPos(circos->getTAPie(), circos->getTAHole());
     gbset_win->setLinkPos(circos->getLKPie(), circos->getLKHole());
     gbset_win->show();
-    connect(gbset_win, &GlobalSetWin::BBInnerRadiusChanged,
-            circos, &Circos::setBBHole);
-    connect(gbset_win, &GlobalSetWin::BBOuterRadiusChanged,
-            circos, &Circos::setBBPie);
-    connect(gbset_win, &GlobalSetWin::CatInnerRadiusChanged,
-            circos, &Circos::setCGHole);
-    connect(gbset_win, &GlobalSetWin::CatOuterRadiusChanged,
-            circos, &Circos::setCGPie);
-    connect(gbset_win, &GlobalSetWin::ARWInnerRadiusChanged,
-            circos, &Circos::setTAHole);
-    connect(gbset_win, &GlobalSetWin::ARWOuterRadiusChanged,
-            circos, &Circos::setTAPie);
-    connect(gbset_win, &GlobalSetWin::LinkInnerRadiusChanged,
-            circos, &Circos::setLKHole);
-    connect(gbset_win, &GlobalSetWin::LinkOuterRadiusChanged,
-            circos, &Circos::setLKPie);
+//    connect(gbset_win, &GlobalSetWin::BBInnerRadiusChanged,
+//            circos, &Circos::setBBHole);
+//    connect(gbset_win, &GlobalSetWin::BBOuterRadiusChanged,
+//            circos, &Circos::setBBPie);
+//    connect(gbset_win, &GlobalSetWin::CatInnerRadiusChanged,
+//            circos, &Circos::setCGHole);
+//    connect(gbset_win, &GlobalSetWin::CatOuterRadiusChanged,
+//            circos, &Circos::setCGPie);
+//    connect(gbset_win, &GlobalSetWin::ARWInnerRadiusChanged,
+//            circos, &Circos::setTAHole);
+//    connect(gbset_win, &GlobalSetWin::ARWOuterRadiusChanged,
+//            circos, &Circos::setTAPie);
+//    connect(gbset_win, &GlobalSetWin::LinkInnerRadiusChanged,
+//            circos, &Circos::setLKHole);
+//    connect(gbset_win, &GlobalSetWin::LinkOuterRadiusChanged,
+//            circos, &Circos::setLKPie);
   }
   if (func == "openbackbonefile") {
 #ifndef FILE_RES_USED
