@@ -315,7 +315,8 @@ void GlobalSetWin::onLineEditTextChanged(const QString &text) {
   QString func = p_line_edit->property("function").toString();
   if (prefix.compare("gene") == 0) {
     if (func.compare("set-gap") == 0) {
-      c_ptr->setBBGap(degreeToRadius(text.toDouble()));
+//      c_ptr->setBBGap(degreeToRadius(text.toDouble()));
+      cgs_gap_edit->setText(text);
     }
   }
 }
