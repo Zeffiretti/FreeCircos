@@ -10,7 +10,7 @@ void FreeCircos::initBBTable(void) {
   backbone_table->setModel(backbone_model);
   backbone_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
   backbone_table->setSelectionBehavior(QAbstractItemView::SelectRows);
-  if(table_edit_mode == EditGene) {
+  if (table_edit_mode == EditGene) {
     backbone_table->setSelectionMode(QAbstractItemView::SingleSelection);
   }
   backbone_table->verticalHeader()->hide();
@@ -209,6 +209,8 @@ void FreeCircos::connectBCSingalSlot(void) {
   connect(backbone_moveup_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
   connect(backbone_movedown_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  connect(backbone_move_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
   connect(category_fill_color_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);

@@ -190,7 +190,7 @@ void FreeCircos::onButtonClicked(bool) {
   }
   if (func.compare("backbone-moveto") == 0) {
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
-    int index_to = backbone_move_lineedit->text().toInt();
+    int index_to = backbone_move_lineedit->text().toInt() - 1;
     moveTableRow(backbone_table, backbone_model, sel_row, index_to);
   }
   if (func.compare("switch") == 0) {
@@ -381,6 +381,8 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
         backbone_movedown_button->setEnabled(false);
       }
       int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
+      backbone_move_lineedit->setText(QString::number(sel_row + 1));
+      backbone_move_lineedit->setEnabled(true);
       qDebug() << "Index=" << index;
       Gene *b = circos->getGene(index);
       QPalette pal = backbone_strike_color_button->palette();
