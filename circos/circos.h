@@ -176,6 +176,7 @@ class Circos : public QObject {
   }
   void setCatGap(qreal g) {
     category_gap = g;
+//    category.at(0).
   }
  signals:
   void linkColorFunChanged(int index);

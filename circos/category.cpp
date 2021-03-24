@@ -26,7 +26,7 @@ int Category::count(void) {
 }
 
 QString Category::at(int index) {
-  if(index >= m_genes.size()) {
+  if (index >= m_genes.size()) {
     return "";
   } else {
     return m_genes.at(index);
@@ -81,3 +81,6 @@ void Category::setLabelState(CustomSlice::LabelState l_s) {
   label_state = l_s;
 }
 
+QString Category::getGeneName(int index) {
+  return m_genes.at(index);
+}

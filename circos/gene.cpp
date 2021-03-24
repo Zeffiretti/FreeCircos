@@ -5,7 +5,7 @@ Gene::Gene() {
   links.clear();
 }
 
-Gene::Gene(const QString& n, int l) {
+Gene::Gene(const QString &n, int l) {
   name = n;
   length = qAbs(l);
   end = start + l;
@@ -13,7 +13,7 @@ Gene::Gene(const QString& n, int l) {
   links.clear();
 }
 
-Gene::Gene(const QString& n, int s, int e) {
+Gene::Gene(const QString &n, int s, int e) {
   name = n;
   start = s;
   end = e;
@@ -105,7 +105,7 @@ void Gene::setLabelState(CustomSlice::LabelState l_s) {
   label_state = l_s;
 }
 
-Category* Gene::getCategory(void) {
+Category *Gene::getCategory(void) {
   return cat;
 }
 
@@ -120,11 +120,16 @@ void Gene::addLink(Link *l) {
 void Gene::addLink(Link *l, CustomLink::LinkGenes lg) {
   links.append(l);
   switch (lg) {
-  case CustomLink::LinkGene::LinkStart:
-    break;
-  case CustomLink::LinkGene::LinkEnd:
-    break;
-  default:
-    break;
+    case CustomLink::LinkGene::LinkStart:break;
+    case CustomLink::LinkGene::LinkEnd:break;
+    default:break;
   }
+}
+
+Gene::GapRule Gene::getGapRule(void) {
+  return gap_rule_;
+}
+
+void Gene::setGapRule(GapRule rule) {
+  gap_rule_ = rule;
 }

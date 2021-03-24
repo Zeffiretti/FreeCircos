@@ -318,6 +318,10 @@ void GlobalSetWin::onLineEditTextChanged(const QString &text) {
 //      c_ptr->setBBGap(degreeToRadius(text.toDouble()));
       cgs_gap_edit->setText(text);
     }
+  } else if (prefix.compare("category") == 0){
+    if(func.compare("set-gap")==0){
+
+    }
   }
 }
 

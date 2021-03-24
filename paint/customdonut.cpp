@@ -41,9 +41,9 @@ void CustomDonut::drawDonut(QCustomPlot *canvas) {
   if(size_reset) {
     setSize(d_hole_size, d_pie_size);
   }
-  if(gap_reset) {
-    setGaps(d_gap);
-  }
+//  if(gap_reset) {
+//    setGaps(d_gap);
+//  }
 //    if(ls_reset) {
 //        SetLabelStates(d_ls);
 //    }

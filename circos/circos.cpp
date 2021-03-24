@@ -217,7 +217,8 @@ void Circos::dataToTrackArrow(void) {
 
 int Circos::indexOfGene(const QString &n) {
   for (int i = 0; i < back_bone.size(); ++i) {
-    if (back_bone.at(i)->name == n) {
+    QString name = getGene(i)->getName();
+    if (name == n) {
       return i;
     }
   }
@@ -252,6 +253,7 @@ void Circos::buildBackBoneDonut(CustomDonut *donut) {
     Gene *g = it.next();
     g->setOnCanvas(false);
   }
+  QString next_cat_name_;
   for (int i = 0; i < back_bone_sequence.size(); ++i) {
     int index = back_bone_sequence.at(i);
     Gene *g = back_bone.at(index);
@@ -264,10 +266,24 @@ void Circos::buildBackBoneDonut(CustomDonut *donut) {
     slice->setPen(QPen(g->getStrikeColor()));
     slice->setLabelPosition(g->getLabelPosition());
     slice->setLabelState(g->getLabelState());
+    int next_index = i + 1;
+    if (next_index == back_bone_sequence.size()) {
+      next_index = 0;
+    }
+    next_cat_name_ = back_bone.at(getBackBoneSequence(next_index))->getCategory()->getName();
+    if (g->getCategory()->getName() == next_cat_name_) {
+      qDebug() << "Current name: " << g->getCategory()->getName() << " ==" << next_cat_name_;
+      slice->setGap(back_bone_gap);
+    } else {
+      qDebug() << "Current name: " << g->getCategory()->getName() << " !=" << next_cat_name_;
+      slice->setGap(category_gap);
+    }
+//    next_cat_name_ = g->getCategory()->getName();
+//    donut->setGaps(back_bone_gap);
 //    slice->setSize(back_bone_inner_radius, back_bone_outer_radius);
     donut->addSlice(slice);
   }
-  donut->setGaps(back_bone_gap);
+//  donut->setGaps(back_bone_gap);
   donut->setSize(back_bone_inner_radius, back_bone_outer_radius);
 }
 
@@ -318,9 +334,10 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
     slice->setPen(QPen(c->getStrikeColor()));
     slice->setLabelPosition(c->getLabelPosition());
     slice->setLabelState(c->getLabelState());
+    slice->setGap(category_gap);
     donut->addSlice(slice);
   }
-  donut->setGaps(category_gap);
+//  donut->setGaps(category_gap);
   donut->setSize(category_inner_raidus, category_outer_radius);
 }
 

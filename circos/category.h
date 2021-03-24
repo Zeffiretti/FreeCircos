@@ -33,6 +33,7 @@ class Category {
   void setLabelPosition(CustomSlice::LabelPosition l_p);
   CustomSlice::LabelState getLabelState(void);
   void setLabelState(CustomSlice::LabelState l_s);
+  QString getGeneName(int index);
 
 };
 
