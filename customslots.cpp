@@ -5,8 +5,11 @@ void FreeCircos::onButtonClicked(bool) {
   QString func = btn->property("function").toString();
   if (func == "generate") {
     clearCanvas(canvas);
+    qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
     circos->buildBackBoneSequence(backbone_model);
+    qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
     circos->buildBackBoneDonut(gene_donut);
+    qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
 //        gene_donut->setSize(0.7, 0.75);
     gene_donut->drawDonut(canvas);
     if (circos->getCategoryEnable()) {
@@ -30,8 +33,10 @@ void FreeCircos::onButtonClicked(bool) {
     circos->reset();
     backbone_model->clear();
     link_model->clear();
-    initBackBoneWidget(control_panel);
-    initLinkWidget(control_panel);
+    backbone_model->setHorizontalHeaderLabels(backbone_header_list);
+    link_model->setHorizontalHeaderLabels(link_header_list);
+//    initBackBoneWidget(control_panel);
+//    initLinkWidget(control_panel);
   }
   if (func.compare("globalsetting") == 0) {
     gbset_win = new GlobalSetWin(circos, this);

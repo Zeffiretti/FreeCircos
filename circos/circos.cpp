@@ -235,6 +235,8 @@ int Circos::indexOfCategory(const QString &n) {
 
 void Circos::buildBackBoneSequence(QStandardItemModel *model) {
   back_bone_sequence.clear();
+  qDebug() << "Row Cnt=" << model->rowCount();
+  qDebug() << "Proceeding to " << __FILE__ << "in Line " << __LINE__;
   for (int i = 0; i < model->rowCount(); ++i) {
     if (model->item(i, 0)->checkState() == Qt::Checked) {
       int index = model->item(i, 0)->text().toInt() - 1;

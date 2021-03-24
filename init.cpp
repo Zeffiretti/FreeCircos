@@ -24,6 +24,7 @@ void FreeCircos::initCanvas(void) {
 //BackBone Tables Method
 void FreeCircos::initBackBoneTableModel(QStandardItemModel *model,
                                         Circos *c) {
+  backbone_index_list.clear();
   for (qint8 i = 0; i < c->getGeneNum(); ++i) {
     //index
     QStandardItem *index_item = new QStandardItem;
