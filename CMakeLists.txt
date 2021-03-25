@@ -27,6 +27,7 @@ if (${MINGW})
     set(CMAKE_PREFIX_PATH $ENV{Qt5_Dir}/mingw73_64)
   endif ()
 elseif (${MSVC})
+  set(glfw3_DIR dependencies/glfw3/lib/cmake/glfw3)
   message("USING TOOLSET: MSVC-${MSVC_TOOLSET_VERSION}-${MSVC_VERSION}")
   include_directories(./
       ENV{Qt5129}/msvc_2017/include)
@@ -42,6 +43,7 @@ find_package(Qt5 COMPONENTS
     AxContainer
     Widgets
     PrintSupport REQUIRED)
+find_package(glfw3)
 
 if (${Qt5AxContainer_FOUND})
   message("Qt5AxContainer Found Successfully.")
@@ -156,9 +158,17 @@ target_link_libraries(${PROJECT_NAME}
     Qt5::Widgets)
 
 message("Build Type: ${CMAKE_BUILD_TYPE}")
+if (OPENGL_FOUND)
+  message("OPENGL Found Successfully")
+  message("OpenGL Include Dirs: ${OPENGL_INCLUDE_DIR}")
+  add_definitions(-DQT_NO_DEBUG_OUTPUT)
+  target_compile_definitions(${PROJECT_NAME} PUBLIC QCUSTOMPLOT_USE_OPENGL)
+  target_link_libraries(${PROJECT_NAME} OPENGL_LIBRARIES)
+else ()
+  message("NO OPENGL")
+endif ()
 if (CMAKE_BUILD_TYPE MATCHES Release)
   message("Release Project")
-  add_definitions(-DQT_NO_DEBUG_OUTPUT)
   add_definitions(-DQCUSTOMPLOT_USE_OPENGL)
   target_compile_definitions(${PROJECT_NAME} PUBLIC QT_NO_DEBUG_OUTPUT)
 endif ()
