@@ -15,6 +15,7 @@
 !*.xlsx
 !*.ico
 !*.rc
+!*.conf
 !CMakeLists.txt
 !LICENSE
 !README.md
