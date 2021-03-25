@@ -21,6 +21,8 @@ void FreeCircos::initCanvas(void) {
   qDebug() << "QCUSTOMPLOT_USE_OPENGL DEFINED.";
   canvas->setOpenGl(true);
 #endif
+  canvas->setBufferDevicePixelRatio(1);
+//  canvas.s
   canvas->setAntialiasedElements(QCP::AntialiasedElement::aeItems |
       QCP::AntialiasedElement::aePlottables);
 }
