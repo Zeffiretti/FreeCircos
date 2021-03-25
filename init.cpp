@@ -17,10 +17,6 @@ void FreeCircos::initCanvas(void) {
   canvas->yAxis->setRange(-1, 1);
   canvas->xAxis->setVisible(false);
   canvas->yAxis->setVisible(false);
-#ifdef QCUSTOMPLOT_USE_OPENGL
-  qDebug() << "QCUSTOMPLOT_USE_OPENGL DEFINED.";
-  canvas->setOpenGl(true);
-#endif
   canvas->setBufferDevicePixelRatio(1);
 //  canvas.s
   canvas->setAntialiasedElements(QCP::AntialiasedElement::aeItems |
