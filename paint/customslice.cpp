@@ -55,6 +55,7 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
   qreal angle_offset = 0.1, r_offset = 0.02;
   slice_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
   strike_pen.setCosmetic(true);
+  strike_pen.setWidthF(1.6);
 //  fill_brush.
   slice_curve->setPen(strike_pen);
   slice_curve->setBrush(fill_brush);
