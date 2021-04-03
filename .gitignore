@@ -20,3 +20,9 @@
 !LICENSE
 !README.md
 !*.json
+!*.cmake
+!*/color_widgets.pri
+!*.yml
+!*/Doxyfile.in
+!*/refactor.sh
+!*.in
