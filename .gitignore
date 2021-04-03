@@ -27,3 +27,5 @@
 !*/refactor.sh
 !*.in
 !*.hpp
+!*glfw3.pc
+!*glfw3.lib
