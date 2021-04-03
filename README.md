@@ -1,4 +1,5 @@
 # FreeCircos
+[![wakatime](https://wakatime.com/badge/github/Zeffiretti/FreeCircos.svg)](https://wakatime.com/badge/github/Zeffiretti/FreeCircos)
 ## Summary
 To Develop A Program for Painting Circos Figure.
 ## Platform & Version

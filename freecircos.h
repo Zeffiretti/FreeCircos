@@ -12,9 +12,12 @@
 #include <QLineEdit>
 #include <QFont>
 
+#include "QtColorWidgets/ColorDialog"
+
 #include "extension/extdoubleslider.h"
 #include "extension/extgradientbutton.h"
 #include "extension/extcheckboxheaderview.h"
+#include "extension/extcolordialog.h"
 
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
@@ -43,7 +46,7 @@ class FreeCircos;
 QT_END_NAMESPACE
 //class TableMoveDialog;
 class FreeCircos : public QMainWindow {
-  Q_OBJECT
+ Q_OBJECT
 
  public:
   FreeCircos(QWidget *parent = nullptr);
@@ -82,7 +85,7 @@ class FreeCircos : public QMainWindow {
   void initLKTable(void);
   void initLKConfigWidget(void);
   void initLKColorScale(QCustomPlot *parent1 = nullptr, QCustomPlot *parent2 = nullptr);
-  void initLKTableModel(QStandardItemModel *model, Circos*);
+  void initLKTableModel(QStandardItemModel *model, Circos *);
 
   bool eventFilter(QObject *watched, QEvent *event);
 
@@ -100,7 +103,7 @@ class FreeCircos : public QMainWindow {
   void onTableHeaderViewClicked(int index);
   void onTableEditModeChanged(TableEditMode tem);
   void onCheckboxStateChanged(int state);
-  void onLineEditTextChanged(const QString& text);
+  void onLineEditTextChanged(const QString &text);
   void onHeaderCheckBoxStateChanged(int state);
   void onExtStandardItemStateSet(int index, Qt::CheckState state);
   void onStandardItemChanged(QStandardItem *item);
@@ -190,7 +193,7 @@ class FreeCircos : public QMainWindow {
   QCustomPlot *link_thermometer_colormap_onpanel_plot;
   QCustomPlot *link_thermometer_colormap_oncanvas_plot;
   QCPColorMap *link_thermometer_onpanel_color_map;
-   QCPColorMap *link_thermometer_oncanvas_color_map;
+  QCPColorMap *link_thermometer_oncanvas_color_map;
 //    QCPColorScale *link_thermometer_color_scale;
   QCPColorGradient *link_gradient;
   ExtGradientButton *link_cm_button1;

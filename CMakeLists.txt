@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.1.0)
 
-project(FreeCircos VERSION 0.5.0 LANGUAGES CXX)
+project(FreeCircos LANGUAGES CXX)
+set(${PROJECT_NAME}_VERSION_MAJOR 0)
+set(${PROJECT_NAME}_VERSION_MINOR 0)
+set(${PROJECT_NAME}_VERSION_PATCH 0)
 message("Projecte Infomation: [${PROJECT_NAME}_${PROJECT_VERSION}]")
 if (WIN32)
   ADD_DEFINITIONS(-DWINDOWS_H_)
@@ -15,6 +18,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 add_compile_definitions(QT_DEPRECATED_WARNINGS)
+add_subdirectory(addition/colorwidgets)
+include_directories(addition/colorwidgets/include)
 if (NOT DEFINED ENV{Qt5_Dir})
   message(FATAL_ERROR "not defined environment variable: Qt5_Dir")
 endif ()
@@ -35,6 +40,7 @@ endif ()
 #set(Qt5_DIR "D:/Apps/Qt5129/5.12.9/mingw73_64/lib/cmake")
 message("CMAKE_PREFIX_PATH at ${CMAKE_PREFIX_PATH}")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+#set(QtColorWidgets_DIR "addition/colorwidgets/cmake")
 
 find_package(Qt5 COMPONENTS
     Core
@@ -42,6 +48,7 @@ find_package(Qt5 COMPONENTS
     AxContainer
     Widgets
     PrintSupport REQUIRED)
+#find_package(ColorWidgets REQUIRED)
 
 if (${Qt5AxContainer_FOUND})
   message("Qt5AxContainer Found Successfully.")
@@ -107,7 +114,8 @@ set(EXT_FILES
     extension/extcheckboxheaderview.cpp
     extension/extdoubleslider.cpp
     extension/extdoublesliderprivate.h
-    extension/extgradientbutton.cpp)
+    extension/extgradientbutton.cpp
+    extension/extcolordialog.cpp)
 set(FILEPROS_FILES
     fileprocess/excelbase.cpp
     fileprocess/qvariantlistlistmodel.cpp)
@@ -154,7 +162,11 @@ target_link_libraries(${PROJECT_NAME}
     Qt5::AxContainer
     Qt5::PrintSupport
     Qt5::Widgets)
+link_directories(addition/colorwidgets)
 
+target_link_libraries(${PROJECT_NAME}
+    ColorWidgets)
+#add_dependencies(${PROJECT_NAME} ColorWidgets)
 message("Build Type: ${CMAKE_BUILD_TYPE}")
 if (CMAKE_BUILD_TYPE MATCHES Release)
   message("Release Project")

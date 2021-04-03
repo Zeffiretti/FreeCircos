@@ -156,8 +156,10 @@ void FreeCircos::onButtonClicked(bool) {
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
     QColor pre_color = circos->getGene(index)->getStrikeColor();
+//    QColor color =
+//        QColorDialog::getColor(pre_color, backbone_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
     QColor color =
-        QColorDialog::getColor(pre_color, backbone_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
+        ExtColorDialog::getColor(pre_color, backbone_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->setStrikeColor(color);

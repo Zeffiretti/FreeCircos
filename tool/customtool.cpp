@@ -1,4 +1,4 @@
-#include "customtool.h"
+þÿ#include "customtool.h"
 
 CustomTool::CustomTool() {
 }
@@ -113,4 +113,4 @@ QColor CustomTool::colorFun(const QString &type, qreal index) {
         break;
     }
   }
-}
+}ÿý
