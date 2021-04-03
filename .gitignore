@@ -26,3 +26,4 @@
 !*/Doxyfile.in
 !*/refactor.sh
 !*.in
+!*.hpp
