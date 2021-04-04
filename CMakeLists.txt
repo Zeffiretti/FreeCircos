@@ -19,6 +19,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 add_compile_definitions(QT_DEPRECATED_WARNINGS)
 add_subdirectory(addition/colorwidgets)
+#include(addition/colorwidgets/CMakeLists.txt)
 include_directories(addition/colorwidgets/include)
 if (NOT DEFINED ENV{Qt5_Dir})
   message(FATAL_ERROR "not defined environment variable: Qt5_Dir")
@@ -129,8 +130,7 @@ set(PAINT_FILES
     paint/customslice.cpp
     paint/customtrack.cpp
     paint/customtrackarrow.cpp
-    paint/qcustomplot.cpp
-    paint/smoothcurvegenerator.cpp)
+    paint/qcustomplot.cpp)
 set(RESOURCE_FILES
     resource/icon.ico
     resource/resource.qrc
@@ -165,7 +165,7 @@ target_link_libraries(${PROJECT_NAME}
 link_directories(addition/colorwidgets)
 
 target_link_libraries(${PROJECT_NAME}
-    ColorWidgets)
+    QtColorWidgets)
 #add_dependencies(${PROJECT_NAME} ColorWidgets)
 message("Build Type: ${CMAKE_BUILD_TYPE}")
 if (CMAKE_BUILD_TYPE MATCHES Release)

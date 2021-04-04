@@ -20,6 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+#include <stdexcept>
 #include "QtColorWidgets/color_wheel_private.hpp"
 #include "QtColorWidgets/harmony_color_wheel.hpp"
 

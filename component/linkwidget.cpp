@@ -235,11 +235,11 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
 //    parent2->yAxis->setTicker();
   parent2->yAxis->setSubTicks(false);
   parent2->setGeometry(430, 350, 60, 160);
-  link_gradient->setColorStopAt(0.0, QColor(Qt::blue));   // 设置色条开始时的颜色
+  link_gradient->setColorStopAt(0.0, QColor(Qt::blue));   //
   link_gradient->setColorStopAt(0.25, QColor(Qt::green));
   link_gradient->setColorStopAt(0.5, QColor(Qt::yellow));
   link_gradient->setColorStopAt(0.75, QColor(Qt::red));
-  link_gradient->setColorStopAt(1.0, QColor(Qt::darkRed));  // 设置色条结束时的颜色
+  link_gradient->setColorStopAt(1.0, QColor(Qt::darkRed));  //
   link_thermometer_oncanvas_color_map->setGradient(*link_gradient);
   link_thermometer_onpanel_color_map->setGradient(*link_gradient);
   circos->setLinkGradient(link_gradient);
