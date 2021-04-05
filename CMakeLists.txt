@@ -25,8 +25,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 #     可执行程序输出目录 => 构建目录/bin
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 add_compile_definitions(QT_DEPRECATED_WARNINGS)
-add_subdirectory(addition/colorwidgets)
-#include(addition/colorwidgets/CMakeLists.txt)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/colorwidgets)
+
 if (NOT DEFINED ENV{Qt5_Dir})
   message(FATAL_ERROR "not defined environment variable: Qt5_Dir")
 endif ()
@@ -172,7 +172,7 @@ target_link_libraries(${PROJECT_NAME}
   Qt5::AxContainer
   Qt5::PrintSupport
   Qt5::Widgets)
-link_directories(addition/colorwidgets)
+link_directories(lib/colorwidgets)
 
 target_link_libraries(${PROJECT_NAME}
   QtColorWidgets)
