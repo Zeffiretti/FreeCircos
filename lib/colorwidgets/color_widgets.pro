@@ -19,7 +19,7 @@ CONFIG += dll
 QT += core gui widgets
 DEFINES += QTCOLORWIDGETS_LIBRARY
 
-TARGET=QtColorWidgets-Qt5
+TARGET=QtColorWidgets
 
 VERSION=2.2.0
 
@@ -43,10 +43,11 @@ win32 {
 }
 
 isEmpty(PREFIX) {
-    PREFIX = /usr/local
+    PREFIX = $$OUT_PWD
 }
-target.path = $$PREFIX/lib
-headers.path = $$PREFIX/include/QtColorWidgets
+target.path = $$OUT_PWD/release
+DESTDIR = $$OUT_PWD/release
+headers.path = $$OUT_PWD/release/include/QtColorWidgets
 headers.files = $$HEADERS
 
 INSTALLS += target headers

@@ -120,7 +120,8 @@ set(CIRCOS_FILES
 set(COMPONENT_FILES
   component/bbwidget.cpp
   component/linkwidget.cpp
-  component/globalsetwin.cpp)
+  component/globalsetwin.cpp
+  component/colorwidget.cpp)
 set(EXT_FILES
   extension/extcheckboxheaderview.cpp
   extension/extdoubleslider.cpp

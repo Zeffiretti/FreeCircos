@@ -54,13 +54,13 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
   /// table
   initBBTable();
   ///backbone configuration
-  initBBConfigWidget();
-  /// Category configuration
-  initCatConfigWidget();
-  /// Switch butthon
-  initBCSwitch();
-  /// Signal&Slot connection
-  connectBCSingalSlot();
+//  initBBConfigWidget();
+//  /// Category configuration
+//  initCatConfigWidget();
+//  /// Switch butthon
+//  initBCSwitch();
+//  /// Signal&Slot connection
+//  connectBCSingalSlot();
   parent->addTab(backbone_widget, "BackBone");
 }
 

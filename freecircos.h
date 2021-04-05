@@ -61,6 +61,7 @@ class FreeCircos : public QMainWindow {
 
   //init method
   void initCanvas(void);
+  void initColorDialog(void);
   void initGenerateButton(void);
   void clearCanvas(QCustomPlot *cvs);
   void initBackBoneTableModel(QStandardItemModel *model,
@@ -201,8 +202,9 @@ class FreeCircos : public QMainWindow {
   ExtGradientButton *link_cm_button3;
   ExtGradientButton *link_cm_button4;
   ExtGradientButton *link_cm_button5;
-
   QStringList link_header_list;
+
+  color_widgets::ColorDialog *color_dialog_;
 
 //  QPushButton
 
