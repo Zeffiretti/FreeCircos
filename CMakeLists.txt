@@ -17,6 +17,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
+message(" PROJECT_BINARY at ${PROJECT_BINARY_DIR}")
+#     静态库输出目录 => 构建目录/lib
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+#     动态库输出目录 => 构建目录/bin
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+#     可执行程序输出目录 => 构建目录/bin
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 add_compile_definitions(QT_DEPRECATED_WARNINGS)
 add_subdirectory(addition/colorwidgets)
 #include(addition/colorwidgets/CMakeLists.txt)
@@ -166,10 +173,11 @@ link_directories(addition/colorwidgets)
 
 target_link_libraries(${PROJECT_NAME}
     QtColorWidgets)
-#add_dependencies(${PROJECT_NAME} ColorWidgets)
+add_dependencies(${PROJECT_NAME} QtColorWidgets)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/addition/colorwidgets/include)
 message("Build Type: ${CMAKE_BUILD_TYPE}")
 if (CMAKE_BUILD_TYPE MATCHES Release)
   message("Release Project")
-  add_definitions(-DQCUSTOMPLOT_USE_OPENGL)
+#  add_definitions(-DQCUSTOMPLOT_USE_OPENGL)
   target_compile_definitions(${PROJECT_NAME} PUBLIC QT_NO_DEBUG_OUTPUT)
 endif ()
