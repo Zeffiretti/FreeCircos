@@ -27,6 +27,7 @@ OBJECTS_DIR = out/obj
 MOC_DIR = out/generated
 UI_DIR = out/generated
 RCC_DIR = out/generated
+INCLUDEPATH += $$UI_DIR $$RCC_DIR $$MOC_DIR
 
 include(color_widgets.pri)
 
@@ -45,7 +46,7 @@ win32 {
 isEmpty(PREFIX) {
     PREFIX = $$OUT_PWD
 }
-target.path = $$OUT_PWD/release
+target.path = $$OUT_PWD
 DESTDIR = $$OUT_PWD/release
 headers.path = $$OUT_PWD/release/include/QtColorWidgets
 headers.files = $$HEADERS

@@ -9,4 +9,5 @@ void FreeCircos::initColorDialog(void) {
   color_dialog_->setParent(backbone_widget);
   color_dialog_->setGeometry(400, 10, 600, 560);
   color_dialog_->show();
+  color_dialog_->setEnabled(false);
 }

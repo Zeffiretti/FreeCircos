@@ -156,7 +156,7 @@ set(ROOT_FILES
 set(TOOL_FILES
   tool/customtool.cpp)
 
-add_executable(${PROJECT_NAME}
+add_executable(${PROJECT_NAME} WIN32
   ${ADD_FILES}
   ${CIRCOS_FILES}
   ${COMPONENT_FILES}
