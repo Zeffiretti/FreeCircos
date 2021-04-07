@@ -10,7 +10,13 @@
       "cmakeCommandArgs": "",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
-      "variables": []
+      "variables": [
+        {
+          "name": "COLOR_WIDGETS_QT_SUFFIX",
+          "value": "True",
+          "type": "BOOL"
+        }
+      ]
     },
     {
       "name": "msvcx64-Release",

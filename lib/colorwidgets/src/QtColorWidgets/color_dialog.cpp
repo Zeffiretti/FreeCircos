@@ -49,11 +49,9 @@ public:
 };
 
 ColorDialog::ColorDialog(QWidget *parent, Qt::WindowFlags f) :
-    QDialog(parent, f), p(new Private)
-{
-    p->ui.setupUi(this);
-
-    setAcceptDrops(true);
+    QDialog(parent, f), p(new Private) {
+  p->ui.setupUi(this);
+  setAcceptDrops(true);
 
     // Add "pick color" button
     QPushButton *pickButton = p->ui.buttonBox->addButton(tr("Pick"), QDialogButtonBox::ActionRole);
