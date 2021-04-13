@@ -127,7 +127,8 @@ set(EXT_FILES
   extension/extdoubleslider.cpp
   extension/extdoublesliderprivate.h
   extension/extgradientbutton.cpp
-  extension/extcolordialog.cpp)
+  extension/extcolordialog.cpp
+   "extension/extitemmodel.cpp")
 set(FILEPROS_FILES
   fileprocess/excelbase.cpp
   fileprocess/qvariantlistlistmodel.cpp)
