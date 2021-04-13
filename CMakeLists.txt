@@ -156,17 +156,32 @@ set(ROOT_FILES
 set(TOOL_FILES
   tool/customtool.cpp)
 
-add_executable(${PROJECT_NAME} WIN32
-  ${ADD_FILES}
-  ${CIRCOS_FILES}
-  ${COMPONENT_FILES}
-  ${EXT_FILES}
-  ${FILEPROS_FILES}
-  ${ICON_FILE}
-  ${PAINT_FILES}
-  ${RESOURCE_FILES}
-  ${ROOT_FILES}
-  ${TOOL_FILES})
+
+if (CMAKE_BUILD_TYPE MATCHES Release)
+  add_executable(${PROJECT_NAME} WIN32
+    ${ADD_FILES}
+    ${CIRCOS_FILES}
+    ${COMPONENT_FILES}
+    ${EXT_FILES}
+    ${FILEPROS_FILES}
+    ${ICON_FILE}
+    ${PAINT_FILES}
+    ${RESOURCE_FILES}
+    ${ROOT_FILES}
+    ${TOOL_FILES})
+elseif (CMAKE_BUILD_TYPE MATCHES Debug)
+  add_executable(${PROJECT_NAME}
+    ${ADD_FILES}
+    ${CIRCOS_FILES}
+    ${COMPONENT_FILES}
+    ${EXT_FILES}
+    ${FILEPROS_FILES}
+    ${ICON_FILE}
+    ${PAINT_FILES}
+    ${RESOURCE_FILES}
+    ${ROOT_FILES}
+    ${TOOL_FILES})
+endif ()
 target_link_libraries(${PROJECT_NAME}
   Qt5::Core
   Qt5::Gui
