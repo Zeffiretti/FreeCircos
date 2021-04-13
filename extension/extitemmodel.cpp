@@ -36,9 +36,11 @@ bool ExtItemModel::dropMimeData(const QMimeData *data,
   const QModelIndex old_index = index(data->data("row").toInt(),
                                       data->data("col").toInt());
   const QModelIndex current_index = parent;
-  QStandardItem *old_item = takeItem(old_index.row(), old_index.column());
-  QStandardItem *current_item = takeItem(current_index.row(), current_index.column());
-  setItem(old_index.row(), old_index.column(), current_item);
-  setItem(current_index.row(), current_index.column(), old_item);
+//  QStandardItem *old_item = takeItem(old_index.row(), old_index.column());
+//  QStandardItem *current_item = takeItem(current_index.row(), current_index.column());
+//  setItem(old_index.row(), old_index.column(), current_item);
+//  setItem(current_index.row(), current_index.column(), old_item);
+  QList<QStandardItem *> temp_model = takeRow(old_index.row());
+  insertRow(current_index.row(), temp_model);
   return true;
 }
