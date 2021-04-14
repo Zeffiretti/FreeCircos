@@ -3,6 +3,7 @@
 *build*/
 *out/*
 .*/
+!.github
 !.gitignore
 !*.cpp
 !*.c
