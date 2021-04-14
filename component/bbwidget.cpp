@@ -10,7 +10,8 @@ void FreeCircos::initBBTable(void) {
   backbone_table->setModel(backbone_model);
   backbone_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
   backbone_table->setSelectionBehavior(QAbstractItemView::SelectRows);
-  backbone_table->setSelectionMode(QAbstractItemView::SingleSelection);
+  backbone_table->setDefaultDropAction(Qt::MoveAction);
+//  backbone_table->setSelectionMode(QAbstractItemView::SingleSelection);
   backbone_table->setDragEnabled(true);
   backbone_table->setDragDropMode(QAbstractItemView::InternalMove);
   if (table_edit_mode == EditGene) {
@@ -37,6 +38,10 @@ void FreeCircos::initBBTable(void) {
   backbone_table_header->setProperty("function", "tableselected");
   backbone_table->setHorizontalHeader(backbone_table_header);
   backbone_model->setHorizontalHeaderLabels(backbone_header_list);
+  backbone_model->setColumnCount(4);
+  backbone_model->setProperty("prefix", "backbone");
+  connect(backbone_model, &ExtItemModel::moveRow,
+          this, &FreeCircos::onItemRowMoveRequest);
 }
 
 void FreeCircos::initBBConfigWidget(void) {

@@ -13,10 +13,10 @@
 #include <QMimeData>
 
 class ExtItemModel : public QStandardItemModel {
+ Q_OBJECT
  public:
   ExtItemModel();
   ~ExtItemModel() override;
-
 
   [[nodiscard]] Qt::ItemFlags flags(const QModelIndex &index) const override;
 
@@ -26,6 +26,12 @@ class ExtItemModel : public QStandardItemModel {
 
   bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row,
                     int column, const QModelIndex &parent) override;
+
+
+//  void insertRow(int row, const QList<QStandardItem*> &items);
+
+  Q_SIGNAL
+  void moveRow(int source_row, int dest_row);
 };
 
 #endif  // !EXT_ITEMMODEL_H

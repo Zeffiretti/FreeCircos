@@ -77,7 +77,7 @@ class FreeCircos : public QMainWindow {
                           Circos *c);
   void connectLKSignalSlot(void);
   void moveTableRow(QTableView *table,
-                    QStandardItemModel *model,
+                    ExtItemModel *model,
                     int from_row,
                     int to_row);
   void backBoneTableToSequence(QStandardItemModel *model,
@@ -109,6 +109,7 @@ class FreeCircos : public QMainWindow {
   void onHeaderCheckBoxStateChanged(int state);
   void onExtStandardItemStateSet(int index, Qt::CheckState state);
   void onStandardItemChanged(QStandardItem *item);
+  void onItemRowMoveRequest(int source, int dest);
 
  private:
 

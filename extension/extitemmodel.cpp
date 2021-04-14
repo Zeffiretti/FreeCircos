@@ -15,12 +15,11 @@ Qt::DropActions ExtItemModel::supportedDropActions() const {
 }
 
 QMimeData *ExtItemModel::mimeData(const QModelIndexList &indexes) const {
-
   QMimeData *data = QStandardItemModel::mimeData(indexes);
   if (data) {
+    // parent mimeData中已判断indexes有效性，无效的会返回nullptr
+    // 也可以把信息放到model的mutable成员中
     data->setData("row", QByteArray::number(indexes.at(0).row()));
-    data->setData("col", QByteArray::number(indexes.at(0).column()));
-//    data.
   }
   return data;
 }
@@ -33,14 +32,17 @@ bool ExtItemModel::dropMimeData(const QMimeData *data,
   if (!data || action != Qt::MoveAction)
     return false;
 
-  const QModelIndex old_index = index(data->data("row").toInt(),
-                                      data->data("col").toInt());
-  const QModelIndex current_index = parent;
-//  QStandardItem *old_item = takeItem(old_index.row(), old_index.column());
-//  QStandardItem *current_item = takeItem(current_index.row(), current_index.column());
-//  setItem(old_index.row(), old_index.column(), current_item);
-//  setItem(current_index.row(), current_index.column(), old_item);
-  QList<QStandardItem *> temp_model = takeRow(old_index.row());
-  insertRow(current_index.row(), temp_model);
+  int old_row = data->data("row").toInt();
+  int new_row = parent.row();
+  QList<QStandardItem *> items = takeRow(old_row);
+//  int step = new_row > old_row ? 1 : -1;
+//  for (int r = old_row; r != new_row + step; r += step) {
+//    insertRow(r, takeRow(r + step));
+//  }
+//  insertRow(new_row, items);
   return true;
 }
+
+//void ExtItemModel::insertRow(int row, const QList<QStandardItem *> &items) {
+//  QStandardItemModel::insertRow(row, items);
+//}

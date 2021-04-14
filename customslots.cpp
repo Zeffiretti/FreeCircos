@@ -137,7 +137,7 @@ void FreeCircos::onButtonClicked(bool) {
     circos->setTrackEnabled(true);
   }
   if (func == "backboneconfig") {
-    moveTableRow(backbone_table, backbone_model, 4, 0);
+//    moveTableRow(backbone_table, backbone_model, 4, 0);
   }
   if (func == "movepanel") {
     btn->setEnabled(false);
@@ -804,5 +804,13 @@ void FreeCircos::onStandardItemChanged(QStandardItem *item) {
              << "changed.";
     int index = item->text().toInt() - 1;
     circos->getLink(index)->setEnable(item->checkState() == Qt::Checked);
+  }
+}
+
+void FreeCircos::onItemRowMoveRequest(int source, int dest) {
+  ExtItemModel *model = qobject_cast<ExtItemModel *>(sender());
+  QString prefix = model->property("prefix").toString();
+  if (prefix == "backbone") {
+    moveTableRow(backbone_table, backbone_model, source, dest);
   }
 }
