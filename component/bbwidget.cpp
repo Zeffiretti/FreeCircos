@@ -1,24 +1,25 @@
 #include <freecircos.h>
 
 void FreeCircos::initBBTable(void) {
-  backbone_model = new ExtItemModel;
-  backbone_table = new QTableView;
+  backbone_model = new QStandardItemModel;
+  backbone_table = new ExtTableView;
   backbone_table_header = new ExtCheckBoxHeaderView;
   backbone_table->setSortingEnabled(true);
   backbone_table->setGeometry(0, 0, 360, 580);
   backbone_table->setParent(backbone_widget);
-  backbone_table->setModel(backbone_model);
+  backbone_table->SetModel(backbone_model);
   backbone_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
   backbone_table->setSelectionBehavior(QAbstractItemView::SelectRows);
-  backbone_table->setDefaultDropAction(Qt::MoveAction);
+//  backbone_table->setFocusPolicy(Qt::NoFocus);
+//  backbone_table->setDefaultDropAction(Qt::CopyAction);
 //  backbone_table->setSelectionMode(QAbstractItemView::SingleSelection);
-  backbone_table->setDragEnabled(true);
-  backbone_table->setDragDropMode(QAbstractItemView::InternalMove);
+//  backbone_table->setDragEnabled(true);
+//  backbone_table->setDragDropMode(QAbstractItemView::InternalMove);
   if (table_edit_mode == EditGene) {
     backbone_table->setSelectionMode(QAbstractItemView::SingleSelection);
   }
   backbone_table->verticalHeader()->hide();
-  backbone_table->installEventFilter(this);
+//  backbone_table->installEventFilter(this);
   backbone_table->selectionModel()->setProperty("prefix", "backbone");
   backbone_table->selectionModel()->setProperty("function", "backbone-table-model");
   backbone_table->setProperty("prefix", "backbone");
@@ -40,8 +41,8 @@ void FreeCircos::initBBTable(void) {
   backbone_model->setHorizontalHeaderLabels(backbone_header_list);
   backbone_model->setColumnCount(4);
   backbone_model->setProperty("prefix", "backbone");
-  connect(backbone_model, &ExtItemModel::moveRow,
-          this, &FreeCircos::onItemRowMoveRequest);
+//  connect(backbone_model, &ExtItemModel::moveRow,
+//          this, &FreeCircos::onItemRowMoveRequest);
 }
 
 void FreeCircos::initBBConfigWidget(void) {

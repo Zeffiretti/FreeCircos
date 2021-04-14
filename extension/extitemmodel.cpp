@@ -1,6 +1,6 @@
 #include "extitemmodel.h"
 
-ExtItemModel::ExtItemModel() : QStandardItemModel() {}
+ExtItemModel::ExtItemModel(QObject *parent) : QStandardItemModel(parent) {}
 ExtItemModel::~ExtItemModel() = default;
 
 Qt::ItemFlags ExtItemModel::flags(const QModelIndex &index) const {
@@ -34,7 +34,17 @@ bool ExtItemModel::dropMimeData(const QMimeData *data,
 
   int old_row = data->data("row").toInt();
   int new_row = parent.row();
-  QList<QStandardItem *> items = takeRow(old_row);
+  QList<QStandardItem *> items;
+  QStandardItem *aItem;
+  for (int i = 0; i < 4; i++) { //不包含最后1列
+    aItem = new QStandardItem("0"); //创建Item
+    items << aItem;   //添加到容器
+  }
+  row = parent.row();
+  column = parent.column();
+  insertRow(rowCount(), items);
+//  emit moveRow(old_row, new_row);
+//  QList<QStandardItem *> items = takeRow(old_row);
 //  int step = new_row > old_row ? 1 : -1;
 //  for (int r = old_row; r != new_row + step; r += step) {
 //    insertRow(r, takeRow(r + step));

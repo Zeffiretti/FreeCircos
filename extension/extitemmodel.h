@@ -15,7 +15,7 @@
 class ExtItemModel : public QStandardItemModel {
  Q_OBJECT
  public:
-  ExtItemModel();
+  ExtItemModel(QObject *parent = nullptr);
   ~ExtItemModel() override;
 
   [[nodiscard]] Qt::ItemFlags flags(const QModelIndex &index) const override;

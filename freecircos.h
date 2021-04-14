@@ -19,6 +19,7 @@
 #include "extension/extcheckboxheaderview.h"
 #include "extension/extcolordialog.h"
 #include "extension/extitemmodel.h"
+#include "extension/exttableview.h"
 
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
@@ -77,7 +78,7 @@ class FreeCircos : public QMainWindow {
                           Circos *c);
   void connectLKSignalSlot(void);
   void moveTableRow(QTableView *table,
-                    ExtItemModel *model,
+                    QStandardItemModel *model,
                     int from_row,
                     int to_row);
   void backBoneTableToSequence(QStandardItemModel *model,
@@ -128,8 +129,8 @@ class FreeCircos : public QMainWindow {
   QTabWidget *control_panel;
 
   QWidget *backbone_widget;
-  QTableView *backbone_table;
-  ExtItemModel *backbone_model;
+  ExtTableView *backbone_table;
+  QStandardItemModel *backbone_model;
   TableEditMode table_edit_mode;
   ExtCheckBoxHeaderView *backbone_table_header;
 
