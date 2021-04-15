@@ -12,7 +12,7 @@ FreeCircos::FreeCircos(QWidget *parent)
 //  setWindowFlags(flags);
   setMinimumSize(g_app_base_width * g_scale, g_app_base_height * g_scale);
   setMaximumSize(g_app_base_width * g_scale, g_app_base_height * g_scale);
-  this->setGeometry(w / 10, h / 5, g_app_base_width * g_scale, g_app_base_height * g_scale);
+  this->setGeometry(w / 15, h / 5, g_app_base_width * g_scale, g_app_base_height * g_scale);
   major_font = new QFont;
   major_font->setFamily("Microsoft Yahei UI");
   major_font->setPixelSize(14);
@@ -130,7 +130,10 @@ FreeCircos::FreeCircos(QWidget *parent)
 //    timer.restart();
   control_panel = new QTabWidget;
   control_panel->setParent(this);
-  control_panel->setGeometry(600, 30, 1000, 600);
+  control_panel->setGeometry(g_scale * config_widget_pos_x,
+                             g_scale * config_widget_pos_y,
+                             g_scale * config_widget_width,
+                             g_scale * config_widget_height);
   initBackBoneWidget(control_panel);
   initLinkWidget(control_panel);
   //qDebug() << CustomTool::mapInt2Real(202293916, 202585582, 0, 1, 202417563);

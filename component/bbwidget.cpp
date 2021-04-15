@@ -5,7 +5,10 @@ void FreeCircos::initBBTable(void) {
   backbone_table = new ExtTableView;
   backbone_table_header = new ExtCheckBoxHeaderView;
   backbone_table->setSortingEnabled(true);
-  backbone_table->setGeometry(0, 0, 360, 580);
+  backbone_table->setGeometry(g_scale * table_pos_x,
+                              g_scale * table_pos_y,
+                              g_scale * table_width,
+                              g_scale * table_height);
   backbone_table->setParent(backbone_widget);
   backbone_table->setExtModel(backbone_model);
   backbone_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
