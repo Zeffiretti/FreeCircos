@@ -4,11 +4,15 @@
 
 FreeCircos::FreeCircos(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::FreeCircos) {
+  QDesktopWidget *desktopWidget = QApplication::desktop();
+  QRect screenRect = desktopWidget->screenGeometry();
+  int w = screenRect.width();
+  int h = screenRect.height();
   ui->setupUi(this);
 //  setWindowFlags(flags);
-  setMinimumSize(1610, 650);
-  setMaximumSize(1610, 650);
-  this->setGeometry(200, 200, 1610, 650);
+  setMinimumSize(g_app_base_width * g_scale, g_app_base_height * g_scale);
+  setMaximumSize(g_app_base_width * g_scale, g_app_base_height * g_scale);
+  this->setGeometry(w / 10, h / 5, g_app_base_width * g_scale, g_app_base_height * g_scale);
   major_font = new QFont;
   major_font->setFamily("Microsoft Yahei UI");
   major_font->setPixelSize(14);
@@ -29,7 +33,8 @@ FreeCircos::FreeCircos(QWidget *parent)
   QPushButton *backbone_button = new QPushButton;
   backbone_button->setParent(this);
   backbone_button->setText("backbone");
-  backbone_button->setGeometry(10, 10, 100, 40);
+  backbone_button->setGeometry(button_box_pos_x * g_scale, button_box_pos_y * g_scale,
+                               button_box_width * g_scale, button_box_height * g_scale);
   backbone_button->setProperty("function", "openbackbonefile");
   backbone_button->setVisible(true);
   connect(backbone_button, &QPushButton::clicked,
@@ -37,7 +42,10 @@ FreeCircos::FreeCircos(QWidget *parent)
   QPushButton *category_button = new QPushButton;
   category_button->setParent(this);
   category_button->setText("category");
-  category_button->setGeometry(120, 10, 100, 40);
+  category_button->setGeometry(g_scale * (button_box_pos_x + button_box_width + button_gap_x),
+                               g_scale * button_box_pos_y,
+                               button_box_width * g_scale,
+                               button_box_height * g_scale);
   category_button->setProperty("function", "opencategoryfile");
   category_button->setVisible(true);
   connect(category_button, &QPushButton::clicked,
@@ -45,7 +53,10 @@ FreeCircos::FreeCircos(QWidget *parent)
   QPushButton *link_button = new QPushButton;
   link_button->setParent(this);
   link_button->setText("link");
-  link_button->setGeometry(10, 60, 100, 40);
+  link_button->setGeometry(g_scale * button_box_pos_x,
+                           g_scale * (button_box_pos_y + button_box_height + button_gap_y),
+                           button_box_width * g_scale,
+                           button_box_height * g_scale);
   link_button->setProperty("function", "openlinkfile");
   link_button->setVisible(true);
   connect(link_button, &QPushButton::clicked,
@@ -53,7 +64,10 @@ FreeCircos::FreeCircos(QWidget *parent)
   QPushButton *trackarrow_button = new QPushButton;
   trackarrow_button->setParent(this);
   trackarrow_button->setText("trackarrow");
-  trackarrow_button->setGeometry(120, 60, 100, 40);
+  trackarrow_button->setGeometry(g_scale * (button_box_pos_x + button_box_width + button_gap_x),
+                                 g_scale * (button_box_pos_y + button_box_height + button_gap_y),
+                                 button_box_width * g_scale,
+                                 button_box_height * g_scale);
   trackarrow_button->setProperty("function", "opentrackarrowfile");
   trackarrow_button->setVisible(true);
   connect(trackarrow_button, &QPushButton::clicked,
@@ -61,7 +75,10 @@ FreeCircos::FreeCircos(QWidget *parent)
   QPushButton *setting_button = new QPushButton;
   setting_button->setParent(this);
   setting_button->setText("Global Setting");
-  setting_button->setGeometry(230, 10, 100, 40);
+  setting_button->setGeometry(g_scale * (button_box_pos_x + 2 * button_box_width + 2 * button_gap_x),
+                              g_scale * (button_box_pos_y + 0 * button_box_height + 0 * button_gap_y),
+                              button_box_width * g_scale,
+                              button_box_height * g_scale);
   setting_button->setProperty("prefix", "global");
   setting_button->setProperty("function", "globalsetting");
   connect(setting_button, &QPushButton::clicked,
@@ -70,14 +87,20 @@ FreeCircos::FreeCircos(QWidget *parent)
   save_button->setParent(this);
   save_button->setText("Save");
   save_button->setProperty("function", "saveimage");
-  save_button->setGeometry(230, 60, 100, 40);
+  save_button->setGeometry(g_scale * (button_box_pos_x + 2 * button_box_width + 2 * button_gap_x),
+                           g_scale * (button_box_pos_y + button_box_height + button_gap_y),
+                           button_box_width * g_scale,
+                           button_box_height * g_scale);
   connect(save_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
   QPushButton *reset_button = new QPushButton;
   reset_button->setParent(this);
   reset_button->setText("Reset");
   reset_button->setProperty("function", "reset");
-  reset_button->setGeometry(340, 60, 150, 40);
+  reset_button->setGeometry(g_scale * (button_box_pos_x + 3 * button_box_width + 3 * button_gap_x),
+                            g_scale * (button_box_pos_y + button_box_height + button_gap_y),
+                            button_box_width * g_scale,
+                            button_box_height * g_scale);
   connect(reset_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
 //    QElapsedTimer timer;

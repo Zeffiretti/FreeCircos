@@ -3,7 +3,10 @@
 void FreeCircos::initGenerateButton(void) {
   generate_button = new QPushButton("Generate!");
   generate_button->setParent(this);
-  generate_button->setGeometry(340, 10, 150, 40);
+  generate_button->setGeometry(g_scale * (button_box_pos_x + 3 * button_box_width + 3 * button_gap_x),
+                               g_scale * (button_box_pos_y + 0 * button_box_height + 0 * button_gap_y),
+                               button_box_width * g_scale,
+                               button_box_height * g_scale);
   generate_button->setProperty("function", "generate");
   connect(generate_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
@@ -12,7 +15,10 @@ void FreeCircos::initGenerateButton(void) {
 void FreeCircos::initCanvas(void) {
   canvas = new QCustomPlot;
   canvas->setParent(this);
-  canvas->setGeometry(10, 110, 500, 500);
+  canvas->setGeometry(g_scale * canvas_pos_x,
+                      g_scale * (button_box_pos_y + 2 * button_box_height + button_gap_y + canvas_pos_gap_y),
+                      g_scale * canvas_width,
+                      g_scale * canvas_height);
   canvas->xAxis->setRange(-1, 1);
   canvas->yAxis->setRange(-1, 1);
   canvas->xAxis->setVisible(false);

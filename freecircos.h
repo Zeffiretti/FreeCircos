@@ -11,6 +11,9 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QFont>
+#include <QDesktopWidget>
+
+#include "settings/winscale.h"
 
 #include "QtColorWidgets/ColorDialog"
 
