@@ -7,7 +7,7 @@ void FreeCircos::initBBTable(void) {
   backbone_table->setSortingEnabled(true);
   backbone_table->setGeometry(0, 0, 360, 580);
   backbone_table->setParent(backbone_widget);
-  backbone_table->SetModel(backbone_model);
+  backbone_table->setExtModel(backbone_model);
   backbone_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
   backbone_table->setSelectionBehavior(QAbstractItemView::SelectRows);
 //  backbone_table->setFocusPolicy(Qt::NoFocus);

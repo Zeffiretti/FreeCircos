@@ -9,6 +9,8 @@
 #include <QTableView>
 #include <QLabel>
 #include <QMouseEvent>
+#include <QWheelEvent>
+#include <QScrollBar>
 #include <QStandardItemModel>
 #include <QApplication>
 #include <QDrag>
@@ -21,7 +23,7 @@ class ExtTableView : public QTableView {
  public:
   ExtTableView(QWidget *parent = nullptr);
   ~ExtTableView();
-  void SetModel(QStandardItemModel *model);
+  void setExtModel(QStandardItemModel *model);
   Q_SIGNAL
   void sigRowChange(int from, int to);
 
@@ -31,6 +33,7 @@ class ExtTableView : public QTableView {
   void dragEnterEvent(QDragEnterEvent *event);
   void dragMoveEvent(QDragMoveEvent *event);
   void dropEvent(QDropEvent *event);
+//  void wheelEvent(QWheelEvent *event);
 
  private:
   void DoDrag();
@@ -49,6 +52,7 @@ class ExtTableView : public QTableView {
   QString mDragText;
   QPoint mDragPoint;
   QPoint mDragPointAtItem;
+//  int offset;
 };
 
 #endif //FREECIRCOS_EXTENSION_EXTTABLEVIEW_H_

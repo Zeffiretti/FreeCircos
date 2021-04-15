@@ -4,7 +4,8 @@
 
 #include "exttableview.h"
 
-ExtTableView::ExtTableView(QWidget *parent) : QTableView(parent) {
+ExtTableView::ExtTableView(QWidget *parent)
+    : QTableView(parent) {
   setAcceptDrops(true);
 
   mLabel = new QLabel(this);
@@ -18,10 +19,16 @@ ExtTableView::ExtTableView(QWidget *parent) : QTableView(parent) {
   mValidPress = false;
   mRowFrom = 0;
   mRowTo = 0;
+
+  // stylesheet setting
+  setStyleSheet("QTableView {border: 1px solid gray;background: #E8E8E8;}\
+                          QTableView::item{color:black;}\
+                          QTableView::item:selected{color:black;background: #63B8FF;}");
+//  setColumnWidth(0, 40);
 }
 ExtTableView::~ExtTableView() = default;
 
-void ExtTableView::SetModel(QStandardItemModel *model) {
+void ExtTableView::setExtModel(QStandardItemModel *model) {
   mModel = model;
   QTableView::setModel(model);
 }
@@ -83,7 +90,19 @@ void ExtTableView::dragMoveEvent(QDragMoveEvent *e) {
 //        if (nCurRow != mRowFrom)
     {
       mRowTo = nCurRow;
-      mLabel->setGeometry(1, mRowTo * mRowHeight, width() - 2, 2);
+      qreal v_pos = mRowTo * mRowHeight;
+      qDebug() << "table hight: " << height() << ", pos is " << v_pos;
+//      while (v_pos > height()) {
+//        v_pos -= height();
+//      }
+      QPoint f_p(2, 2);
+      QModelIndex f_index = indexAt(f_p);
+      int offset = f_index.row() * mRowHeight;
+      v_pos -= offset;
+
+//      this->verticalScrollBar()->value();
+      qDebug() << "table hight: " << height() << ", pos is " << v_pos;
+      mLabel->setGeometry(1, v_pos, width() - 2, 2);
     }
     e->acceptProposedAction();
     return;
@@ -135,27 +154,8 @@ void ExtTableView::MoveRow(int from, int to) {
   if (from == to) {
     return;
   }
-  QStandardItem *item = mModel->item(from, 1);
-  if (item) {
-    QString strText = item->text();
 
-    QList<QStandardItem *> items;
-    QStandardItem *item0 = new QStandardItem("");
-    QStandardItem *item1 = new QStandardItem(strText);
-    items.append(item0);
-    items.append(item1);
-    item0->setTextAlignment(Qt::AlignCenter);
-
-    mModel->insertRow(to, items);
-    if (from < to) {
-      mModel->removeRow(from);
-      selectRow(to - 1);
-    } else {
-      mModel->removeRow(from + 1);
-      selectRow(to);
-    }
-    ResetOrder();
-    emit sigRowChange(mRowFrom, mRowTo);
-
-  }
+  QList<QStandardItem *> items = mModel->takeRow(from);
+  mModel->insertRow(to, items);
+  emit sigRowChange(mRowFrom, mRowTo);
 }
