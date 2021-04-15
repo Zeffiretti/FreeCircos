@@ -92,9 +92,6 @@ void ExtTableView::dragMoveEvent(QDragMoveEvent *e) {
       mRowTo = nCurRow;
       qreal v_pos = mRowTo * mRowHeight;
       qDebug() << "table hight: " << height() << ", pos is " << v_pos;
-//      while (v_pos > height()) {
-//        v_pos -= height();
-//      }
       QPoint f_p(2, 2);
       QModelIndex f_index = indexAt(f_p);
       int offset = f_index.row() * mRowHeight;
