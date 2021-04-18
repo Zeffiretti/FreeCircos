@@ -34,11 +34,15 @@ const static int
 
 // variables below are referenced in config_widget
 const static int page_margin = 0;
-const static int page_label_margin = 20;
+const static int page_label_margin = 15;
+const static int switch_button_pos_x = page_margin;
+const static int switch_button_pos_y = page_margin;
+const static int switch_button_height = 15;
+const static int switch_button_width = config_widget_width / 2;
 const static int table_pos_x = page_margin;
-const static int table_pos_y = page_margin;
-const static int table_width = config_widget_width / 2;
-const static int table_height = config_widget_height;
+const static int table_pos_y = page_margin + switch_button_height;
+const static int table_width = switch_button_width;
+const static int table_height = config_widget_height - table_pos_y - switch_button_height;
 const static int color_dialog_pos_x = table_width;
 const static int color_dialog_pos_y = page_margin;
 const static int color_dialog_width = config_widget_width - table_width;

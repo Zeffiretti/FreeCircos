@@ -132,6 +132,8 @@ class FreeCircos : public QMainWindow {
   QTabWidget *control_panel;
 
   QWidget *backbone_widget;
+  QPushButton *gene_button;
+  QPushButton *cat_button;
   ExtTableView *backbone_table;
   QStandardItemModel *backbone_model;
   TableEditMode table_edit_mode;

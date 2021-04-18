@@ -102,7 +102,8 @@ void FreeCircos::onButtonClicked(bool) {
 #endif
     circos->dataToCategory();
     circos->setCategoryEnable(true);
-    switch_button->setEnabled(true);
+//    switch_button->setEnabled(true);
+    cat_button->setEnabled(true);
 //        initBackBoneTableModel(backbone_table, backbone_model, circos);
     addCategoryToTable(backbone_model, circos);
   }
@@ -210,6 +211,13 @@ void FreeCircos::onButtonClicked(bool) {
       emit setTableEditMode(TableEditMode::EditCategory);
       category_config_widget->setEnabled(true);
     }
+  }
+
+  if (func == "enable_gene") {
+    emit setTableEditMode(TableEditMode::EditGene);
+  }
+  if (func == "enable_cat") {
+    emit setTableEditMode(TableEditMode::EditCategory);
   }
   if (func == "category-strike-color") {
     qDebug() << "select a color";
@@ -379,19 +387,19 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
   int sel_row = current.row();
   if (prefix.compare("backbone") == 0) {
     if (func.compare("backbone-table-model") == 0) {
-      if (sel_row != 0) {
-        backbone_moveup_button->setEnabled(true);
-      } else {
-        backbone_moveup_button->setEnabled(false);
-      }
-      if (sel_row != backbone_model->rowCount() - 1) {
-        backbone_movedown_button->setEnabled(true);
-      } else {
-        backbone_movedown_button->setEnabled(false);
-      }
+//      if (sel_row != 0) {
+//        backbone_moveup_button->setEnabled(true);
+//      } else {
+//        backbone_moveup_button->setEnabled(false);
+//      }
+//      if (sel_row != backbone_model->rowCount() - 1) {
+//        backbone_movedown_button->setEnabled(true);
+//      } else {
+//        backbone_movedown_button->setEnabled(false);
+//      }
       int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
-      backbone_move_lineedit->setText(QString::number(sel_row + 1));
-      backbone_move_lineedit->setEnabled(true);
+//      backbone_move_lineedit->setText(QString::number(sel_row + 1));
+//      backbone_move_lineedit->setEnabled(true);
       qDebug() << "Index=" << index;
       Gene *b = circos->getGene(index);
       QPalette pal = backbone_strike_color_button->palette();
@@ -679,16 +687,26 @@ void FreeCircos::onTableHeaderViewClicked(int index) {
 }
 
 void FreeCircos::onTableEditModeChanged(TableEditMode tem) {
+//  switch (tem) {
+//    case TableEditMode::EditGene:backbone_config_widget->setEnabled(true);
+//      category_config_widget->setEnabled(false);
+//      table_edit_mode = TableEditMode::EditGene;
+//      backbone_table->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+////        qDebug() << "Edit Gene.";
+//      break;
+//    default:backbone_config_widget->setEnabled(false);
+//      category_config_widget->setEnabled(true);
+//      table_edit_mode = TableEditMode::EditCategory;
+//      backbone_table->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
+////        qDebug() << "Edit Category.";
+//      break;
+//  }
   switch (tem) {
-    case TableEditMode::EditGene:backbone_config_widget->setEnabled(true);
-      category_config_widget->setEnabled(false);
-      table_edit_mode = TableEditMode::EditGene;
+    case TableEditMode::EditGene:table_edit_mode = TableEditMode::EditGene;
       backbone_table->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
 //        qDebug() << "Edit Gene.";
       break;
-    default:backbone_config_widget->setEnabled(false);
-      category_config_widget->setEnabled(true);
-      table_edit_mode = TableEditMode::EditCategory;
+    default:table_edit_mode = TableEditMode::EditCategory;
       backbone_table->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
 //        qDebug() << "Edit Category.";
       break;

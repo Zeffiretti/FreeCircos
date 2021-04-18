@@ -1,6 +1,23 @@
 #include <freecircos.h>
 
 void FreeCircos::initBBTable(void) {
+  gene_button = new QPushButton;
+  gene_button->setParent(backbone_widget);
+  gene_button->setText("backbone");
+  gene_button->setGeometry(g_scale * switch_button_pos_x,
+                           g_scale * switch_button_pos_y,
+                           g_scale * switch_button_width / 2,
+                           g_scale * switch_button_height);
+  gene_button->setProperty("function", "enable_gene");
+  cat_button = new QPushButton;
+  cat_button->setParent(backbone_widget);
+  cat_button->setText("category");
+  cat_button->setGeometry(g_scale * (switch_button_pos_x + switch_button_width / 2),
+                          g_scale * switch_button_pos_y,
+                          g_scale * switch_button_width / 2,
+                          g_scale * switch_button_height);
+  cat_button->setProperty("function", "enable_cat");
+  cat_button->setDisabled(true);
   backbone_model = new QStandardItemModel;
   backbone_table = new ExtTableView;
   backbone_table_header = new ExtCheckBoxHeaderView;
@@ -205,41 +222,45 @@ void FreeCircos::connectBCSingalSlot(void) {
   //signal----slot
 //  connect(backbone_table_rightclick_action_moveto, &QAction::triggered,
 //          this, &FreeCircos::onActionTriggered);
+  connect(gene_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  connect(cat_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
   connect(backbone_table_header, &ExtCheckBoxHeaderView::headerCheckBoxStateChanged,
           this, &FreeCircos::onHeaderCheckBoxStateChanged);
   connect(this, &FreeCircos::setTableEditMode, this, &FreeCircos::onTableEditModeChanged);
   connect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
           this, &FreeCircos::onTableSelectedChanged);
-  connect(backbone_strike_color_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  connect(backbone_fill_color_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  connect(backbone_label_state_combobox, &QComboBox::currentTextChanged,
-          this, &FreeCircos::onComboboxTextChanged);
-  connect(backbone_label_position_combobox, &QComboBox::currentTextChanged,
-          this, &FreeCircos::onComboboxTextChanged);
-  connect(backbone_moveup_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  connect(backbone_movedown_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  connect(backbone_move_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  connect(category_fill_color_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  connect(category_strike_color_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  connect(category_label_state_combobox, &QComboBox::currentTextChanged,
-          this, &FreeCircos::onComboboxTextChanged);
-  connect(category_label_position_combobox, &QComboBox::currentTextChanged,
-          this, &FreeCircos::onComboboxTextChanged);
-  connect(category_moveup_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  connect(category_movedown_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  connect(category_move_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  connect(switch_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  connect(backbone_table->horizontalHeader(), &QHeaderView::sectionClicked,
-          this, &FreeCircos::onTableHeaderViewClicked);
+//  connect(backbone_strike_color_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  connect(backbone_fill_color_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  connect(backbone_label_state_combobox, &QComboBox::currentTextChanged,
+//          this, &FreeCircos::onComboboxTextChanged);
+//  connect(backbone_label_position_combobox, &QComboBox::currentTextChanged,
+//          this, &FreeCircos::onComboboxTextChanged);
+//  connect(backbone_moveup_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  connect(backbone_movedown_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  connect(backbone_move_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  connect(category_fill_color_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  connect(category_strike_color_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  connect(category_label_state_combobox, &QComboBox::currentTextChanged,
+//          this, &FreeCircos::onComboboxTextChanged);
+//  connect(category_label_position_combobox, &QComboBox::currentTextChanged,
+//          this, &FreeCircos::onComboboxTextChanged);
+//  connect(category_moveup_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  connect(category_movedown_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  connect(category_move_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  connect(switch_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  connect(backbone_table->horizontalHeader(), &QHeaderView::sectionClicked,
+//          this, &FreeCircos::onTableHeaderViewClicked);
 }

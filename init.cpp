@@ -66,7 +66,7 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
 //  /// Switch butthon
 //  initBCSwitch();
 //  /// Signal&Slot connection
-//  connectBCSingalSlot();
+  connectBCSingalSlot();
   parent->addTab(backbone_widget, "BackBone");
 }
 

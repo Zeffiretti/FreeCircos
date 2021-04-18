@@ -14,10 +14,10 @@ FreeCircos::FreeCircos(QWidget *parent)
   setMaximumSize(g_app_base_width * g_scale, g_app_base_height * g_scale);
   this->setGeometry(w / 15, h / 5, g_app_base_width * g_scale, g_app_base_height * g_scale);
   major_font = new QFont;
-  major_font->setFamily("Microsoft Yahei UI");
-  major_font->setPixelSize(14);
-//  major_font->setPointSize(10);
-  major_font->setBold(true);
+//  major_font->setFamily("Microsoft Yahei UI");
+//  major_font->setPixelSize(14);
+////  major_font->setPointSize(10);
+//  major_font->setBold(true);
   //init canvas
   initCanvas();
   //init generate button

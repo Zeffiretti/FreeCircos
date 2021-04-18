@@ -5,7 +5,10 @@ void FreeCircos::initLKTable(void) {
   link_table = new QTableView;
   link_table_header = new ExtCheckBoxHeaderView;
   link_table->setSortingEnabled(false);
-  link_table->setGeometry(0, 0, 360, 580);
+  link_table->setGeometry(g_scale * table_pos_x,
+                          g_scale * table_pos_y,
+                          g_scale * table_width,
+                          g_scale * table_height);
   link_table->setParent(link_widget);
   link_table->setModel(link_model);
   link_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
