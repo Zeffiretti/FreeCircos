@@ -402,71 +402,71 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
 //      backbone_move_lineedit->setEnabled(true);
       qDebug() << "Index=" << index;
       Gene *b = circos->getGene(index);
-      QPalette pal = backbone_strike_color_button->palette();
-      pal.setColor(QPalette::Button, b->getStrikeColor());
-      backbone_strike_color_button->setPalette(pal);
-      backbone_strike_color_button->setAutoFillBackground(true);
-      backbone_strike_color_button->setFlat(true);
-      pal = backbone_fill_color_button->palette();
-      pal.setColor(QPalette::Button, b->getFillColor());
-      backbone_fill_color_button->setPalette(pal);
-      backbone_fill_color_button->setAutoFillBackground(true);
-      backbone_fill_color_button->setFlat(true);
+//      QPalette pal = backbone_strike_color_button->palette();
+//      pal.setColor(QPalette::Button, b->getStrikeColor());
+//      backbone_strike_color_button->setPalette(pal);
+//      backbone_strike_color_button->setAutoFillBackground(true);
+//      backbone_strike_color_button->setFlat(true);
+//      pal = backbone_fill_color_button->palette();
+//      pal.setColor(QPalette::Button, b->getFillColor());
+//      backbone_fill_color_button->setPalette(pal);
+//      backbone_fill_color_button->setAutoFillBackground(true);
+//      backbone_fill_color_button->setFlat(true);
       Category *c = circos->getGene(index)->getCategory();
-      pal = category_strike_color_button->palette();
-      pal.setColor(QPalette::Button, c->getStrikeColor());
-      category_strike_color_button->setPalette(pal);
-      category_strike_color_button->setAutoFillBackground(true);
-      category_strike_color_button->setFlat(true);
-      pal = category_fill_color_button->palette();
-      pal.setColor(QPalette::Button, c->getFillColor());
-      category_fill_color_button->setPalette(pal);
-      category_fill_color_button->setAutoFillBackground(true);
-      category_fill_color_button->setFlat(true);
-      switch (b->getLabelState()) {
-        case CustomSlice::LabelInvisable:backbone_label_state_combobox->setCurrentText("Invisable");
-          break;
-        case CustomSlice::LabelSleep:backbone_label_state_combobox->setCurrentText("Sleep");
-          break;
-        case CustomSlice::LabelStand:backbone_label_state_combobox->setCurrentText("Stand");
-          break;
-      }
-      switch (b->getLabelPosition()) {
-        case CustomSlice::LabelInsideDonut:backbone_label_position_combobox->setCurrentText("Inside");
-          break;
-        case CustomSlice::LabelOnDonut:backbone_label_position_combobox->setCurrentText("On");
-          break;
-        case CustomSlice::LabelOutsideDonut:backbone_label_position_combobox->setCurrentText("Outside");
-          break;
-      }
-      switch (c->getLabelState()) {
-        case CustomSlice::LabelInvisable:category_label_state_combobox->setCurrentText("Invisable");
-          break;
-        case CustomSlice::LabelSleep:category_label_state_combobox->setCurrentText("Sleep");
-          break;
-        case CustomSlice::LabelStand:category_label_state_combobox->setCurrentText("Stand");
-          break;
-      }
-      switch (c->getLabelPosition()) {
-        case CustomSlice::LabelInsideDonut:category_label_position_combobox->setCurrentText("Inside");
-          break;
-        case CustomSlice::LabelOnDonut:category_label_position_combobox->setCurrentText("On");
-          break;
-        case CustomSlice::LabelOutsideDonut:category_label_position_combobox->setCurrentText("Outside");
-          break;
-      }
+//      pal = category_strike_color_button->palette();
+//      pal.setColor(QPalette::Button, c->getStrikeColor());
+//      category_strike_color_button->setPalette(pal);
+//      category_strike_color_button->setAutoFillBackground(true);
+//      category_strike_color_button->setFlat(true);
+//      pal = category_fill_color_button->palette();
+//      pal.setColor(QPalette::Button, c->getFillColor());
+//      category_fill_color_button->setPalette(pal);
+//      category_fill_color_button->setAutoFillBackground(true);
+//      category_fill_color_button->setFlat(true);
+//      switch (b->getLabelState()) {
+//        case CustomSlice::LabelInvisable:backbone_label_state_combobox->setCurrentText("Invisable");
+//          break;
+//        case CustomSlice::LabelSleep:backbone_label_state_combobox->setCurrentText("Sleep");
+//          break;
+//        case CustomSlice::LabelStand:backbone_label_state_combobox->setCurrentText("Stand");
+//          break;
+//      }
+//      switch (b->getLabelPosition()) {
+//        case CustomSlice::LabelInsideDonut:backbone_label_position_combobox->setCurrentText("Inside");
+//          break;
+//        case CustomSlice::LabelOnDonut:backbone_label_position_combobox->setCurrentText("On");
+//          break;
+//        case CustomSlice::LabelOutsideDonut:backbone_label_position_combobox->setCurrentText("Outside");
+//          break;
+//      }
+//      switch (c->getLabelState()) {
+//        case CustomSlice::LabelInvisable:category_label_state_combobox->setCurrentText("Invisable");
+//          break;
+//        case CustomSlice::LabelSleep:category_label_state_combobox->setCurrentText("Sleep");
+//          break;
+//        case CustomSlice::LabelStand:category_label_state_combobox->setCurrentText("Stand");
+//          break;
+//      }
+//      switch (c->getLabelPosition()) {
+//        case CustomSlice::LabelInsideDonut:category_label_position_combobox->setCurrentText("Inside");
+//          break;
+//        case CustomSlice::LabelOnDonut:category_label_position_combobox->setCurrentText("On");
+//          break;
+//        case CustomSlice::LabelOutsideDonut:category_label_position_combobox->setCurrentText("Outside");
+//          break;
+//      }
       if (table_edit_mode == TableEditMode::EditCategory) {
         QString cat_name = backbone_model->item(sel_row, 3)->text();
-        if (backbone_model->item(0, 3)->text().compare(cat_name) == 0) {
-          category_moveup_button->setEnabled(false);
-        } else {
-          category_moveup_button->setEnabled(true);
-        }
-        if (backbone_model->item(backbone_model->rowCount() - 1, 3)->text().compare(cat_name) == 0) {
-          category_movedown_button->setEnabled(false);
-        } else {
-          category_movedown_button->setEnabled(true);
-        }
+//        if (backbone_model->item(0, 3)->text().compare(cat_name) == 0) {
+//          category_moveup_button->setEnabled(false);
+//        } else {
+//          category_moveup_button->setEnabled(true);
+//        }
+//        if (backbone_model->item(backbone_model->rowCount() - 1, 3)->text().compare(cat_name) == 0) {
+//          category_movedown_button->setEnabled(false);
+//        } else {
+//          category_movedown_button->setEnabled(true);
+//        }
         QItemSelectionModel *sel_model = backbone_table->selectionModel();
         QItemSelection *selection = new QItemSelection;
         disconnect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
