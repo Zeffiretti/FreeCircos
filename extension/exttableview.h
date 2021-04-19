@@ -33,7 +33,7 @@ class ExtTableView : public QTableView {
   void dragEnterEvent(QDragEnterEvent *event);
   void dragMoveEvent(QDragMoveEvent *event);
   void dropEvent(QDropEvent *event);
-//  void wheelEvent(QWheelEvent *event);
+  void wheelEvent(QWheelEvent *event);
 
  private:
   void DoDrag();

@@ -79,27 +79,23 @@ void ExtTableView::dragMoveEvent(QDragMoveEvent *e) {
     int nCurRow = 0;
     QModelIndex index = indexAt(e->pos());
     if (index.isValid()) {
-      if (e->pos().y() - index.row() * mRowHeight >= mRowHeight / 2) {
-        nCurRow = index.row() + 1;
-      } else {
-        nCurRow = index.row();
-      }
+//      if (e->pos().y() - index.row() * mRowHeight >= mRowHeight / 2) {
+//        nCurRow = index.row() + 1;
+//      } else {
+//        nCurRow = index.row();
+//      }
+      nCurRow = index.row();
     } else {
       nCurRow = mModel->rowCount();
     }
 //        if (nCurRow != mRowFrom)
     {
       mRowTo = nCurRow;
-      qreal v_pos = mRowTo * mRowHeight;
-      qDebug() << "table hight: " << height() << ", pos is " << v_pos;
-      QPoint f_p(2, 2);
-      QModelIndex f_index = indexAt(f_p);
-      int offset = f_index.row() * mRowHeight;
-      v_pos -= offset;
+      qreal v_pos = (nCurRow + 1) * mRowHeight;
+      qDebug() << "current row is " << mRowTo;
+      v_pos -= verticalOffset();
 
-//      this->verticalScrollBar()->value();
-      qDebug() << "table hight: " << height() << ", pos is " << v_pos;
-      mLabel->setGeometry(1, v_pos, width() - 2, 2);
+      mLabel->setGeometry(1, v_pos - 2, width() - 2, 2);
     }
     e->acceptProposedAction();
     return;
@@ -120,6 +116,11 @@ void ExtTableView::dropEvent(QDropEvent *e) {
 
   e->ignore();
   QTableView::dropEvent(e);
+}
+
+void ExtTableView::wheelEvent(QWheelEvent *event) {
+  emit QTableView::wheelEvent(event);
+//  verticalScrollBar()
 }
 
 void ExtTableView::DoDrag() {
@@ -150,9 +151,12 @@ void ExtTableView::ResetOrder() {
 void ExtTableView::MoveRow(int from, int to) {
   if (from == to) {
     return;
+  } else if (to > from) {
+    to -= 1;
   }
 
   QList<QStandardItem *> items = mModel->takeRow(from);
   mModel->insertRow(to, items);
+  selectRow(to);
   emit sigRowChange(mRowFrom, mRowTo);
 }
