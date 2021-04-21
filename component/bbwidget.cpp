@@ -49,7 +49,7 @@ void FreeCircos::initBBTable(void) {
 //  backbone_table_rightclick_action_moveto->setProperty("function", "backbonemove");
 //  backbone_table_rightclick_action_moveto->setProperty("prefix", "backbone");
 //  backbone_table_rightclick_menu->addAction(backbone_table_rightclick_action_moveto);
-  backbone_header_list << "Index(Visable)"
+  backbone_header_list << "Index"
                        << "Gene Name"
                        << "Length"
                        << "Category";
@@ -66,6 +66,58 @@ void FreeCircos::initBBTable(void) {
 }
 
 void FreeCircos::initBBConfigWidget(void) {
+#ifdef QtColorWidgets_USED
+  backbone_label_state_label = new QLabel;
+  backbone_label_state_label->setParent(backbone_widget);
+  backbone_label_state_label->setGeometry(g_scale * label_state_pos_x,
+                                          g_scale * label_state_pos_y,
+                                          g_scale * label_state_width,
+                                          g_scale * label_state_height);
+  qDebug() << "label_state_height=" << label_state_height;
+  backbone_label_state_label->setText("BB Label State");
+//  QFont *ft = new QFont;
+//  ft->setFamily("Source Code Pro");
+//  ft->setPointSize(16);
+//  ft->setBold(true);
+  backbone_label_state_label->setFont(*major_font);
+  backbone_label_state_label->setAlignment(Qt::AlignCenter);
+  backbone_label_state_combobox = new QComboBox;
+  backbone_label_state_combobox->setParent(backbone_widget);
+  backbone_label_state_combobox->setGeometry(g_scale * (label_state_pos_x + label_state_width),
+                                             g_scale * label_state_pos_y,
+                                             g_scale * label_state_width,
+                                             g_scale * label_state_height);
+  backbone_label_state_combobox->setFont(*major_font);
+  backbone_label_state_combobox->setProperty("function", "backbone-label-state");
+  backbone_label_state_combobox->setProperty("prefix", "backbone");
+  label_state_combobox_items << "Sleep"
+                             << "Stand"
+                             << "Invisable";
+  backbone_label_state_combobox->addItems(label_state_combobox_items);
+  backbone_label_position_label = new QLabel;
+  backbone_label_position_label->setParent(backbone_widget);
+  backbone_label_position_label->setGeometry(g_scale * (label_state_pos_x + 2 * label_state_width),
+                                             g_scale * label_state_pos_y,
+                                             g_scale * label_state_width,
+                                             g_scale * label_state_height);
+  backbone_label_position_label->setText("BB Label Pos");
+  backbone_label_position_label->setFont(*major_font);
+  backbone_label_position_label->setAlignment(Qt::AlignCenter);
+  backbone_label_position_combobox = new QComboBox;
+  backbone_label_position_combobox->setParent(backbone_widget);
+  backbone_label_position_combobox->setGeometry(g_scale * (label_state_pos_x + 3 * label_state_width),
+                                                g_scale * label_state_pos_y,
+                                                g_scale * label_state_width,
+                                                g_scale * label_state_height);
+  backbone_label_position_combobox->setFont(*major_font);
+  backbone_label_position_combobox->setProperty("function", "backbone-label-position");
+  backbone_label_position_combobox->setProperty("prefix", "backbone");
+  label_position_combobox_items << "On"
+                                << "Outside"
+                                << "Inside";
+  backbone_label_position_combobox->addItems(label_position_combobox_items);
+#endif
+#ifndef QtColorWidgets_USED
   backbone_config_widget = new QWidget;
   backbone_config_widget->setParent(backbone_widget);
   backbone_config_widget->setGeometry(380, 20, 600, 560 / 2);
@@ -140,6 +192,7 @@ void FreeCircos::initBBConfigWidget(void) {
   backbone_move_lineedit->setGeometry(440, 400 / 2, 110, 40 / 2);
   backbone_move_lineedit->setValidator(new QIntValidator(0, 10000, this));
   backbone_move_lineedit->setEnabled(false);
+#endif
 }
 
 void FreeCircos::initCatConfigWidget(void) {

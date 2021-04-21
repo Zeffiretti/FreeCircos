@@ -138,7 +138,7 @@ FreeCircos::FreeCircos(QWidget *parent)
   initLinkWidget(control_panel);
   //qDebug() << CustomTool::mapInt2Real(202293916, 202585582, 0, 1, 202417563);
 //    qDebug() << QColor(Qt::red).name();
-  initColorDialog();
+//  initColorDialog();
 //  auto *dlg = new color_widgets::ColorDialog;
 //  dlg->setParent(this);
 ////  dlg->setGeometry(100,20,500,400);

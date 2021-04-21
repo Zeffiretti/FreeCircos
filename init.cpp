@@ -60,7 +60,8 @@ void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
   /// table
   initBBTable();
   ///backbone configuration
-//  initBBConfigWidget();
+  initColorDialog();
+  initBBConfigWidget();
 //  /// Category configuration
 //  initCatConfigWidget();
 //  /// Switch butthon

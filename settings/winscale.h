@@ -34,7 +34,7 @@ const static int
 
 // variables below are referenced in config_widget
 const static int page_margin = 0;
-const static int page_label_margin = 15;
+const static int page_label_margin = 30;
 const static int switch_button_pos_x = page_margin;
 const static int switch_button_pos_y = page_margin;
 const static int switch_button_height = 15;
@@ -47,4 +47,12 @@ const static int color_dialog_pos_x = table_width;
 const static int color_dialog_pos_y = page_margin;
 const static int color_dialog_width = config_widget_width - table_width;
 const static int color_dialog_height = table_height - page_label_margin;
+const static int label_margin_y = 5;
+const static int label_margin_x = 3;
+const static int label_state_pos_x = color_dialog_pos_x + label_margin_x;
+const static int label_state_pos_y = color_dialog_pos_y + color_dialog_height + label_margin_y;
+//const static int label_state_width = 10;
+const static int label_state_width = (color_dialog_width - 2 * label_margin_x) / 4;
+//const static int label_state_height = 5;
+const static int label_state_height = (config_widget_height - label_state_pos_y - label_margin_y)/3;
 #endif //FREECIRCOS_SETTINGS_WINSCALE_H_

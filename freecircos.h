@@ -1,6 +1,6 @@
 #ifndef FREECIRCOS_H
 #define FREECIRCOS_H
-
+#define QtColorWidgets_USED
 #include <QMainWindow>
 #include <QStandardItemModel>
 #include <QStandardItem>
