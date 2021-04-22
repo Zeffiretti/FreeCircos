@@ -183,10 +183,10 @@ class Circos : public QObject {
 
  private:
   // global paremater
-  qreal back_bone_inner_radius = 0.6;
-  qreal back_bone_outer_radius = 0.7;
-  qreal category_inner_raidus = 0.7;
-  qreal category_outer_radius = 0.8;
+  qreal back_bone_inner_radius = canvas_scale * 0.6;
+  qreal back_bone_outer_radius = canvas_scale * 0.7;
+  qreal category_inner_raidus = canvas_scale * 0.7;
+  qreal category_outer_radius = canvas_scale * 0.8;
   qreal trackarrow_inner_radius = back_bone_inner_radius;
   qreal trackarrow_outer_radius = back_bone_outer_radius;
   qreal link_inner_radius = back_bone_inner_radius;

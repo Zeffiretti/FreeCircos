@@ -3,7 +3,7 @@
 CustomSlice::CustomSlice() {
 }
 
-CustomSlice::CustomSlice(const QString& n, qreal len) {
+CustomSlice::CustomSlice(const QString &n, qreal len) {
   name = n;
   length = len;
 }
@@ -52,16 +52,19 @@ void CustomSlice::setLabelPosition(LabelPosition lp) {
 
 void CustomSlice::drawSlice(QCustomPlot *canvas) {
   //curve draw
-  qreal angle_offset = 0.1, r_offset = 0.02;
+  qreal angle_offset = M_PI / 200, r_offset = 2;
   slice_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
   strike_pen.setCosmetic(true);
-  strike_pen.setWidthF(1.6);
+  strike_pen.setWidth(1);
+  slice_curve->setAntialiased(true);
+  slice_curve->setAntialiasedScatters(true);
+  slice_curve->setAntialiasedFill(true);
 //  fill_brush.
   slice_curve->setPen(strike_pen);
   slice_curve->setBrush(fill_brush);
 //  slice_curve->setPen();
   qreal e = end_angle - gap_angle;
-  if(qAbs(e - start_angle) > 0.003) {
+  if (qAbs(e - start_angle) > 0.003) {
     int i = 0;
     double angle = start_angle;
     double r = pie_size;
@@ -125,61 +128,61 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
   //            slice_curve->data()->add(QCPCurveData(i, r * cos(start_angle), r * sin(start_angle)));
   //        }
   switch (label_state) {
-  case LabelState::LabelInvisable: {
-    break;
-  }
-  case LabelState::LabelStand: {
-    qreal center_angle = (start_angle + e) / 2;
-    qreal left_radius = pie_size + 0.01;
-    QCPItemText *text = new QCPItemText(canvas);
-    text->position->setType(QCPItemPosition::ptPlotCoords);
-    text->position->setCoords(left_radius * qCos(center_angle), left_radius * qSin(center_angle));
-    text->setPositionAlignment(Qt::AlignLeft | Qt::AlignBottom);
-    qreal rotate_angle = (center_angle > M_PI_2 && center_angle < M_PI_2 * 3) ? (M_PI - center_angle) : -center_angle;
-    text->setRotation(rotate_angle * 180 / M_PI);
-    text->setText(name);
-    break;
-  }
-  case LabelState::LabelSleep: {
-    switch (label_position) {
-    case LabelInsideDonut: {
+    case LabelState::LabelInvisable: {
+      break;
+    }
+    case LabelState::LabelStand: {
       qreal center_angle = (start_angle + e) / 2;
-      qreal t_radius = hole_size;
+      qreal left_radius = pie_size + 0.01;
       QCPItemText *text = new QCPItemText(canvas);
       text->position->setType(QCPItemPosition::ptPlotCoords);
-      text->setPositionAlignment(Qt::AlignTop | Qt::AlignHCenter);
-      text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
-      qreal rotate_angle = (center_angle > M_PI) ? (-M_PI_2 - center_angle) : (M_PI_2 - center_angle);
-      text->setRotation( rotate_angle * 180 / M_PI);
+      text->position->setCoords(left_radius * qCos(center_angle), left_radius * qSin(center_angle));
+      text->setPositionAlignment(Qt::AlignLeft | Qt::AlignBottom);
+      qreal rotate_angle = (center_angle > M_PI_2 && center_angle < M_PI_2 * 3) ? (M_PI - center_angle) : -center_angle;
+      text->setRotation(rotate_angle * 180 / M_PI);
       text->setText(name);
       break;
     }
-    case LabelOnDonut: {
-      qreal center_angle = (start_angle + e) / 2;
-      qreal t_radius = hole_size + (pie_size - hole_size) / 2;
-      text = new QCPItemText(canvas);
-      text->position->setType(QCPItemPosition::ptPlotCoords);
-      text->setPositionAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
-      text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
-      qreal rotate_angle = (center_angle > M_PI) ? (-M_PI_2 - center_angle) : (M_PI_2 - center_angle);
-      text->setRotation( rotate_angle * 180 / M_PI);
-      text->setText(name);
-      break;
+    case LabelState::LabelSleep: {
+      switch (label_position) {
+        case LabelInsideDonut: {
+          qreal center_angle = (start_angle + e) / 2;
+          qreal t_radius = hole_size;
+          QCPItemText *text = new QCPItemText(canvas);
+          text->position->setType(QCPItemPosition::ptPlotCoords);
+          text->setPositionAlignment(Qt::AlignTop | Qt::AlignHCenter);
+          text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
+          qreal rotate_angle = (center_angle > M_PI) ? (-M_PI_2 - center_angle) : (M_PI_2 - center_angle);
+          text->setRotation(rotate_angle * 180 / M_PI);
+          text->setText(name);
+          break;
+        }
+        case LabelOnDonut: {
+          qreal center_angle = (start_angle + e) / 2;
+          qreal t_radius = hole_size + (pie_size - hole_size) / 2;
+          text = new QCPItemText(canvas);
+          text->position->setType(QCPItemPosition::ptPlotCoords);
+          text->setPositionAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+          text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
+          qreal rotate_angle = (center_angle > M_PI) ? (-M_PI_2 - center_angle) : (M_PI_2 - center_angle);
+          text->setRotation(rotate_angle * 180 / M_PI);
+          text->setText(name);
+          break;
+        }
+        case LabelOutsideDonut: {
+          qreal center_angle = (start_angle + e) / 2;
+          qreal t_radius = pie_size;
+          QCPItemText *text = new QCPItemText(canvas);
+          text->position->setType(QCPItemPosition::ptPlotCoords);
+          text->setPositionAlignment(Qt::AlignBottom | Qt::AlignHCenter);
+          text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
+          qreal rotate_angle = (center_angle > M_PI) ? (-M_PI_2 - center_angle) : (M_PI_2 - center_angle);
+          text->setRotation(rotate_angle * 180 / M_PI);
+          text->setText(name);
+          break;
+        }
+      }
     }
-    case LabelOutsideDonut: {
-      qreal center_angle = (start_angle + e) / 2;
-      qreal t_radius = pie_size;
-      QCPItemText *text = new QCPItemText(canvas);
-      text->position->setType(QCPItemPosition::ptPlotCoords);
-      text->setPositionAlignment(Qt::AlignBottom | Qt::AlignHCenter);
-      text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
-      qreal rotate_angle = (center_angle > M_PI) ? (-M_PI_2 - center_angle) : (M_PI_2 - center_angle);
-      text->setRotation( rotate_angle * 180 / M_PI);
-      text->setText(name);
-      break;
-    }
-    }
-  }
   }
 }
 
@@ -197,9 +200,9 @@ void CustomSlice::setName(QString n) {
 }
 
 void CustomSlice::buildTrack(void) {
-  if(track_enabled) {
+  if (track_enabled) {
     track->setStart(track_start);
     track->setEnd(track_end);
-    track->setBoundary(track_head_ratio * track_end + (1 - track_head_ratio)*track_start);
+    track->setBoundary(track_head_ratio * track_end + (1 - track_head_ratio) * track_start);
   }
 }

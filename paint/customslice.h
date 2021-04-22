@@ -2,6 +2,7 @@
 #define CUSTOMSLICE_H
 #include "qcustomplot.h"
 #include "customtrack.h"
+#include "settings/winscale.h"
 
 class CustomSlice {
  public:

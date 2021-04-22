@@ -19,14 +19,15 @@ void FreeCircos::initCanvas(void) {
                       g_scale * (button_box_pos_y + 2 * button_box_height + button_gap_y + canvas_pos_gap_y),
                       g_scale * canvas_width,
                       g_scale * canvas_height);
-  canvas->xAxis->setRange(-1, 1);
-  canvas->yAxis->setRange(-1, 1);
+  canvas->xAxis->setRange(-canvas_scale, canvas_scale);
+  canvas->yAxis->setRange(-canvas_scale, canvas_scale);
   canvas->xAxis->setVisible(false);
   canvas->yAxis->setVisible(false);
-  canvas->setBufferDevicePixelRatio(1);
-//  canvas.s
-  canvas->setAntialiasedElements(QCP::AntialiasedElement::aeItems |
-      QCP::AntialiasedElement::aePlottables);
+//  canvas->setBufferDevicePixelRatio(1);
+//  canvas->setAntialiasedElements(QCP::AntialiasedElement::aeNone);
+  canvas->setAntialiasedElements(QCP::AntialiasedElement::aeAll);
+//  canvas->setPlottingHints(QCP::PlottingHint::phImmediateRefresh);
+//  canvas.re
 }
 
 //BackBone Tables Method

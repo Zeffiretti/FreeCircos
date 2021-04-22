@@ -7,6 +7,7 @@
 #include "customdonut.h"
 #include "custombezier.h"
 #include "tool/customtool.h"
+#include "settings/winscale.h"
 
 class CustomLink {
  public:
