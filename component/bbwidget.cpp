@@ -69,11 +69,11 @@ void FreeCircos::initBBConfigWidget(void) {
 #ifdef QtColorWidgets_USED
   backbone_label_state_label = new QLabel;
   backbone_label_state_label->setParent(backbone_widget);
-  backbone_label_state_label->setGeometry(g_scale * label_state_pos_x,
-                                          g_scale * label_state_pos_y,
-                                          g_scale * label_state_width,
-                                          g_scale * label_state_height);
-  qDebug() << "label_state_height=" << label_state_height;
+  backbone_label_state_label->setGeometry(g_scale * bb_label_state_pos_x,
+                                          g_scale * bb_label_state_pos_y,
+                                          g_scale * bb_label_state_width,
+                                          g_scale * bb_label_state_height);
+  qDebug() << "bb_label_state_height=" << bb_label_state_height;
   backbone_label_state_label->setText("BB Label State");
 //  QFont *ft = new QFont;
 //  ft->setFamily("Source Code Pro");
@@ -83,10 +83,10 @@ void FreeCircos::initBBConfigWidget(void) {
   backbone_label_state_label->setAlignment(Qt::AlignCenter);
   backbone_label_state_combobox = new QComboBox;
   backbone_label_state_combobox->setParent(backbone_widget);
-  backbone_label_state_combobox->setGeometry(g_scale * (label_state_pos_x + label_state_width),
-                                             g_scale * label_state_pos_y,
-                                             g_scale * label_state_width,
-                                             g_scale * label_state_height);
+  backbone_label_state_combobox->setGeometry(g_scale * (bb_label_state_pos_x + bb_label_state_width),
+                                             g_scale * bb_label_state_pos_y,
+                                             g_scale * bb_label_state_width,
+                                             g_scale * bb_label_state_height);
   backbone_label_state_combobox->setFont(*major_font);
   backbone_label_state_combobox->setProperty("function", "backbone-label-state");
   backbone_label_state_combobox->setProperty("prefix", "backbone");
@@ -96,19 +96,19 @@ void FreeCircos::initBBConfigWidget(void) {
   backbone_label_state_combobox->addItems(label_state_combobox_items);
   backbone_label_position_label = new QLabel;
   backbone_label_position_label->setParent(backbone_widget);
-  backbone_label_position_label->setGeometry(g_scale * (label_state_pos_x + 2 * label_state_width),
-                                             g_scale * label_state_pos_y,
-                                             g_scale * label_state_width,
-                                             g_scale * label_state_height);
+  backbone_label_position_label->setGeometry(g_scale * (bb_label_state_pos_x + 2 * bb_label_state_width),
+                                             g_scale * bb_label_state_pos_y,
+                                             g_scale * bb_label_state_width,
+                                             g_scale * bb_label_state_height);
   backbone_label_position_label->setText("BB Label Pos");
   backbone_label_position_label->setFont(*major_font);
   backbone_label_position_label->setAlignment(Qt::AlignCenter);
   backbone_label_position_combobox = new QComboBox;
   backbone_label_position_combobox->setParent(backbone_widget);
-  backbone_label_position_combobox->setGeometry(g_scale * (label_state_pos_x + 3 * label_state_width),
-                                                g_scale * label_state_pos_y,
-                                                g_scale * label_state_width,
-                                                g_scale * label_state_height);
+  backbone_label_position_combobox->setGeometry(g_scale * (bb_label_state_pos_x + 3 * bb_label_state_width),
+                                                g_scale * bb_label_state_pos_y,
+                                                g_scale * bb_label_state_width,
+                                                g_scale * bb_label_state_height);
   backbone_label_position_combobox->setFont(*major_font);
   backbone_label_position_combobox->setProperty("function", "backbone-label-position");
   backbone_label_position_combobox->setProperty("prefix", "backbone");
@@ -196,6 +196,46 @@ void FreeCircos::initBBConfigWidget(void) {
 }
 
 void FreeCircos::initCatConfigWidget(void) {
+#ifdef QtColorWidgets_USED
+  category_label_state_label = new QLabel;
+  category_label_state_label->setParent(backbone_widget);
+  category_label_state_label->setGeometry(g_scale * cat_label_state_pos_x,
+                                          g_scale * cat_label_state_pos_y,
+                                          g_scale * cat_label_state_width,
+                                          g_scale * cat_label_state_height);
+  category_label_state_label->setText("Cat Label State");
+  category_label_state_label->setFont(*major_font);
+  category_label_state_label->setAlignment(Qt::AlignCenter);
+  category_label_position_label = new QLabel;
+  category_label_position_label->setParent(backbone_widget);
+  category_label_position_label->setGeometry(g_scale * (cat_label_state_pos_x + 2 * cat_label_state_width),
+                                             g_scale * cat_label_state_pos_y,
+                                             g_scale * cat_label_state_width,
+                                             g_scale * cat_label_state_height);
+  category_label_position_label->setText("Cat Label Pos");
+  category_label_position_label->setFont(*major_font);
+  category_label_position_label->setAlignment(Qt::AlignCenter);
+  category_label_state_combobox = new QComboBox;
+  category_label_state_combobox->setParent(backbone_widget);
+  category_label_state_combobox->setFont(*major_font);
+  category_label_state_combobox->setProperty("function", "category-label-state");
+  category_label_state_combobox->setProperty("prefix", "category");
+  category_label_state_combobox->setGeometry(g_scale * (cat_label_state_pos_x + 1 * cat_label_state_width),
+                                             g_scale * cat_label_state_pos_y,
+                                             g_scale * cat_label_state_width,
+                                             g_scale * cat_label_state_height);
+  category_label_state_combobox->addItems(label_state_combobox_items);
+  category_label_position_combobox = new QComboBox;
+  category_label_position_combobox->setParent(backbone_widget);
+  category_label_position_combobox->setFont(*major_font);
+  category_label_position_combobox->setProperty("function", "category-label-position");
+  category_label_position_combobox->setProperty("prefix", "category");
+  category_label_position_combobox->setGeometry(g_scale * (cat_label_state_pos_x + 3 * cat_label_state_width),
+                                                g_scale * cat_label_state_pos_y,
+                                                g_scale * cat_label_state_width,
+                                                g_scale * cat_label_state_height);
+  category_label_position_combobox->addItems(label_position_combobox_items);
+#else
   category_config_widget = new QWidget;
   category_config_widget->setParent(backbone_widget);
   category_config_widget->setGeometry(380, 310, 600, 280);
@@ -259,6 +299,7 @@ void FreeCircos::initCatConfigWidget(void) {
   category_move_lineedit->setValidator(new QIntValidator(0, 10000, this));
   backbone_config_widget->setEnabled(false);
   category_config_widget->setEnabled(false);
+#endif
 }
 
 void FreeCircos::initBCSwitch(void) {
