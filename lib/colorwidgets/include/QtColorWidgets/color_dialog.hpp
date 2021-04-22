@@ -51,7 +51,8 @@ public:
     enum ButtonMode {
         OkCancel,
         OkApplyCancel,
-        Close
+        Close,
+        YesYesAll
     };
 
     explicit ColorDialog(QWidget *parent = 0, Qt::WindowFlags f = {});

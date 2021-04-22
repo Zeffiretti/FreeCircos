@@ -1,6 +1,7 @@
 #include <freecircos.h>
 
 void FreeCircos::initBBTable(void) {
+#ifndef QtColorWidgets_USED
   gene_button = new QPushButton;
   gene_button->setParent(backbone_widget);
   gene_button->setText("backbone");
@@ -18,6 +19,7 @@ void FreeCircos::initBBTable(void) {
                           g_scale * switch_button_height);
   cat_button->setProperty("function", "enable_cat");
   cat_button->setDisabled(true);
+#endif
   backbone_model = new QStandardItemModel;
   backbone_table = new ExtTableView;
   backbone_table_header = new ExtCheckBoxHeaderView;
@@ -75,10 +77,6 @@ void FreeCircos::initBBConfigWidget(void) {
                                           g_scale * bb_label_state_height);
   qDebug() << "bb_label_state_height=" << bb_label_state_height;
   backbone_label_state_label->setText("BB Label State");
-//  QFont *ft = new QFont;
-//  ft->setFamily("Source Code Pro");
-//  ft->setPointSize(16);
-//  ft->setBold(true);
   backbone_label_state_label->setFont(*major_font);
   backbone_label_state_label->setAlignment(Qt::AlignCenter);
   backbone_label_state_combobox = new QComboBox;
@@ -116,6 +114,9 @@ void FreeCircos::initBBConfigWidget(void) {
                                 << "Outside"
                                 << "Inside";
   backbone_label_position_combobox->addItems(label_position_combobox_items);
+
+  backbone_label_state_combobox->setEnabled(false);
+  backbone_label_position_combobox->setEnabled(false);
 #endif
 #ifndef QtColorWidgets_USED
   backbone_config_widget = new QWidget;
@@ -235,6 +236,9 @@ void FreeCircos::initCatConfigWidget(void) {
                                                 g_scale * cat_label_state_width,
                                                 g_scale * cat_label_state_height);
   category_label_position_combobox->addItems(label_position_combobox_items);
+
+  category_label_state_combobox->setEnabled(false);
+  category_label_position_combobox->setEnabled(false);
 #else
   category_config_widget = new QWidget;
   category_config_widget->setParent(backbone_widget);
@@ -314,12 +318,14 @@ void FreeCircos::initBCSwitch(void) {
 
 void FreeCircos::connectBCSingalSlot(void) {
   //signal----slot
+#ifndef QtColorWidgets_USED
 //  connect(backbone_table_rightclick_action_moveto, &QAction::triggered,
 //          this, &FreeCircos::onActionTriggered);
-  connect(gene_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  connect(cat_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
+//  connect(gene_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  connect(cat_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+#endif
   connect(backbone_table_header, &ExtCheckBoxHeaderView::headerCheckBoxStateChanged,
           this, &FreeCircos::onHeaderCheckBoxStateChanged);
   connect(this, &FreeCircos::setTableEditMode, this, &FreeCircos::onTableEditModeChanged);
@@ -329,10 +335,10 @@ void FreeCircos::connectBCSingalSlot(void) {
 //          this, &FreeCircos::onButtonClicked);
 //  connect(backbone_fill_color_button, &QPushButton::clicked,
 //          this, &FreeCircos::onButtonClicked);
-//  connect(backbone_label_state_combobox, &QComboBox::currentTextChanged,
-//          this, &FreeCircos::onComboboxTextChanged);
-//  connect(backbone_label_position_combobox, &QComboBox::currentTextChanged,
-//          this, &FreeCircos::onComboboxTextChanged);
+  connect(backbone_label_state_combobox, &QComboBox::currentTextChanged,
+          this, &FreeCircos::onComboboxTextChanged);
+  connect(backbone_label_position_combobox, &QComboBox::currentTextChanged,
+          this, &FreeCircos::onComboboxTextChanged);
 //  connect(backbone_moveup_button, &QPushButton::clicked,
 //          this, &FreeCircos::onButtonClicked);
 //  connect(backbone_movedown_button, &QPushButton::clicked,
@@ -343,10 +349,10 @@ void FreeCircos::connectBCSingalSlot(void) {
 //          this, &FreeCircos::onButtonClicked);
 //  connect(category_strike_color_button, &QPushButton::clicked,
 //          this, &FreeCircos::onButtonClicked);
-//  connect(category_label_state_combobox, &QComboBox::currentTextChanged,
-//          this, &FreeCircos::onComboboxTextChanged);
-//  connect(category_label_position_combobox, &QComboBox::currentTextChanged,
-//          this, &FreeCircos::onComboboxTextChanged);
+  connect(category_label_state_combobox, &QComboBox::currentTextChanged,
+          this, &FreeCircos::onComboboxTextChanged);
+  connect(category_label_position_combobox, &QComboBox::currentTextChanged,
+          this, &FreeCircos::onComboboxTextChanged);
 //  connect(category_moveup_button, &QPushButton::clicked,
 //          this, &FreeCircos::onButtonClicked);
 //  connect(category_movedown_button, &QPushButton::clicked,
@@ -355,6 +361,6 @@ void FreeCircos::connectBCSingalSlot(void) {
 //          this, &FreeCircos::onButtonClicked);
 //  connect(switch_button, &QPushButton::clicked,
 //          this, &FreeCircos::onButtonClicked);
-//  connect(backbone_table->horizontalHeader(), &QHeaderView::sectionClicked,
-//          this, &FreeCircos::onTableHeaderViewClicked);
+  connect(backbone_table->horizontalHeader(), &QHeaderView::sectionClicked,
+          this, &FreeCircos::onTableHeaderViewClicked);
 }
