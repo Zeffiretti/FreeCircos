@@ -29,6 +29,7 @@
 #include <QMimeData>
 #include <QPushButton>
 #include <QScreen>
+#include <QDebug>
 
 #include "QtColorWidgets/color_utils.hpp"
 
@@ -121,7 +122,8 @@ void ColorDialog::setButtonMode(ButtonMode mode) {
   switch (mode) {
     case OkCancel: btns = QDialogButtonBox::Ok | QDialogButtonBox::Cancel;
       break;
-    case OkApplyCancel: btns = QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply
+    case OkApplyCancel:
+      btns = QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply
           | QDialogButtonBox::Reset;
       break;
     case Close: btns = QDialogButtonBox::Close;
@@ -130,6 +132,9 @@ void ColorDialog::setButtonMode(ButtonMode mode) {
       break;
   }
   p->ui.buttonBox->setStandardButtons(btns);
+  p->ui.buttonBox->disconnect();
+  connect(p->ui.buttonBox, &QDialogButtonBox::clicked,
+          this, &ColorDialog::on_buttonBox_clicked);
 }
 
 ColorDialog::ButtonMode ColorDialog::buttonMode() const {
@@ -245,10 +250,25 @@ void ColorDialog::on_edit_hex_colorEditingFinished(const QColor &color) {
 
 void ColorDialog::on_buttonBox_clicked(QAbstractButton *btn) {
   QDialogButtonBox::ButtonRole role = p->ui.buttonBox->buttonRole(btn);
-
+  if (btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::Ok))) {
+    qDebug() << "Ok button clicked";
+    p->ui.preview->setComparisonColor(color());
+    Q_EMIT colorSelected(color());
+    return;
+  }else if(btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::Yes))){
+    qDebug() << "Button Yes Clicked.";
+  }else if(btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::YesToAll))){
+    qDebug() << "Button YesToAll Clicked.";
+  }
   switch (role) {
-    case QDialogButtonBox::AcceptRole:
-    case QDialogButtonBox::ApplyRole:
+    case QDialogButtonBox::AcceptRole:qDebug() << "Button AcceptRole Clicked.";
+    case QDialogButtonBox::ApplyRole:qDebug() << "Button ApplyRole Clicked.";
+      // Explicitly select the color
+      p->ui.preview->setComparisonColor(color());
+      Q_EMIT colorSelected(color());
+      break;
+
+    case QDialogButtonBox::YesRole:qDebug() << "Button YesRole Clicked.";
       // Explicitly select the color
       p->ui.preview->setComparisonColor(color());
       Q_EMIT colorSelected(color());

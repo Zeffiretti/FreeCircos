@@ -12,5 +12,7 @@ void FreeCircos::initColorDialog(void) {
                              g_scale * color_dialog_width,
                              g_scale * color_dialog_height);
   color_dialog_->show();
-//  color_dialog_->setEnabled(false);
+  color_dialog_->setEnabled(false);
+
+//  connect(color_dialog_,&color_widgets::ColorDialog::)
 }
