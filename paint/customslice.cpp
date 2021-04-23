@@ -52,7 +52,7 @@ void CustomSlice::setLabelPosition(LabelPosition lp) {
 
 void CustomSlice::drawSlice(QCustomPlot *canvas) {
   //curve draw
-  qreal angle_offset = M_PI / 200, r_offset = 2;
+  qreal angle_offset = M_PI / 200, r_offset = 0.02*canvas_scale;
   slice_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
   strike_pen.setCosmetic(true);
   strike_pen.setWidth(1);

@@ -1,7 +1,7 @@
 #include <freecircos.h>
 
 void FreeCircos::initBBTable(void) {
-#ifndef QtColorWidgets_USED
+#ifdef QtColorWidgets_USED
   gene_button = new QPushButton;
   gene_button->setParent(backbone_widget);
   gene_button->setText("backbone");

@@ -59,5 +59,5 @@ const static int cat_label_state_width = bb_label_state_width;
 const static int cat_label_state_height = bb_label_state_height;
 
 // canvas setting
-const static int canvas_scale = 100;
+const static int canvas_scale = 1000;
 #endif //FREECIRCOS_SETTINGS_WINSCALE_H_
