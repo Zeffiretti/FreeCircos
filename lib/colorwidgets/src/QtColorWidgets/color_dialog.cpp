@@ -255,9 +255,9 @@ void ColorDialog::on_buttonBox_clicked(QAbstractButton *btn) {
     p->ui.preview->setComparisonColor(color());
     Q_EMIT colorSelected(color());
     return;
-  }else if(btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::Yes))){
+  } else if (btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::Yes))) {
     qDebug() << "Button Yes Clicked.";
-  }else if(btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::YesToAll))){
+  } else if (btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::YesToAll))) {
     qDebug() << "Button YesToAll Clicked.";
   }
   switch (role) {
@@ -344,6 +344,10 @@ void ColorDialog::setWheelRotating(bool rotating) {
 
 bool ColorDialog::wheelRotating() const {
   return p->ui.wheel->rotatingSelector();
+}
+
+void ColorDialog::setIndex(int i) {
+  index = i;
 }
 
 } // namespace color_widgets

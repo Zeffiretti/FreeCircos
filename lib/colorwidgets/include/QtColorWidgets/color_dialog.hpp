@@ -125,6 +125,7 @@ Q_SIGNALS:
      * The user selected the new color by pressing Ok/Apply
      */
     void colorSelected(QColor);
+//    void colorSelected
 
     void wheelShapeChanged(ColorWheel::ShapeEnum shape);
     void colorSpaceChanged(ColorWheel::ColorSpaceEnum space);
@@ -147,6 +148,8 @@ private Q_SLOTS:
 
     void on_buttonBox_clicked(QAbstractButton*);
 
+    void setIndex(int i);
+
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dropEvent(QDropEvent * event);
@@ -156,6 +159,7 @@ protected:
 private:
     class Private;
     Private * const p;
+    int index;
 };
 
 } // namespace color_widgets

@@ -384,54 +384,16 @@ void FreeCircos::onBackBoneTableMoveRequest(int from_row, int to_row) {
 }
 
 void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModelIndex &) {
-//    qDebug() << current << " " << previous;
   QItemSelectionModel *table = qobject_cast<QItemSelectionModel *>(sender());
   QString prefix = table->property("prefix").toString();
   QString func = table->property("function").toString();
   int sel_row = current.row();
-  color_dialog_->setEnabled(true);
   if (prefix.compare("backbone") == 0) {
+    color_dialog_->setEnabled(true);
     if (func.compare("backbone-table-model") == 0) {
-//      if (sel_row != 0) {
-//        backbone_moveup_button->setEnabled(true);
-//      } else {
-//        backbone_moveup_button->setEnabled(false);
-//      }
-//      if (sel_row != backbone_model->rowCount() - 1) {
-//        backbone_movedown_button->setEnabled(true);
-//      } else {
-//        backbone_movedown_button->setEnabled(false);
-//      }
       int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
-//      backbone_move_lineedit->setText(QString::number(sel_row + 1));
-//      backbone_move_lineedit->setEnabled(true);
       qDebug() << "Index=" << index;
       Gene *b = circos->getGene(index);
-//      color_dialog_->setPreviewDisplayMode();
-      color_dialog_->setColor(b->getFillColor());
-//      QPalette pal = backbone_strike_color_button->palette();
-//      pal.setColor(QPalette::Button, b->getStrikeColor());
-//      backbone_strike_color_button->setPalette(pal);
-//      backbone_strike_color_button->setAutoFillBackground(true);
-//      backbone_strike_color_button->setFlat(true);
-//      pal = backbone_fill_color_button->palette();
-//      pal.setColor(QPalette::Button, b->getFillColor());
-//      backbone_fill_color_button->setPalette(pal);
-//      backbone_fill_color_button->setAutoFillBackground(true);
-//      backbone_fill_color_button->setFlat(true);
-      Category *c = circos->getGene(index)->getCategory();
-      backbone_label_state_combobox->setEnabled(true);
-      backbone_label_position_combobox->setEnabled(true);
-//      pal = category_strike_color_button->palette();
-//      pal.setColor(QPalette::Button, c->getStrikeColor());
-//      category_strike_color_button->setPalette(pal);
-//      category_strike_color_button->setAutoFillBackground(true);
-//      category_strike_color_button->setFlat(true);
-//      pal = category_fill_color_button->palette();
-//      pal.setColor(QPalette::Button, c->getFillColor());
-//      category_fill_color_button->setPalette(pal);
-//      category_fill_color_button->setAutoFillBackground(true);
-//      category_fill_color_button->setFlat(true);
       switch (b->getLabelState()) {
         case CustomSlice::LabelInvisable:backbone_label_state_combobox->setCurrentText("Invisable");
           break;
@@ -448,66 +410,64 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
         case CustomSlice::LabelOutsideDonut:backbone_label_position_combobox->setCurrentText("Outside");
           break;
       }
-      switch (c->getLabelState()) {
-        case CustomSlice::LabelInvisable:category_label_state_combobox->setCurrentText("Invisable");
-          break;
-        case CustomSlice::LabelSleep:category_label_state_combobox->setCurrentText("Sleep");
-          break;
-        case CustomSlice::LabelStand:category_label_state_combobox->setCurrentText("Stand");
-          break;
+      if (table_edit_mode == TableEditMode::EditGene) {
+        color_dialog_->setColor(b->getFillColor());
+        backbone_label_state_combobox->setEnabled(true);
+        backbone_label_position_combobox->setEnabled(true);
       }
-      switch (c->getLabelPosition()) {
-        case CustomSlice::LabelInsideDonut:category_label_position_combobox->setCurrentText("Inside");
-          break;
-        case CustomSlice::LabelOnDonut:category_label_position_combobox->setCurrentText("On");
-          break;
-        case CustomSlice::LabelOutsideDonut:category_label_position_combobox->setCurrentText("Outside");
-          break;
-      }
-      if (table_edit_mode == TableEditMode::EditCategory) {
-        QString cat_name = backbone_model->item(sel_row, 3)->text();
-//        if (backbone_model->item(0, 3)->text().compare(cat_name) == 0) {
-//          category_moveup_button->setEnabled(false);
-//        } else {
-//          category_moveup_button->setEnabled(true);
-//        }
-//        if (backbone_model->item(backbone_model->rowCount() - 1, 3)->text().compare(cat_name) == 0) {
-//          category_movedown_button->setEnabled(false);
-//        } else {
-//          category_movedown_button->setEnabled(true);
-//        }
-        QItemSelectionModel *sel_model = backbone_table->selectionModel();
-        QItemSelection *selection = new QItemSelection;
-        disconnect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
-                   this, &FreeCircos::onTableSelectedChanged);
-        sel_model->clearSelection();
-        connect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
-                this, &FreeCircos::onTableSelectedChanged);
-        //        QModelIndex ll_index = backbone_model->index(sel_row, 0);
-        //        QModelIndex rr_index = backbone_model->index(sel_row, backbone_model->columnCount() - 1);
-        //        QItemSelection esel(ll_index, rr_index);
-        //        selection->merge(esel, QItemSelectionModel::Select);
-        for (int i = sel_row; i >= 0 && backbone_model->item(i, 3)->text().compare(cat_name) == 0; --i) {
-          //            qDebug("select row:[%d].", i);
-          //            backbone_table->selectRow(i);
-          QModelIndex l_index = backbone_model->index(i, 0);
-          QModelIndex r_index = backbone_model->index(i, backbone_model->columnCount() - 1);
-          QItemSelection sel(l_index, r_index);
-          selection->merge(sel, QItemSelectionModel::Select);
-          cat_begin_row = i;
+      Category *c = circos->getGene(index)->getCategory();
+      if (!c->isEmpty()) {
+        switch (c->getLabelState()) {
+          case CustomSlice::LabelInvisable:category_label_state_combobox->setCurrentText("Invisable");
+            break;
+          case CustomSlice::LabelSleep:category_label_state_combobox->setCurrentText("Sleep");
+            break;
+          case CustomSlice::LabelStand:category_label_state_combobox->setCurrentText("Stand");
+            break;
         }
-        cat_end_row = sel_row;
-        for (int i = sel_row + 1;
-             i < backbone_model->rowCount() && backbone_model->item(i, 3)->text().compare(cat_name) == 0; ++i) {
-          //            qDebug("select row:[%d].", i);
-          QModelIndex l_index = backbone_model->index(i, 0);
-          QModelIndex r_index = backbone_model->index(i, backbone_model->columnCount() - 1);
-          QItemSelection sel(l_index, r_index);
-          selection->merge(sel, QItemSelectionModel::Select);
-          cat_end_row = i;
+        switch (c->getLabelPosition()) {
+          case CustomSlice::LabelInsideDonut:category_label_position_combobox->setCurrentText("Inside");
+            break;
+          case CustomSlice::LabelOnDonut:category_label_position_combobox->setCurrentText("On");
+            break;
+          case CustomSlice::LabelOutsideDonut:category_label_position_combobox->setCurrentText("Outside");
+            break;
         }
-        sel_model->select(*selection, QItemSelectionModel::Select);
-        //        backbone_table->sele
+        if (table_edit_mode == TableEditMode::EditCategory) {
+          backbone_label_state_combobox->setEnabled(false);
+          backbone_label_position_combobox->setEnabled(false);
+          color_dialog_->setColor(c->getFillColor());
+          category_label_state_combobox->setEnabled(true);
+          category_label_position_combobox->setEnabled(true);
+          QString cat_name = backbone_model->item(sel_row, 3)->text();
+          QItemSelectionModel *sel_model = backbone_table->selectionModel();
+          QItemSelection *selection = new QItemSelection;
+          disconnect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
+                     this, &FreeCircos::onTableSelectedChanged);
+          sel_model->clearSelection();
+          connect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
+                  this, &FreeCircos::onTableSelectedChanged);
+          for (int i = sel_row; i >= 0 && backbone_model->item(i, 3)->text().compare(cat_name) == 0; --i) {
+            QModelIndex l_index = backbone_model->index(i, 0);
+            QModelIndex r_index = backbone_model->index(i, backbone_model->columnCount() - 1);
+            QItemSelection sel(l_index, r_index);
+            selection->merge(sel, QItemSelectionModel::Select);
+            cat_begin_row = i;
+          }
+          cat_end_row = sel_row;
+          for (int i = sel_row + 1;
+               i < backbone_model->rowCount() && backbone_model->item(i, 3)->text().compare(cat_name) == 0; ++i) {
+            QModelIndex l_index = backbone_model->index(i, 0);
+            QModelIndex r_index = backbone_model->index(i, backbone_model->columnCount() - 1);
+            QItemSelection sel(l_index, r_index);
+            selection->merge(sel, QItemSelectionModel::Select);
+            cat_end_row = i;
+          }
+          sel_model->select(*selection, QItemSelectionModel::Select);
+        } else {
+          category_label_state_combobox->setEnabled(false);
+          category_label_position_combobox->setEnabled(false);
+        }
       }
     }
   }
@@ -840,4 +800,29 @@ void FreeCircos::onItemRowMoveRequest(int source, int dest) {
   if (prefix == "backbone") {
     moveTableRow(backbone_table, backbone_model, source, dest);
   }
+}
+
+void FreeCircos::onDialogColorSelected(QColor c) {
+//  color_widgets::ColorDialog dlg = qobject_cast<color_widgets::ColorDialog>(sender());
+
+  int sel_row = backbone_table->selectionModel()->currentIndex().row();
+  int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
+  switch (table_edit_mode) {
+    case TableEditMode::EditCategory: {
+      circos->getGene(index)->getCategory()->setFillColor(c);
+      break;
+    }
+    case TableEditMode::EditGene:
+    default: {
+      circos->getGene(index)->setFillColor(c);
+      break;
+    }
+  }
+//  QString which = dlg.property("which").toString();
+//  int index = dlg.property("index").toInt();
+//  if (which == "gene") {
+//    circos->getGene(index)->setFillColor(c);
+//  } else if (which == "category") {
+//    circos->getGene(index)->getCategory()->setFillColor(c);
+//  }
 }

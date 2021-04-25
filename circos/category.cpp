@@ -42,7 +42,7 @@ QList<QString>::iterator Category::end(void) {
 }
 
 bool Category::isEmpty(void) {
-  return m_genes.isEmpty();
+  return name.isEmpty();
 }
 
 void Category::clearGenes(void) {

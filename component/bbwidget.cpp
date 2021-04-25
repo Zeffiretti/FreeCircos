@@ -319,13 +319,13 @@ void FreeCircos::initBCSwitch(void) {
 void FreeCircos::connectBCSingalSlot(void) {
   //signal----slot
 #ifndef QtColorWidgets_USED
-//  connect(backbone_table_rightclick_action_moveto, &QAction::triggered,
-//          this, &FreeCircos::onActionTriggered);
-//  connect(gene_button, &QPushButton::clicked,
-//          this, &FreeCircos::onButtonClicked);
-//  connect(cat_button, &QPushButton::clicked,
-//          this, &FreeCircos::onButtonClicked);
+  //  connect(backbone_table_rightclick_action_moveto, &QAction::triggered,
+  //          this, &FreeCircos::onActionTriggered);
 #endif
+  connect(gene_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  connect(cat_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
   connect(backbone_table_header, &ExtCheckBoxHeaderView::headerCheckBoxStateChanged,
           this, &FreeCircos::onHeaderCheckBoxStateChanged);
   connect(this, &FreeCircos::setTableEditMode, this, &FreeCircos::onTableEditModeChanged);

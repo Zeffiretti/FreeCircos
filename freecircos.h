@@ -114,6 +114,7 @@ class FreeCircos : public QMainWindow {
   void onExtStandardItemStateSet(int index, Qt::CheckState state);
   void onStandardItemChanged(QStandardItem *item);
   void onItemRowMoveRequest(int source, int dest);
+  void onDialogColorSelected(QColor c);
 
  private:
 
