@@ -31,4 +31,5 @@ FCRelease/
 !*.hpp
 !*glfw3.pc
 !*glfw3.lib
+!release/
 *tags
