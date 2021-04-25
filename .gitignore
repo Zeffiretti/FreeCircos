@@ -1,7 +1,7 @@
 *.*
 !.gitignore
 !.github/*
-!release/*
+!release/
 !testfile
 out/*
 !README.md
