@@ -32,4 +32,6 @@ FCRelease/
 !*glfw3.pc
 !*glfw3.lib
 !release/
+!*.exe
+!*.dll
 *tags
