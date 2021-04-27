@@ -12,6 +12,10 @@ bool FreeCircos::eventFilter(QObject *watched, QEvent *event) {
   return QWidget::eventFilter(watched, event);
 }
 
+void FreeCircos::closeEvent(QCloseEvent *event) {
+  gbset_win->close();
+}
+
 // Canvas Method
 void FreeCircos::clearCanvas(QCustomPlot *cvs) {
   cvs->clearItems();

@@ -12,6 +12,7 @@
 #include <QLineEdit>
 #include <QFont>
 #include <QDesktopWidget>
+#include <QCloseEvent>
 
 #include "settings/winscale.h"
 
@@ -95,6 +96,9 @@ class FreeCircos : public QMainWindow {
 
   bool eventFilter(QObject *watched, QEvent *event);
 
+ protected:
+  void closeEvent(QCloseEvent *event);
+
  signals:
   void setTableEditMode(TableEditMode tem);
   void setLinkColor(int index, QColor c);
@@ -115,6 +119,7 @@ class FreeCircos : public QMainWindow {
   void onStandardItemChanged(QStandardItem *item);
   void onItemRowMoveRequest(int source, int dest);
   void onDialogColorSelected(QColor c);
+  void onWindowClosed(QCloseEvent *event);
 
  private:
 

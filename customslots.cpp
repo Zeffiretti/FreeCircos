@@ -832,3 +832,7 @@ void FreeCircos::onDialogColorSelected(QColor c) {
 //    circos->getGene(index)->getCategory()->setFillColor(c);
 //  }
 }
+
+void FreeCircos::onWindowClosed(QCloseEvent *event) {
+
+}

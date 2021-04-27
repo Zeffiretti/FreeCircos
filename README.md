@@ -12,7 +12,7 @@ To Develop A Program for Painting Circos Figure.
 ## TODO List:
 1. ~~图片分辨率过低~~
 2. 当只有一个基因or一个category时，仍然有gap
-3. `global setting` 界面不随程序关闭而关闭（程序关闭 `global setting` 还在）
+3. ~~`global setting` 界面不随程序关闭而关闭（程序关闭 `global setting` 还在）~~
 4. ~~`trackarrow`采样率过低~~
 5. ~~`gene name label`信息会被箭头覆盖,有没有可能弄成这个层级可以被用户调整？~~
 6. 这左中右3个框有没有可能可以拖动？ 就是比如我把中间部分拖大一点之类的？
