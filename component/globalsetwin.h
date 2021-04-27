@@ -25,12 +25,15 @@ class GlobalSetWin : public QMainWindow {
 
   explicit GlobalSetWin(QWidget *parent = nullptr);
   explicit GlobalSetWin(Circos *c, QWidget *parent = nullptr);
+  void closeEvent(QCloseEvent *e);
   void setBbPos(qreal _max, qreal _min);
   void setCatPos(qreal _max, qreal _min);
   void setTrkPos(qreal _max, qreal _min);
   void setLinkPos(qreal _max, qreal _min);
   void setComponents(Component c);
+  bool isInit(void);
  private:
+  bool active = false;
   void initPanel(void);
   qreal degreeToRadius(qreal de);
   qreal radiusToDegree(qreal ra);
@@ -68,6 +71,7 @@ class GlobalSetWin : public QMainWindow {
   void LinkInnerRadiusChanged(qreal);
   void LinkOuterRadiusChanged(qreal);
   void GapSet(const QString &properity, qreal gap);
+  void closeSet(void);
 
  public slots:
   void onDoubleSliderLowerValueChanged(int i);

@@ -8,7 +8,14 @@ GlobalSetWin::GlobalSetWin(QWidget *parent) : QMainWindow(parent) {
 GlobalSetWin::GlobalSetWin(Circos *c, QWidget *parent) {
   c_ptr = c;
   initPanel();
+  active = true;
 }
+
+void GlobalSetWin::closeEvent(QCloseEvent *e) {
+  emit closeSet();
+}
+
+bool GlobalSetWin::isInit(void) { return active; }
 
 void GlobalSetWin::initPanel() {
   this->setGeometry(400, 400, 600, 500);

@@ -57,6 +57,7 @@ class FreeCircos : public QMainWindow {
  public:
   FreeCircos(QWidget *parent = nullptr);
   GlobalSetWin *gbset_win;
+  bool gb_active = false;
 
   enum TableEditMode {
     EditGene,
@@ -119,7 +120,7 @@ class FreeCircos : public QMainWindow {
   void onStandardItemChanged(QStandardItem *item);
   void onItemRowMoveRequest(int source, int dest);
   void onDialogColorSelected(QColor c);
-  void onWindowClosed(QCloseEvent *event);
+  void onWindowClosed(void);
 
  private:
 

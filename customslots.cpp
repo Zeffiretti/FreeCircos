@@ -63,6 +63,10 @@ void FreeCircos::onButtonClicked(bool) {
     gbset_win->setTrkPos(circos->getTAPie(), circos->getTAHole());
     gbset_win->setLinkPos(circos->getLKPie(), circos->getLKHole());
     gbset_win->show();
+    gb_active = true;
+    connect(gbset_win, &GlobalSetWin::closeSet,
+            this, &FreeCircos::onWindowClosed);
+//    connect(gbset_win,&QWidget::c)
 //    connect(gbset_win, &GlobalSetWin::BBInnerRadiusChanged,
 //            circos, &Circos::setBBHole);
 //    connect(gbset_win, &GlobalSetWin::BBOuterRadiusChanged,
@@ -833,6 +837,6 @@ void FreeCircos::onDialogColorSelected(QColor c) {
 //  }
 }
 
-void FreeCircos::onWindowClosed(QCloseEvent *event) {
-
+void FreeCircos::onWindowClosed(void) {
+  gb_active = false;
 }

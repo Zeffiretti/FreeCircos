@@ -27,6 +27,7 @@ FreeCircos::FreeCircos(QWidget *parent)
   link_canvas = new CustomLinkCanvas;
   track_canvas = new CustomTrackArrow;
   circos = new Circos;
+  circos->setWidget(this);
   table_edit_mode = EditGene;
   connect(gene_donut, &CustomDonut::sliceAngleChanged,
           circos, &Circos::onGeneAngleChanged);
