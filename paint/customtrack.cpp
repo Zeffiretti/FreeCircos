@@ -74,7 +74,7 @@ void CustomTrack::buildData(void) {
     angle_offset = (end_angle > start_angle) ? 0.1 : -0.1;
     qDebug() << "start angle:" << start_angle;
     qDebug() << "end angle:" << end_angle;
-    qDebug()<<"boundary angle:"<<boundary_angle ;
+    qDebug() << "boundary angle:" << boundary_angle;
     if (qAbs(start_angle - end_angle) > 0.003) {
 //      if(start_angle < end_angle) {
       int i = 0;
@@ -136,6 +136,7 @@ void CustomTrack::drawTrack(QCustomPlot *canvas) {
   buildData();
   track_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
   track_curve->setPen(QPen(color));
+  track_curve->setLayer(canvas->layer(track_layer));
 //  color.setAlphaF(0.7);
   track_curve->setBrush(QBrush(color));
       foreach (QCPCurveData *data, track_data) {

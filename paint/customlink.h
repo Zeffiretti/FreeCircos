@@ -37,10 +37,10 @@ class CustomLink {
   };
   Q_DECLARE_FLAGS(LinkDirections, LinkDirection)
   enum CurveType {
-    StartLinkCurve    = 0x0001,
-    EndLinkCurve      = 0x0002,
-    StartBoardCurve   = 0x0004,
-    EndBoardCurve     = 0x0008
+    StartLinkCurve = 0x0001,
+    EndLinkCurve = 0x0002,
+    StartBoardCurve = 0x0004,
+    EndBoardCurve = 0x0008
   };
   Q_DECLARE_FLAGS(LinkCurveType, CurveType)
 //    enum RainbowColor
@@ -68,8 +68,8 @@ class CustomLink {
   qreal getDSA(void);
   qreal getDEA(void);
   // setters
-  void setSGN(const QString& n);
-  void setDGN(const QString& n);
+  void setSGN(const QString &n);
+  void setDGN(const QString &n);
   void setHoleSize(qreal hs);
   void setPieSize(qreal ps);
   void setLinkClass(CustomLink::LinkClasses lc);
@@ -85,6 +85,7 @@ class CustomLink {
   void setSEA(qreal _sea);
   void setDSA(qreal _dsa);
   void setDEA(qreal _dea);
+  void setLinkLayer(int _l);
 
   // hidden methods
 //    void buildCurvePoint(void);
@@ -143,6 +144,8 @@ class CustomLink {
   const qreal border_data_gap = 0.1;
   QVector<QPointF> start_border_data;
   QVector<QPointF> end_border_data;
+
+  int link_layer = 0;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkGenes)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLink::LinkClasses)

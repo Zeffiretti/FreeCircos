@@ -107,7 +107,7 @@ qreal CustomLink::getSSA(void) {
 }
 
 qreal CustomLink::getSEA(void) {
-  if(link_class.testFlag(Block2Block) || link_class.testFlag(Block2End)) {
+  if (link_class.testFlag(Block2Block) || link_class.testFlag(Block2End)) {
     return CustomTool::normalizeAngle(source_end_angle);
   } else {
     return CustomTool::normalizeAngle(source_start_angle);
@@ -119,7 +119,7 @@ qreal CustomLink::getDSA(void) {
 }
 
 qreal CustomLink::getDEA(void) {
-  if(link_class.testFlag(Block2Block) || link_class.testFlag(End2Block)) {
+  if (link_class.testFlag(Block2Block) || link_class.testFlag(End2Block)) {
     return CustomTool::normalizeAngle(destination_end_angle);
   } else {
     return CustomTool::normalizeAngle(destination_start_angle);
@@ -194,27 +194,24 @@ void CustomLink::setDEA(qreal _dea) {
   destination_end_angle = _dea;
 }
 
+void CustomLink::setLinkLayer(int _l) { link_layer = _l; }
+
 void CustomLink::buildLinkCurve(void) {
   CustomLink::LinkCurveType _lt = CustomLink::CurveType::StartLinkCurve;
   switch (link_class) {
-  case CustomLink::LinkClass::End2End:
-    break;
-  case CustomLink::LinkClass::End2Block:
-    _lt |= CustomLink::CurveType::EndBoardCurve;
-    _lt |= CustomLink::CurveType::EndLinkCurve;
-    break;
-  case CustomLink::LinkClass::Block2End:
-    _lt |= CustomLink::CurveType::StartBoardCurve;
-    _lt |= CustomLink::CurveType::EndLinkCurve;
-    break;
-  case CustomLink::LinkClass::Block2Block:
-    _lt |= CustomLink::CurveType::StartBoardCurve;
-    _lt |= CustomLink::CurveType::StartLinkCurve;
-    _lt |= CustomLink::CurveType::EndBoardCurve;
-    _lt |= CustomLink::CurveType::EndLinkCurve;
-    break;
-  default:
-    break;
+    case CustomLink::LinkClass::End2End:break;
+    case CustomLink::LinkClass::End2Block:_lt |= CustomLink::CurveType::EndBoardCurve;
+      _lt |= CustomLink::CurveType::EndLinkCurve;
+      break;
+    case CustomLink::LinkClass::Block2End:_lt |= CustomLink::CurveType::StartBoardCurve;
+      _lt |= CustomLink::CurveType::EndLinkCurve;
+      break;
+    case CustomLink::LinkClass::Block2Block:_lt |= CustomLink::CurveType::StartBoardCurve;
+      _lt |= CustomLink::CurveType::StartLinkCurve;
+      _lt |= CustomLink::CurveType::EndBoardCurve;
+      _lt |= CustomLink::CurveType::EndLinkCurve;
+      break;
+    default:break;
   }
   setLinkCurveType(_lt);
 }
@@ -226,7 +223,7 @@ void CustomLink::buildCurveData(void) {
   end_link_data.clear();
   end_border_data.clear();
   qreal rel_len, rel_ang, rel_factor;
-  if(link_type.testFlag(CustomLink::LinkType::Default) || link_type.testFlag(CustomLink::LinkType::In)) {
+  if (link_type.testFlag(CustomLink::LinkType::Default) || link_type.testFlag(CustomLink::LinkType::In)) {
     rel_factor = 0;
     rel_len = getHoleSize();
   } else {
@@ -235,20 +232,20 @@ void CustomLink::buildCurveData(void) {
   }
   vector<QPointF> control_points;
   QVector<qreal> angles;
-  if(link_curve_type.testFlag(CustomLink::CurveType::StartLinkCurve)) {
+  if (link_curve_type.testFlag(CustomLink::CurveType::StartLinkCurve)) {
     // build start link datas
     control_points.clear();
     qreal s = getSSA();
     qreal e = getDSA();
-    if(link_type.testFlag(CustomLink::LinkType::Out)) {
+    if (link_type.testFlag(CustomLink::LinkType::Out)) {
       int knot_num;
-      if(qMin(qAbs(s - e), 2 * M_PI - qAbs(s - e)) > mGap) {
+      if (qMin(qAbs(s - e), 2 * M_PI - qAbs(s - e)) > mGap) {
         knot_num = qMax(int((qMin((s - e), 2 * M_PI - (s - e)) / mGap)), 2);
       } else {
         knot_num = 1;
       }
 //            int knot_num = qMax(int(qMin((s - e), 2 * M_PI - (s - e)) / mGap), 1);
-      if(knot_num > 3) {
+      if (knot_num > 3) {
         qDebug() << knot_num;
         rel_factor *= 1.1;
       }
@@ -261,7 +258,7 @@ void CustomLink::buildCurveData(void) {
       int i = 0;
       while (angleIt.hasNext()) {
         rel_ang = angleIt.next();
-        if(i % 2 == 0) {
+        if (i % 2 == 0) {
           control_points.push_back(QPointF(rel_factor * rel_len * qCos(rel_ang),
                                            rel_factor * rel_len * qSin(rel_ang)));
         } else {
@@ -286,12 +283,12 @@ void CustomLink::buildCurveData(void) {
       start_link_data = QVector<QPointF>::fromStdVector(CustomTool::bezierCurve(control_points));
     }
   }
-  if(link_curve_type.testFlag(CustomLink::CurveType::EndLinkCurve)) {
+  if (link_curve_type.testFlag(CustomLink::CurveType::EndLinkCurve)) {
     // build end link datas
     control_points.clear();
     qreal s = getSEA();
     qreal e = getDEA();
-    if(link_type.testFlag(CustomLink::LinkType::Out)) {
+    if (link_type.testFlag(CustomLink::LinkType::Out)) {
       int knot_num = qMax(int((qAbs(s - e)) / mGap), 2);
       qreal gap = (s - e) / (knot_num + 1);
       control_points.push_back(QPointF(rel_len * qCos(s), rel_len * qSin(s)));
@@ -320,21 +317,21 @@ void CustomLink::buildCurveData(void) {
       end_link_data = QVector<QPointF>::fromStdVector(CustomTool::bezierCurve(control_points));
     }
   }
-  if(link_curve_type.testFlag(CustomLink::CurveType::StartBoardCurve)) {
+  if (link_curve_type.testFlag(CustomLink::CurveType::StartBoardCurve)) {
     qreal angle_offset = 0.1;
-    if(qAbs(getSSA() - getSEA()) < 0.5) {
+    if (qAbs(getSSA() - getSEA()) < 0.5) {
       angle_offset = qAbs(getSSA() - getSEA()) / 5;
     }
-    for(qreal angle = qMin(getSSA(), getSEA()); angle <= qMax(getSSA(), getSEA()); angle += angle_offset) {
+    for (qreal angle = qMin(getSSA(), getSEA()); angle <= qMax(getSSA(), getSEA()); angle += angle_offset) {
       start_border_data.append(QPointF(rel_len * qCos(angle), rel_len * qSin(angle)));
     }
   }
-  if(link_curve_type.testFlag(CustomLink::CurveType::EndBoardCurve)) {
+  if (link_curve_type.testFlag(CustomLink::CurveType::EndBoardCurve)) {
     qreal angle_offset = 0.1;
-    if(qAbs(getDEA() - getDSA()) < 0.5) {
+    if (qAbs(getDEA() - getDSA()) < 0.5) {
       angle_offset = qAbs(getDSA() - getDEA()) / 5;
     }
-    for(qreal angle = qMin(getDSA(), getDEA()); angle <= qMax(getDSA(), getDEA()); angle += angle_offset) {
+    for (qreal angle = qMin(getDSA(), getDEA()); angle <= qMax(getDSA(), getDEA()); angle += angle_offset) {
       end_border_data.append(QPointF(rel_len * qCos(angle), rel_len * qSin(angle)));
     }
   }
@@ -350,9 +347,9 @@ QVector<qreal> CustomLink::buildCtrlPoints(qreal start_angle, qreal end_angle, i
   qreal s = start_angle;
   qreal e = end_angle;
   QVector<qreal> angles;
-  if(qAbs(s - e) < M_PI) {
+  if (qAbs(s - e) < M_PI) {
   } else {
-    if(e > s) {
+    if (e > s) {
       while (qAbs(s - e) > M_PI) {
         e -= 2 * M_PI;
       }
@@ -363,7 +360,7 @@ QVector<qreal> CustomLink::buildCtrlPoints(qreal start_angle, qreal end_angle, i
     }
   }
   qreal gap = (e - s) / (knot_num + 1);
-  for(int i = 1; i <= knot_num; ++i) {
+  for (int i = 1; i <= knot_num; ++i) {
     angles.append(s + i * gap);
   }
   return angles;
@@ -374,17 +371,18 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
   buildLinkCurve();
   buildCurveData();
   draw_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
+  draw_curve->setLayer(canvas->layer(link_layer));
   strike_pen.setWidth(line_width);
   strike_pen.setStyle(pen_style);
   draw_curve->setPen(strike_pen);
-  if(start_link_data.size() > 0) {
+  if (start_link_data.size() > 0) {
     QVectorIterator<QPointF> pit(start_link_data);
     while (pit.hasNext()) {
       QPointF p = pit.next();
       draw_curve->addData(p.x(), p.y());
     }
   }
-  if(end_border_data.size() > 1) {
+  if (end_border_data.size() > 1) {
     setLinkDirection(NoArrow);
     draw_curve->setBrush(fill_brush);
     QVectorIterator<QPointF> pit(end_border_data);
@@ -394,7 +392,7 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
       draw_curve->addData(p.x(), p.y());
     }
   }
-  if(end_link_data.size() > 0) {
+  if (end_link_data.size() > 0) {
     setLinkDirection(NoArrow);
     draw_curve->setBrush(fill_brush);
     QVectorIterator<QPointF> pit(end_link_data);
@@ -404,7 +402,7 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
       draw_curve->addData(p.x(), p.y());
     }
   }
-  if(start_border_data.size() > 1) {
+  if (start_border_data.size() > 1) {
     setLinkDirection(NoArrow);
     draw_curve->setBrush(fill_brush);
     QVectorIterator<QPointF> pit(start_border_data);
@@ -413,7 +411,7 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
       draw_curve->addData(p.x(), p.y());
     }
   }
-  if(link_direction.testFlag(End2Start)) {
+  if (link_direction.testFlag(End2Start)) {
     QCPItemLine *arrow_line;
     arrow_line = new QCPItemLine(canvas);
     arrow_line->setParent(canvas);
@@ -422,7 +420,7 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
     arrow_line->setTail(QCPLineEnding::esSpikeArrow);
     arrow_line->setPen(strike_pen);
   }
-  if(link_direction.testFlag(Start2End)) {
+  if (link_direction.testFlag(Start2End)) {
     QCPItemLine *arrow_line;
     arrow_line = new QCPItemLine(canvas);
     arrow_line->setParent(canvas);
@@ -437,7 +435,7 @@ void CustomLink::drawLink(QCustomPlot *canvas) {
 void CustomLink::drawEnd2End(QCustomPlot *canvas) {
   draw_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
   draw_curve->setPen(strike_pen);
-  if(start_link_data.size() > 0) {
+  if (start_link_data.size() > 0) {
     QVectorIterator<QPointF> pit(start_link_data);
     while (pit.hasNext()) {
       QPointF p = pit.next();

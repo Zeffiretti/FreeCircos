@@ -41,8 +41,15 @@ class CustomSlice {
   void setName(QString);
   void buildTrack(void);
 
+  void setSliceLayer(int l);
+  void setTextLayer(int l);
+  int getSliceLayer(void);
+  int getTextLayer(void);
+
   QCPCurve *slice_curve;
+  int slice_layer;
   QCPItemText *text;
+  int text_layer;
   QString name;
   qreal length;
   qreal start_angle, end_angle;

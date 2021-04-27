@@ -7,8 +7,8 @@ class CustomLinkCanvas {
  public:
   enum LinkType {
     IntroOut = 0x01,
-    AllIn    = 0x02,
-    AllOut   = 0x04
+    AllIn = 0x02,
+    AllOut = 0x04
   };
   Q_DECLARE_FLAGS(LinkTypes, LinkType)
   CustomLinkCanvas();
@@ -27,6 +27,7 @@ class CustomLinkCanvas {
   void setArrowDirection(CustomLink::LinkDirections ad);
   void setLineStyle(Qt::PenStyle ps);
   void setLineWidth(qreal w);
+  void setLinkLayer(int l);
 //  void setColFun(CustomLink::ColorFuns c);
 
  private:
@@ -36,6 +37,7 @@ class CustomLinkCanvas {
   Qt::PenStyle line_style;
   qreal line_width;
 //  CustomLink::ColorFuns col_fun = CustomLink::ColorFun::None;
+  int link_layer;
 
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomLinkCanvas::LinkTypes)

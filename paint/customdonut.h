@@ -6,8 +6,8 @@
 #include <QList>
 #include <QListIterator>
 
-class CustomDonut: public QObject {
-  Q_OBJECT
+class CustomDonut : public QObject {
+ Q_OBJECT
  public:
   CustomDonut(QObject *parent = nullptr);
   ~CustomDonut();
@@ -39,9 +39,12 @@ class CustomDonut: public QObject {
   void setSingleBrush(int index, QColor b);
   void setBrushes(QColor b);
   void setBrushes(QList<QColor> b_s);
-  CustomSlice* findSlice(const QString &n);
+  CustomSlice *findSlice(const QString &n);
+
+  void setSliceLayer(int l);
+  void setTextLayer(int l);
  signals:
-  void sliceAngleChanged(const QString& n, qreal s, qreal e);
+  void sliceAngleChanged(const QString &n, qreal s, qreal e);
 
  private:
 
@@ -62,6 +65,9 @@ class CustomDonut: public QObject {
   CustomSlice::LabelState d_ls = CustomSlice::LabelSleep;
   bool ls_reset = true;
   bool d_reset = true;
+
+  int slice_layer = 0;
+  int text_layer = 0;
 
 };
 

@@ -69,6 +69,9 @@ class CustomTrack {
     return type;
   }
 
+  void setTrackLayer(int l) { track_layer = l; }
+  int getTrackLayer(void) { return track_layer; }
+
   QCPCurve *track_curve;
   QColor color = QColor(204, 204, 204);
   QList<QCPCurveData *> track_data;
@@ -82,6 +85,7 @@ class CustomTrack {
 //  qreal head_outer_radius;
   qreal inner_radius;
   qreal outer_radius;
+  int track_layer;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomTrack::Types)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomTrack::ArrowDirections)

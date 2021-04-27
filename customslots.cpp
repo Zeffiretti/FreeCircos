@@ -11,20 +11,26 @@ void FreeCircos::onButtonClicked(bool) {
     circos->buildBackBoneDonut(gene_donut);
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
 //        gene_donut->setSize(0.7, 0.75);
+    gene_donut->setSliceLayer(graph_layer);
+    gene_donut->setTextLayer(text_layer);
     gene_donut->drawDonut(canvas);
     if (circos->getCategoryEnable()) {
       circos->buildCategorySequence(backbone_model);
       circos->buildCategoryDonut(category_donut);
 //      category_donut->setSize(0.78, 0.83);
+      category_donut->setSliceLayer(graph_layer);
+      category_donut->setTextLayer(text_layer);
       category_donut->drawDonut(canvas);
     }
     if (circos->getLinkEnable()) {
       circos->buildCustomLink(link_canvas);
 //            link_canvas->setLinkType(CustomLinkCanvas::LinkType::AllOut);
+      link_canvas->setLinkLayer(graph_layer);
       link_canvas->drawLinks(canvas);
     }
     if (circos->getTrackEnabled()) {
       circos->buildCustomTrack(track_canvas);
+      track_canvas->setTrackLayer(graph_layer + 1);
       track_canvas->drawTracks(canvas);
     }
     canvas->replot();

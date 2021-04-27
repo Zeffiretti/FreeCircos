@@ -217,5 +217,9 @@ class FreeCircos : public QMainWindow {
 
 //  QPushButton
 
+  int background_layer = 0;
+  int graph_layer = 1;
+  int text_layer = 5;
+
 };
 #endif // FREECIRCOS_H

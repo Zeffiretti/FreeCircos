@@ -52,8 +52,9 @@ void CustomSlice::setLabelPosition(LabelPosition lp) {
 
 void CustomSlice::drawSlice(QCustomPlot *canvas) {
   //curve draw
-  qreal angle_offset = M_PI / 200, r_offset = 0.02*canvas_scale;
+  qreal angle_offset = M_PI / 200, r_offset = 0.02 * canvas_scale;
   slice_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
+  slice_curve->setLayer(canvas->layer(slice_layer));
   strike_pen.setCosmetic(true);
   strike_pen.setWidth(1);
   slice_curve->setAntialiased(true);
@@ -134,7 +135,8 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
     case LabelState::LabelStand: {
       qreal center_angle = (start_angle + e) / 2;
       qreal left_radius = pie_size + 0.01;
-      QCPItemText *text = new QCPItemText(canvas);
+      text = new QCPItemText(canvas);
+      text->setLayer(canvas->layer(text_layer));
       text->position->setType(QCPItemPosition::ptPlotCoords);
       text->position->setCoords(left_radius * qCos(center_angle), left_radius * qSin(center_angle));
       text->setPositionAlignment(Qt::AlignLeft | Qt::AlignBottom);
@@ -148,7 +150,8 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
         case LabelInsideDonut: {
           qreal center_angle = (start_angle + e) / 2;
           qreal t_radius = hole_size;
-          QCPItemText *text = new QCPItemText(canvas);
+          text = new QCPItemText(canvas);
+          text->setLayer(canvas->layer(text_layer));
           text->position->setType(QCPItemPosition::ptPlotCoords);
           text->setPositionAlignment(Qt::AlignTop | Qt::AlignHCenter);
           text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
@@ -161,6 +164,7 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
           qreal center_angle = (start_angle + e) / 2;
           qreal t_radius = hole_size + (pie_size - hole_size) / 2;
           text = new QCPItemText(canvas);
+          text->setLayer(canvas->layer(text_layer));
           text->position->setType(QCPItemPosition::ptPlotCoords);
           text->setPositionAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
           text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
@@ -172,7 +176,8 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
         case LabelOutsideDonut: {
           qreal center_angle = (start_angle + e) / 2;
           qreal t_radius = pie_size;
-          QCPItemText *text = new QCPItemText(canvas);
+          text = new QCPItemText(canvas);
+          text->setLayer(canvas->layer(text_layer));
           text->position->setType(QCPItemPosition::ptPlotCoords);
           text->setPositionAlignment(Qt::AlignBottom | Qt::AlignHCenter);
           text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
@@ -206,3 +211,9 @@ void CustomSlice::buildTrack(void) {
     track->setBoundary(track_head_ratio * track_end + (1 - track_head_ratio) * track_start);
   }
 }
+
+void CustomSlice::setSliceLayer(int l) { slice_layer = l; }
+void CustomSlice::setTextLayer(int l) { text_layer = l; }
+
+int CustomSlice::getSliceLayer() { return slice_layer; }
+int CustomSlice::getTextLayer() { return text_layer; }

@@ -19,12 +19,16 @@ class CustomTrackArrow {
   Types getType(void) {
     return type;
   }
-  void addArrow(CustomTrack* a);
-  void clearArrow(void);
-  void drawTracks(QCustomPlot*);
 
+  void setTrackLayer(int l) { track_layer = l; }
+  int getTrackLayer(void) { return track_layer; }
+  void addArrow(CustomTrack *a);
+  void clearArrow(void);
+  void drawTracks(QCustomPlot *);
+ private:
+  int track_layer;
   Types type;
-  QList<CustomTrack* > track_list;
+  QList<CustomTrack *> track_list;
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomTrackArrow::Types)
 

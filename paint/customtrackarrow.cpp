@@ -12,10 +12,11 @@ void CustomTrackArrow::clearArrow(void) {
 }
 
 void CustomTrackArrow::drawTracks(QCustomPlot *canvas) {
-  foreach (CustomTrack* it, track_list) {
-    if(type.testFlag(CustomTrackArrow::Type::Arrow)) {
+      foreach (CustomTrack *it, track_list) {
+      if (type.testFlag(CustomTrackArrow::Type::Arrow)) {
 //        it->
+      }
+      it->setTrackLayer(track_layer);
+      it->drawTrack(canvas);
     }
-    it->drawTrack(canvas);
-  }
 }
