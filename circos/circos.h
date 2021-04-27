@@ -2,6 +2,8 @@
 #define CIRCOS_H
 #include <QMainWindow>
 #include <QElapsedTimer>
+#include <QMessageBox>
+#include <QErrorMessage>
 #include <QDebug>
 #include <QObject>
 #include "gene.h"
@@ -100,6 +102,8 @@ class Circos : public QObject {
   void setTrackEnabled(bool b);
   bool getTrackEnabled(void);
   void clearTrackArrow(void);
+
+  void setWidget(QWidget *w) { widget = w; }
 
   qreal getBBHole(void) {
     return back_bone_inner_radius;
@@ -212,6 +216,8 @@ class Circos : public QObject {
 
   QScopedPointer<ExcelBase> m_xls;
   QList<QList<QVariant> > m_datas;
+
+  QWidget *widget;
 
 };
 

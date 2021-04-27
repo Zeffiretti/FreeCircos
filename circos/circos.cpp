@@ -35,12 +35,52 @@ void Circos::openFile(const QString &xlsFile) {
 void Circos::dataToBackBone(void) {
   back_bone.clear();
   back_bone_sequence.clear();
+  int name_index = -1;
+  int start_index = -1;
+  int end_index = -1;
+  int length_index = -1;
   if (!m_datas.empty()) {
-    if (m_datas.at(0).at(2) != "") {
+    for (int i = 0; i < m_datas.at(0).size(); ++i) {
+      if (m_datas.at(0).at(i).toString() == "Gene name") { name_index = i; }
+      else if (m_datas.at(0).at(i).toString() == "from") { start_index = i; }
+      else if (m_datas.at(0).at(i).toString() == "to") { end_index = i; }
+      else if (m_datas.at(0).at(i).toString() == "length") { length_index = i; }
+    }
+    if (name_index < 0) {
+//      qDebug() << "Open Backbone Error: No 'Gene name'!!!";
+      auto err_dialog = new QErrorMessage;
+      err_dialog->setParent(widget);
+      err_dialog->setWindowTitle(tr("Open Backbone Error"));
+      err_dialog->showMessage(tr("No 'Gene name'!!!"));
+      return;
+    }
+    if (length_index < 0) {
+      if (start_index < 0) {
+//        qDebug() << "Open Backbone Error: No 'from' or 'length'!!!";
+        auto err_dialog = new QErrorMessage(widget);
+//        err_dialog->setParent(widget);
+        err_dialog->setWindowTitle(tr("Open Backbone Error"));
+        err_dialog->showMessage(tr("No 'from' or 'length'!!!"));
+        return;
+      } else if (end_index < 0) {
+//        qDebug() << "Open Backbone Error: 'from' exists but No 'to'!!!";
+
+//        auto err_dialog = new QErrorMessage(widget);
+////        err_dialog->setParent(widget);
+//        err_dialog->setWindowTitle(tr("Open Backbone Error"));
+//        err_dialog->showMessage(tr("'from' exists but No 'to'!!!"));
+        QMessageBox::critical(widget,
+                              tr("Open Backbone Error"),
+                              tr("'from' exists but No 'to'!!!"),
+                              QMessageBox::Ok);
+        return;
+      }
+    }
+    if (length_index < 0) {
       for (int i = 1; i < m_datas.size(); ++i) {
-        Gene *g = new Gene(m_datas.at(i).at(0).toString(),
-                           m_datas.at(i).at(1).toUInt(),
-                           m_datas.at(i).at(2).toUInt());
+        Gene *g = new Gene(m_datas.at(i).at(name_index).toString(),
+                           m_datas.at(i).at(start_index).toUInt(),
+                           m_datas.at(i).at(end_index).toUInt());
         g->setFillColor(QColor(Qt::white));
         g->setStrikeColor(QColor(Qt::black));
         g->setLabelState(CustomSlice::LabelSleep);
@@ -50,8 +90,8 @@ void Circos::dataToBackBone(void) {
       }
     } else {
       for (int i = 1; i < m_datas.size(); ++i) {
-        Gene *g = new Gene(m_datas.at(i).at(0).toString(),
-                           m_datas.at(i).at(1).toUInt());
+        Gene *g = new Gene(m_datas.at(i).at(name_index).toString(),
+                           m_datas.at(i).at(length_index).toUInt());
         g->setFillColor(QColor(Qt::white));
         g->setStrikeColor(QColor(Qt::black));
         back_bone.append(g);
