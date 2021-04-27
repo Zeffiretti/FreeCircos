@@ -10,12 +10,19 @@ To Develop A Program for Painting Circos Figure.
 - Build Toolchain: msvc x64| mingw64
 
 ## TODO List:
-1. ~~加UI：category 需要增加一个图形上不显示category这一圈的功能~~
-2. ~~backbone 间距改成度数制~~
-3. ~~global setting 加一个确定键，然后点击关闭是不进行操作的~~
-4. ~~点击进入配色界面时能不能默认到该位置本来的颜色信息~~
-5. ~~reset 之后重新导入数据会出问题~~ 
-6. ~~category 默认改成框是无色  填充是浅灰的颜色吧~~
-7. ~~category的间隔没有随着backbone的间隔变~~
-8. ~~也加个category 的间隔吧，默认2个间隔一样的，当有category 信息时，category 间隔更改之后，category的间隔和对应的backbone间隔同时改变，此时backbone的间隔只改category间隔部分，其他间隔仍然遵循backbone间隔~~
-9. ~~moveto 后面的输入信息的框不可用  上一版未改完~~
+1. 图片分辨率过低
+2. 当只有一个基因or一个category时，仍然有gap
+3. `global setting` 界面不随程序关闭而关闭（程序关闭 `global setting` 还在）
+4. `trackarrow`采样率过低
+5. `gene name label`信息会被箭头覆盖,有没有可能弄成这个层级可以被用户调整？
+6. 这左中右3个框有没有可能可以拖动？ 就是比如我把中间部分拖大一点之类的？
+7. 能否弄个如果打开文件格式有问题 弹个框报错一下，不要直接崩溃?
+8. `Backbone`, `Trackarrow` 和 `link` 也都加个勾选框 可以选择是否隐藏吧.
+9. 这个选择颜色选项这里加个边框吧，都看不出这是按钮了，然后这个黑色这个有木有啥解决办法？ 已经看不到strike字了
+10. `link`界面 这里`ColFun` 没用就删掉吧（突然发现是有用的）
+然后当导入的是带`Stre` 参数的`link`   默认把 `thermometer` 那勾上 根据下面5个颜色框去调颜色
+然后导入没有`Stre` 参数的时候， 默认勾`fixed color` 那里  ，然后那里可以调出颜色框
+11. `link` 界面的颜色框 也默认到当前选定颜色吧
+12. `backbone` 的颜色框 加一个 `Apply to all`和 `apply to category`（意思就是把同属一个category的gene 都替换成同一个颜色）
+    Category 的颜色框 只加一个 `Apply to all`   
+    link  那个 `fixed color` 颜色框 加上`Apply to all/apply to category/apply to gene`
