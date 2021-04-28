@@ -75,6 +75,7 @@ FreeCircos::FreeCircos(QWidget *parent)
           this, &FreeCircos::onButtonClicked);
   QPushButton *setting_button = new QPushButton;
   setting_button->setParent(this);
+  setting_button->setObjectName("Global Setting");
   setting_button->setText("Global Setting");
   setting_button->setGeometry(g_scale * (button_box_pos_x + 2 * button_box_width + 2 * button_gap_x),
                               g_scale * (button_box_pos_y + 0 * button_box_height + 0 * button_gap_y),

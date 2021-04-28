@@ -45,6 +45,7 @@ void FreeCircos::onButtonClicked(bool) {
 //    initLinkWidget(control_panel);
   }
   if (func.compare("globalsetting") == 0) {
+    btn->setEnabled(false);
     gbset_win = new GlobalSetWin(circos, this);
     GlobalSetWin::Component component = GlobalSetWin::ComponentEnable::AllDisable;
     component |= GlobalSetWin::ComponentEnable::BackBone;
@@ -95,7 +96,9 @@ void FreeCircos::onButtonClicked(bool) {
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\backbone file.xlsx");
 #endif
     gene_donut->clear();
-    circos->dataToBackBone();
+    if (circos->dataToBackBone() != Circos::DataProcessState::Success) {
+      return;
+    }
     qDebug() << "open file finished";
     initBackBoneTableModel(backbone_model, circos);
     backbone_widget->setEnabled(true);
@@ -114,7 +117,9 @@ void FreeCircos::onButtonClicked(bool) {
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\category file.xlsx");
 #endif
-    circos->dataToCategory();
+    if (circos->dataToCategory() != Circos::DataProcessState::Success) {
+      return;
+    }
     circos->setCategoryEnable(true);
 //    switch_button->setEnabled(true);
     cat_button->setEnabled(true);
@@ -838,5 +843,6 @@ void FreeCircos::onDialogColorSelected(QColor c) {
 }
 
 void FreeCircos::onWindowClosed(void) {
+  findChild<QPushButton *>("Global Setting")->setEnabled(true);
   gb_active = false;
 }

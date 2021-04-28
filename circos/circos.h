@@ -22,14 +22,18 @@
 class Circos : public QObject {
  Q_OBJECT
  public:
+  enum DataProcessState {
+    Success,
+    Error
+  };
   Circos(QObject *parent = nullptr);
   ~Circos();
 
   void openFile(const QString &);
-  void dataToBackBone(void);
-  void dataToCategory(void);
-  void dataToLink(void);
-  void dataToTrackArrow(void);
+  DataProcessState dataToBackBone(void);
+  DataProcessState dataToCategory(void);
+  DataProcessState dataToLink(void);
+  DataProcessState dataToTrackArrow(void);
   int indexOfGene(const QString &);
   int indexOfCategory(const QString &);
   void buildBackBoneSequence(QStandardItemModel *model);
