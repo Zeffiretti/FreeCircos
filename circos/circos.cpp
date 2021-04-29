@@ -114,7 +114,7 @@ Circos::DataProcessState Circos::dataToCategory(void) {
     for (int i = 0; i < m_datas.at(0).size(); ++i) {
       if (m_datas.at(0).at(i).toString() == "Gene name") {
         name_index = i;
-      } else if (m_datas.at(0).at(i).toString() == "system") {
+      } else if (m_datas.at(0).at(i).toString() == "System") {
         sys_index = i;
       }
       if (name_index < 0) {
