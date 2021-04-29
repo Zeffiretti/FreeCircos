@@ -5,7 +5,7 @@
 #ifndef FREECIRCOS_SETTINGS_WINSCALE_H_
 #define FREECIRCOS_SETTINGS_WINSCALE_H_
 
-const static qreal g_scale = 1.5;
+static qreal g_scale = 1.2;
 const static int g_app_base_width = 900;
 const static int g_app_base_height = 350;
 const static int left_margin = 5;

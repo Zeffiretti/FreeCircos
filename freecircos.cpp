@@ -4,12 +4,18 @@
 
 FreeCircos::FreeCircos(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::FreeCircos) {
-  QDesktopWidget *desktopWidget = QApplication::desktop();
+  QDesktopWidget * desktopWidget = QApplication::desktop();
   QRect screenRect = desktopWidget->screenGeometry();
   int w = screenRect.width();
   int h = screenRect.height();
   ui->setupUi(this);
 //  setWindowFlags(flags);
+  if (g_app_base_width * g_scale > 0.8 * w) {
+    g_scale = 0.8 * w / g_app_base_width;
+  }
+  if (g_app_base_height * g_scale > 0.6 * h) {
+    g_scale = 0.6 * h / g_app_base_height;
+  }
   setMinimumSize(g_app_base_width * g_scale, g_app_base_height * g_scale);
   setMaximumSize(g_app_base_width * g_scale, g_app_base_height * g_scale);
   this->setGeometry(w / 15, h / 5, g_app_base_width * g_scale, g_app_base_height * g_scale);
