@@ -117,19 +117,19 @@ Circos::DataProcessState Circos::dataToCategory(void) {
       } else if (m_datas.at(0).at(i).toString() == "System") {
         sys_index = i;
       }
-      if (name_index < 0) {
-        QMessageBox::critical(widget,
-                              tr("Open Category Error"),
-                              tr("no \'Gene name\' item."),
-                              QMessageBox::Ok);
-        return DataProcessState::Error;
-      } else if (sys_index < 0) {
-        QMessageBox::critical(widget,
-                              tr("Open Category Error"),
-                              tr("no \'System\' item."),
-                              QMessageBox::Ok);
-        return DataProcessState::Error;
-      }
+    }
+    if (name_index < 0) {
+      QMessageBox::critical(widget,
+                            tr("Open Category Error"),
+                            tr("no \'Gene name\' item."),
+                            QMessageBox::Ok);
+      return DataProcessState::Error;
+    } else if (sys_index < 0) {
+      QMessageBox::critical(widget,
+                            tr("Open Category Error"),
+                            tr("no \'System\' item."),
+                            QMessageBox::Ok);
+      return DataProcessState::Error;
     }
     for (int i = 1, cnt = 0; i < m_datas.size(); ++i) {
       gene_name = m_datas.at(i).at(name_index).toString();
