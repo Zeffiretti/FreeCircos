@@ -90,6 +90,12 @@ void GlobalSetWin::initPanel() {
   arw_name_label->setGeometry(210, 420, 110, 30);
   arw_name_label->setText("TrackArrow");
   arw_name_label->setAlignment(Qt::AlignCenter);
+  arw_enable_checkbox = new QCheckBox;
+  arw_enable_checkbox->setParent(this);
+  arw_enable_checkbox->setGeometry(220, 427, 15, 15);
+  arw_enable_checkbox->setProperty("prefix", "trackarrow");
+  arw_enable_checkbox->setProperty("function", "set-enable");
+  arw_enable_checkbox->setCheckState(c_ptr->getTrackEnabled() ? Qt::Checked : Qt::Unchecked);
   arw_value_label = new QLabel;
   arw_value_label->setParent(this);
   arw_value_label->setGeometry(210, 450, 110, 30);
@@ -101,6 +107,12 @@ void GlobalSetWin::initPanel() {
   link_name_label->setGeometry(310, 420, 110, 30);
   link_name_label->setText("Link");
   link_name_label->setAlignment(Qt::AlignCenter);
+  link_enable_checkbox = new QCheckBox;
+  link_enable_checkbox->setParent(this);
+  link_enable_checkbox->setGeometry(300, 427, 15, 15);
+  link_enable_checkbox->setProperty("prefix", "link");
+  link_enable_checkbox->setProperty("function", "set-enable");
+  link_enable_checkbox->setCheckState(c_ptr->getLinkEnable() ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
   link_value_label = new QLabel;
   link_value_label->setParent(this);
   link_value_label->setGeometry(310, 450, 110, 30);
@@ -157,6 +169,10 @@ void GlobalSetWin::initPanel() {
   connect(link_dslider, &ExtDoubleSlider::upperValueChanged,
           this, &GlobalSetWin::onDoubleSliderUpperValueChanged);
   connect(cgs_enable_checkbox, &QCheckBox::stateChanged,
+          this, &GlobalSetWin::onCheckboxStateChanged);
+  connect(arw_enable_checkbox, &QCheckBox::stateChanged,
+          this, &GlobalSetWin::onCheckboxStateChanged);
+  connect(link_enable_checkbox, &QCheckBox::stateChanged,
           this, &GlobalSetWin::onCheckboxStateChanged);
   connect(gene_gap_edit, &QLineEdit::textChanged,
           this, &GlobalSetWin::onLineEditTextChanged);
@@ -339,12 +355,19 @@ void GlobalSetWin::onCheckboxStateChanged(int state) {
   QString func = check_box->property("function").toString();
   if (prefix.compare("gene") == 0) {
 
-  }
-  if (prefix.compare("category") == 0) {
+  } else if (prefix.compare("category") == 0) {
     if (func.compare("set-enable") == 0) {
       c_ptr->setCategoryEnable(state == Qt::Checked);
       category_dslider->setEnabled(state == Qt::Checked);
     }
+  } else if (prefix.compare("trackarrow") == 0) {
+    if (func.compare("set-enable") == 0) {
+      c_ptr->setTrackEnabled(state == Qt::Checked);
+      trackarrow_dslider->setShortcutEnabled(state == Qt::Checked);
+    }
+  } else if (prefix.compare("link") == 0) {
+    c_ptr->setLinkEnable(state == Qt::Checked);
+    link_dslider->setEnabled(state == Qt::Checked);
   }
 }
 
