@@ -55,6 +55,13 @@ ColorDialog::ColorDialog(QWidget *parent, Qt::WindowFlags f) :
   // Add "pick color" button
   QPushButton *pickButton = p->ui.buttonBox->addButton(tr("Pick"), QDialogButtonBox::ActionRole);
   pickButton->setIcon(QIcon::fromTheme(QStringLiteral("color-picker")));
+  // Add "apply to xxx" button
+  QPushButton *backboneButton = p->ui.buttonBox->addButton(tr("Backbone"), QDialogButtonBox::YesRole);
+  backboneButton->setProperty("field", "backbone");
+  QPushButton *categoryButton = p->ui.buttonBox->addButton(tr("Category"), QDialogButtonBox::YesRole);
+  categoryButton->setProperty("field", "category");
+  QPushButton *allButton = p->ui.buttonBox->addButton(tr("All"), QDialogButtonBox::YesRole);
+  allButton->setProperty("field", "all");
 
   setButtonMode(YesYesAll);
   setPreviewDisplayMode(ColorPreview::DisplayMode::SplitColor);
@@ -119,18 +126,25 @@ bool ColorDialog::alphaEnabled() const {
 void ColorDialog::setButtonMode(ButtonMode mode) {
   p->button_mode = mode;
   QDialogButtonBox::StandardButtons btns;
-  switch (mode) {
-    case OkCancel: btns = QDialogButtonBox::Ok | QDialogButtonBox::Cancel;
-      break;
-    case OkApplyCancel:
-      btns = QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply
-          | QDialogButtonBox::Reset;
-      break;
-    case Close: btns = QDialogButtonBox::Close;
-      break;
-    case YesYesAll: btns = QDialogButtonBox::Reset | QDialogButtonBox::Yes | QDialogButtonBox::YesToAll;
-      break;
-  }
+//  switch (mode) {
+//    case OkCancel: btns = QDialogButtonBox::Ok | QDialogButtonBox::Cancel;
+//      break;
+//    case OkApplyCancel:
+//      btns = QDialogButtonBox::Ok | QDialogButtonBox::Cancel | QDialogButtonBox::Apply
+//          | QDialogButtonBox::Reset;
+//      break;
+//    case Close: btns = QDialogButtonBox::Close;
+//      break;
+//    case YesYesAll:
+//      btns = QDialogButtonBox::Reset | QDialogButtonBox::Ok | QDialogButtonBox::Yes
+//          | QDialogButtonBox::YesToAll;
+//      break;
+//  }
+//  p->ui.buttonBox->setStandardButtons(btns);
+//  p->ui.buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Backbone"));
+//  p->ui.buttonBox->button(QDialogButtonBox::Yes)->setText(tr("Category"));
+//  p->ui.buttonBox->button(QDialogButtonBox::YesToAll)->setText(tr("All"));
+  btns = QDialogButtonBox::Reset;
   p->ui.buttonBox->setStandardButtons(btns);
   p->ui.buttonBox->disconnect();
   connect(p->ui.buttonBox, &QDialogButtonBox::clicked,
@@ -250,34 +264,39 @@ void ColorDialog::on_edit_hex_colorEditingFinished(const QColor &color) {
 
 void ColorDialog::on_buttonBox_clicked(QAbstractButton *btn) {
   QDialogButtonBox::ButtonRole role = p->ui.buttonBox->buttonRole(btn);
-  if (btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::Ok))) {
-    qDebug() << "Ok button clicked";
-    p->ui.preview->setComparisonColor(color());
-    Q_EMIT colorSelected(color());
-    return;
-  } else if (btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::Yes))) {
-    qDebug() << "Button Yes Clicked.";
-  } else if (btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::YesToAll))) {
-    qDebug() << "Button YesToAll Clicked.";
-  }
+  QString _field = btn->property("field").toString();
+//  if (btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::Ok))) {
+//    qDebug() << "Ok button clicked";
+//    p->ui.preview->setComparisonColor(color());
+//    Q_EMIT colorSelected(color());
+//    return;
+//  } else if (btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::Yes))) {
+//    qDebug() << "Button Yes Clicked.";
+//    // Explicitly select the color
+//    p->ui.preview->setComparisonColor(color());
+//    Q_EMIT colorSelected(color());
+//  } else if (btn == static_cast<QAbstractButton *>(p->ui.buttonBox->button(QDialogButtonBox::YesToAll))) {
+//    qDebug() << "Button YesToAll Clicked.";
+//    // Explicitly select the color
+//    p->ui.preview->setComparisonColor(color());
+//    Q_EMIT allColorSelected(color());
+//  }
   switch (role) {
-    case QDialogButtonBox::AcceptRole:qDebug() << "Button AcceptRole Clicked.";
-    case QDialogButtonBox::ApplyRole:qDebug() << "Button ApplyRole Clicked.";
-      // Explicitly select the color
-      p->ui.preview->setComparisonColor(color());
-      Q_EMIT colorSelected(color());
-      break;
-
-    case QDialogButtonBox::YesRole:qDebug() << "Button YesRole Clicked.";
-      // Explicitly select the color
-      p->ui.preview->setComparisonColor(color());
-      Q_EMIT colorSelected(color());
-      break;
-
     case QDialogButtonBox::ActionRole:
       // Currently, the only action button is the "pick color" button
       grabMouse(Qt::CrossCursor);
       p->pick_from_screen = true;
+      break;
+
+    case QDialogButtonBox::YesRole:
+      // Emit signals
+      if (_field == tr("backbone")) {
+        Q_EMIT colorSelected(color());
+      } else if (_field == tr("category")) {
+        Q_EMIT partialColorSelected(color());
+      } else if (_field == tr("all")) {
+        Q_EMIT allColorSelected(color());
+      }
       break;
 
     case QDialogButtonBox::ResetRole:
