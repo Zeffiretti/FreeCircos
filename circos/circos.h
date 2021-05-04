@@ -46,6 +46,7 @@ class Circos : public QObject {
 
   Gene *findGene(const QString name);
   Category *findCategory(const QString name);
+  Category *getCategory(int index);
   int takeGeneAt(int index);
   void insertGene(int index, int value);
   int takeCategoryAt(int index);
@@ -53,6 +54,7 @@ class Circos : public QObject {
   void adjustBackBoneToCategory(void);
   void clearCategory(void);
   void clearCategorySequence(void);
+  int getCategoryNum(void);
 
   void setCategoryEnable(bool b);
   bool getCategoryEnable(void);

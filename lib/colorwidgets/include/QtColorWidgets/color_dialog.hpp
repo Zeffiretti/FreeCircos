@@ -114,6 +114,9 @@ class QCP_EXPORT ColorDialog : public QDialog {
    */
   void setAlphaEnabled(bool a);
 
+  void setGeneButtonEnabled(bool b);
+  void setCategoryButtonEnabled(bool b);
+
  Q_SIGNALS:
   /**
    * The current color was changed

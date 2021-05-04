@@ -333,7 +333,7 @@ int Circos::indexOfGene(const QString &n) {
 
 int Circos::indexOfCategory(const QString &n) {
   for (int i = 0; i < category.size(); ++i) {
-    if (category.at(i)->name == n) {
+    if (category.at(i)->getName() == n) {
       return i;
     }
   }
@@ -432,10 +432,10 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
     Category *c = category.at(index);
     int sum = 0;
     for (int j = 0; j < c->count(); ++j) {
-      QString g = c->m_genes.at(j);
+      QString g = c->getGenes().at(j);
       sum += findGene(g)->getLength();
     }
-    CustomSlice *slice = new CustomSlice(c->name, sum);
+    CustomSlice *slice = new CustomSlice(c->getName(), sum);
     slice->setBrush(QBrush(c->getFillColor()));
     slice->setPen(QPen(c->getStrikeColor()));
     slice->setLabelPosition(c->getLabelPosition());
@@ -629,12 +629,14 @@ Gene *Circos::findGene(const QString name) {
 
 Category *Circos::findCategory(const QString name) {
   for (int i = 0; i < category.size(); ++i) {
-    if (category.at(i)->name == name) {
+    if (category.at(i)->getName() == name) {
       return category.at(i);
     }
   }
   return new Category;
 }
+
+Category *Circos::getCategory(int index) { return category.at(index); }
 
 int Circos::takeGeneAt(int index) {
   return back_bone_sequence.takeAt(index);
@@ -669,6 +671,8 @@ void Circos::clearCategory(void) {
 void Circos::clearCategorySequence(void) {
   category_sequence.clear();
 }
+
+int Circos::getCategoryNum() { return category.size(); }
 
 void Circos::setCategoryEnable(bool b) {
   category_enabled = b;

@@ -8,14 +8,8 @@ class Category {
   Category();
   Category(const QString n);
 
-  QString name;
-  QList<QString> m_genes;
-  QColor strike_color;
-  QColor fill_color;
-  CustomSlice::LabelPosition label_position;
-  CustomSlice::LabelState label_state;
-
   void addGene(const QString gene_name);
+  QList<QString> getGenes(void);
   void setName(const QString n);
   QString getName(void);
   int count(void);
@@ -34,7 +28,13 @@ class Category {
   CustomSlice::LabelState getLabelState(void);
   void setLabelState(CustomSlice::LabelState l_s);
   QString getGeneName(int index);
-
+ private:
+  QString name;
+  QList<QString> m_genes;
+  QColor strike_color;
+  QColor fill_color;
+  CustomSlice::LabelPosition label_position;
+  CustomSlice::LabelState label_state;
 };
 
 #endif // CATEGORY_H

@@ -101,6 +101,7 @@ void FreeCircos::onButtonClicked(bool) {
     }
     qDebug() << "open file finished";
     initBackBoneTableModel(backbone_model, circos);
+    color_dialog_->setCategoryButtonEnabled(false);
     backbone_widget->setEnabled(true);
 //    color_dialog_->setEnabled(true);
 //    backbone_label_state_combobox->setEnabled(true);
@@ -121,6 +122,7 @@ void FreeCircos::onButtonClicked(bool) {
       return;
     }
     circos->setCategoryEnable(true);
+    color_dialog_->setCategoryButtonEnabled(true);
 //    switch_button->setEnabled(true);
     cat_button->setEnabled(true);
 //        initBackBoneTableModel(backbone_table, backbone_model, circos);
@@ -687,11 +689,13 @@ void FreeCircos::onTableEditModeChanged(TableEditMode tem) {
 //  }
   switch (tem) {
     case TableEditMode::EditGene:table_edit_mode = TableEditMode::EditGene;
+      color_dialog_->setGeneButtonEnabled(true);
       backbone_table->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
 //        qDebug() << "Edit Gene.";
       break;
     default:table_edit_mode = TableEditMode::EditCategory;
       backbone_table->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
+      color_dialog_->setGeneButtonEnabled(false);
 //        qDebug() << "Edit Category.";
       break;
   }
@@ -817,14 +821,15 @@ void FreeCircos::onItemRowMoveRequest(int source, int dest) {
   }
 }
 
-void FreeCircos::onDialogColorSelected(QColor c) {
-//  color_widgets::ColorDialog dlg = qobject_cast<color_widgets::ColorDialog>(sender());
-
+void FreeCircos::onBackboneColorSelected(QColor c) {
   int sel_row = backbone_table->selectionModel()->currentIndex().row();
   int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
   switch (table_edit_mode) {
     case TableEditMode::EditCategory: {
-      circos->getGene(index)->getCategory()->setFillColor(c);
+      QMessageBox::critical(this,
+                            tr("Set Color Error"),
+                            tr("You are in wrong mode."),
+                            QMessageBox::Ok);
       break;
     }
     case TableEditMode::EditGene:
@@ -833,13 +838,44 @@ void FreeCircos::onDialogColorSelected(QColor c) {
       break;
     }
   }
-//  QString which = dlg.property("which").toString();
-//  int index = dlg.property("index").toInt();
-//  if (which == "gene") {
-//    circos->getGene(index)->setFillColor(c);
-//  } else if (which == "category") {
-//    circos->getGene(index)->getCategory()->setFillColor(c);
-//  }
+}
+
+void FreeCircos::onCategoryColorSelected(QColor c) {
+  int sel_row = backbone_table->selectionModel()->currentIndex().row();
+  int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
+  Category *cat = circos->getGene(index)->getCategory();
+  switch (table_edit_mode) {
+    case TableEditMode::EditCategory: {
+      cat->setFillColor(c);
+      break;
+    }
+    case TableEditMode::EditGene:
+    default: {
+      QList<QString> genes = cat->getGenes();
+      QString g;
+          foreach(g, genes) {
+          circos->findGene(g)->setFillColor(c);
+        }
+      break;
+    }
+  }
+}
+
+void FreeCircos::onAllColorSelected(QColor c) {
+  int sel_row = backbone_table->selectionModel()->currentIndex().row();
+  int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
+  Category *cat = circos->getGene(index)->getCategory();
+  switch (table_edit_mode) {
+    case TableEditMode::EditCategory: {
+      for (int i = 0; i < circos->getCategoryNum(); ++i) { circos->getCategory(i)->setFillColor(c); }
+      break;
+    }
+    case TableEditMode::EditGene:
+    default: {
+      for (int i = 0; i < circos->getGeneNum(); ++i) { circos->getGene(i)->setFillColor(c); }
+      break;
+    }
+  }
 }
 
 void FreeCircos::onWindowClosed(void) {

@@ -57,12 +57,17 @@ ColorDialog::ColorDialog(QWidget *parent, Qt::WindowFlags f) :
   pickButton->setIcon(QIcon::fromTheme(QStringLiteral("color-picker")));
   // Add "apply to xxx" button
   QPushButton *backboneButton = p->ui.buttonBox->addButton(tr("Backbone"), QDialogButtonBox::YesRole);
+  backboneButton->setObjectName(backboneButton->text());
+  backboneButton->setAccessibleName(backboneButton->text());
   backboneButton->setProperty("field", "backbone");
   QPushButton *categoryButton = p->ui.buttonBox->addButton(tr("Category"), QDialogButtonBox::YesRole);
+  categoryButton->setObjectName(categoryButton->text());
+  categoryButton->setAccessibleName(categoryButton->text());
   categoryButton->setProperty("field", "category");
   QPushButton *allButton = p->ui.buttonBox->addButton(tr("All"), QDialogButtonBox::YesRole);
   allButton->setProperty("field", "all");
 
+//  setGeneButtonEnabled(false);
   setButtonMode(YesYesAll);
   setPreviewDisplayMode(ColorPreview::DisplayMode::SplitColor);
 
@@ -117,6 +122,15 @@ void ColorDialog::setAlphaEnabled(bool a) {
 
     Q_EMIT alphaEnabledChanged(a);
   }
+}
+
+void ColorDialog::setGeneButtonEnabled(bool b) {
+//  p->ui.buttonBox->button(QPushButton(tr("Backbone")))
+  p->ui.buttonBox->findChildren<QPushButton *>(tr("Backbone")).at(0)->setEnabled(b);
+}
+
+void ColorDialog::setCategoryButtonEnabled(bool b) {
+  p->ui.buttonBox->findChildren<QPushButton *>(tr("Category")).at(0)->setEnabled(b);
 }
 
 bool ColorDialog::alphaEnabled() const {
@@ -289,6 +303,8 @@ void ColorDialog::on_buttonBox_clicked(QAbstractButton *btn) {
       break;
 
     case QDialogButtonBox::YesRole:
+      // Show the color in the preview
+      p->ui.preview->setComparisonColor(color());
       // Emit signals
       if (_field == tr("backbone")) {
         Q_EMIT colorSelected(color());

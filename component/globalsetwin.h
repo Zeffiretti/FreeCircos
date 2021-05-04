@@ -9,6 +9,7 @@
 #include <QCheckBox>
 #include "extension/extdoubleslider.h"
 #include "circos/circos.h"
+#include "settings/winscale.h"
 
 class GlobalSetWin : public QMainWindow {
  Q_OBJECT

@@ -13,6 +13,8 @@ void Category::addGene(const QString gene_name) {
   m_genes.append(gene_name);
 }
 
+QList<QString> Category::getGenes() { return m_genes; }
+
 void Category::setName(const QString n) {
   name = n;
 }

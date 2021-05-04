@@ -15,7 +15,11 @@ void FreeCircos::initColorDialog(void) {
   color_dialog_->setEnabled(false);
   color_dialog_->setProperty("which", "gene");
   color_dialog_->setProperty("index", 0);
-  connect(color_dialog_, &color_widgets::ColorDialog::colorChanged,
-          this, &FreeCircos::onDialogColorSelected);
+  connect(color_dialog_, &color_widgets::ColorDialog::colorSelected,
+          this, &FreeCircos::onBackboneColorSelected);
+  connect(color_dialog_, &color_widgets::ColorDialog::partialColorSelected,
+          this, &FreeCircos::onCategoryColorSelected);
+  connect(color_dialog_, &color_widgets::ColorDialog::allColorSelected,
+          this, &FreeCircos::onAllColorSelected);
 //  connect(color_dialog_,&color_widgets::ColorDialog::)
 }
