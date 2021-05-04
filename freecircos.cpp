@@ -11,7 +11,7 @@ FreeCircos::FreeCircos(QWidget *parent)
   ui->setupUi(this);
 //  setWindowFlags(flags);
 //  if (g_app_base_width * g_scale > 0.8 * w) {
-    g_scale = 0.8 * w / g_app_base_width;
+    g_scale = 0.85 * w / g_app_base_width;
 //  }
   if (g_app_base_height * g_scale > 0.6 * h) {
     g_scale = 0.6 * h / g_app_base_height;
