@@ -1,7 +1,7 @@
 #include "freecircos.h"
 
 #include "ui_freecircos.h"
-
+qreal g_scale;
 FreeCircos::FreeCircos(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::FreeCircos) {
   QDesktopWidget * desktopWidget = QApplication::desktop();
@@ -10,9 +10,9 @@ FreeCircos::FreeCircos(QWidget *parent)
   int h = screenRect.height();
   ui->setupUi(this);
 //  setWindowFlags(flags);
-  if (g_app_base_width * g_scale > 0.8 * w) {
+//  if (g_app_base_width * g_scale > 0.8 * w) {
     g_scale = 0.8 * w / g_app_base_width;
-  }
+//  }
   if (g_app_base_height * g_scale > 0.6 * h) {
     g_scale = 0.6 * h / g_app_base_height;
   }

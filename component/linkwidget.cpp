@@ -1,5 +1,5 @@
 #include <freecircos.h>
-
+extern qreal g_scale;
 void FreeCircos::initLKTable(void) {
   link_model = new QStandardItemModel;
   link_table = new QTableView;

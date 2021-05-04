@@ -3,7 +3,7 @@
 //
 
 #include "freecircos.h"
-
+extern qreal g_scale;
 void FreeCircos::initColorDialog(void) {
   color_dialog_ = new color_widgets::ColorDialog;
   color_dialog_->setParent(backbone_widget);

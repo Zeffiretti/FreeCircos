@@ -1,5 +1,5 @@
 #include <freecircos.h>
-
+extern qreal g_scale;
 void FreeCircos::initBBTable(void) {
 #ifdef QtColorWidgets_USED
   gene_button = new QPushButton;

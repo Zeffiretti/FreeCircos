@@ -1,5 +1,5 @@
 #include <freecircos.h>
-
+extern qreal g_scale;
 void FreeCircos::initGenerateButton(void) {
   generate_button = new QPushButton("Generate!");
   generate_button->setParent(this);
