@@ -35,3 +35,4 @@ FCRelease/
 !*.exe
 !*.dll
 *tags
+!codecount.sh
