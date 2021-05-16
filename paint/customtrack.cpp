@@ -6,14 +6,15 @@ CustomTrack::CustomTrack() {
 
 void CustomTrack::buildData(void) {
   track_data.clear();
-  qreal angle_offset = (end_angle > start_angle) ? 0.1 : -0.1;
+  qreal angle_offset = (end_angle > start_angle) ? 1 : -1;
+  angle_offset *= M_PI / 200;
   qreal radius_offset = 0.02;
   if (type.testFlag(CustomTrack::Type::Tile)) {
     if (qAbs(end_angle - start_angle) > 0.003) {
       int i = 0;
       qreal angle = start_angle;
       qreal radius = outer_radius;
-      while (angle <= end_angle) {
+      while ((end_angle - angle) * angle_offset > 0) {
         track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
         ++i;
         angle += angle_offset;
@@ -29,7 +30,7 @@ void CustomTrack::buildData(void) {
       radius = inner_radius;
       track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
       ++i;
-      while (angle >= start_angle) {
+      while ((angle - start_angle) * angle_offset > 0) {
         track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
         ++i;
         angle -= angle_offset;
@@ -71,7 +72,7 @@ void CustomTrack::buildData(void) {
 //      end_angle = min;
 //      boundary_angle = boud;
 //    }
-    angle_offset = (end_angle > start_angle) ? 0.1 : -0.1;
+//    angle_offset = (end_angle > start_angle) ? 0.1 : -0.1;
     qDebug() << "start angle:" << start_angle;
     qDebug() << "end angle:" << end_angle;
     qDebug() << "boundary angle:" << boundary_angle;
@@ -80,7 +81,7 @@ void CustomTrack::buildData(void) {
       int i = 0;
       qreal angle = start_angle;
       qreal radius = outer_radius;
-      while (angle <= boundary_angle) {
+      while ((boundary_angle - angle) * angle_offset > 0) {
         track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
         ++i;
         angle += angle_offset;
@@ -101,7 +102,7 @@ void CustomTrack::buildData(void) {
       radius = inner_radius;
       track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
       ++i;
-      while (angle >= start_angle) {
+      while ((angle - start_angle) * angle_offset > 0) {
         track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
         ++i;
         angle -= angle_offset;
@@ -135,7 +136,9 @@ void CustomTrack::buildData(void) {
 void CustomTrack::drawTrack(QCustomPlot *canvas) {
   buildData();
   track_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
-  track_curve->setPen(QPen(color));
+  QPen track_pen = QPen(color);
+//  track_pen.setWidth(canvas_line_width);
+  track_curve->setPen(track_pen);
   track_curve->setLayer(canvas->layer(track_layer));
 //  color.setAlphaF(0.7);
   track_curve->setBrush(QBrush(color));

@@ -339,7 +339,8 @@ void FreeCircos::onButtonClicked(bool) {
     if (!fileName.isNull()) {
       //fileName是文件名
       qDebug() << fileName;
-      canvas->toPixmap(0, 0, 1);
+
+      canvas->toPixmap(0, 0, 10);
       canvas->savePng(fileName, 500, 500, 10);
 //      canvas->savePng(fileName, 0, 0, 1.0, 5, 1024, QCP::ResolutionUnit::ruDotsPerCentimeter);
       //(const QString &fileName, int width = 0, int height = 0, double scale = 1.0, int quality = -1, int resolution = 96, QCP::ResolutionUnit resolutionUnit = QCP::ruDotsPerInch);

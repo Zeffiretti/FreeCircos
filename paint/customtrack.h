@@ -2,6 +2,7 @@
 #define CUSTOMTRACK_H
 #include <QtCore>
 #include "qcustomplot.h"
+#include "settings/winscale.h"
 //#include "circos/trackarrow.h"
 
 class CustomTrack {

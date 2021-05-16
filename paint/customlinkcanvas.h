@@ -3,6 +3,7 @@
 #include "customlink.h"
 #include "qcustomplot.h"
 #include "tool/customtool.h"
+#include "settings/winscale.h"
 class CustomLinkCanvas {
  public:
   enum LinkType {
