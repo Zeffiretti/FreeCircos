@@ -299,7 +299,8 @@ void FreeCircos::onButtonClicked(bool) {
     connect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &FreeCircos::onTableSelectedChanged);
     sel_model->select(*selection, QItemSelectionModel::Select);
-    emit backbone_table->selectionModel()->currentRowChanged(l_index, r_index);
+    emit
+    backbone_table->selectionModel()->currentRowChanged(l_index, r_index);
   }
   if (func == "category-movedown") {
     int down_cnt = 0;
@@ -328,7 +329,8 @@ void FreeCircos::onButtonClicked(bool) {
     connect(backbone_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
             this, &FreeCircos::onTableSelectedChanged);
     sel_model->select(*selection, QItemSelectionModel::Select);
-    emit backbone_table->selectionModel()->currentRowChanged(l_index, r_index);
+    emit
+    backbone_table->selectionModel()->currentRowChanged(l_index, r_index);
   }
   if (func.compare("saveimage") == 0) {
     QString fileName;
@@ -337,7 +339,8 @@ void FreeCircos::onButtonClicked(bool) {
     if (!fileName.isNull()) {
       //fileName是文件名
       qDebug() << fileName;
-      canvas->savePng(fileName);
+      canvas->toPixmap(0, 0, 1);
+      canvas->savePng(fileName, 500, 500, 10);
 //      canvas->savePng(fileName, 0, 0, 1.0, 5, 1024, QCP::ResolutionUnit::ruDotsPerCentimeter);
       //(const QString &fileName, int width = 0, int height = 0, double scale = 1.0, int quality = -1, int resolution = 96, QCP::ResolutionUnit resolutionUnit = QCP::ruDotsPerInch);
     } else {

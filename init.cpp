@@ -23,6 +23,7 @@ void FreeCircos::initCanvas(void) {
   canvas->yAxis->setRange(-canvas_scale, canvas_scale);
   canvas->xAxis->setVisible(false);
   canvas->yAxis->setVisible(false);
+
 //  canvas->setBufferDevicePixelRatio(1);
 //  canvas->setAntialiasedElements(QCP::AntialiasedElement::aeNone);
   canvas->setAntialiasedElements(QCP::AntialiasedElement::aeAll);

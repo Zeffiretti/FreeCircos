@@ -56,7 +56,7 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
   slice_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
   slice_curve->setLayer(canvas->layer(slice_layer));
   strike_pen.setCosmetic(true);
-  strike_pen.setWidth(1);
+  strike_pen.setWidth(10);
   slice_curve->setAntialiased(true);
   slice_curve->setAntialiasedScatters(true);
   slice_curve->setAntialiasedFill(true);
