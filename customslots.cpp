@@ -11,7 +11,7 @@ void FreeCircos::onButtonClicked(bool) {
     circos->buildBackBoneDonut(gene_donut);
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
 //        gene_donut->setSize(0.7, 0.75);
-    gene_donut->setSliceLayer(graph_layer);
+    gene_donut->setSliceLayer(graph_layer + 1);
     gene_donut->setTextLayer(text_layer);
     gene_donut->drawDonut(canvas);
     if (circos->getCategoryEnable()) {

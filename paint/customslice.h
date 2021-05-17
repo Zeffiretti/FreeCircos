@@ -24,7 +24,7 @@ class CustomSlice {
   Q_DECLARE_FLAGS(TrackPositions, TrackPosition)
 
   CustomSlice();
-  CustomSlice(const QString& n, qreal len);
+  CustomSlice(const QString &n, qreal len);
   qreal getLength(void);
   void setSE(qreal start, qreal end);
   qreal getStart(void);
@@ -36,6 +36,7 @@ class CustomSlice {
   void setLabelState(LabelState);
   void setLabelPosition(LabelPosition);
   void drawSlice(QCustomPlot *canvas);
+  void drawAnnulus(QCustomPlot *canvas);
   void removeFrom(QCustomPlot *);
   QString getName(void);
   void setName(QString);

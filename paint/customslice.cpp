@@ -191,6 +191,94 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
   }
 }
 
+void CustomSlice::drawAnnulus(QCustomPlot *canvas) {
+  QCPCurve *outer_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
+  QCPCurve *inner_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
+  outer_curve->setLayer(canvas->layer(slice_layer));
+  inner_curve->setLayer(canvas->layer(slice_layer));
+  strike_pen.setCosmetic(true);
+  strike_pen.setWidth(canvas_line_width);
+  outer_curve->setAntialiased(true);
+  outer_curve->setAntialiasedScatters(true);
+  outer_curve->setAntialiasedFill(true);
+  inner_curve->setAntialiased(true);
+  inner_curve->setAntialiasedScatters(true);
+  inner_curve->setAntialiasedFill(true);
+//  fill_brush.
+  outer_curve->setPen(strike_pen);
+  outer_curve->setBrush(fill_brush);
+  inner_curve->setPen(strike_pen);
+  inner_curve->setBrush(QBrush(Qt::white));
+  int dot_num = 200;
+  for (int i = 0; i < dot_num; ++i) {
+    qreal angle = 2 * M_PI / dot_num * i;
+    outer_curve->data()->add(QCPCurveData(i, pie_size * qCos(angle), pie_size * qSin(angle)));
+    inner_curve->data()->add(QCPCurveData(i, hole_size * qCos(angle), hole_size * qSin(angle)));
+  }
+
+  switch (label_state) {
+    case LabelState::LabelInvisable: {
+      break;
+    }
+    case LabelState::LabelStand: {
+      qreal center_angle = M_PI;
+      qreal left_radius = pie_size + 0.01;
+      text = new QCPItemText(canvas);
+      text->setLayer(canvas->layer(text_layer));
+      text->position->setType(QCPItemPosition::ptPlotCoords);
+      text->position->setCoords(left_radius * qCos(center_angle), left_radius * qSin(center_angle));
+      text->setPositionAlignment(Qt::AlignLeft | Qt::AlignBottom);
+      qreal rotate_angle = (center_angle > M_PI_2 && center_angle < M_PI_2 * 3) ? (M_PI - center_angle) : -center_angle;
+      text->setRotation(rotate_angle * 180 / M_PI);
+      text->setText(name);
+      break;
+    }
+    case LabelState::LabelSleep: {
+      switch (label_position) {
+        case LabelInsideDonut: {
+          qreal center_angle = M_PI;
+          qreal t_radius = hole_size;
+          text = new QCPItemText(canvas);
+          text->setLayer(canvas->layer(text_layer));
+          text->position->setType(QCPItemPosition::ptPlotCoords);
+          text->setPositionAlignment(Qt::AlignTop | Qt::AlignHCenter);
+          text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
+          qreal rotate_angle = (center_angle > M_PI) ? (-M_PI_2 - center_angle) : (M_PI_2 - center_angle);
+          text->setRotation(rotate_angle * 180 / M_PI);
+          text->setText(name);
+          break;
+        }
+        case LabelOnDonut: {
+          qreal center_angle = M_PI;
+          qreal t_radius = hole_size + (pie_size - hole_size) / 2;
+          text = new QCPItemText(canvas);
+          text->setLayer(canvas->layer(text_layer));
+          text->position->setType(QCPItemPosition::ptPlotCoords);
+          text->setPositionAlignment(Qt::AlignVCenter | Qt::AlignHCenter);
+          text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
+          qreal rotate_angle = (center_angle > M_PI) ? (-M_PI_2 - center_angle) : (M_PI_2 - center_angle);
+          text->setRotation(rotate_angle * 180 / M_PI);
+          text->setText(name);
+          break;
+        }
+        case LabelOutsideDonut: {
+          qreal center_angle = M_PI;
+          qreal t_radius = pie_size;
+          text = new QCPItemText(canvas);
+          text->setLayer(canvas->layer(text_layer));
+          text->position->setType(QCPItemPosition::ptPlotCoords);
+          text->setPositionAlignment(Qt::AlignBottom | Qt::AlignHCenter);
+          text->position->setCoords(t_radius * qCos(center_angle), t_radius * qSin(center_angle));
+          qreal rotate_angle = (center_angle > M_PI) ? (-M_PI_2 - center_angle) : (M_PI_2 - center_angle);
+          text->setRotation(rotate_angle * 180 / M_PI);
+          text->setText(name);
+          break;
+        }
+      }
+    }
+  }
+}
+
 void CustomSlice::removeFrom(QCustomPlot *canvas) {
   canvas->removeItem(text);
   canvas->removePlottable(slice_curve);
