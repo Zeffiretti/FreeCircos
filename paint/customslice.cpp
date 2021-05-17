@@ -210,7 +210,7 @@ void CustomSlice::drawAnnulus(QCustomPlot *canvas) {
   inner_curve->setPen(strike_pen);
   inner_curve->setBrush(QBrush(Qt::white));
   int dot_num = 200;
-  for (int i = 0; i < dot_num; ++i) {
+  for (int i = 0; i <= dot_num; ++i) {
     qreal angle = 2 * M_PI / dot_num * i;
     outer_curve->data()->add(QCPCurveData(i, pie_size * qCos(angle), pie_size * qSin(angle)));
     inner_curve->data()->add(QCPCurveData(i, hole_size * qCos(angle), hole_size * qSin(angle)));
