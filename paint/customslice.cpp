@@ -55,8 +55,9 @@ void CustomSlice::drawSlice(QCustomPlot *canvas) {
   qreal angle_offset = M_PI / 200, r_offset = 0.02 * canvas_scale;
   slice_curve = new QCPCurve(canvas->xAxis, canvas->yAxis);
   slice_curve->setLayer(canvas->layer(slice_layer));
-  strike_pen.setCosmetic(true);
+  strike_pen.setCosmetic(false);
   strike_pen.setWidth(canvas_line_width);
+  strike_pen.setJoinStyle(Qt::PenJoinStyle::SvgMiterJoin);
   slice_curve->setAntialiased(true);
   slice_curve->setAntialiasedScatters(true);
   slice_curve->setAntialiasedFill(true);
