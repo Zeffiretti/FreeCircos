@@ -25,7 +25,7 @@ const static int canvas_width =
     g_app_base_height - bottom_margin - 2 * button_box_height - button_gap_y - top_margin - canvas_pos_gap_y;
 const static int canvas_height = canvas_width;
 const static int canvas_dpi_ratio = 1;
-const static int canvas_line_width = canvas_dpi_ratio;
+const static int canvas_line_width = 1;
 
 const static int config_widget_margin_x = 10;
 const static int config_widget_pos_y = top_margin;
