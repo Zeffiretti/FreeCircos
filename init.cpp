@@ -24,7 +24,7 @@ void FreeCircos::initCanvas(void) {
   canvas->xAxis->setVisible(false);
   canvas->yAxis->setVisible(false);
 
-  canvas->setBufferDevicePixelRatio(canvas_dpi_ratio);
+//  canvas->setBufferDevicePixelRatio(canvas_dpi_ratio);
 //  canvas->setAntialiasedElements(QCP::AntialiasedElement::aeNone);
   canvas->setAntialiasedElements(QCP::AntialiasedElement::aeAll);
 //  canvas->setPlottingHints(QCP::PlottingHint::phImmediateRefresh);
