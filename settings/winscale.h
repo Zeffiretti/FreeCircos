@@ -34,7 +34,7 @@ const static int config_widget_height = g_app_base_height - bottom_margin - conf
 const static int
     config_widget_width = g_app_base_width - left_margin - right_margin - canvas_width - config_widget_margin_x;
 
-// variables below are referenced in config_widget
+// variables below are referenced in config_widget(backbone & category)
 const static int page_margin = 0;
 const static int page_label_margin = 30;
 const static int switch_button_pos_x = page_margin;
@@ -59,6 +59,31 @@ const static int cat_label_state_pos_x = bb_label_state_pos_x;
 const static int cat_label_state_pos_y = bb_label_state_pos_y + bb_label_state_height + label_margin_y;
 const static int cat_label_state_width = bb_label_state_width;
 const static int cat_label_state_height = bb_label_state_height;
+
+// variables below are referenced in config_widget(link)
+const static int lk_config_pos_x = color_dialog_pos_x;
+const static int lk_config_pos_y = color_dialog_pos_y;
+const static int lk_config_width = color_dialog_width;
+const static int lk_config_height = table_height;
+const static int lk_text_pos_x1 = label_margin_x;
+const static int lk_text_pos_y1 = page_margin + label_margin_y + table_pos_y;
+const static int lk_label_width = bb_label_state_width;
+const static int lk_label_height = bb_label_state_height;
+const static int lk_combobox_pos_x1 = lk_text_pos_x1 + lk_label_width;
+const static int lk_text_pos_x2 = lk_combobox_pos_x1 + lk_label_width;
+const static int lk_combobox_pos_x2 = lk_text_pos_x2 + lk_label_width;
+const static int thermometer_pos_x = lk_text_pos_x1 + label_margin_x;
+const static int thermometer_pos_y = lk_text_pos_y1 + 4 * (lk_label_height + label_margin_y);
+const static int thermometer_width = lk_config_width - 4 * label_margin_x;
+const static int thermometer_height = 2 * lk_label_height;
+const static int thermometer_canvas_pos_x = 0.86 * canvas_width;
+const static int thermometer_canvas_pos_y = 0.7 * canvas_width;
+const static int thermometer_canvas_width = 0.12 * canvas_width;
+const static int thermometer_canvas_height = 0.3 * canvas_width;
+const static int link_cm_button_width = 16;
+const static int link_cm_button_height = 25;
+const static int link_cm_button_pos_x1 = thermometer_pos_x;
+const static int link_cm_button_pos_y = thermometer_pos_y + thermometer_height;
 
 // canvas setting
 const static int canvas_scale = 1000;
