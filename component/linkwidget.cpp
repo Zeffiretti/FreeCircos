@@ -53,17 +53,27 @@ void FreeCircos::initLKConfigWidget(void) {
   link_thermometer_colormap_oncanvas_plot = new QCustomPlot;
   link_config_widget->setEnabled(true);
   link_config_widget->setParent(link_widget);
-  link_config_widget->setGeometry(380, 20, 600, 560);
+  link_config_widget->setGeometry(g_scale * lk_config_pos_x,
+                                  g_scale * lk_config_pos_y,
+                                  g_scale * lk_config_width,
+                                  g_scale * lk_config_height);
 //  QFont *ft = new QFont;
 //  ft->setFamily("Source Code Pro");
 //  ft->setPointSize(16);
 //  ft->setBold(true);
   link_type_label->setParent(link_config_widget);
-  link_type_label->setGeometry(80, 20, 160, 60);
-  link_type_label->setText("Link Type: ");
+  link_type_label->setGeometry(g_scale * lk_text_pos_x1,
+                               g_scale * lk_text_pos_y1,
+                               g_scale * lk_label_width,
+                               g_scale * lk_label_height);
+  link_type_label->setText("Link Type");
   link_type_label->setFont(*major_font);
+  link_type_label->setAlignment(Qt::AlignCenter);
   link_type_combobox->setParent(link_config_widget);
-  link_type_combobox->setGeometry(340, 20, 160, 60);
+  link_type_combobox->setGeometry(g_scale * lk_combobox_pos_x1,
+                                  g_scale * lk_text_pos_y1,
+                                  g_scale * lk_label_width,
+                                  g_scale * lk_label_height);
   link_type_combobox->setFont(*major_font);
   QStringList link_type_list;
   link_type_list << "Intro-Out"
@@ -73,14 +83,21 @@ void FreeCircos::initLKConfigWidget(void) {
   link_type_combobox->setProperty("function", "link-type");
   link_type_combobox->setProperty("prefix", "link");
   link_directional_checkbox->setParent(link_config_widget);
-  link_directional_checkbox->setGeometry(80, 100, 160, 60);
+  link_directional_checkbox->setGeometry(g_scale * (lk_text_pos_x2 + 0.1 * lk_label_width),
+                                         g_scale * lk_text_pos_y1,
+                                         g_scale * (0.9 * lk_label_width),
+                                         g_scale * lk_label_height);
   link_directional_checkbox->setText("Directional");
+//  link_directional_checkbox.
   link_directional_checkbox->setFont(*major_font);
   link_directional_checkbox->setCheckState(Qt::CheckState::Unchecked);
   link_directional_checkbox->setProperty("prefix", "link");
   link_directional_checkbox->setProperty("function", "link-directional");
   link_direction_combobox->setParent(link_config_widget);
-  link_direction_combobox->setGeometry(340, 100, 160, 60);
+  link_direction_combobox->setGeometry(g_scale * lk_combobox_pos_x2,
+                                       g_scale * lk_text_pos_y1,
+                                       g_scale * lk_label_width,
+                                       g_scale * lk_label_height);
   link_direction_combobox->setFont(*major_font);
   QStringList link_direction_list;
   link_direction_list << "Head--->Tail" << "Head<---Tail";
@@ -96,11 +113,18 @@ void FreeCircos::initLKConfigWidget(void) {
 //    link_border_lineedit->setGeometry(160, 180, 80, 60);
 //    link_border_lineedit->setValidator(new QDoubleValidator(0, 100, 2, this));
   link_lty_label->setParent(link_config_widget);
-  link_lty_label->setGeometry(80, 180, 160, 60);
+  link_lty_label->setGeometry(g_scale * lk_text_pos_x1,
+                              g_scale * (lk_text_pos_y1 + lk_label_height + label_margin_y),
+                              g_scale * lk_label_width,
+                              g_scale * lk_label_height);
   link_lty_label->setFont(*major_font);
-  link_lty_label->setText("LTY");
+  link_lty_label->setText("Line Style");
+  link_lty_label->setAlignment(Qt::AlignCenter);
   link_lty_combobox->setParent(link_config_widget);
-  link_lty_combobox->setGeometry(340, 180, 160, 60);
+  link_lty_combobox->setGeometry(g_scale * lk_combobox_pos_x1,
+                                 g_scale * (lk_text_pos_y1 + lk_label_height + label_margin_y),
+                                 g_scale * lk_label_width,
+                                 g_scale * lk_label_height);
   link_lty_combobox->setFont(*major_font);
   QStringList link_lty_list;
   link_lty_list << "Solid"
@@ -113,11 +137,18 @@ void FreeCircos::initLKConfigWidget(void) {
   link_lty_combobox->setProperty("function", "link-linestyle");
   link_lty_combobox->setProperty("prefix", "link");
   link_colfun_label->setParent(link_config_widget);
-  link_colfun_label->setGeometry(80, 260, 160, 60);
+  link_colfun_label->setGeometry(g_scale * lk_text_pos_x2,
+                                 g_scale * (lk_text_pos_y1 + lk_label_height + label_margin_y),
+                                 g_scale * lk_label_width,
+                                 g_scale * lk_label_height);
   link_colfun_label->setFont(*major_font);
-  link_colfun_label->setText("ColFun");
+  link_colfun_label->setText("Color Function");
+  link_colfun_label->setAlignment(Qt::AlignCenter);
   link_colfun_combobox->setParent(link_config_widget);
-  link_colfun_combobox->setGeometry(340, 260, 160, 60);
+  link_colfun_combobox->setGeometry(g_scale * lk_combobox_pos_x2,
+                                    g_scale * (lk_text_pos_y1 + lk_label_height + label_margin_y),
+                                    g_scale * lk_label_width,
+                                    g_scale * lk_label_height);
   link_colfun_combobox->setFont(*major_font);
   QStringList link_colfun_list;
   link_colfun_list << "none" << "ramp" << "rainbow";
@@ -126,18 +157,28 @@ void FreeCircos::initLKConfigWidget(void) {
   link_colfun_combobox->setProperty("prefix", "link");
   link_colfun_combobox->setEnabled(false);
   link_color_label->setParent(link_config_widget);
-  link_color_label->setGeometry(80, 340, 80, 60);
+  link_color_label->setGeometry(g_scale * lk_text_pos_x1,
+                                g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
+                                g_scale * lk_label_width,
+                                g_scale * lk_label_height);
   link_color_label->setFont(*major_font);
   link_color_label->setText("Color");
+  link_color_label->setAlignment(Qt::AlignCenter);
   link_color_lineedit->setParent(link_config_widget);
-  link_color_lineedit->setGeometry(160, 340, 80, 60);
+  link_color_lineedit->setGeometry(g_scale * lk_combobox_pos_x1,
+                                   g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
+                                   g_scale * lk_label_width,
+                                   g_scale * lk_label_height);
   link_color_lineedit->setValidator(new QDoubleValidator(10, 50, 2, this));
   link_color_lineedit->setEnabled(true);
   link_color_lineedit->setText("10.00");
   link_color_lineedit->setProperty("prefix", "link");
   link_color_lineedit->setProperty("function", "link-line-color");
   line_color_combobox->setParent(link_config_widget);
-  line_color_combobox->setGeometry(160, 340, 80, 60);
+  line_color_combobox->setGeometry(g_scale * lk_combobox_pos_x1,
+                                   g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
+                                   g_scale * lk_label_width,
+                                   g_scale * lk_label_height);
   line_color_combobox->setValidator(new QDoubleValidator(0, 100, 2, this));
 //  line_stre_combobox->setVisible(false);
   line_color_combobox->setEnabled(false);
@@ -160,18 +201,28 @@ void FreeCircos::initLKConfigWidget(void) {
 //  link_color_indicator << QString(tr"blue") << QString(tr"green") << QString(tr"yellow");
   link_lwd_label->setParent(link_config_widget);
   link_lwd_label->setParent(link_config_widget);
-  link_lwd_label->setGeometry(340, 340, 80, 60);
+  link_lwd_label->setGeometry(g_scale * lk_text_pos_x2,
+                              g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
+                              g_scale * lk_label_width,
+                              g_scale * lk_label_height);
   link_lwd_label->setFont(*major_font);
-  link_lwd_label->setText("LineWidth");
+  link_lwd_label->setText("Line Width");
+  link_lwd_label->setAlignment(Qt::AlignCenter);
   link_lwd_lineedit->setParent(link_config_widget);
-  link_lwd_lineedit->setGeometry(420, 340, 80, 60);
+  link_lwd_lineedit->setGeometry(g_scale * lk_combobox_pos_x2,
+                                 g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
+                                 g_scale * lk_label_width,
+                                 g_scale * lk_label_height);
   link_lwd_lineedit->setValidator(new QDoubleValidator(0, 20, 2, this));
   link_lwd_lineedit->setText("1.00");
   link_lwd_lineedit->setFont(*major_font);
   link_lwd_lineedit->setProperty("prefix", "link");
   link_lwd_lineedit->setProperty("function", "link-line-width");
   link_thermometer_checkbox->setParent(link_config_widget);
-  link_thermometer_checkbox->setGeometry(80, 420, 160, 60);
+  link_thermometer_checkbox->setGeometry(g_scale * lk_text_pos_x1,
+                                         g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
+                                         g_scale * lk_label_width,
+                                         g_scale * lk_label_height);
   link_thermometer_checkbox->setFont(*major_font);
   link_thermometer_checkbox->setText("thermometer");
   link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
@@ -221,7 +272,10 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
   link_cm_button5 = new ExtGradientButton(4);
   link_gradient = new QCPColorGradient;
   parent1->setParent(link_config_widget);
-  parent1->setGeometry(80, 500, 420, 20);
+  parent1->setGeometry(g_scale * thermometer_pos_x,
+                       g_scale * thermometer_pos_y,
+                       g_scale * thermometer_width,
+                       g_scale * thermometer_height);
   parent1->yAxis->setVisible(false);
   link_thermometer_onpanel_color_map->data()->setSize(40, 1);
   link_thermometer_onpanel_color_map->data()->setRange(QCPRange(10, 50), QCPRange(0, 1));
@@ -237,7 +291,10 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
 //    parent2->yAxis->setTickLength(5);
 //    parent2->yAxis->setTicker();
   parent2->yAxis->setSubTicks(false);
-  parent2->setGeometry(430, 350, 60, 160);
+  parent2->setGeometry(g_scale * thermometer_canvas_pos_x,
+                       g_scale * thermometer_canvas_pos_y,
+                       g_scale * thermometer_canvas_width,
+                       g_scale * thermometer_canvas_height);
   link_gradient->setColorStopAt(0.0, QColor(Qt::blue));   //
   link_gradient->setColorStopAt(0.25, QColor(Qt::green));
   link_gradient->setColorStopAt(0.5, QColor(Qt::yellow));
@@ -256,15 +313,30 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
   parent2->setParent(canvas);
   parent2->setVisible(true);
   link_cm_button1->setParent(link_config_widget);
-  link_cm_button1->setGeometry(90, 520, 18, 30);
+  link_cm_button1->setGeometry(g_scale * (link_cm_button_pos_x1 + 0.02 * thermometer_width),
+                               g_scale * link_cm_button_pos_y,
+                               g_scale * link_cm_button_width,
+                               g_scale * link_cm_button_height);
   link_cm_button2->setParent(link_config_widget);
-  link_cm_button2->setGeometry(185, 520, 18, 30);
+  link_cm_button2->setGeometry(g_scale * (link_cm_button_pos_x1 + 0.24 * thermometer_width),
+                               g_scale * link_cm_button_pos_y,
+                               g_scale * link_cm_button_width,
+                               g_scale * link_cm_button_height);
   link_cm_button3->setParent(link_config_widget);
-  link_cm_button3->setGeometry(280, 520, 18, 30);
+  link_cm_button3->setGeometry(g_scale * (link_cm_button_pos_x1 + 0.47 * thermometer_width),
+                               g_scale * link_cm_button_pos_y,
+                               g_scale * link_cm_button_width,
+                               g_scale * link_cm_button_height);
   link_cm_button4->setParent(link_config_widget);
-  link_cm_button4->setGeometry(375, 520, 18, 30);
+  link_cm_button4->setGeometry(g_scale * (link_cm_button_pos_x1 + 0.7 * thermometer_width),
+                               g_scale * link_cm_button_pos_y,
+                               g_scale * link_cm_button_width,
+                               g_scale * link_cm_button_height);
   link_cm_button5->setParent(link_config_widget);
-  link_cm_button5->setGeometry(470, 520, 18, 30);
+  link_cm_button5->setGeometry(g_scale * (link_cm_button_pos_x1 + 0.94 * thermometer_width),
+                               g_scale * link_cm_button_pos_y,
+                               g_scale * link_cm_button_width,
+                               g_scale * link_cm_button_height);
 //  link_cm_button1->setColor(QColor(Qt::blue));
 //  link_cm_button2->setColor(QColor(Qt::green));
 //  link_cm_button3->setColor(QColor(Qt::yellow));
