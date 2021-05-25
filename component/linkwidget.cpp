@@ -66,8 +66,9 @@ void FreeCircos::initLKConfigWidget(void) {
                                g_scale * lk_text_pos_y1,
                                g_scale * lk_label_width,
                                g_scale * lk_label_height);
-  link_type_label->setText("Link Type: ");
+  link_type_label->setText("Link Type");
   link_type_label->setFont(*major_font);
+  link_type_label->setAlignment(Qt::AlignCenter);
   link_type_combobox->setParent(link_config_widget);
   link_type_combobox->setGeometry(g_scale * lk_combobox_pos_x1,
                                   g_scale * lk_text_pos_y1,
@@ -82,11 +83,12 @@ void FreeCircos::initLKConfigWidget(void) {
   link_type_combobox->setProperty("function", "link-type");
   link_type_combobox->setProperty("prefix", "link");
   link_directional_checkbox->setParent(link_config_widget);
-  link_directional_checkbox->setGeometry(g_scale * lk_text_pos_x2,
+  link_directional_checkbox->setGeometry(g_scale * (lk_text_pos_x2 + 0.1 * lk_label_width),
                                          g_scale * lk_text_pos_y1,
-                                         g_scale * lk_label_width,
+                                         g_scale * (0.9 * lk_label_width),
                                          g_scale * lk_label_height);
   link_directional_checkbox->setText("Directional");
+//  link_directional_checkbox.
   link_directional_checkbox->setFont(*major_font);
   link_directional_checkbox->setCheckState(Qt::CheckState::Unchecked);
   link_directional_checkbox->setProperty("prefix", "link");
@@ -116,7 +118,8 @@ void FreeCircos::initLKConfigWidget(void) {
                               g_scale * lk_label_width,
                               g_scale * lk_label_height);
   link_lty_label->setFont(*major_font);
-  link_lty_label->setText("LTY");
+  link_lty_label->setText("Line Style");
+  link_lty_label->setAlignment(Qt::AlignCenter);
   link_lty_combobox->setParent(link_config_widget);
   link_lty_combobox->setGeometry(g_scale * lk_combobox_pos_x1,
                                  g_scale * (lk_text_pos_y1 + lk_label_height + label_margin_y),
@@ -139,7 +142,8 @@ void FreeCircos::initLKConfigWidget(void) {
                                  g_scale * lk_label_width,
                                  g_scale * lk_label_height);
   link_colfun_label->setFont(*major_font);
-  link_colfun_label->setText("ColFun");
+  link_colfun_label->setText("Color Function");
+  link_colfun_label->setAlignment(Qt::AlignCenter);
   link_colfun_combobox->setParent(link_config_widget);
   link_colfun_combobox->setGeometry(g_scale * lk_combobox_pos_x2,
                                     g_scale * (lk_text_pos_y1 + lk_label_height + label_margin_y),
@@ -159,6 +163,7 @@ void FreeCircos::initLKConfigWidget(void) {
                                 g_scale * lk_label_height);
   link_color_label->setFont(*major_font);
   link_color_label->setText("Color");
+  link_color_label->setAlignment(Qt::AlignCenter);
   link_color_lineedit->setParent(link_config_widget);
   link_color_lineedit->setGeometry(g_scale * lk_combobox_pos_x1,
                                    g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
@@ -201,7 +206,8 @@ void FreeCircos::initLKConfigWidget(void) {
                               g_scale * lk_label_width,
                               g_scale * lk_label_height);
   link_lwd_label->setFont(*major_font);
-  link_lwd_label->setText("LineWidth");
+  link_lwd_label->setText("Line Width");
+  link_lwd_label->setAlignment(Qt::AlignCenter);
   link_lwd_lineedit->setParent(link_config_widget);
   link_lwd_lineedit->setGeometry(g_scale * lk_combobox_pos_x2,
                                  g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
