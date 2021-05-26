@@ -22,7 +22,7 @@ To Develop A Program for Painting Circos Figure.
 10. `link`界面 这里`ColFun` 没用就删掉吧（突然发现是有用的）
 然后当导入的是带`Stre` 参数的`link`   默认把 `thermometer` 那勾上 根据下面5个颜色框去调颜色
 然后导入没有`Stre` 参数的时候， 默认勾`fixed color` 那里  ，然后那里可以调出颜色框
-11. `link` 界面的颜色框 也默认到当前选定颜色吧
+11. ~~`link` 界面的颜色框 也默认到当前选定颜色吧~~
 12. ~~`backbone` 的颜色框 加一个 `Apply to all`和 `apply to category`（意思就是把同属一个category的gene 都替换成同一个颜色）
     Category 的颜色框 只加一个 `Apply to all`~~ 
     link  那个 `fixed color` 颜色框 加上`Apply to all/apply to category/apply to gene`
