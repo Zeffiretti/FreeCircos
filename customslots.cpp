@@ -350,7 +350,7 @@ void FreeCircos::onButtonClicked(bool) {
   if (func.compare("gradient-color") == 0) {
     ExtGradientButton *ext_btn = qobject_cast<ExtGradientButton *>(sender());
     qDebug() << "select a color";
-    QColor color = QColorDialog::getColor(Qt::white, link_config_widget, "Link Color", QColorDialog::ShowAlphaChannel);
+    QColor color = QColorDialog::getColor(ext_btn->getColor(), link_config_widget, "Link Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       ext_btn->setColor(color);
       link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
