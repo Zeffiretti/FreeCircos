@@ -223,6 +223,7 @@ class FreeCircos : public QMainWindow {
   ExtGradientButton *link_cm_button3;
   ExtGradientButton *link_cm_button4;
   ExtGradientButton *link_cm_button5;
+  QPushButton *link_confirm_color_button;
   QStringList link_header_list;
 
   color_widgets::ColorDialog *color_dialog_;

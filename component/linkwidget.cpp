@@ -53,6 +53,7 @@ void FreeCircos::initLKConfigWidget(void) {
   link_fixcolor_button = new QPushButton;
   link_apply_label = new QLabel;
   link_apply_combobox = new QComboBox;
+  link_confirm_color_button = new QPushButton;
   link_thermometer_colormap_onpanel_plot = new QCustomPlot;
   link_thermometer_colormap_oncanvas_plot = new QCustomPlot;
 
@@ -282,6 +283,15 @@ void FreeCircos::initLKConfigWidget(void) {
   link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
   link_thermometer_checkbox->setProperty("prefix", "link");
   link_thermometer_checkbox->setProperty("function", "link-thermometer");
+  link_confirm_color_button->setParent(link_config_widget);
+  link_confirm_color_button->setText(tr("Confirm Color"));
+  link_confirm_color_button->setGeometry(g_scale * lk_combobox_pos_x1,
+                                         g_scale * (lk_text_pos_y1 + 4 * (lk_label_height + label_margin_y)),
+                                         g_scale * 3 * lk_label_width,
+                                         g_scale * lk_label_height);
+  link_confirm_color_button->setProperty("prefix", "link");
+  link_confirm_color_button->setProperty("function", "link-confirm-color");
+  link_confirm_color_button->setEnabled(true);
 }
 
 void FreeCircos::connectLKSignalSlot(void) {
@@ -312,6 +322,8 @@ void FreeCircos::connectLKSignalSlot(void) {
   connect(link_fixcolor_checkbox, &QCheckBox::stateChanged,
           this, &FreeCircos::onCheckboxStateChanged);
   connect(link_fixcolor_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  connect(link_confirm_color_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
   connect(link_model, &QStandardItemModel::itemChanged,
           this, &FreeCircos::onStandardItemChanged);

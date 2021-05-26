@@ -354,12 +354,12 @@ void FreeCircos::onButtonClicked(bool) {
         QColorDialog::getColor(ext_btn->getColor(), link_config_widget, "Link Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       ext_btn->setColor(color);
-      link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
+//      link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
       link_thermometer_onpanel_color_map->setGradient(*circos->getLinkGradient());
-      link_thermometer_oncanvas_color_map->rescaleDataRange();
+//      link_thermometer_oncanvas_color_map->rescaleDataRange();
       link_thermometer_onpanel_color_map->rescaleDataRange();
       link_thermometer_colormap_onpanel_plot->replot();
-      link_thermometer_colormap_oncanvas_plot->replot();
+//      link_thermometer_colormap_oncanvas_plot->replot();
 //      circos->setLinkGradient(link_gradient);
 //      link_thermometer_onpanel_color_map->rescaleDataRange();
 //      link_thermometer_oncanvas_color_map->rescaleDataRange();
@@ -392,6 +392,15 @@ void FreeCircos::onButtonClicked(bool) {
           .arg(color.alpha());
       qDebug() << "Style is " << style;
       btn->setStyleSheet(style);
+    }
+  }
+  if (func.compare("link-confirm-color") == 0) {
+    if (link_thermometer_checkbox->checkState() == Qt::Checked) {
+      link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
+      link_thermometer_oncanvas_color_map->rescaleDataRange();
+      link_thermometer_colormap_oncanvas_plot->replot();
+    } else if (link_fixcolor_checkbox->checkState() == Qt::Checked) {
+      //| todo: set all links in one color
     }
   }
 }
@@ -754,16 +763,38 @@ void FreeCircos::onCheckboxStateChanged(int state) {
     }
     if (func.compare("link-thermometer") == 0) {
       switch (state) {
-        case Qt::CheckState::Checked:link_thermometer_colormap_oncanvas_plot->setVisible(true);
+        case Qt::CheckState::Checked: {
+          link_thermometer_colormap_oncanvas_plot->setVisible(true);
+          link_fixcolor_checkbox->setCheckState(Qt::CheckState::Unchecked);
           break;
-        case Qt::CheckState::Unchecked:link_thermometer_colormap_oncanvas_plot->setVisible(false);
+        }
+        case Qt::CheckState::Unchecked: {
+          link_thermometer_colormap_oncanvas_plot->setVisible(false);
+          link_fixcolor_checkbox->setCheckState(Qt::CheckState::Checked);
           break;
+        }
         default:break;
       }
     }
     if (func.compare("fix-color") == 0) {
-      link_fixcolor_button->setEnabled(state == Qt::CheckState::Checked);
-      link_apply_combobox->setEnabled(state == Qt::CheckState::Checked);
+      switch (state) {
+        case Qt::CheckState::Checked: {
+//          link_thermometer_colormap_oncanvas_plot->setVisible(true);
+          link_apply_combobox->setEnabled(true);
+          link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
+          link_fixcolor_button->setEnabled(true);
+          break;
+        }
+        case Qt::CheckState::Unchecked: {
+          link_apply_combobox->setEnabled(false);
+          link_thermometer_checkbox->setCheckState(Qt::CheckState::Checked);
+          link_fixcolor_button->setEnabled(false);
+          break;
+        }
+        default:break;
+//      link_fixcolor_button->setEnabled(state == Qt::CheckState::Checked);
+//      link_apply_combobox->setEnabled(state == Qt::CheckState::Checked);
+      }
     }
   }
 }
