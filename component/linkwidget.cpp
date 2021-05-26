@@ -142,73 +142,78 @@ void FreeCircos::initLKConfigWidget(void) {
   link_lty_combobox->setEnabled(true);
   link_lty_combobox->setProperty("function", "link-linestyle");
   link_lty_combobox->setProperty("prefix", "link");
-  link_colfun_label->setParent(link_config_widget);
-  link_colfun_label->setGeometry(g_scale * lk_text_pos_x2,
-                                 g_scale * (lk_text_pos_y1 + lk_label_height + label_margin_y),
-                                 g_scale * lk_label_width,
-                                 g_scale * lk_label_height);
-  link_colfun_label->setFont(*major_font);
-  link_colfun_label->setText("Color Function");
-  link_colfun_label->setAlignment(Qt::AlignCenter);
-  link_colfun_combobox->setParent(link_config_widget);
-  link_colfun_combobox->setGeometry(g_scale * lk_combobox_pos_x2,
-                                    g_scale * (lk_text_pos_y1 + lk_label_height + label_margin_y),
-                                    g_scale * lk_label_width,
-                                    g_scale * lk_label_height);
-  link_colfun_combobox->setFont(*major_font);
-  QStringList link_colfun_list;
-  link_colfun_list << "none" << "ramp" << "rainbow";
-  link_colfun_combobox->addItems(link_colfun_list);
-  link_colfun_combobox->setProperty("function", "link-colfun");
-  link_colfun_combobox->setProperty("prefix", "link");
-  link_colfun_combobox->setEnabled(false);
-  link_color_label->setParent(link_config_widget);
-  link_color_label->setGeometry(g_scale * lk_text_pos_x1,
-                                g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
-                                g_scale * lk_label_width,
-                                g_scale * lk_label_height);
-  link_color_label->setFont(*major_font);
-  link_color_label->setText("Color");
-  link_color_label->setAlignment(Qt::AlignCenter);
-  link_color_lineedit->setParent(link_config_widget);
-  link_color_lineedit->setGeometry(g_scale * lk_combobox_pos_x1,
-                                   g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
-                                   g_scale * lk_label_width,
-                                   g_scale * lk_label_height);
-  link_color_lineedit->setValidator(new QDoubleValidator(10, 50, 2, this));
-  link_color_lineedit->setEnabled(true);
-  link_color_lineedit->setText("10.00");
-  link_color_lineedit->setProperty("prefix", "link");
-  link_color_lineedit->setProperty("function", "link-line-color");
-  line_color_combobox->setParent(link_config_widget);
-  line_color_combobox->setGeometry(g_scale * lk_combobox_pos_x1,
-                                   g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
-                                   g_scale * lk_label_width,
-                                   g_scale * lk_label_height);
-  line_color_combobox->setValidator(new QDoubleValidator(0, 100, 2, this));
-//  line_stre_combobox->setVisible(false);
-  line_color_combobox->setEnabled(false);
-  QStringList rainbow_color_list;
-  rainbow_color_list << "blue" << "green" << "yellow" << "red" << "darked";
-  line_color_combobox->addItems(rainbow_color_list);
-  line_color_combobox->setProperty("prefix", "link");
-  line_color_combobox->setProperty("function", "link-line-color");
-  QStringList link_color_indicator = rainbow_color_list;
-  QStringListModel *link_color_listmodel = new QStringListModel;
-  link_color_listmodel->setStringList(link_color_indicator);
-//  link_color_completer = new QCompleter;
-//  link_color_completer->setModel(link_color_listmodel);
-//  link_color_completer->setCaseSensitivity(Qt::CaseInsensitive);
-//  link_color_completer->setFilterMode(Qt::MatchRecursive);
-  line_color_combobox->setEditable(true);
-//  line_color_combobox->setCompleter(link_color_completer);
-  line_color_combobox->setToolTip("remind");
-  line_color_combobox->setLineEdit(link_color_lineedit);
+//  link_colfun_label->setParent(link_config_widget);
+//  link_colfun_label->setGeometry(g_scale * lk_text_pos_x2,
+//                                 g_scale * (lk_text_pos_y1 + lk_label_height + label_margin_y),
+//                                 g_scale * lk_label_width,
+//                                 g_scale * lk_label_height);
+//  link_colfun_label->setFont(*major_font);
+//  link_colfun_label->setText("Color Function");
+//  link_colfun_label->setAlignment(Qt::AlignCenter);
+
+//  link_colfun_combobox->setParent(link_config_widget);
+//  link_colfun_combobox->setGeometry(g_scale * lk_combobox_pos_x2,
+//                                    g_scale * (lk_text_pos_y1 + lk_label_height + label_margin_y),
+//                                    g_scale * lk_label_width,
+//                                    g_scale * lk_label_height);
+//  link_colfun_combobox->setFont(*major_font);
+//  QStringList link_colfun_list;
+//  link_colfun_list << "none" << "ramp" << "rainbow";
+//  link_colfun_combobox->addItems(link_colfun_list);
+//  link_colfun_combobox->setProperty("function", "link-colfun");
+//  link_colfun_combobox->setProperty("prefix", "link");
+//  link_colfun_combobox->setEnabled(false);
+
+//  link_color_label->setParent(link_config_widget);
+//  link_color_label->setGeometry(g_scale * lk_text_pos_x1,
+//                                g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
+//                                g_scale * lk_label_width,
+//                                g_scale * lk_label_height);
+//  link_color_label->setFont(*major_font);
+//  link_color_label->setText("Color");
+//  link_color_label->setAlignment(Qt::AlignCenter);
+
+//  link_color_lineedit->setParent(link_config_widget);
+//  link_color_lineedit->setGeometry(g_scale * lk_combobox_pos_x1,
+//                                   g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
+//                                   g_scale * lk_label_width,
+//                                   g_scale * lk_label_height);
+//  link_color_lineedit->setValidator(new QDoubleValidator(10, 50, 2, this));
+//  link_color_lineedit->setEnabled(true);
+//  link_color_lineedit->setText("10.00");
+//  link_color_lineedit->setProperty("prefix", "link");
+//  link_color_lineedit->setProperty("function", "link-line-color");
+
+//  line_color_combobox->setParent(link_config_widget);
+//  line_color_combobox->setGeometry(g_scale * lk_combobox_pos_x1,
+//                                   g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
+//                                   g_scale * lk_label_width,
+//                                   g_scale * lk_label_height);
+//  line_color_combobox->setValidator(new QDoubleValidator(0, 100, 2, this));
+////  line_stre_combobox->setVisible(false);
+//  line_color_combobox->setEnabled(false);
+//  QStringList rainbow_color_list;
+//  rainbow_color_list << "blue" << "green" << "yellow" << "red" << "darked";
+//  line_color_combobox->addItems(rainbow_color_list);
+//  line_color_combobox->setProperty("prefix", "link");
+//  line_color_combobox->setProperty("function", "link-line-color");
+//  QStringList link_color_indicator = rainbow_color_list;
+//  QStringListModel *link_color_listmodel = new QStringListModel;
+//  link_color_listmodel->setStringList(link_color_indicator);
+////  link_color_completer = new QCompleter;
+////  link_color_completer->setModel(link_color_listmodel);
+////  link_color_completer->setCaseSensitivity(Qt::CaseInsensitive);
+////  link_color_completer->setFilterMode(Qt::MatchRecursive);
+//  line_color_combobox->setEditable(true);
+////  line_color_combobox->setCompleter(link_color_completer);
+//  line_color_combobox->setToolTip("remind");
+//  line_color_combobox->setLineEdit(link_color_lineedit);
 //  link_color_indicator << QString(tr"blue") << QString(tr"green") << QString(tr"yellow");
+
   link_lwd_label->setParent(link_config_widget);
   link_lwd_label->setParent(link_config_widget);
   link_lwd_label->setGeometry(g_scale * lk_text_pos_x2,
-                              g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
+                              g_scale * (lk_text_pos_y1 + 1 * (lk_label_height + label_margin_y)),
                               g_scale * lk_label_width,
                               g_scale * lk_label_height);
   link_lwd_label->setFont(*major_font);
@@ -216,7 +221,7 @@ void FreeCircos::initLKConfigWidget(void) {
   link_lwd_label->setAlignment(Qt::AlignCenter);
   link_lwd_lineedit->setParent(link_config_widget);
   link_lwd_lineedit->setGeometry(g_scale * lk_combobox_pos_x2,
-                                 g_scale * (lk_text_pos_y1 + 2 * (lk_label_height + label_margin_y)),
+                                 g_scale * (lk_text_pos_y1 + 1 * (lk_label_height + label_margin_y)),
                                  g_scale * lk_label_width,
                                  g_scale * lk_label_height);
   link_lwd_lineedit->setValidator(new QDoubleValidator(0, 20, 2, this));
@@ -266,7 +271,7 @@ void FreeCircos::initLKConfigWidget(void) {
   link_apply_combobox->addItems(link_apply_list);
   link_apply_combobox->setProperty("prefix", "link");
   link_apply_combobox->setProperty("function", "link-fixcolor-apply");
-  QStringList link_apply_indicator = rainbow_color_list;
+  QStringList link_apply_indicator = link_apply_list;
   QStringListModel *link_apply_listmodel = new QStringListModel;
   link_apply_listmodel->setStringList(link_apply_indicator);
 //  link_apply_combobox->setEditable(true);
