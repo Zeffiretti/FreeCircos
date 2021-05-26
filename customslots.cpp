@@ -350,7 +350,8 @@ void FreeCircos::onButtonClicked(bool) {
   if (func.compare("gradient-color") == 0) {
     ExtGradientButton *ext_btn = qobject_cast<ExtGradientButton *>(sender());
     qDebug() << "select a color";
-    QColor color = QColorDialog::getColor(ext_btn->getColor(), link_config_widget, "Link Color", QColorDialog::ShowAlphaChannel);
+    QColor color =
+        QColorDialog::getColor(ext_btn->getColor(), link_config_widget, "Link Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       ext_btn->setColor(color);
       link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
@@ -376,6 +377,21 @@ void FreeCircos::onButtonClicked(bool) {
 //      default:
 //        break;
 //      }
+    }
+  }
+  if (func.compare("link-fix-color") == 0) {
+    QColor color = QColorDialog::getColor(btn->palette().color(QPalette::ColorRole::Button),
+                                          link_config_widget,
+                                          tr("Fixed Color"),
+                                          QColorDialog::ShowAlphaChannel);
+    if (color.isValid()) {
+      QString style = QString("background-color: rgba(%1, %2, %3, %4)")
+          .arg(color.red())
+          .arg(color.green())
+          .arg(color.blue())
+          .arg(color.alpha());
+      qDebug() << "Style is " << style;
+      btn->setStyleSheet(style);
     }
   }
 }
@@ -744,6 +760,10 @@ void FreeCircos::onCheckboxStateChanged(int state) {
           break;
         default:break;
       }
+    }
+    if (func.compare("fix-color") == 0) {
+      link_fixcolor_button->setEnabled(state == Qt::CheckState::Checked);
+      link_apply_combobox->setEnabled(state == Qt::CheckState::Checked);
     }
   }
 }

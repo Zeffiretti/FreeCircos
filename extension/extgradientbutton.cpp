@@ -43,7 +43,7 @@ void ExtGradientButton::onColorChanged(int i, QColor c) {
   qDebug() << color;
   QPalette pal = this->palette();
 //  pal.setColor(QPalette::Button, color);
-  pal.setBrush(QPalette::Button, color);
+//  pal.setBrush(QPalette::Button, color);
   QString style = QString("background-color: rgb(%1, %2, %3, %4)")
       .arg(color.red())
       .arg(color.green())

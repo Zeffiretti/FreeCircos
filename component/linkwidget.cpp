@@ -49,8 +49,13 @@ void FreeCircos::initLKConfigWidget(void) {
 //  link_color_completer = new QCompleter;
   link_lwd_label = new QLabel;
   link_lwd_lineedit = new QLineEdit;
+  link_fixcolor_checkbox = new QCheckBox;
+  link_fixcolor_button = new QPushButton;
+  link_apply_label = new QLabel;
+  link_apply_combobox = new QComboBox;
   link_thermometer_colormap_onpanel_plot = new QCustomPlot;
   link_thermometer_colormap_oncanvas_plot = new QCustomPlot;
+
   link_config_widget->setEnabled(true);
   link_config_widget->setParent(link_widget);
   link_config_widget->setGeometry(g_scale * lk_config_pos_x,
@@ -218,9 +223,58 @@ void FreeCircos::initLKConfigWidget(void) {
   link_lwd_lineedit->setFont(*major_font);
   link_lwd_lineedit->setProperty("prefix", "link");
   link_lwd_lineedit->setProperty("function", "link-line-width");
+  link_fixcolor_checkbox->setParent(link_config_widget);
+  link_fixcolor_checkbox->setGeometry(g_scale * (lk_text_pos_x1 + 0.1 * lk_label_width),
+                                      g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
+                                      g_scale * (0.9 * lk_label_width),
+                                      g_scale * lk_label_height);
+  link_fixcolor_checkbox->setText("Fixed color");
+//  link_directional_checkbox.
+  link_fixcolor_checkbox->setFont(*major_font);
+  link_fixcolor_checkbox->setCheckState(Qt::CheckState::Unchecked);
+  link_fixcolor_checkbox->setProperty("prefix", "link");
+  link_fixcolor_checkbox->setProperty("function", "fix-color");
+  link_fixcolor_button->setParent(link_config_widget);
+  link_fixcolor_button->setGeometry(g_scale * lk_combobox_pos_x1,
+                                    g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
+                                    g_scale * lk_label_width,
+                                    g_scale * lk_label_height);
+  link_fixcolor_button->setProperty("prefix", "link");
+  link_fixcolor_button->setProperty("function", "link-fix-color");
+  link_fixcolor_button->setStyleSheet("background-color: rgba(200, 255, 255, 127)");
+  link_fixcolor_button->setEnabled(false);
+  link_apply_label->setParent(link_config_widget);
+  link_apply_label->setParent(link_config_widget);
+  link_apply_label->setGeometry(g_scale * lk_text_pos_x2,
+                                g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
+                                g_scale * lk_label_width,
+                                g_scale * lk_label_height);
+  link_apply_label->setFont(*major_font);
+  link_apply_label->setText("apply to");
+  link_apply_label->setAlignment(Qt::AlignCenter);
+  link_apply_combobox->setParent(link_config_widget);
+  link_apply_combobox->setGeometry(g_scale * lk_combobox_pos_x2,
+                                   g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
+                                   g_scale * lk_label_width,
+                                   g_scale * lk_label_height);
+  link_apply_combobox->setValidator(new QDoubleValidator(0, 100, 2, this));
+//  line_stre_combobox->setVisible(false);
+  link_apply_combobox->setEnabled(false);
+  QStringList link_apply_list;
+  link_apply_list << "all" << "category" << "gene";
+  link_apply_combobox->addItems(link_apply_list);
+  link_apply_combobox->setProperty("prefix", "link");
+  link_apply_combobox->setProperty("function", "link-fixcolor-apply");
+  QStringList link_apply_indicator = rainbow_color_list;
+  QStringListModel *link_apply_listmodel = new QStringListModel;
+  link_apply_listmodel->setStringList(link_apply_indicator);
+//  link_apply_combobox->setEditable(true);
+//  link_apply_combobox->setToolTip("remind");
+//  link_apply_combobox->setLineEdit(link_color_lineedit);
+
   link_thermometer_checkbox->setParent(link_config_widget);
   link_thermometer_checkbox->setGeometry(g_scale * lk_text_pos_x1,
-                                         g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
+                                         g_scale * (lk_text_pos_y1 + 4 * (lk_label_height + label_margin_y)),
                                          g_scale * lk_label_width,
                                          g_scale * lk_label_height);
   link_thermometer_checkbox->setFont(*major_font);
@@ -255,6 +309,10 @@ void FreeCircos::connectLKSignalSlot(void) {
           this, &FreeCircos::onLineEditTextChanged);
   connect(link_color_lineedit, &QLineEdit::textChanged,
           this, &FreeCircos::onLineEditTextChanged);
+  connect(link_fixcolor_checkbox, &QCheckBox::stateChanged,
+          this, &FreeCircos::onCheckboxStateChanged);
+  connect(link_fixcolor_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
   connect(link_model, &QStandardItemModel::itemChanged,
           this, &FreeCircos::onStandardItemChanged);
 //  connect(this, &FreeCircos::setLinkColor,
