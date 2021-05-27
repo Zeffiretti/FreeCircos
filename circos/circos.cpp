@@ -171,7 +171,7 @@ Circos::DataProcessState Circos::dataToLink(void) {
   if (!m_datas.empty()) {
     QListIterator<QList<QVariant> > it(m_datas);
 //    it.peekNext();
-    QList<QVariant> data = it.next();
+    QList < QVariant > data = it.next();
     for (int i = 0; i < data.size(); ++i) {
       if (data.at(i).toString().toUpper().compare("STRE") == 0) {
         stre_index = i;
@@ -244,7 +244,9 @@ Circos::DataProcessState Circos::dataToLink(void) {
 
       Link *l = new Link;
       l->setSGN(source_gene_name);
+      findGene(source_gene_name)->addLink(l, "start");
       l->setDGN(dest_gene_name);
+      findGene(dest_gene_name)->addLink(l, "end");
       l->setSourceStart(source_gene_start);
       if (source_gene_end > 0) {
         l->setSourceEnd(source_gene_end);
@@ -296,7 +298,7 @@ Circos::DataProcessState Circos::dataToTrackArrow(void) {
                             QMessageBox::Ok);
       return DataProcessState::Error;
     }
-    QList<QVariant> data;
+    QList < QVariant > data;
     m_datas.removeAt(0);
         foreach (data, m_datas) {
         TrackArrow *ta = new TrackArrow;
@@ -698,13 +700,17 @@ QString Circos::getLinkColorFunStr(int index) {
   return getLink(index)->getColorFunString();
 }
 
-void Circos::setLinkColorFun(int index, Link::ColorFuns cf) {
+void Circos::setLinkColorFunc(int index, Link::ColorFuns cf) {
   getLink(index)->setColorFun(cf);
 }
 
-Link::ColorFuns Circos::getLinkColorFun(int index) {
+void Circos::setLinkColorFunc(Link::ColorFuns cf) { color_funs_ = cf; }
+
+Link::ColorFuns Circos::getLinkColorFunc(int index) {
   return getLink(index)->getColorFun();
 }
+
+Link::ColorFuns Circos::getLinkColorFunc(void) { return color_funs_; }
 
 void Circos::setLinkColorName(int index, const QString &name) {
   getLink(index)->setColorName(name);
@@ -842,8 +848,8 @@ void Circos::onGeneAngleChanged(const QString &n, qreal s, qreal e) {
 //  getLink(index)->setColor(c);
 //}
 
-void Circos::onLinkColorFunChanged(int index) {
-  Link::ColorFuns cf = getLinkColorFun(index);
+void Circos::onLinkColorFuncChanged(int index) {
+  Link::ColorFuns cf = getLinkColorFunc(index);
   if (cf.testFlag(Link::ColorFun::Ramp)) {
   } else if (cf.testFlag(Link::ColorFun::Rainbow)) {
   } else {

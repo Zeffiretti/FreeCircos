@@ -212,6 +212,7 @@ class FreeCircos : public QMainWindow {
   QPushButton *link_fixcolor_button;
   QLabel *link_apply_label;
   QComboBox *link_apply_combobox;
+  QComboBox *link_apply2_combobox;
   QCustomPlot *link_thermometer_colormap_onpanel_plot;
   QCustomPlot *link_thermometer_colormap_oncanvas_plot;
   QCPColorMap *link_thermometer_onpanel_color_map;

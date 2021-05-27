@@ -138,8 +138,8 @@ void FreeCircos::onButtonClicked(bool) {
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\link file.xlsx");
 #endif
-    connect(circos, &Circos::linkColorFunChanged,
-            circos, &Circos::onLinkColorFunChanged);
+//    connect(circos, &Circos::linkColorFuncChanged,
+//            circos, &Circos::onLinkColorFuncChanged);
     circos->dataToLink();
     circos->setLinkEnable(true);
     //addCategoryToTable(backbone_table, backbone_model, circos);
@@ -519,6 +519,8 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
   }
   if (prefix.compare("link") == 0) {
     if (func.compare("link-table-model") == 0) {
+      link_fixcolor_checkbox->setEnabled(true);
+      link_thermometer_checkbox->setEnabled(true);
       link_colfun_combobox->setEnabled(true);
 //      link_stre_lineedit->setEnabled(true);
       line_color_combobox->setEnabled(true);
@@ -631,14 +633,14 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
 //        line_stre_combobox->setVisible(false);
 //          circos->setlink
         line_color_combobox->setEnabled(false);
-        circos->setLinkColorFun(index, Link::ColorFun::Ramp);
+        circos->setLinkColorFunc(index, Link::ColorFun::Ramp);
 //                emit link_stre_lineedit->textChanged(
 //                    link_stre_lineedit->text());
       } else if (text.compare("rainbow") == 0) {
 //        link_stre_lineedit->setVisible(false);
 //        link_stre_lineedit->setEnabled(false);
 //        line_stre_combobox->setVisible(true);
-        circos->setLinkColorFun(index, Link::ColorFun::Rainbow);
+        circos->setLinkColorFunc(index, Link::ColorFun::Rainbow);
         line_color_combobox->setEnabled(true);
         emit line_color_combobox->currentTextChanged(
             line_color_combobox->currentText());
@@ -648,7 +650,7 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
 //                //line_stre_combobox->setVisible(false);
 //                line_stre_combobox->setEnabled(false);
 //                emit setLinkColor(index, QColor(Qt::black));
-        circos->setLinkColorFun(index, Link::ColorFun::None);
+        circos->setLinkColorFunc(index, Link::ColorFun::None);
 //        qreal stre_code = circos->getLinkStre(index);
 //        QColor c = QColor(link_gradient->color(stre_code,
 //                                               QCPRange(circos->getLinkStreMin(),
@@ -764,6 +766,7 @@ void FreeCircos::onCheckboxStateChanged(int state) {
     if (func.compare("link-thermometer") == 0) {
       switch (state) {
         case Qt::CheckState::Checked: {
+//          circos.setlinkc
           link_thermometer_colormap_oncanvas_plot->setVisible(true);
           link_fixcolor_checkbox->setCheckState(Qt::CheckState::Unchecked);
           break;
@@ -781,12 +784,14 @@ void FreeCircos::onCheckboxStateChanged(int state) {
         case Qt::CheckState::Checked: {
 //          link_thermometer_colormap_oncanvas_plot->setVisible(true);
           link_apply_combobox->setEnabled(true);
+          link_apply2_combobox->setEnabled(true);
           link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
           link_fixcolor_button->setEnabled(true);
           break;
         }
         case Qt::CheckState::Unchecked: {
           link_apply_combobox->setEnabled(false);
+          link_apply2_combobox->setEnabled(true);
           link_thermometer_checkbox->setCheckState(Qt::CheckState::Checked);
           link_fixcolor_button->setEnabled(false);
           break;

@@ -10,6 +10,9 @@ class Link {
   enum ColorFun {
     Ramp,
     Rainbow,
+    Gene,
+    Category,
+    All,
     None
   };
   Q_DECLARE_FLAGS(ColorFuns, ColorFun)

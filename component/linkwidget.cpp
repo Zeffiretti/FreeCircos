@@ -53,6 +53,7 @@ void FreeCircos::initLKConfigWidget(void) {
   link_fixcolor_button = new QPushButton;
   link_apply_label = new QLabel;
   link_apply_combobox = new QComboBox;
+  link_apply2_combobox = new QComboBox;
   link_confirm_color_button = new QPushButton;
   link_thermometer_colormap_onpanel_plot = new QCustomPlot;
   link_thermometer_colormap_oncanvas_plot = new QCustomPlot;
@@ -237,6 +238,7 @@ void FreeCircos::initLKConfigWidget(void) {
   link_fixcolor_checkbox->setText("Fixed color");
 //  link_directional_checkbox.
   link_fixcolor_checkbox->setFont(*major_font);
+  link_fixcolor_checkbox->setEnabled(false);
   link_fixcolor_checkbox->setCheckState(Qt::CheckState::Unchecked);
   link_fixcolor_checkbox->setProperty("prefix", "link");
   link_fixcolor_checkbox->setProperty("function", "fix-color");
@@ -261,7 +263,7 @@ void FreeCircos::initLKConfigWidget(void) {
   link_apply_combobox->setParent(link_config_widget);
   link_apply_combobox->setGeometry(g_scale * lk_combobox_pos_x2,
                                    g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
-                                   g_scale * lk_label_width,
+                                   g_scale * 0.5 * lk_label_width,
                                    g_scale * lk_label_height);
   link_apply_combobox->setValidator(new QDoubleValidator(0, 100, 2, this));
 //  line_stre_combobox->setVisible(false);
@@ -271,9 +273,22 @@ void FreeCircos::initLKConfigWidget(void) {
   link_apply_combobox->addItems(link_apply_list);
   link_apply_combobox->setProperty("prefix", "link");
   link_apply_combobox->setProperty("function", "link-fixcolor-apply");
-  QStringList link_apply_indicator = link_apply_list;
-  QStringListModel *link_apply_listmodel = new QStringListModel;
-  link_apply_listmodel->setStringList(link_apply_indicator);
+  link_apply2_combobox->setParent(link_config_widget);
+  link_apply2_combobox->setGeometry(g_scale * (lk_combobox_pos_x2 + 0.5 * lk_label_width),
+                                    g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
+                                    g_scale * 0.5 * lk_label_width,
+                                    g_scale * lk_label_height);
+  link_apply2_combobox->setValidator(new QDoubleValidator(0, 100, 2, this));
+//  line_stre_combobox->setVisible(false);
+  link_apply2_combobox->setEnabled(false);
+  QStringList link_apply2_list;
+  link_apply2_list << "both" << "start" << "end";
+  link_apply2_combobox->addItems(link_apply2_list);
+  link_apply2_combobox->setProperty("prefix", "link");
+  link_apply2_combobox->setProperty("function", "link-fixcolor-apply2");
+//  QStringList link_apply_indicator = link_apply_list;
+//  QStringListModel *link_apply_listmodel = new QStringListModel;
+//  link_apply_listmodel->setStringList(link_apply_indicator);
 //  link_apply_combobox->setEditable(true);
 //  link_apply_combobox->setToolTip("remind");
 //  link_apply_combobox->setLineEdit(link_color_lineedit);
@@ -288,8 +303,9 @@ void FreeCircos::initLKConfigWidget(void) {
   link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
   link_thermometer_checkbox->setProperty("prefix", "link");
   link_thermometer_checkbox->setProperty("function", "link-thermometer");
+  link_thermometer_checkbox->setEnabled(false);
   link_confirm_color_button->setParent(link_config_widget);
-  link_confirm_color_button->setText(tr("Confirm Color"));
+  link_confirm_color_button->setText(tr("Confirm This Color"));
   link_confirm_color_button->setGeometry(g_scale * lk_combobox_pos_x1,
                                          g_scale * (lk_text_pos_y1 + 4 * (lk_label_height + label_margin_y)),
                                          g_scale * 3 * lk_label_width,
