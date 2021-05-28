@@ -244,7 +244,9 @@ Circos::DataProcessState Circos::dataToLink(void) {
 
       Link *l = new Link;
       l->setSGN(source_gene_name);
+      findGene(source_gene_name)->addLink(l, "start");
       l->setDGN(dest_gene_name);
+      findGene(dest_gene_name)->addLink(l, "end");
       l->setSourceStart(source_gene_start);
       if (source_gene_end > 0) {
         l->setSourceEnd(source_gene_end);
@@ -517,29 +519,31 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
 //                  emit setLinkColor(index, c);
 //          l->set
 //      }
-        Link::ColorFuns cf = l->getColorFun();
-        if (cf.testFlag(Link::ColorFun::Ramp)) {
-          qreal stre_code = l->getStreCode();
-          QColor c = QColor(link_gradient->color(stre_code,
-                                                 QCPRange(getLinkStreMin(), getLinkStreMax())));
-          l->setColor(c);
-        } else if (cf.testFlag(Link::ColorFun::Rainbow)) {
-          switch (qrand() % 5) {
-            case 0:l->setColor(Qt::blue);
-              break;
-            case 1:l->setColor(Qt::green);
-              break;
-            case 2:l->setColor(Qt::yellow);
-              break;
-            case 3:l->setColor(Qt::red);
-              break;
-            case 4:l->setColor(Qt::darkRed);
-              break;
-            default:break;
-          }
-        } else {
-          l->setColor(Qt::black);
-        }
+
+
+//        Link::ColorFuns cf = l->getColorFun();
+//        if (cf.testFlag(Link::ColorFun::Ramp)) {
+//          qreal stre_code = l->getStreCode();
+//          QColor c = QColor(link_gradient->color(stre_code,
+//                                                 QCPRange(getLinkStreMin(), getLinkStreMax())));
+//          l->setColor(c);
+//        } else if (cf.testFlag(Link::ColorFun::Rainbow)) {
+//          switch (qrand() % 5) {
+//            case 0:l->setColor(Qt::blue);
+//              break;
+//            case 1:l->setColor(Qt::green);
+//              break;
+//            case 2:l->setColor(Qt::yellow);
+//              break;
+//            case 3:l->setColor(Qt::red);
+//              break;
+//            case 4:l->setColor(Qt::darkRed);
+//              break;
+//            default:break;
+//          }
+//        } else {
+//          l->setColor(Qt::black);
+//        }
         custom_link->setLineWidth(1);
         custom_link->setLinkClass(lc);
         custom_link->setHoleSize(getLKHole());
@@ -698,13 +702,75 @@ QString Circos::getLinkColorFunStr(int index) {
   return getLink(index)->getColorFunString();
 }
 
-void Circos::setLinkColorFun(int index, Link::ColorFuns cf) {
+void Circos::setLinkColorFunc(int index, Link::ColorFuns cf, QColor c) {
+  if (cf.testFlag(Link::ColorFun::Ramp)) {
+    for (auto &l:links) {
+      qreal stre_code = l->getStreCode();
+      QColor c = QColor(link_gradient->color(stre_code,
+                                             QCPRange(getLinkStreMin(), getLinkStreMax())));
+      l->setColor(c);
+    }
+    qDebug() << "This is Link::ColorFun::Ramp";
+  } else if (cf.testFlag(Link::ColorFun::All)) {
+    for (auto &l:links) { l->setColor(c); }
+    qDebug() << "This is Link::ColorFun::All";
+  } else if (cf.testFlag(Link::ColorFun::Single)) {
+    getLink(index)->setColor(c);
+    qDebug() << "This is Link::ColorFun::Single";
+  } else if (cf.testFlag(Link::ColorFun::Gene)) {
+    Link *l = getLink(index);
+    qDebug() << "This is Link::ColorFun::Gene";
+    if (cf.testFlag(Link::ColorFun::Start)) {
+      Gene *g = findGene(l->getSGN());
+      auto ls = g->getStartLinks();
+      for (auto &l_i:ls) { l_i->setColor(c); }
+      qDebug() << "This is Link::ColorFun::Start";
+    }
+    if (cf.testFlag(Link::ColorFun::End)) {
+      Gene *g = findGene(l->getDGN());
+      auto ls = g->getStartLinks();
+      for (auto &l_i:ls) { l_i->setColor(c); }
+      qDebug() << "This is Link::ColorFun::End";
+    }
+  } else if (cf.testFlag(Link::ColorFun::Category)) {
+    Link *l = getLink(index);
+    qDebug() << "This is Link::ColorFun::Category";
+    if (cf.testFlag(Link::ColorFun::Start)) {
+      Gene *g1 = findGene(l->getSGN());
+      Category *cat = g1->getCategory();
+      auto gs_n = cat->getGenes();
+      for (auto &g_n:gs_n) {
+        Gene *g = findGene(g_n);
+        auto ls = g->getStartLinks();
+        for (auto &l_i:ls) { l_i->setColor(c); }
+      }
+      qDebug() << "This is Link::ColorFun::Start";
+    }
+    if (cf.testFlag(Link::ColorFun::End)) {
+      Gene *g1 = findGene(l->getDGN());
+      Category *cat = g1->getCategory();
+      auto gs_n = cat->getGenes();
+      for (auto &g_n:gs_n) {
+        Gene *g = findGene(g_n);
+        auto ls = g->getStartLinks();
+        for (auto &l_i:ls) { l_i->setColor(c); }
+      }
+      qDebug() << "This is Link::ColorFun::End";
+    }
+  }
+}
+
+void Circos::setLinkColorFunc(int index, Link::ColorFuns cf) {
   getLink(index)->setColorFun(cf);
 }
 
-Link::ColorFuns Circos::getLinkColorFun(int index) {
+void Circos::setLinkColorFunc(Link::ColorFuns cf) { color_funs_ = cf; }
+
+Link::ColorFuns Circos::getLinkColorFunc(int index) {
   return getLink(index)->getColorFun();
 }
+
+Link::ColorFuns Circos::getLinkColorFunc(void) { return color_funs_; }
 
 void Circos::setLinkColorName(int index, const QString &name) {
   getLink(index)->setColorName(name);
@@ -842,8 +908,8 @@ void Circos::onGeneAngleChanged(const QString &n, qreal s, qreal e) {
 //  getLink(index)->setColor(c);
 //}
 
-void Circos::onLinkColorFunChanged(int index) {
-  Link::ColorFuns cf = getLinkColorFun(index);
+void Circos::onLinkColorFuncChanged(int index) {
+  Link::ColorFuns cf = getLinkColorFunc(index);
   if (cf.testFlag(Link::ColorFun::Ramp)) {
   } else if (cf.testFlag(Link::ColorFun::Rainbow)) {
   } else {

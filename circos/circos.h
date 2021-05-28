@@ -59,13 +59,20 @@ class Circos : public QObject {
   void setCategoryEnable(bool b);
   bool getCategoryEnable(void);
 
+  Link *getLink(int index);
+  int getLinkNum(void);
+  void clearLink(void);
+
   void setLinkEnable(bool b);
   bool getLinkEnable(void);
 
   void setLinkColorFunStr(int index, const QString &cf);
   QString getLinkColorFunStr(int index);
-  void setLinkColorFun(int index, Link::ColorFuns cf);
-  Link::ColorFuns getLinkColorFun(int index);
+  void setLinkColorFunc(int index, Link::ColorFuns cf, QColor c);
+  void setLinkColorFunc(int index, Link::ColorFuns cf);
+  void setLinkColorFunc(Link::ColorFuns cf);
+  Link::ColorFuns getLinkColorFunc(int index);
+  Link::ColorFuns getLinkColorFunc(void);
 
   void setLinkColorName(int index, const QString &name);
   QString getLinkColorName(int index);
@@ -84,7 +91,6 @@ class Circos : public QObject {
 
   void setLinkLineWidth(qreal w);
   qreal getLinkLineWidth(void);
-
   void setLinkStre(qreal min, qreal max);
   qreal getLinkStre(int index);
   qreal getLinkStreMin(void);
@@ -100,10 +106,6 @@ class Circos : public QObject {
   void appendBackBoneSequence(int index);
   int getBackBoneSequence(int index);
   int getGeneNum(void);
-
-  Link *getLink(int index);
-  int getLinkNum(void);
-  void clearLink(void);
 
   void setTrackEnabled(bool b);
   bool getTrackEnabled(void);
@@ -152,7 +154,7 @@ class Circos : public QObject {
  public slots:
   void onGeneAngleChanged(const QString &n, qreal s, qreal e);
 //  void onLinkColorSet(int index, QColor c);
-  void onLinkColorFunChanged(int index);
+  void onLinkColorFuncChanged(int index);
   void setBBHole(qreal bbh) {
     back_bone_inner_radius = bbh;
   }
@@ -189,7 +191,7 @@ class Circos : public QObject {
 //    category.at(0).
   }
  signals:
-  void linkColorFunChanged(int index);
+  void linkColorFuncChanged(int index);
 
  private:
   // global paremater
@@ -215,6 +217,7 @@ class Circos : public QObject {
   CustomLinkCanvas::LinkTypes link_type = CustomLinkCanvas::LinkType::IntroOut;
   CustomLink::LinkDirections link_arrow_direction = CustomLink::LinkDirection::NoArrow;
   Qt::PenStyle link_line_style = Qt::PenStyle::SolidLine;
+  Link::ColorFuns color_funs_;
   qreal link_line_width = 1;
   qreal link_stre_min = 0, link_stre_max = 10;
   QList<TrackArrow *> track_arrow;

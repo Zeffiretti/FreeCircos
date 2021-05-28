@@ -208,6 +208,11 @@ class FreeCircos : public QMainWindow {
 //  QCompleter *link_color_completer;
   QLabel *link_lwd_label;
   QLineEdit *link_lwd_lineedit;
+  QCheckBox *link_fixcolor_checkbox;
+  QPushButton *link_fixcolor_button;
+  QLabel *link_apply_label;
+  QComboBox *link_apply_combobox;
+  QComboBox *link_apply2_combobox;
   QCustomPlot *link_thermometer_colormap_onpanel_plot;
   QCustomPlot *link_thermometer_colormap_oncanvas_plot;
   QCPColorMap *link_thermometer_onpanel_color_map;
@@ -219,6 +224,7 @@ class FreeCircos : public QMainWindow {
   ExtGradientButton *link_cm_button3;
   ExtGradientButton *link_cm_button4;
   ExtGradientButton *link_cm_button5;
+  QPushButton *link_confirm_color_button;
   QStringList link_header_list;
 
   color_widgets::ColorDialog *color_dialog_;

@@ -43,6 +43,9 @@ class Gene {
   void setCategory(Category *);
   void addLink(Link *);
   void addLink(Link *, CustomLink::LinkGenes);
+  void addLink(Link *, const QString &);
+  QList<Link *> getStartLinks(void);
+  QList<Link *> getEndLinks(void);
   GapRule getGapRule(void);
   void setGapRule(GapRule rule);
 
@@ -57,7 +60,8 @@ class Gene {
   CustomSlice::LabelPosition label_position;
   CustomSlice::LabelState label_state;
   Category *cat;
-  QList<Link *> links;
+  QList<Link *> start_links; //store those links starting here
+  QList<Link *> end_links;   //store those links ending here
   GapRule gap_rule_;
 };
 

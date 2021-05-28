@@ -138,8 +138,8 @@ void FreeCircos::onButtonClicked(bool) {
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\link file.xlsx");
 #endif
-    connect(circos, &Circos::linkColorFunChanged,
-            circos, &Circos::onLinkColorFunChanged);
+//    connect(circos, &Circos::linkColorFuncChanged,
+//            circos, &Circos::onLinkColorFuncChanged);
     circos->dataToLink();
     circos->setLinkEnable(true);
     //addCategoryToTable(backbone_table, backbone_model, circos);
@@ -350,15 +350,16 @@ void FreeCircos::onButtonClicked(bool) {
   if (func.compare("gradient-color") == 0) {
     ExtGradientButton *ext_btn = qobject_cast<ExtGradientButton *>(sender());
     qDebug() << "select a color";
-    QColor color = QColorDialog::getColor(Qt::white, link_config_widget, "Link Color", QColorDialog::ShowAlphaChannel);
+    QColor color =
+        QColorDialog::getColor(ext_btn->getColor(), link_config_widget, "Link Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       ext_btn->setColor(color);
-      link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
+//      link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
       link_thermometer_onpanel_color_map->setGradient(*circos->getLinkGradient());
-      link_thermometer_oncanvas_color_map->rescaleDataRange();
+//      link_thermometer_oncanvas_color_map->rescaleDataRange();
       link_thermometer_onpanel_color_map->rescaleDataRange();
       link_thermometer_colormap_onpanel_plot->replot();
-      link_thermometer_colormap_oncanvas_plot->replot();
+//      link_thermometer_colormap_oncanvas_plot->replot();
 //      circos->setLinkGradient(link_gradient);
 //      link_thermometer_onpanel_color_map->rescaleDataRange();
 //      link_thermometer_oncanvas_color_map->rescaleDataRange();
@@ -376,6 +377,56 @@ void FreeCircos::onButtonClicked(bool) {
 //      default:
 //        break;
 //      }
+    }
+  }
+  if (func.compare("link-fix-color") == 0) {
+    QColor color = QColorDialog::getColor(btn->palette().color(QPalette::ColorRole::Button),
+                                          link_config_widget,
+                                          tr("Fixed Color"),
+                                          QColorDialog::ShowAlphaChannel);
+    if (color.isValid()) {
+      QString style = QString("background-color: rgba(%1, %2, %3, %4)")
+          .arg(color.red())
+          .arg(color.green())
+          .arg(color.blue())
+          .arg(color.alpha());
+      qDebug() << "Style is " << style;
+      btn->setStyleSheet(style);
+    }
+  }
+  if (func.compare("link-confirm-color") == 0) {
+    int sel_row = link_table->selectionModel()->currentIndex().row();
+    int index = link_model->item(sel_row, 0)->text().toInt() - 1;
+    if (link_thermometer_checkbox->checkState() == Qt::Checked) {
+//      circos->setLinkColorFunc(Link::ColorFun::Ramp);
+      circos->setLinkColorFunc(index, Link::ColorFun::Ramp, QColor());
+      link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
+      link_thermometer_oncanvas_color_map->rescaleDataRange();
+      link_thermometer_colormap_oncanvas_plot->replot();
+    } else if (link_fixcolor_checkbox->checkState() == Qt::Checked) {
+      //| todo: set all links in one color
+      QColor c = link_fixcolor_button->palette().color(QPalette::ColorRole::Button);
+      if (link_apply_combobox->currentText().compare("single") == 0) {
+        circos->setLinkColorFunc(index, Link::ColorFun::Single, c);
+      } else if (link_apply_combobox->currentText().compare("all") == 0) {
+        circos->setLinkColorFunc(index, Link::ColorFun::All, c);
+      } else if (link_apply_combobox->currentText().compare("category") == 0) {
+        if (link_apply2_combobox->currentText().compare("start") == 0) {
+          circos->setLinkColorFunc(index, Link::ColorFun::Category | Link::ColorFun::Start, c);
+        } else if (link_apply2_combobox->currentText().compare("end") == 0) {
+          circos->setLinkColorFunc(index, Link::ColorFun::Category | Link::ColorFun::End, c);
+        } else {
+          circos->setLinkColorFunc(index, Link::ColorFun::Category | Link::ColorFun::End | Link::ColorFun::Start, c);
+        }
+      } else if (link_apply_combobox->currentText().compare("gene") == 0) {
+        if (link_apply2_combobox->currentText().compare("start") == 0) {
+          circos->setLinkColorFunc(index, Link::ColorFun::Gene | Link::ColorFun::Start, c);
+        } else if (link_apply2_combobox->currentText().compare("end") == 0) {
+          circos->setLinkColorFunc(index, Link::ColorFun::Gene | Link::ColorFun::End, c);
+        } else {
+          circos->setLinkColorFunc(index, Link::ColorFun::Gene | Link::ColorFun::End | Link::ColorFun::Start, c);
+        }
+      }
     }
   }
 }
@@ -494,6 +545,9 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
   }
   if (prefix.compare("link") == 0) {
     if (func.compare("link-table-model") == 0) {
+      link_fixcolor_checkbox->setEnabled(true);
+      link_thermometer_checkbox->setEnabled(true);
+      link_confirm_color_button->setEnabled(true);
       link_colfun_combobox->setEnabled(true);
 //      link_stre_lineedit->setEnabled(true);
       line_color_combobox->setEnabled(true);
@@ -606,14 +660,14 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
 //        line_stre_combobox->setVisible(false);
 //          circos->setlink
         line_color_combobox->setEnabled(false);
-        circos->setLinkColorFun(index, Link::ColorFun::Ramp);
+        circos->setLinkColorFunc(index, Link::ColorFun::Ramp);
 //                emit link_stre_lineedit->textChanged(
 //                    link_stre_lineedit->text());
       } else if (text.compare("rainbow") == 0) {
 //        link_stre_lineedit->setVisible(false);
 //        link_stre_lineedit->setEnabled(false);
 //        line_stre_combobox->setVisible(true);
-        circos->setLinkColorFun(index, Link::ColorFun::Rainbow);
+        circos->setLinkColorFunc(index, Link::ColorFun::Rainbow);
         line_color_combobox->setEnabled(true);
         emit line_color_combobox->currentTextChanged(
             line_color_combobox->currentText());
@@ -623,7 +677,7 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
 //                //line_stre_combobox->setVisible(false);
 //                line_stre_combobox->setEnabled(false);
 //                emit setLinkColor(index, QColor(Qt::black));
-        circos->setLinkColorFun(index, Link::ColorFun::None);
+        circos->setLinkColorFunc(index, Link::ColorFun::None);
 //        qreal stre_code = circos->getLinkStre(index);
 //        QColor c = QColor(link_gradient->color(stre_code,
 //                                               QCPRange(circos->getLinkStreMin(),
@@ -738,11 +792,40 @@ void FreeCircos::onCheckboxStateChanged(int state) {
     }
     if (func.compare("link-thermometer") == 0) {
       switch (state) {
-        case Qt::CheckState::Checked:link_thermometer_colormap_oncanvas_plot->setVisible(true);
+        case Qt::CheckState::Checked: {
+//          circos.setlinkc
+          link_thermometer_colormap_oncanvas_plot->setVisible(true);
+          link_fixcolor_checkbox->setCheckState(Qt::CheckState::Unchecked);
           break;
-        case Qt::CheckState::Unchecked:link_thermometer_colormap_oncanvas_plot->setVisible(false);
+        }
+        case Qt::CheckState::Unchecked: {
+          link_thermometer_colormap_oncanvas_plot->setVisible(false);
+          link_fixcolor_checkbox->setCheckState(Qt::CheckState::Checked);
           break;
+        }
         default:break;
+      }
+    }
+    if (func.compare("fix-color") == 0) {
+      switch (state) {
+        case Qt::CheckState::Checked: {
+//          link_thermometer_colormap_oncanvas_plot->setVisible(true);
+          link_apply_combobox->setEnabled(true);
+          link_apply2_combobox->setEnabled(true);
+          link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
+          link_fixcolor_button->setEnabled(true);
+          break;
+        }
+        case Qt::CheckState::Unchecked: {
+          link_apply_combobox->setEnabled(false);
+          link_apply2_combobox->setEnabled(true);
+          link_thermometer_checkbox->setCheckState(Qt::CheckState::Checked);
+          link_fixcolor_button->setEnabled(false);
+          break;
+        }
+        default:break;
+//      link_fixcolor_button->setEnabled(state == Qt::CheckState::Checked);
+//      link_apply_combobox->setEnabled(state == Qt::CheckState::Checked);
       }
     }
   }

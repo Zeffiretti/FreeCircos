@@ -2,7 +2,7 @@
 
 Gene::Gene() {
   cat = new Category;
-  links.clear();
+  start_links.clear();
 }
 
 Gene::Gene(const QString &n, int l) {
@@ -10,7 +10,7 @@ Gene::Gene(const QString &n, int l) {
   length = qAbs(l);
   end = start + l;
   cat = new Category;
-  links.clear();
+  start_links.clear();
 }
 
 Gene::Gene(const QString &n, int s, int e) {
@@ -19,7 +19,7 @@ Gene::Gene(const QString &n, int s, int e) {
   end = e;
   length = qAbs(end - start);
   cat = new Category;
-  links.clear();
+  start_links.clear();
 }
 
 bool Gene::getOnCanvas(void) {
@@ -114,17 +114,27 @@ void Gene::setCategory(Category *c) {
 }
 
 void Gene::addLink(Link *l) {
-  links.append(l);
+  start_links.append(l);
 }
 
 void Gene::addLink(Link *l, CustomLink::LinkGenes lg) {
-  links.append(l);
+  start_links.append(l);
   switch (lg) {
     case CustomLink::LinkGene::LinkStart:break;
     case CustomLink::LinkGene::LinkEnd:break;
     default:break;
   }
 }
+
+void Gene::addLink(Link *l, const QString &type) {
+  if (type.compare("start") == 0) { start_links.append(l); }
+  else if (type.compare("end") == 0) { end_links.append(l); }
+  else { qDebug() << "Link type error in gene {" << name << "} of" << type; }
+}
+
+QList<Link *> Gene::getStartLinks(void) { return start_links; }
+
+QList<Link *> Gene::getEndLinks(void) { return end_links; }
 
 Gene::GapRule Gene::getGapRule(void) {
   return gap_rule_;
