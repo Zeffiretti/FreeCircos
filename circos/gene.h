@@ -44,6 +44,8 @@ class Gene {
   void addLink(Link *);
   void addLink(Link *, CustomLink::LinkGenes);
   void addLink(Link *, const QString &);
+  QList<Link *> getStartLinks(void);
+  QList<Link *> getEndLinks(void);
   GapRule getGapRule(void);
   void setGapRule(GapRule rule);
 

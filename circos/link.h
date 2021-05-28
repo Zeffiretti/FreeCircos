@@ -8,12 +8,15 @@
 class Link {
  public:
   enum ColorFun {
-    Ramp,
-    Rainbow,
-    Gene,
-    Category,
-    All,
-    None
+    None = 0x00,
+    Ramp = 0x01,
+    Rainbow = 0x02,
+    Single = 0x04,
+    Gene = 0x08,
+    Category = 0x10,
+    All = 0x20,
+    Start = 0x40,
+    End = 0x80
   };
   Q_DECLARE_FLAGS(ColorFuns, ColorFun)
   Link();

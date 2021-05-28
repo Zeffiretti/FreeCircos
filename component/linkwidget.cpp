@@ -269,7 +269,7 @@ void FreeCircos::initLKConfigWidget(void) {
 //  line_stre_combobox->setVisible(false);
   link_apply_combobox->setEnabled(false);
   QStringList link_apply_list;
-  link_apply_list << "all" << "category" << "gene";
+  link_apply_list << "single" << "all" << "category" << "gene";
   link_apply_combobox->addItems(link_apply_list);
   link_apply_combobox->setProperty("prefix", "link");
   link_apply_combobox->setProperty("function", "link-fixcolor-apply");
@@ -313,6 +313,7 @@ void FreeCircos::initLKConfigWidget(void) {
   link_confirm_color_button->setProperty("prefix", "link");
   link_confirm_color_button->setProperty("function", "link-confirm-color");
   link_confirm_color_button->setEnabled(true);
+  link_confirm_color_button->setEnabled(false);
 }
 
 void FreeCircos::connectLKSignalSlot(void) {

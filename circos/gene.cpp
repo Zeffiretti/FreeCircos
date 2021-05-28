@@ -132,6 +132,10 @@ void Gene::addLink(Link *l, const QString &type) {
   else { qDebug() << "Link type error in gene {" << name << "} of" << type; }
 }
 
+QList<Link *> Gene::getStartLinks(void) { return start_links; }
+
+QList<Link *> Gene::getEndLinks(void) { return end_links; }
+
 Gene::GapRule Gene::getGapRule(void) {
   return gap_rule_;
 }

@@ -395,12 +395,38 @@ void FreeCircos::onButtonClicked(bool) {
     }
   }
   if (func.compare("link-confirm-color") == 0) {
+    int sel_row = link_table->selectionModel()->currentIndex().row();
+    int index = link_model->item(sel_row, 0)->text().toInt() - 1;
     if (link_thermometer_checkbox->checkState() == Qt::Checked) {
+//      circos->setLinkColorFunc(Link::ColorFun::Ramp);
+      circos->setLinkColorFunc(index, Link::ColorFun::Ramp, QColor());
       link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
       link_thermometer_oncanvas_color_map->rescaleDataRange();
       link_thermometer_colormap_oncanvas_plot->replot();
     } else if (link_fixcolor_checkbox->checkState() == Qt::Checked) {
       //| todo: set all links in one color
+      QColor c = link_fixcolor_button->palette().color(QPalette::ColorRole::Button);
+      if (link_apply_combobox->currentText().compare("single") == 0) {
+        circos->setLinkColorFunc(index, Link::ColorFun::Single, c);
+      } else if (link_apply_combobox->currentText().compare("all") == 0) {
+        circos->setLinkColorFunc(index, Link::ColorFun::All, c);
+      } else if (link_apply_combobox->currentText().compare("category") == 0) {
+        if (link_apply2_combobox->currentText().compare("start") == 0) {
+          circos->setLinkColorFunc(index, Link::ColorFun::Category | Link::ColorFun::Start, c);
+        } else if (link_apply2_combobox->currentText().compare("end") == 0) {
+          circos->setLinkColorFunc(index, Link::ColorFun::Category | Link::ColorFun::End, c);
+        } else {
+          circos->setLinkColorFunc(index, Link::ColorFun::Category | Link::ColorFun::End | Link::ColorFun::Start, c);
+        }
+      } else if (link_apply_combobox->currentText().compare("gene") == 0) {
+        if (link_apply2_combobox->currentText().compare("start") == 0) {
+          circos->setLinkColorFunc(index, Link::ColorFun::Gene | Link::ColorFun::Start, c);
+        } else if (link_apply2_combobox->currentText().compare("end") == 0) {
+          circos->setLinkColorFunc(index, Link::ColorFun::Gene | Link::ColorFun::End, c);
+        } else {
+          circos->setLinkColorFunc(index, Link::ColorFun::Gene | Link::ColorFun::End | Link::ColorFun::Start, c);
+        }
+      }
     }
   }
 }
@@ -521,6 +547,7 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
     if (func.compare("link-table-model") == 0) {
       link_fixcolor_checkbox->setEnabled(true);
       link_thermometer_checkbox->setEnabled(true);
+      link_confirm_color_button->setEnabled(true);
       link_colfun_combobox->setEnabled(true);
 //      link_stre_lineedit->setEnabled(true);
       line_color_combobox->setEnabled(true);
