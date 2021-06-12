@@ -95,6 +95,9 @@ class FreeCircos : public QMainWindow {
   void initLKColorScale(QCustomPlot *parent1 = nullptr, QCustomPlot *parent2 = nullptr);
   void initLKTableModel(QStandardItemModel *model, Circos *);
 
+  void initArrowWidget(QTabWidget *parent);
+  void initArrowTable(void);
+
   bool eventFilter(QObject *watched, QEvent *event);
 
  protected:
@@ -228,6 +231,15 @@ class FreeCircos : public QMainWindow {
   QStringList link_header_list;
 
   color_widgets::ColorDialog *color_dialog_;
+
+  QWidget *arrow_widget;
+  QTableView *arrow_table;
+  QStandardItemModel *arrow_model;
+  QLabel *arrow_type_label;
+  QComboBox *arrow_type_combobox;
+  QCustomPlot *arrow_edit_plot;
+
+
 
 //  QPushButton
 

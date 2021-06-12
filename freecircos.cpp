@@ -144,6 +144,7 @@ FreeCircos::FreeCircos(QWidget *parent)
                              g_scale * config_widget_height);
   initBackBoneWidget(control_panel);
   initLinkWidget(control_panel);
+  initArrowWidget(control_panel);
   //qDebug() << CustomTool::mapInt2Real(202293916, 202585582, 0, 1, 202417563);
 //    qDebug() << QColor(Qt::red).name();
 //  initColorDialog();

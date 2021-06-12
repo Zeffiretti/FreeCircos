@@ -57,32 +57,3 @@ void FreeCircos::initBackBoneTableModel(QStandardItemModel *model,
   qDebug() << "Counted Gene Num: " << c->getGeneNum();
 }
 
-void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
-  backbone_widget = new QWidget;
-  /// table
-  initBBTable();
-  ///backbone configuration
-  initColorDialog();
-  initBBConfigWidget();
-//  /// Category configuration
-  initCatConfigWidget();
-//  /// Switch butthon
-//  initBCSwitch();
-//  /// Signal&Slot connection
-  backbone_widget->setEnabled(false);
-  connectBCSingalSlot();
-  parent->addTab(backbone_widget, "BackBone");
-}
-
-void FreeCircos::initLinkWidget(QTabWidget *parent) {
-  link_widget = new QWidget;
-  initLKTable();
-  initLKConfigWidget();
-  initLKColorScale(link_thermometer_colormap_onpanel_plot, link_thermometer_colormap_oncanvas_plot);
-  link_thermometer_colormap_oncanvas_plot->setVisible(false);
-//  initLinkColorScale(link_thermometer_colormap_onpanel_plot, canvas);
-  connectLKSignalSlot();
-  parent->addTab(link_widget, "Link");
-}
-
-

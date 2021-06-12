@@ -1,5 +1,24 @@
 #include <freecircos.h>
 extern qreal g_scale;
+
+void FreeCircos::initBackBoneWidget(QTabWidget *parent) {
+  backbone_widget = new QWidget;
+  /// table
+  initBBTable();
+  ///backbone configuration
+  initColorDialog();
+  initBBConfigWidget();
+//  /// Category configuration
+  initCatConfigWidget();
+//  /// Switch butthon
+//  initBCSwitch();
+//  /// Signal&Slot connection
+  backbone_widget->setEnabled(false);
+  connectBCSingalSlot();
+  parent->addTab(backbone_widget, "BackBone");
+}
+
+
 void FreeCircos::initBBTable(void) {
 #ifdef QtColorWidgets_USED
   gene_button = new QPushButton;

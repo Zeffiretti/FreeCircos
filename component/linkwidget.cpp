@@ -1,5 +1,18 @@
 #include <freecircos.h>
 extern qreal g_scale;
+
+void FreeCircos::initLinkWidget(QTabWidget *parent) {
+  link_widget = new QWidget;
+  initLKTable();
+  initLKConfigWidget();
+  initLKColorScale(link_thermometer_colormap_onpanel_plot, link_thermometer_colormap_oncanvas_plot);
+  link_thermometer_colormap_oncanvas_plot->setVisible(false);
+//  initLinkColorScale(link_thermometer_colormap_onpanel_plot, canvas);
+  connectLKSignalSlot();
+  parent->addTab(link_widget, "Link");
+}
+
+
 void FreeCircos::initLKTable(void) {
   link_model = new QStandardItemModel;
   link_table = new QTableView;

@@ -122,7 +122,7 @@ set(COMPONENT_FILES
   component/bbwidget.cpp
   component/linkwidget.cpp
   component/globalsetwin.cpp
-  component/colorwidget.cpp)
+  component/colorwidget.cpp component/arrowwidget.cpp)
 set(EXT_FILES
   extension/extcheckboxheaderview.cpp
   extension/extdoubleslider.cpp
