@@ -268,6 +268,7 @@ Circos::DataProcessState Circos::dataToLink(void) {
 Circos::DataProcessState Circos::dataToTrackArrow(void) {
   track_arrow.clear();
   if (!m_datas.empty()) {
+    qDebug() << "TrackArrow Numbers: " << m_datas.size();
     int start_index = -1;
     int end_index = -1;
     int name_index = -1;
@@ -300,7 +301,7 @@ Circos::DataProcessState Circos::dataToTrackArrow(void) {
     }
     QList<QVariant> data;
     m_datas.removeAt(0);
-        foreach (data, m_datas) {
+      foreach (data, m_datas) {
         TrackArrow *ta = new TrackArrow;
         if (direction_index < 0) {
 //      qDebug("this is tile file.");
@@ -565,7 +566,7 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
 void Circos::buildCustomTrack(CustomTrackArrow *track) {
   track->clearArrow();
   track->setType(CustomTrackArrow::Type::Arrow);
-      foreach (TrackArrow *it, track_arrow) {
+    foreach (TrackArrow *it, track_arrow) {
       CustomTrack *tr = new CustomTrack;
       Gene *g = findGene(it->getName());
       if (g->getOnCanvas()) {
@@ -898,6 +899,10 @@ bool Circos::getTrackEnabled(void) {
 void Circos::clearTrackArrow(void) {
   track_arrow.clear();
   track_enabled = false;
+}
+
+QList<TrackArrow *> Circos::getTrackArrow(void) {
+  return track_arrow;
 }
 
 void Circos::onGeneAngleChanged(const QString &n, qreal s, qreal e) {

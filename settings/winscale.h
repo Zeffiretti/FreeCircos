@@ -85,6 +85,12 @@ const static int link_cm_button_height = 25;
 const static int link_cm_button_pos_x1 = thermometer_pos_x;
 const static int link_cm_button_pos_y = thermometer_pos_y + thermometer_height;
 
+// arrow widget
+const static int arrow_config_pos_x = color_dialog_pos_x;
+const static int arrow_config_pos_y = color_dialog_pos_y;
+const static int arrow_config_width = color_dialog_width;
+const static int arrow_config_height = table_height;
+
 // canvas setting
 const static int canvas_scale = 1000;
 #endif //FREECIRCOS_SETTINGS_WINSCALE_H_

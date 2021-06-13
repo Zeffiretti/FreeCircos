@@ -93,10 +93,11 @@ class FreeCircos : public QMainWindow {
   void initLKTable(void);
   void initLKConfigWidget(void);
   void initLKColorScale(QCustomPlot *parent1 = nullptr, QCustomPlot *parent2 = nullptr);
-  void initLKTableModel(QStandardItemModel *model, Circos *);
+  void initLKTableModel(QStandardItemModel *model, Circos *c);
 
   void initArrowWidget(QTabWidget *parent);
   void initArrowTable(void);
+  void initArrowTableModel(QStandardItemModel *model, Circos *c);
 
   bool eventFilter(QObject *watched, QEvent *event);
 
@@ -235,6 +236,8 @@ class FreeCircos : public QMainWindow {
   QWidget *arrow_widget;
   QTableView *arrow_table;
   QStandardItemModel *arrow_model;
+  ExtCheckBoxHeaderView *arrow_table_header;
+  QStringList arrow_header_list;
   QLabel *arrow_type_label;
   QComboBox *arrow_type_combobox;
   QCustomPlot *arrow_edit_plot;
