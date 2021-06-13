@@ -137,7 +137,9 @@ class Circos : public QObject {
   qreal getTAPie(void) {
     return trackarrow_outer_radius;
   }
-
+  TrackArrow::Types getTrackType(void) {
+    return track_arrow_type;
+  }
   qreal getLKHole(void) {
     return link_inner_radius;
   }
@@ -174,6 +176,9 @@ class Circos : public QObject {
   void setTAPie(qreal tap) {
     trackarrow_outer_radius = tap;
   }
+  void setTAType(TrackArrow::Types t) {
+    track_arrow_type = t;
+  }
   void setLKHole(qreal lkh) {
     link_inner_radius = lkh;
   }
@@ -191,6 +196,7 @@ class Circos : public QObject {
     category_gap = g;
 //    category.at(0).
   }
+
  signals:
   void linkColorFuncChanged(int index);
 
@@ -223,6 +229,7 @@ class Circos : public QObject {
   qreal link_stre_min = 0, link_stre_max = 10;
   QList<TrackArrow *> track_arrow;
   bool track_enabled = false;
+  TrackArrow::Types track_arrow_type;
 
   QScopedPointer<ExcelBase> m_xls;
   QList<QList<QVariant> > m_datas;

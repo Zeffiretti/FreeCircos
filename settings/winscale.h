@@ -90,6 +90,13 @@ const static int arrow_config_pos_x = color_dialog_pos_x;
 const static int arrow_config_pos_y = color_dialog_pos_y;
 const static int arrow_config_width = color_dialog_width;
 const static int arrow_config_height = table_height;
+const static int arrow_label_pos_x1=label_margin_x;
+const static int arrow_label_pos_y1=page_margin + label_margin_y + table_pos_y;
+const static int arrow_label_width = bb_label_state_width;
+const static int arrow_label_height = bb_label_state_height;
+const static int arrow_combobox_pos_x1 = lk_text_pos_x1 + lk_label_width;
+const static int arrow_label_pos_x2 = lk_combobox_pos_x1 + lk_label_width;
+const static int arrow_combobox_pos_x2 = lk_text_pos_x2 + lk_label_width;
 
 // canvas setting
 const static int canvas_scale = 1000;

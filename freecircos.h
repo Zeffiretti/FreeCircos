@@ -98,6 +98,9 @@ class FreeCircos : public QMainWindow {
   void initArrowWidget(QTabWidget *parent);
   void initArrowTable(void);
   void initArrowTableModel(QStandardItemModel *model, Circos *c);
+  void initArrowConfigWidget(void);
+  void connectArrowSignalSlot(void);
+
 
   bool eventFilter(QObject *watched, QEvent *event);
 
@@ -238,6 +241,7 @@ class FreeCircos : public QMainWindow {
   QStandardItemModel *arrow_model;
   ExtCheckBoxHeaderView *arrow_table_header;
   QStringList arrow_header_list;
+  QWidget *arrow_config_widget;
   QLabel *arrow_type_label;
   QComboBox *arrow_type_combobox;
   QCustomPlot *arrow_edit_plot;

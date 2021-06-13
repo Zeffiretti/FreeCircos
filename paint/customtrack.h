@@ -9,8 +9,8 @@ class CustomTrack {
  public:
   CustomTrack();
   enum Type {
-    Arrow,
-    Tile
+    Arrow = 0x01,
+    Tile = 0x02
   };
   Q_DECLARE_FLAGS(Types, Type)
   enum ArrowDirection {

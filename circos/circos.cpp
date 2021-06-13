@@ -300,15 +300,21 @@ Circos::DataProcessState Circos::dataToTrackArrow(void) {
       return DataProcessState::Error;
     }
     QList<QVariant> data;
+    if (direction_index < 0) {
+      track_arrow_type = TrackArrow::Type::Tile;
+    } else {
+      track_arrow_type = TrackArrow::Type::Arrow;
+    }
     m_datas.removeAt(0);
       foreach (data, m_datas) {
         TrackArrow *ta = new TrackArrow;
+        ta->setTypes(track_arrow_type);
         if (direction_index < 0) {
 //      qDebug("this is tile file.");
-          ta->setDirections(TrackArrow::Direction::None);
-          ta->setTypes(TrackArrow::Type::Tile);
+//          ta->setDirections(TrackArrow::Direction::None);
+//          ta->setTypes(TrackArrow::Type::Tile);
         } else {
-          ta->setTypes(TrackArrow::Type::Arrow);
+//          ta->setTypes(TrackArrow::Type::Arrow);
           if (data.at(direction_index).toString().compare("+") == 0) {
             ta->setDirections(TrackArrow::Direction::ClockWise);
           } else {
@@ -585,7 +591,8 @@ void Circos::buildCustomTrack(CustomTrackArrow *track) {
 //      qDebug("values:%d, valuee:%d, start:%.4f, end:%.4f", it->getStart(), it->getEnd(), start, end);
 //      tr->setStart(start);
 //      tr->setEnd(end);
-        if (it->getTypes().testFlag(TrackArrow::Type::Arrow)) {
+//        if (it->getTypes().testFlag(TrackArrow::Type::Arrow)) {
+        if (track_arrow_type.testFlag(TrackArrow::Type::Arrow)) {
           track->setType(CustomTrackArrow::Type::Arrow);
           qreal boud = CustomTool::mapInt2Real(100, 0, start, end, 100 * it->getHeadRatio());
           if (it->getDirections().testFlag(TrackArrow::Direction::ClockWise)) {
@@ -603,6 +610,10 @@ void Circos::buildCustomTrack(CustomTrackArrow *track) {
         } else {
           tr->setType(CustomTrack::Type::Tile);
           track->setType(CustomTrackArrow::Type::Tile);
+
+          tr->setStart(qMin(start, end));
+          tr->setEnd(qMax(start, end));
+
 //        qDebug("this is tile");
         }
         tr->setHoleSize(getTAHole());

@@ -8,7 +8,8 @@ extern qreal g_scale;
 void FreeCircos::initArrowWidget(QTabWidget *parent) {
   arrow_widget = new QWidget;
   initArrowTable();
-
+  initArrowConfigWidget();
+  connectArrowSignalSlot();
   parent->addTab(arrow_widget, tr("Arrow"));
 }
 
@@ -61,4 +62,43 @@ void FreeCircos::initArrowTableModel(QStandardItemModel *model, Circos *c) {
       index++;
     }
 }
+
+void FreeCircos::initArrowConfigWidget(void) {
+  arrow_config_widget = new QWidget;
+  arrow_type_label = new QLabel;
+  arrow_type_combobox = new QComboBox;
+
+  arrow_config_widget->setEnabled(true);
+  arrow_config_widget->setParent(arrow_widget);
+  arrow_config_widget->setGeometry(g_scale * arrow_config_pos_x,
+                                   g_scale * arrow_config_pos_y,
+                                   g_scale * arrow_config_width,
+                                   g_scale * arrow_config_height);
+
+  arrow_type_label->setParent(arrow_config_widget);
+  arrow_type_label->setGeometry(g_scale * arrow_label_pos_x1,
+                                g_scale * arrow_label_pos_y1,
+                                g_scale * arrow_label_width,
+                                g_scale * arrow_label_height);
+  arrow_type_label->setText(tr("Track Type"));
+  arrow_type_label->setFont(*major_font);
+  arrow_type_label->setAlignment(Qt::AlignmentFlag::AlignCenter);
+  arrow_type_combobox->setParent(arrow_config_widget);
+  arrow_type_combobox->setGeometry(g_scale * arrow_combobox_pos_x1,
+                                   g_scale * arrow_label_pos_y1,
+                                   g_scale * arrow_label_width,
+                                   g_scale * arrow_label_height);
+  arrow_type_combobox->setFont(*major_font);
+  QStringList arrow_type_list;
+  arrow_type_list << "Arrow" << "Tile";
+  arrow_type_combobox->addItems(arrow_type_list);
+  arrow_type_combobox->setProperty("prefix", "arrow");
+  arrow_type_combobox->setProperty("function", "arrow-type");
+}
+
+void FreeCircos::connectArrowSignalSlot(void) {
+  connect(arrow_type_combobox, &QComboBox::currentTextChanged,
+          this, &FreeCircos::onComboboxTextChanged);
+}
+
 

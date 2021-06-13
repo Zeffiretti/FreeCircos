@@ -630,8 +630,7 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
         circos->getGene(index)->getCategory()->setLabelPosition(CustomSlice::LabelInsideDonut);
       }
     }
-  }
-  if (prefix.compare("link") == 0) {
+  } else if (prefix.compare("link") == 0) {
     if (func == "link-type") {
       qDebug() << func << "---" << text;
       CustomLinkCanvas::LinkTypes link_type;
@@ -719,6 +718,16 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
       int index = link_model->item(row, 0)->text().toInt() - 1;
       circos->setLinkColorName(index, text);
       emit setLinkColor(index, c);
+    }
+  } else if (prefix.compare("arrow") == 0) {
+    if (func.compare("arrow-type") == 0) {
+      if (cbb->currentText().compare("Arrow") == 0) {
+        circos->setTAType(TrackArrow::Type::Arrow);
+      } else if (cbb->currentText().compare("Tile") == 0) {
+        circos->setTAType(TrackArrow::Type::Tile);
+      } else {
+        qDebug() << "This Track Type doesn't exist: " << cbb->currentText();
+      }
     }
   }
 }
