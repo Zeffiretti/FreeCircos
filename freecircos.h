@@ -24,6 +24,8 @@
 #include "extension/extcolordialog.h"
 #include "extension/extitemmodel.h"
 #include "extension/exttableview.h"
+#include "extension/extarroweditor.h"
+#include "extension/extsymslider.h"
 
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
@@ -93,7 +95,14 @@ class FreeCircos : public QMainWindow {
   void initLKTable(void);
   void initLKConfigWidget(void);
   void initLKColorScale(QCustomPlot *parent1 = nullptr, QCustomPlot *parent2 = nullptr);
-  void initLKTableModel(QStandardItemModel *model, Circos *);
+  void initLKTableModel(QStandardItemModel *model, Circos *c);
+
+  void initArrowWidget(QTabWidget *parent);
+  void initArrowTable(void);
+  void initArrowTableModel(QStandardItemModel *model, Circos *c);
+  void initArrowConfigWidget(void);
+  void initArrowEditor(void);
+  void connectArrowSignalSlot(void);
 
   bool eventFilter(QObject *watched, QEvent *event);
 
@@ -123,6 +132,8 @@ class FreeCircos : public QMainWindow {
   void onCategoryColorSelected(QColor c);
   void onAllColorSelected(QColor c);
   void onWindowClosed(void);
+  void onTrackValueChanged(int value);
+  void onTrackColorChanged(QColor c);
 
  private:
 
@@ -228,6 +239,28 @@ class FreeCircos : public QMainWindow {
   QStringList link_header_list;
 
   color_widgets::ColorDialog *color_dialog_;
+
+  QWidget *arrow_widget;
+  QTableView *arrow_table;
+  QStandardItemModel *arrow_model;
+  ExtCheckBoxHeaderView *arrow_table_header;
+  QStringList arrow_header_list;
+  QWidget *arrow_config_widget;
+  QLabel *arrow_type_label;
+  QComboBox *arrow_type_combobox;
+  QCustomPlot *arrow_edit_plot;
+  ExtArrowEditor *arrow_editor;
+  ExtSymSlider *arrow_head_slider;
+  ExtSymSlider *arrow_tail_slider;
+  QSlider *arrow_ratio_slider;
+  QLabel *arrow_head_label;
+  QLabel *arrow_head_number;
+  QLabel *arrow_tail_label;
+  QLabel *arrow_tail_number;
+  QLabel *arrow_ratio_label;
+  QLabel *arrow_ratio_number;
+
+
 
 //  QPushButton
 

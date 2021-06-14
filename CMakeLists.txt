@@ -122,7 +122,8 @@ set(COMPONENT_FILES
   component/bbwidget.cpp
   component/linkwidget.cpp
   component/globalsetwin.cpp
-  component/colorwidget.cpp)
+  component/colorwidget.cpp
+  component/arrowwidget.cpp)
 set(EXT_FILES
   extension/extcheckboxheaderview.cpp
   extension/extdoubleslider.cpp
@@ -130,7 +131,8 @@ set(EXT_FILES
   extension/extgradientbutton.cpp
   extension/extcolordialog.cpp
   extension/extitemmodel.cpp
-  extension/exttableview.cpp)
+  extension/exttableview.cpp
+  extension/extarroweditor.cpp extension/extsymslider.cpp extension/extsymslider.h)
 set(FILEPROS_FILES
   fileprocess/excelbase.cpp
   fileprocess/qvariantlistlistmodel.cpp)
@@ -201,4 +203,4 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
   #  add_definitions(-DQCUSTOMPLOT_USE_OPENGL)
   target_compile_definitions(${PROJECT_NAME} PUBLIC QT_NO_DEBUG_OUTPUT)
 endif ()
-set( CMAKE_EXPORT_COMPILE_COMMANDS ON )
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

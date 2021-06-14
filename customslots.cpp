@@ -157,6 +157,7 @@ void FreeCircos::onButtonClicked(bool) {
 #endif
     circos->dataToTrackArrow();
     circos->setTrackEnabled(true);
+    initArrowTableModel(arrow_model, circos);
   }
   if (func == "backboneconfig") {
 //    moveTableRow(backbone_table, backbone_model, 4, 0);
@@ -181,7 +182,7 @@ void FreeCircos::onButtonClicked(bool) {
 //    QColor color =
 //        QColorDialog::getColor(pre_color, backbone_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
     QColor color =
-        ExtColorDialog::getColor(pre_color, backbone_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
+      ExtColorDialog::getColor(pre_color, backbone_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->setStrikeColor(color);
@@ -197,7 +198,7 @@ void FreeCircos::onButtonClicked(bool) {
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
     QColor pre_color = circos->getGene(index)->getFillColor();
     QColor color =
-        QColorDialog::getColor(pre_color, backbone_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
+      QColorDialog::getColor(pre_color, backbone_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->setFillColor(color);
@@ -246,7 +247,7 @@ void FreeCircos::onButtonClicked(bool) {
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
     QColor pre_color = circos->getGene(index)->getCategory()->getStrikeColor();
     QColor color =
-        QColorDialog::getColor(pre_color, category_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
+      QColorDialog::getColor(pre_color, category_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->getCategory()->setStrikeColor(color);
@@ -262,7 +263,7 @@ void FreeCircos::onButtonClicked(bool) {
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
     QColor pre_color = circos->getGene(index)->getCategory()->getFillColor();
     QColor color =
-        QColorDialog::getColor(pre_color, category_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
+      QColorDialog::getColor(pre_color, category_config_widget, "Strike Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QPalette pal = btn->palette(); //circos->back_bone.at(index)->getStrikeColor();
       circos->getGene(index)->getCategory()->setFillColor(color);
@@ -351,7 +352,7 @@ void FreeCircos::onButtonClicked(bool) {
     ExtGradientButton *ext_btn = qobject_cast<ExtGradientButton *>(sender());
     qDebug() << "select a color";
     QColor color =
-        QColorDialog::getColor(ext_btn->getColor(), link_config_widget, "Link Color", QColorDialog::ShowAlphaChannel);
+      QColorDialog::getColor(ext_btn->getColor(), link_config_widget, "Link Color", QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       ext_btn->setColor(color);
 //      link_thermometer_oncanvas_color_map->setGradient(*circos->getLinkGradient());
@@ -386,10 +387,10 @@ void FreeCircos::onButtonClicked(bool) {
                                           QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QString style = QString("background-color: rgba(%1, %2, %3, %4)")
-          .arg(color.red())
-          .arg(color.green())
-          .arg(color.blue())
-          .arg(color.alpha());
+        .arg(color.red())
+        .arg(color.green())
+        .arg(color.blue())
+        .arg(color.alpha());
       qDebug() << "Style is " << style;
       btn->setStyleSheet(style);
     }
@@ -583,8 +584,8 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
   QString prefix = cbb->property("prefix").toString();
   QString func = cbb->property("function").toString();
   if (prefix.compare("backbone") == 0
-      || prefix.compare("gene") == 0
-      || prefix.compare("category") == 0) {
+    || prefix.compare("gene") == 0
+    || prefix.compare("category") == 0) {
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
     if (func == "backbone-label-state") {
@@ -629,8 +630,7 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
         circos->getGene(index)->getCategory()->setLabelPosition(CustomSlice::LabelInsideDonut);
       }
     }
-  }
-  if (prefix.compare("link") == 0) {
+  } else if (prefix.compare("link") == 0) {
     if (func == "link-type") {
       qDebug() << func << "---" << text;
       CustomLinkCanvas::LinkTypes link_type;
@@ -670,7 +670,7 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
         circos->setLinkColorFunc(index, Link::ColorFun::Rainbow);
         line_color_combobox->setEnabled(true);
         emit line_color_combobox->currentTextChanged(
-            line_color_combobox->currentText());
+          line_color_combobox->currentText());
       } else {
 //                //link_stre_lineedit->setVisible(false);
 //                link_stre_lineedit->setEnabled(false);
@@ -718,6 +718,16 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
       int index = link_model->item(row, 0)->text().toInt() - 1;
       circos->setLinkColorName(index, text);
       emit setLinkColor(index, c);
+    }
+  } else if (prefix.compare("arrow") == 0) {
+    if (func.compare("arrow-type") == 0) {
+      if (cbb->currentText().compare("Arrow") == 0) {
+        circos->setTAType(TrackArrow::Type::Arrow);
+      } else if (cbb->currentText().compare("Tile") == 0) {
+        circos->setTAType(TrackArrow::Type::Tile);
+      } else {
+        qDebug() << "This Track Type doesn't exist: " << cbb->currentText();
+      }
     }
   }
 }
@@ -940,7 +950,7 @@ void FreeCircos::onCategoryColorSelected(QColor c) {
     default: {
       QList<QString> genes = cat->getGenes();
       QString g;
-          foreach(g, genes) {
+        foreach(g, genes) {
           circos->findGene(g)->setFillColor(c);
         }
       break;
@@ -968,4 +978,30 @@ void FreeCircos::onAllColorSelected(QColor c) {
 void FreeCircos::onWindowClosed(void) {
   findChild<QPushButton *>("Global Setting")->setEnabled(true);
   gb_active = false;
+}
+
+void FreeCircos::onTrackValueChanged(int value) {
+  QWidget *sdr = qobject_cast<QWidget *>(sender());
+  QString prefix = sdr->property("prefix").toString();
+  QString func = sdr->property("function").toString();
+  qDebug() << "track value set for " << prefix << "-" << func << value;
+  if (prefix.compare("arrow") == 0) {
+    if (func.compare("head-width") == 0) {
+      arrow_head_number->setText(QString::number(value));
+      arrow_editor->setHeadWidth(value * 1.0 / 100.0);
+      circos->setTAHeadWidth(value * 1.0 / 100.0);
+    } else if (func.compare("tail-width") == 0) {
+      arrow_tail_number->setText(QString::number(value));
+      arrow_editor->setTailWidth(value * 1.0 / 100.0);
+      circos->setTATailWidth(value * 1.0 / 100.0);
+    } else if (func.compare("head-ratio") == 0) {
+      arrow_ratio_number->setText(QString::number(value));
+      arrow_editor->setHeadRatio(value * 1.0 / 100.0);
+      circos->setTAHeadRatio(value * 1.0 / 100.0);
+    }
+  }
+}
+
+void FreeCircos::onTrackColorChanged(QColor c) {
+  circos->setTAColor(std::move(c));
 }
