@@ -32,6 +32,8 @@ class ExtSymSlider : public QWidget {
   void setParent(QWidget *parent = nullptr);
   Q_SLOT
   void setValue(int v);
+  Q_SIGNAL
+  void valueChanged(int value);
  private:
   QSlider *upper;
   QSlider *lower;

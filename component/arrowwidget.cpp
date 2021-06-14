@@ -146,6 +146,8 @@ void FreeCircos::initArrowEditor(void) {
   arrow_head_slider->setMin(0);
   arrow_head_slider->setMax(100);
   arrow_head_slider->setValue(100);
+  arrow_head_slider->setProperty("prefix", "arrow");
+  arrow_head_slider->setProperty("function", "head-width");
 
   arrow_tail_slider->setParent(arrow_config_widget);
   arrow_tail_slider->setOrientation(Qt::Orientation::Vertical);
@@ -156,6 +158,8 @@ void FreeCircos::initArrowEditor(void) {
   arrow_tail_slider->setMin(0);
   arrow_tail_slider->setMax(100);
   arrow_tail_slider->setValue(50);
+  arrow_tail_slider->setProperty("prefix", "arrow");
+  arrow_tail_slider->setProperty("function", "tail-width");
 
   arrow_ratio_label->setParent(arrow_config_widget);
   arrow_ratio_label->setGeometry(g_scale * arrow_canvas_label_pos_x3,
@@ -175,13 +179,15 @@ void FreeCircos::initArrowEditor(void) {
   arrow_ratio_slider->setMinimum(0);
   arrow_ratio_slider->setMaximum(100);
   arrow_ratio_slider->setValue(20);
+  arrow_ratio_slider->setProperty("prefix", "arrow");
+  arrow_ratio_slider->setProperty("function", "head-ratio");
 
   arrow_head_number->setParent(arrow_config_widget);
   arrow_head_number->setGeometry(g_scale * arrow_canvas_number_pos_x1,
                                  g_scale * arrow_canvas_number_pos_y,
                                  g_scale * arrow_canvas_label_width,
                                  g_scale * arrow_canvas_label_height);
-  arrow_head_number->setText(tr("1.00"));
+  arrow_head_number->setText(tr("100"));
   arrow_head_number->setFont(*major_font);
   arrow_head_number->setAlignment(Qt::AlignmentFlag::AlignLeft
                                     | Qt::AlignmentFlag::AlignTop);
@@ -191,7 +197,7 @@ void FreeCircos::initArrowEditor(void) {
                                  g_scale * arrow_canvas_number_pos_y,
                                  g_scale * arrow_canvas_label_width,
                                  g_scale * arrow_canvas_label_height);
-  arrow_tail_number->setText(tr("0.50"));
+  arrow_tail_number->setText(tr("50"));
   arrow_tail_number->setFont(*major_font);
   arrow_tail_number->setAlignment(Qt::AlignmentFlag::AlignRight
                                     | Qt::AlignmentFlag::AlignTop);
@@ -201,7 +207,7 @@ void FreeCircos::initArrowEditor(void) {
                                   g_scale * arrow_canvas_number_pos_y,
                                   g_scale * arrow_canvas_slider_width3,
                                   g_scale * arrow_canvas_label_height);
-  arrow_ratio_number->setText(tr("0.20"));
+  arrow_ratio_number->setText(tr("20"));
   arrow_ratio_number->setFont(*major_font);
   arrow_ratio_number->setAlignment(Qt::AlignmentFlag::AlignHCenter
                                      | Qt::AlignmentFlag::AlignTop);
@@ -210,6 +216,12 @@ void FreeCircos::initArrowEditor(void) {
 void FreeCircos::connectArrowSignalSlot(void) {
   connect(arrow_type_combobox, &QComboBox::currentTextChanged,
           this, &FreeCircos::onComboboxTextChanged);
+  connect(arrow_head_slider, &ExtSymSlider::valueChanged,
+          this, &FreeCircos::onTrackValueChanged);
+  connect(arrow_tail_slider, &ExtSymSlider::valueChanged,
+          this, &FreeCircos::onTrackValueChanged);
+  connect(arrow_ratio_slider, &QSlider::valueChanged,
+          this, &FreeCircos::onTrackValueChanged);
 }
 
 

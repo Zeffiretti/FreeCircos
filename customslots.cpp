@@ -979,3 +979,22 @@ void FreeCircos::onWindowClosed(void) {
   findChild<QPushButton *>("Global Setting")->setEnabled(true);
   gb_active = false;
 }
+
+void FreeCircos::onTrackValueChanged(int value) {
+  QWidget *sdr = qobject_cast<QWidget *>(sender());
+  QString prefix = sdr->property("prefix").toString();
+  QString func = sdr->property("function").toString();
+  qDebug() << "track value set for " << prefix << "-" << func << value;
+  if (prefix.compare("arrow") == 0) {
+    if (func.compare("head-width") == 0) {
+      arrow_head_number->setText(QString::number(value));
+      arrow_editor->setHeadWidth(value * 1.0 / 100.0);
+    } else if (func.compare("tail-width") == 0) {
+      arrow_tail_number->setText(QString::number(value));
+      arrow_editor->setTailWidth(value * 1.0 / 100.0);
+    } else if (func.compare("head-ratio") == 0) {
+      arrow_ratio_number->setText(QString::number(value));
+      arrow_editor->setHeadRatio(value * 1.0 / 100.0);
+    }
+  }
+}

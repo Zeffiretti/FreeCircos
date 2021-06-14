@@ -6,6 +6,8 @@
 ExtArrowEditor::ExtArrowEditor(QWidget *parent) : QCustomPlot(parent) {
   datas.clear();
   this->setBackground(QBrush(QColor(200, 200, 200)));
+  connect(this, &ExtArrowEditor::valueChanged,
+          this, &ExtArrowEditor::drawArrow);
 }
 
 ExtArrowEditor::~ExtArrowEditor() = default;

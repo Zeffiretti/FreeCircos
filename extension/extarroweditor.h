@@ -26,14 +26,18 @@ class ExtArrowEditor : public QCustomPlot {
   qreal getTailWidth(void) { return tail_width; }
   QColor getColor(void) { return color; }
 
-  void setHeadRatio(qreal hr) { head_ratio = hr; }
-  void setHeadWidth(qreal hw) { head_width = hw; }
-  void setTailWidth(qreal tw) { tail_width = tw; }
+  void setHeadRatio(qreal hr) { head_ratio = hr; emit valueChanged(); }
+  void setHeadWidth(qreal hw) { head_width = hw; emit valueChanged(); }
+  void setTailWidth(qreal tw) { tail_width = tw; emit valueChanged(); }
   void setColor(QColor c) { color = std::move(c); }
 
   void buildData(void);
+  Q_SLOT
   void drawArrow(void);
-
+  void onMousePress(QMouseEvent *event);
+  Q_SIGNAL
+  void valueChanged(void);
+  
  private:
   bool init = true;
   QCPCurve *curve;
@@ -45,8 +49,6 @@ class ExtArrowEditor : public QCustomPlot {
 
   qreal margin_ratio = 0.02;
 
-  Q_SLOT
-  void onMousePress(QMouseEvent *event);
 };
 
 #endif //FREECIRCOS_EXTENSION_EXTARROWEDITOR_H_

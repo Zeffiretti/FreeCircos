@@ -51,6 +51,8 @@ void ExtSymSlider::setValue(int v) {
   else { value = v; }
   upper->setValue(value);
   lower->setValue(-value);
+
+  emit valueChanged(value);
 }
 
 void ExtSymSlider::setMin(int m) {
