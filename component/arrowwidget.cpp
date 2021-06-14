@@ -67,7 +67,6 @@ void FreeCircos::initArrowConfigWidget(void) {
   arrow_config_widget = new QWidget;
   arrow_type_label = new QLabel;
   arrow_type_combobox = new QComboBox;
-  arrow_editor = new ExtArrowEditor;
 
   arrow_config_widget->setEnabled(true);
   arrow_config_widget->setParent(arrow_widget);
@@ -96,12 +95,116 @@ void FreeCircos::initArrowConfigWidget(void) {
   arrow_type_combobox->setProperty("prefix", "arrow");
   arrow_type_combobox->setProperty("function", "arrow-type");
 
+  initArrowEditor();
+}
+
+void FreeCircos::initArrowEditor(void) {
+  arrow_editor = new ExtArrowEditor;
+  arrow_head_slider = new ExtSymSlider;
+  arrow_tail_slider = new ExtSymSlider;
+  arrow_ratio_slider = new QSlider;
+  arrow_head_label = new QLabel;
+  arrow_head_number = new QLabel;
+  arrow_tail_label = new QLabel;
+  arrow_tail_number = new QLabel;
+  arrow_ratio_label = new QLabel;
+  arrow_ratio_number = new QLabel;
+
+  arrow_head_label->setParent(arrow_config_widget);
+  arrow_head_label->setGeometry(g_scale * arrow_canvas_label_pos_x1,
+                                g_scale * arrow_canvas_label_pos_y1,
+                                g_scale * arrow_canvas_label_width,
+                                g_scale * arrow_canvas_label_height);
+  arrow_head_label->setText(tr("Head Width"));
+  arrow_head_label->setFont(*major_font);
+  arrow_head_label->setAlignment(Qt::AlignmentFlag::AlignLeft
+                                   | Qt::AlignmentFlag::AlignBottom);
+
+  arrow_tail_label->setParent(arrow_config_widget);
+  arrow_tail_label->setGeometry(g_scale * arrow_canvas_label_pos_x2,
+                                g_scale * arrow_canvas_label_pos_y1,
+                                g_scale * arrow_canvas_label_width,
+                                g_scale * arrow_canvas_label_height);
+  arrow_tail_label->setText(tr("Tail Width"));
+  arrow_tail_label->setFont(*major_font);
+  arrow_tail_label->setAlignment(Qt::AlignmentFlag::AlignRight
+                                   | Qt::AlignmentFlag::AlignBottom);
+
   arrow_editor->setParent(arrow_config_widget);
   arrow_editor->setGeometry(g_scale * arrow_canvas_pos_x,
                             g_scale * arrow_canvas_pos_y,
                             g_scale * arrow_canvas_width,
                             g_scale * arrow_canvas_height);
   arrow_editor->drawArrow();
+
+  arrow_head_slider->setParent(arrow_config_widget);
+  arrow_head_slider->setOrientation(Qt::Orientation::Vertical);
+  arrow_head_slider->setSymGeometry(g_scale * arrow_canvas_slider_pos_x1,
+                                    g_scale * arrow_canvas_slider_pos_y,
+                                    g_scale * arrow_canvas_slider_width,
+                                    g_scale * arrow_canvas_slider_height);
+  arrow_head_slider->setMin(0);
+  arrow_head_slider->setMax(100);
+  arrow_head_slider->setValue(100);
+
+  arrow_tail_slider->setParent(arrow_config_widget);
+  arrow_tail_slider->setOrientation(Qt::Orientation::Vertical);
+  arrow_tail_slider->setSymGeometry(g_scale * arrow_canvas_slider_pos_x2,
+                                    g_scale * arrow_canvas_slider_pos_y,
+                                    g_scale * arrow_canvas_slider_width,
+                                    g_scale * arrow_canvas_slider_height);
+  arrow_tail_slider->setMin(0);
+  arrow_tail_slider->setMax(100);
+  arrow_tail_slider->setValue(50);
+
+  arrow_ratio_label->setParent(arrow_config_widget);
+  arrow_ratio_label->setGeometry(g_scale * arrow_canvas_label_pos_x3,
+                                 g_scale * arrow_canvas_label_pos_y3,
+                                 g_scale * arrow_canvas_width,
+                                 g_scale * arrow_canvas_label_height);
+  arrow_ratio_label->setText(tr("Head Ratio"));
+  arrow_ratio_label->setFont(*major_font);
+  arrow_ratio_label->setAlignment(Qt::AlignmentFlag::AlignCenter);
+
+  arrow_ratio_slider->setParent(arrow_config_widget);
+  arrow_ratio_slider->setOrientation(Qt::Orientation::Horizontal);
+  arrow_ratio_slider->setGeometry(g_scale * arrow_canvas_slider_pos_x3,
+                                  g_scale * arrow_canvas_slider_pos_y3,
+                                  g_scale * arrow_canvas_slider_width3,
+                                  g_scale * arrow_canvas_slider_height3);
+  arrow_ratio_slider->setMinimum(0);
+  arrow_ratio_slider->setMaximum(100);
+  arrow_ratio_slider->setValue(20);
+
+  arrow_head_number->setParent(arrow_config_widget);
+  arrow_head_number->setGeometry(g_scale * arrow_canvas_number_pos_x1,
+                                 g_scale * arrow_canvas_number_pos_y,
+                                 g_scale * arrow_canvas_label_width,
+                                 g_scale * arrow_canvas_label_height);
+  arrow_head_number->setText(tr("1.00"));
+  arrow_head_number->setFont(*major_font);
+  arrow_head_number->setAlignment(Qt::AlignmentFlag::AlignLeft
+                                    | Qt::AlignmentFlag::AlignTop);
+
+  arrow_tail_number->setParent(arrow_config_widget);
+  arrow_tail_number->setGeometry(g_scale * arrow_canvas_number_pos_x2,
+                                 g_scale * arrow_canvas_number_pos_y,
+                                 g_scale * arrow_canvas_label_width,
+                                 g_scale * arrow_canvas_label_height);
+  arrow_tail_number->setText(tr("0.50"));
+  arrow_tail_number->setFont(*major_font);
+  arrow_tail_number->setAlignment(Qt::AlignmentFlag::AlignRight
+                                    | Qt::AlignmentFlag::AlignTop);
+
+  arrow_ratio_number->setParent(arrow_config_widget);
+  arrow_ratio_number->setGeometry(g_scale * arrow_canvas_number_pos_x3,
+                                  g_scale * arrow_canvas_number_pos_y,
+                                  g_scale * arrow_canvas_slider_width3,
+                                  g_scale * arrow_canvas_label_height);
+  arrow_ratio_number->setText(tr("0.20"));
+  arrow_ratio_number->setFont(*major_font);
+  arrow_ratio_number->setAlignment(Qt::AlignmentFlag::AlignHCenter
+                                     | Qt::AlignmentFlag::AlignTop);
 }
 
 void FreeCircos::connectArrowSignalSlot(void) {

@@ -25,6 +25,7 @@
 #include "extension/extitemmodel.h"
 #include "extension/exttableview.h"
 #include "extension/extarroweditor.h"
+#include "extension/extsymslider.h"
 
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
@@ -100,8 +101,8 @@ class FreeCircos : public QMainWindow {
   void initArrowTable(void);
   void initArrowTableModel(QStandardItemModel *model, Circos *c);
   void initArrowConfigWidget(void);
+  void initArrowEditor(void);
   void connectArrowSignalSlot(void);
-
 
   bool eventFilter(QObject *watched, QEvent *event);
 
@@ -246,7 +247,16 @@ class FreeCircos : public QMainWindow {
   QLabel *arrow_type_label;
   QComboBox *arrow_type_combobox;
   QCustomPlot *arrow_edit_plot;
-  ExtArrowEditor*arrow_editor;
+  ExtArrowEditor *arrow_editor;
+  ExtSymSlider *arrow_head_slider;
+  ExtSymSlider *arrow_tail_slider;
+  QSlider *arrow_ratio_slider;
+  QLabel *arrow_head_label;
+  QLabel *arrow_head_number;
+  QLabel *arrow_tail_label;
+  QLabel *arrow_tail_number;
+  QLabel *arrow_ratio_label;
+  QLabel *arrow_ratio_number;
 
 
 

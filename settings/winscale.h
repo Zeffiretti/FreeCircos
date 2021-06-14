@@ -97,13 +97,34 @@ const static int arrow_label_height = bb_label_state_height;
 const static int arrow_combobox_pos_x1 = lk_text_pos_x1 + lk_label_width;
 const static int arrow_label_pos_x2 = lk_combobox_pos_x1 + lk_label_width;
 const static int arrow_combobox_pos_x2 = lk_text_pos_x2 + lk_label_width;
-const static int arrow_canvas_margin_x = label_margin_x;
-const static int arrow_canvas_margin_y = label_margin_y * 3;
-const static int arrow_canvas_pos_x = arrow_canvas_margin_x;
-const static int arrow_canvas_pos_y = arrow_label_pos_y1 + arrow_label_height + arrow_canvas_margin_y;
-const static int arrow_canvas_width = 3 * arrow_label_width;
-const static int arrow_canvas_height = 3 * arrow_label_height;
 
+const static int arrow_canvas_margin_y = label_margin_y * 3;
+const static int arrow_canvas_label_pos_x1 = arrow_label_pos_x1;
+const static int arrow_canvas_label_pos_y1 = arrow_label_pos_y1 + arrow_label_height + arrow_canvas_margin_y;
+const static int arrow_canvas_label_width = arrow_label_width;
+const static int arrow_canvas_label_height = arrow_label_height;
+const static int arrow_canvas_slider_pos_x1 = arrow_canvas_label_pos_x1;
+const static int arrow_canvas_slider_pos_y = arrow_canvas_label_pos_y1 + arrow_canvas_label_height;
+const static int arrow_canvas_slider_width = 0.1 * arrow_canvas_label_width;
+const static int arrow_canvas_slider_height = 3 * arrow_label_height;
+const static int arrow_canvas_pos_x = arrow_canvas_slider_pos_x1 + arrow_canvas_slider_width;
+const static int arrow_canvas_pos_y = arrow_canvas_slider_pos_y;
+const static int arrow_canvas_width = 4 * arrow_label_width - 2 * arrow_canvas_slider_width;
+const static int arrow_canvas_height = arrow_canvas_slider_height;
+const static int arrow_canvas_slider_pos_x2 = arrow_canvas_pos_x + arrow_canvas_width + 1;
+const static int arrow_canvas_label_pos_x2 = 4 * arrow_label_width - arrow_canvas_label_width;
+const static int arrow_canvas_label_pos_x3 = arrow_canvas_pos_x;
+const static int arrow_canvas_label_pos_y3 = arrow_canvas_pos_y + arrow_canvas_height;
+
+const static int arrow_canvas_slider_pos_x3 = arrow_canvas_pos_x;
+const static int arrow_canvas_slider_pos_y3 = arrow_canvas_label_pos_y3+arrow_canvas_label_height;
+const static int arrow_canvas_slider_width3 = arrow_canvas_width;
+const static int arrow_canvas_slider_height3 = arrow_canvas_slider_width;
+
+const static int arrow_canvas_number_pos_x1 = arrow_canvas_label_pos_x1;
+const static int arrow_canvas_number_pos_x2 = arrow_canvas_label_pos_x2;
+const static int arrow_canvas_number_pos_x3 = arrow_canvas_label_pos_x3;
+const static int arrow_canvas_number_pos_y = arrow_canvas_slider_pos_y3 + arrow_canvas_slider_height3;
 // canvas setting
 const static int canvas_scale = 1000;
 #endif //FREECIRCOS_SETTINGS_WINSCALE_H_
