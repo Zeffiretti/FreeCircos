@@ -67,6 +67,7 @@ void FreeCircos::initArrowConfigWidget(void) {
   arrow_config_widget = new QWidget;
   arrow_type_label = new QLabel;
   arrow_type_combobox = new QComboBox;
+  arrow_editor = new ExtArrowEditor;
 
   arrow_config_widget->setEnabled(true);
   arrow_config_widget->setParent(arrow_widget);
@@ -94,6 +95,13 @@ void FreeCircos::initArrowConfigWidget(void) {
   arrow_type_combobox->addItems(arrow_type_list);
   arrow_type_combobox->setProperty("prefix", "arrow");
   arrow_type_combobox->setProperty("function", "arrow-type");
+
+  arrow_editor->setParent(arrow_config_widget);
+  arrow_editor->setGeometry(g_scale * arrow_canvas_pos_x,
+                            g_scale * arrow_canvas_pos_y,
+                            g_scale * arrow_canvas_width,
+                            g_scale * arrow_canvas_height);
+  arrow_editor->drawArrow();
 }
 
 void FreeCircos::connectArrowSignalSlot(void) {

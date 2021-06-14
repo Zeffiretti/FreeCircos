@@ -22,7 +22,7 @@ const static int button_gap_y = 5;
 const static int canvas_pos_x = left_margin;
 const static int canvas_pos_gap_y = 5;
 const static int canvas_width =
-    g_app_base_height - bottom_margin - 2 * button_box_height - button_gap_y - top_margin - canvas_pos_gap_y;
+  g_app_base_height - bottom_margin - 2 * button_box_height - button_gap_y - top_margin - canvas_pos_gap_y;
 const static int canvas_height = canvas_width;
 //const static int canvas_dpi_ratio = 1;
 const static int canvas_line_width = 1;
@@ -32,7 +32,7 @@ const static int config_widget_pos_y = top_margin;
 const static int config_widget_pos_x = canvas_pos_x + canvas_width + config_widget_margin_x;
 const static int config_widget_height = g_app_base_height - bottom_margin - config_widget_pos_y;
 const static int
-    config_widget_width = g_app_base_width - left_margin - right_margin - canvas_width - config_widget_margin_x;
+  config_widget_width = g_app_base_width - left_margin - right_margin - canvas_width - config_widget_margin_x;
 
 // variables below are referenced in config_widget(backbone & category)
 const static int page_margin = 0;
@@ -90,13 +90,19 @@ const static int arrow_config_pos_x = color_dialog_pos_x;
 const static int arrow_config_pos_y = color_dialog_pos_y;
 const static int arrow_config_width = color_dialog_width;
 const static int arrow_config_height = table_height;
-const static int arrow_label_pos_x1=label_margin_x;
-const static int arrow_label_pos_y1=page_margin + label_margin_y + table_pos_y;
+const static int arrow_label_pos_x1 = label_margin_x;
+const static int arrow_label_pos_y1 = page_margin + label_margin_y + table_pos_y;
 const static int arrow_label_width = bb_label_state_width;
 const static int arrow_label_height = bb_label_state_height;
 const static int arrow_combobox_pos_x1 = lk_text_pos_x1 + lk_label_width;
 const static int arrow_label_pos_x2 = lk_combobox_pos_x1 + lk_label_width;
 const static int arrow_combobox_pos_x2 = lk_text_pos_x2 + lk_label_width;
+const static int arrow_canvas_margin_x = label_margin_x;
+const static int arrow_canvas_margin_y = label_margin_y * 3;
+const static int arrow_canvas_pos_x = arrow_canvas_margin_x;
+const static int arrow_canvas_pos_y = arrow_label_pos_y1 + arrow_label_height + arrow_canvas_margin_y;
+const static int arrow_canvas_width = 3 * arrow_label_width;
+const static int arrow_canvas_height = 3 * arrow_label_height;
 
 // canvas setting
 const static int canvas_scale = 1000;

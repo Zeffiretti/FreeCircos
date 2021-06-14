@@ -24,6 +24,7 @@
 #include "extension/extcolordialog.h"
 #include "extension/extitemmodel.h"
 #include "extension/exttableview.h"
+#include "extension/extarroweditor.h"
 
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
@@ -245,6 +246,7 @@ class FreeCircos : public QMainWindow {
   QLabel *arrow_type_label;
   QComboBox *arrow_type_combobox;
   QCustomPlot *arrow_edit_plot;
+  ExtArrowEditor*arrow_editor;
 
 
 
