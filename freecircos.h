@@ -133,6 +133,7 @@ class FreeCircos : public QMainWindow {
   void onAllColorSelected(QColor c);
   void onWindowClosed(void);
   void onTrackValueChanged(int value);
+  void onTrackColorChanged(QColor c);
 
  private:
 

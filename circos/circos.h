@@ -140,6 +140,9 @@ class Circos : public QObject {
   TrackArrow::Types getTrackType(void) {
     return track_arrow_type;
   }
+  QColor getTAColor(void) {
+    return track_color;
+  }
   qreal getLKHole(void) {
     return link_inner_radius;
   }
@@ -178,6 +181,19 @@ class Circos : public QObject {
   }
   void setTAType(TrackArrow::Types t) {
     track_arrow_type = t;
+  }
+  void setTAHeadWidth(qreal width) {
+    track_head_width = width;
+  }
+  void setTATailWidth(qreal width) {
+    track_tail_width = width;
+  }
+  void setTAHeadRatio(qreal ratio) {
+    track_head_ratio = ratio;
+  }
+  Q_SLOT void setTAColor(QColor c) {
+    qDebug() << "set ta color to" << c;
+    track_color = c;
   }
   void setLKHole(qreal lkh) {
     link_inner_radius = lkh;
@@ -230,6 +246,10 @@ class Circos : public QObject {
   QList<TrackArrow *> track_arrow;
   bool track_enabled = false;
   TrackArrow::Types track_arrow_type;
+  qreal track_head_width = 1.0;
+  qreal track_tail_width = 0.5;
+  qreal track_head_ratio = 0.2;
+  QColor track_color = QColor(204, 204, 204);
 
   QScopedPointer<ExcelBase> m_xls;
   QList<QList<QVariant> > m_datas;

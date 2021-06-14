@@ -572,55 +572,67 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
 void Circos::buildCustomTrack(CustomTrackArrow *track) {
   track->clearArrow();
   track->setType(CustomTrackArrow::Type::Arrow);
-    foreach (TrackArrow *it, track_arrow) {
-      CustomTrack *tr = new CustomTrack;
-      Gene *g = findGene(it->getName());
-      if (g->getOnCanvas()) {
+  foreach(TrackArrow * it, track_arrow)
+  {
+    CustomTrack *tr = new CustomTrack;
+    Gene *g = findGene(it->getName());
+    if (g->getOnCanvas()) {
 //      track->addArrow(tr);
-        int int_min = g->getStart();
-        int int_max = g->getEnd();
-        qreal real_min = g->getStartAngle();
-        qreal real_max = g->getEndAngle();
-        qreal start = CustomTool::mapInt2Real(int_min, int_max,
-                                              real_min, real_max,
-                                              it->getStart());
-        qreal end = CustomTool::mapInt2Real(int_min, int_max,
+      int int_min = g->getStart();
+      int int_max = g->getEnd();
+      qreal real_min = g->getStartAngle();
+      qreal real_max = g->getEndAngle();
+      qreal start = CustomTool::mapInt2Real(int_min, int_max,
                                             real_min, real_max,
-                                            it->getEnd());
+                                            it->getStart());
+      qreal end = CustomTool::mapInt2Real(int_min, int_max,
+                                          real_min, real_max,
+                                          it->getEnd());
 //      qDebug("int_min:%d, int_max:%d, real_min:%.3f, real_max:%.3f", int_min, int_max, real_min, real_max);
 //      qDebug("values:%d, valuee:%d, start:%.4f, end:%.4f", it->getStart(), it->getEnd(), start, end);
 //      tr->setStart(start);
 //      tr->setEnd(end);
 //        if (it->getTypes().testFlag(TrackArrow::Type::Arrow)) {
-        if (track_arrow_type.testFlag(TrackArrow::Type::Arrow)) {
-          track->setType(CustomTrackArrow::Type::Arrow);
-          qreal boud = CustomTool::mapInt2Real(100, 0, start, end, 100 * it->getHeadRatio());
-          if (it->getDirections().testFlag(TrackArrow::Direction::ClockWise)) {
-            tr->setDirection(CustomTrack::ArrowDirection::ClockWise);
-            tr->setStart(qMin(start, end));
-            tr->setEnd(qMax(start, end));
-          } else {
-            boud = CustomTool::mapInt2Real(100, 0, end, start, 100 * it->getHeadRatio());
-            tr->setDirection(CustomTrack::ArrowDirection::AntiClockWise);
-            tr->setStart(qMax(start, end));
-            tr->setEnd(qMin(start, end));
-          }
-          tr->setBoundary(boud);
-          tr->setType(CustomTrack::Type::Arrow);
-        } else {
-          tr->setType(CustomTrack::Type::Tile);
-          track->setType(CustomTrackArrow::Type::Tile);
-
+      if (track_arrow_type.testFlag(TrackArrow::Type::Arrow)) {
+        track->setType(CustomTrackArrow::Type::Arrow);
+//          qreal boud = CustomTool::mapInt2Real(100, 0, start, end, 100 * it->getHeadRatio());
+        qreal boud = CustomTool::mapInt2Real(100, 0, start, end, 100 * track_head_ratio);
+        if (it->getDirections().testFlag(TrackArrow::Direction::ClockWise)) {
+          tr->setDirection(CustomTrack::ArrowDirection::ClockWise);
           tr->setStart(qMin(start, end));
           tr->setEnd(qMax(start, end));
+        } else {
+//            boud = CustomTool::mapInt2Real(100, 0, end, start, 100 * it->getHeadRatio());
+          boud = CustomTool::mapInt2Real(100, 0, end, start, 100 * track_head_ratio);
+          tr->setDirection(CustomTrack::ArrowDirection::AntiClockWise);
+          tr->setStart(qMax(start, end));
+          tr->setEnd(qMin(start, end));
+        }
+        tr->setBoundary(boud);
+        tr->setType(CustomTrack::Type::Arrow);
+      } else {
+        tr->setType(CustomTrack::Type::Tile);
+        track->setType(CustomTrackArrow::Type::Tile);
+
+        tr->setStart(qMin(start, end));
+        tr->setEnd(qMax(start, end));
 
 //        qDebug("this is tile");
-        }
-        tr->setHoleSize(getTAHole());
-        tr->setPieSize(getTAPie());
-        track->addArrow(tr);
       }
+      qreal margin = 0.5 * (1.0 - track_head_width);
+      qreal range = getTAPie() - getTAHole();
+      qreal offset = margin * range;
+      tr->setHoleSize(getTAHole() + offset);
+      tr->setPieSize(getTAPie() - offset);
+      margin = 0.5 * (1.0 - track_tail_width);
+      range = getTAPie() - getTAHole();
+      offset = margin * range;
+      tr->setInnerTail(getTAHole() + offset);
+      tr->setOuterTail(getTAPie() - offset);
+      tr->setColor(track_color);
+      track->addArrow(tr);
     }
+  }
 }
 
 void Circos::reset() {

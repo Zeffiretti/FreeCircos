@@ -29,15 +29,17 @@ class ExtArrowEditor : public QCustomPlot {
   void setHeadRatio(qreal hr) { head_ratio = hr; emit valueChanged(); }
   void setHeadWidth(qreal hw) { head_width = hw; emit valueChanged(); }
   void setTailWidth(qreal tw) { tail_width = tw; emit valueChanged(); }
-  void setColor(QColor c) { color = std::move(c); }
+  void setColor(QColor c) { color = std::move(c); emit extColorChanged(color); }
 
   void buildData(void);
-  Q_SLOT
+ public Q_SLOTS:
   void drawArrow(void);
   void onMousePress(QMouseEvent *event);
-  Q_SIGNAL
+
+ Q_SIGNALS:
   void valueChanged(void);
-  
+  void extColorChanged(QColor c);
+
  private:
   bool init = true;
   QCPCurve *curve;

@@ -56,6 +56,20 @@ class CustomTrack {
     return outer_radius;
   }
 
+  void setOuterTail(qreal t) {
+    outer_tail = t;
+  }
+  qreal getOuterTail(void) {
+    return outer_tail;
+  }
+
+  void setInnerTail(qreal t) {
+    inner_tail = t;
+  }
+  qreal getInnerTail(void) {
+    return inner_tail;
+  }
+
   void setDirection(ArrowDirections d) {
     direction = d;
   }
@@ -70,11 +84,15 @@ class CustomTrack {
     return type;
   }
 
+  void setColor(QColor c) {
+    color = c;
+  }
+
   void setTrackLayer(int l) { track_layer = l; }
   int getTrackLayer(void) { return track_layer; }
-
+ private:
   QCPCurve *track_curve;
-  QColor color = QColor(204, 204, 204);
+  QColor color;
   QList<QCPCurveData *> track_data;
 
   Types type;
@@ -86,7 +104,14 @@ class CustomTrack {
 //  qreal head_outer_radius;
   qreal inner_radius;
   qreal outer_radius;
+  qreal outer_tail;
+  qreal inner_tail;
   int track_layer;
+  qreal rangeMap(qreal start1, qreal end1,
+                 qreal start2, qreal end2,
+                 qreal value1) {
+    return start2 + (end2 - start2) / (end1 - start1) * (value1 - start1);
+  }
 };
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomTrack::Types)
 Q_DECLARE_OPERATORS_FOR_FLAGS(CustomTrack::ArrowDirections)

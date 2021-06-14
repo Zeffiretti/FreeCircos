@@ -989,12 +989,19 @@ void FreeCircos::onTrackValueChanged(int value) {
     if (func.compare("head-width") == 0) {
       arrow_head_number->setText(QString::number(value));
       arrow_editor->setHeadWidth(value * 1.0 / 100.0);
+      circos->setTAHeadWidth(value * 1.0 / 100.0);
     } else if (func.compare("tail-width") == 0) {
       arrow_tail_number->setText(QString::number(value));
       arrow_editor->setTailWidth(value * 1.0 / 100.0);
+      circos->setTATailWidth(value * 1.0 / 100.0);
     } else if (func.compare("head-ratio") == 0) {
       arrow_ratio_number->setText(QString::number(value));
       arrow_editor->setHeadRatio(value * 1.0 / 100.0);
+      circos->setTAHeadRatio(value * 1.0 / 100.0);
     }
   }
+}
+
+void FreeCircos::onTrackColorChanged(QColor c) {
+  circos->setTAColor(std::move(c));
 }

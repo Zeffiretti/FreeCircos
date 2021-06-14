@@ -61,7 +61,7 @@ void ExtArrowEditor::onMousePress(QMouseEvent *event) {
 
   QColor new_color = QColorDialog::getColor(color, this, tr("Arrow Color"), QColorDialog::ShowAlphaChannel);
   if (new_color.isValid()) {
-    color = new_color;
+    setColor(new_color);
     qDebug() << color;
   }
 

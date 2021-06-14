@@ -58,19 +58,6 @@ void CustomTrack::buildData(void) {
   }
   // arrow data
   if (type.testFlag(CustomTrack::Type::Arrow)) {
-//    qreal min = qMin(start_angle, end_angle);
-//    qreal max = qMax(start_angle, end_angle);
-//    qreal boud = min + end_angle - boundary_angle;
-//    if(direction.testFlag(CustomTrack::ArrowDirection::ClockWise)) {
-//      start_angle = min;
-//      end_angle = max;
-//      boundary_angle = boud;
-//    } else {
-//      start_angle = max;
-//      end_angle = min;
-//      boundary_angle = boud;
-//    }
-//    angle_offset = (end_angle > start_angle) ? 0.1 : -0.1;
     qDebug() << "start angle:" << start_angle;
     qDebug() << "end angle:" << end_angle;
     qDebug() << "boundary angle:" << boundary_angle;
@@ -80,6 +67,7 @@ void CustomTrack::buildData(void) {
       qreal angle = start_angle;
       qreal radius = outer_radius;
       while ((boundary_angle - angle) * angle_offset > 0) {
+        radius = rangeMap(start_angle, boundary_angle, outer_tail, outer_radius, angle);
         track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
         ++i;
         angle += angle_offset;
@@ -101,6 +89,7 @@ void CustomTrack::buildData(void) {
       track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
       ++i;
       while ((angle - start_angle) * angle_offset > 0) {
+        radius = rangeMap(boundary_angle, start_angle, inner_radius, inner_tail, angle);
         track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
         ++i;
         angle -= angle_offset;
@@ -108,12 +97,12 @@ void CustomTrack::buildData(void) {
       angle = start_angle;
       track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
       ++i;
-      while (radius <= outer_radius) {
+      while (radius <= outer_tail) {
         track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
         ++i;
         radius += radius_offset;
       }
-      radius = outer_radius;
+      radius = outer_tail;
       track_data.append(new QCPCurveData(i, radius * qCos(angle), radius * qSin(angle)));
 //      }
     } else {

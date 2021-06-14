@@ -135,6 +135,7 @@ void FreeCircos::initArrowEditor(void) {
                             g_scale * arrow_canvas_pos_y,
                             g_scale * arrow_canvas_width,
                             g_scale * arrow_canvas_height);
+  arrow_editor->setColor(circos->getTAColor());
   arrow_editor->drawArrow();
 
   arrow_head_slider->setParent(arrow_config_widget);
@@ -222,6 +223,8 @@ void FreeCircos::connectArrowSignalSlot(void) {
           this, &FreeCircos::onTrackValueChanged);
   connect(arrow_ratio_slider, &QSlider::valueChanged,
           this, &FreeCircos::onTrackValueChanged);
+  connect(arrow_editor, &ExtArrowEditor::extColorChanged,
+          circos, &Circos::setTAColor);
 }
 
 
