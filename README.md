@@ -16,5 +16,5 @@ To Develop A Program for Painting Circos Figure.
 4. 增加`track` 对单个基因的`arrow`调整 或者整体调整
 5. 增加track颜色的调整吧 也是单个或者整体
 6. `track` 默认`tail width`弄成100吧
-7. `link end` 功能无效
+7. ~~`link end` 功能无效~~
 8. `global setting`界面很大
