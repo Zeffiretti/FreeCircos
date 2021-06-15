@@ -12,7 +12,6 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
   parent->addTab(link_widget, "Link");
 }
 
-
 void FreeCircos::initLKTable(void) {
   link_model = new QStandardItemModel;
   link_table = new QTableView;
@@ -244,11 +243,11 @@ void FreeCircos::initLKConfigWidget(void) {
   link_lwd_lineedit->setProperty("prefix", "link");
   link_lwd_lineedit->setProperty("function", "link-line-width");
   link_fixcolor_checkbox->setParent(link_config_widget);
-  link_fixcolor_checkbox->setGeometry(g_scale * (lk_text_pos_x1 + 0.1 * lk_label_width),
+  link_fixcolor_checkbox->setGeometry(g_scale * lk_text_pos_x1,
                                       g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
-                                      g_scale * (0.9 * lk_label_width),
+                                      g_scale * (0.5 * lk_label_width),
                                       g_scale * lk_label_height);
-  link_fixcolor_checkbox->setText("Fixed color");
+  link_fixcolor_checkbox->setText(tr("fixed"));
 //  link_directional_checkbox.
   link_fixcolor_checkbox->setFont(*major_font);
   link_fixcolor_checkbox->setEnabled(false);
@@ -256,9 +255,9 @@ void FreeCircos::initLKConfigWidget(void) {
   link_fixcolor_checkbox->setProperty("prefix", "link");
   link_fixcolor_checkbox->setProperty("function", "fix-color");
   link_fixcolor_button->setParent(link_config_widget);
-  link_fixcolor_button->setGeometry(g_scale * lk_combobox_pos_x1,
+  link_fixcolor_button->setGeometry(g_scale * (lk_text_pos_x1 + 0.5 * lk_label_width),
                                     g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
-                                    g_scale * lk_label_width,
+                                    g_scale * (0.5 * lk_label_width),
                                     g_scale * lk_label_height);
   link_fixcolor_button->setProperty("prefix", "link");
   link_fixcolor_button->setProperty("function", "link-fix-color");
@@ -266,7 +265,7 @@ void FreeCircos::initLKConfigWidget(void) {
   link_fixcolor_button->setEnabled(false);
   link_apply_label->setParent(link_config_widget);
   link_apply_label->setParent(link_config_widget);
-  link_apply_label->setGeometry(g_scale * lk_text_pos_x2,
+  link_apply_label->setGeometry(g_scale * lk_combobox_pos_x1,
                                 g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
                                 g_scale * lk_label_width,
                                 g_scale * lk_label_height);
@@ -274,9 +273,9 @@ void FreeCircos::initLKConfigWidget(void) {
   link_apply_label->setText("apply to");
   link_apply_label->setAlignment(Qt::AlignCenter);
   link_apply_combobox->setParent(link_config_widget);
-  link_apply_combobox->setGeometry(g_scale * lk_combobox_pos_x2,
+  link_apply_combobox->setGeometry(g_scale * lk_text_pos_x2,
                                    g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
-                                   g_scale * 0.5 * lk_label_width,
+                                   g_scale * lk_label_width,
                                    g_scale * lk_label_height);
   link_apply_combobox->setValidator(new QDoubleValidator(0, 100, 2, this));
 //  line_stre_combobox->setVisible(false);
@@ -287,9 +286,9 @@ void FreeCircos::initLKConfigWidget(void) {
   link_apply_combobox->setProperty("prefix", "link");
   link_apply_combobox->setProperty("function", "link-fixcolor-apply");
   link_apply2_combobox->setParent(link_config_widget);
-  link_apply2_combobox->setGeometry(g_scale * (lk_combobox_pos_x2 + 0.5 * lk_label_width),
+  link_apply2_combobox->setGeometry(g_scale * lk_combobox_pos_x2,
                                     g_scale * (lk_text_pos_y1 + 3 * (lk_label_height + label_margin_y)),
-                                    g_scale * 0.5 * lk_label_width,
+                                    g_scale * lk_label_width,
                                     g_scale * lk_label_height);
   link_apply2_combobox->setValidator(new QDoubleValidator(0, 100, 2, this));
 //  line_stre_combobox->setVisible(false);
