@@ -14,9 +14,8 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
 
 void FreeCircos::initLKTable(void) {
   link_model = new QStandardItemModel;
-  link_table = new QTableView;
+  link_table = new ExtSortTable;
   link_table_header = new ExtCheckBoxHeaderView;
-  link_table->setSortingEnabled(false);
   link_table->setGeometry(g_scale * table_pos_x,
                           g_scale * table_pos_y,
                           g_scale * table_width,
@@ -30,6 +29,9 @@ void FreeCircos::initLKTable(void) {
   link_table->selectionModel()->setProperty("function", "link-table-model");
   link_table->setProperty("prefix", "link");
   link_table->setProperty("funciton", "link-table");
+  link_table->horizontalHeader()->setSectionsClickable(true);
+  link_table->setSortingEnabled(true);
+  link_table->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}");
   link_header_list << "Index"
                    << "Start"
                    << "StartBlock"
@@ -37,8 +39,11 @@ void FreeCircos::initLKTable(void) {
                    << "EndBlock";
   link_table_header->setProperty("prefix", "link");
   link_table_header->setProperty("function", "tableselected");
+  link_table_header->setSectionsClickable(true);
   link_table->setHorizontalHeader(link_table_header);
   link_model->setHorizontalHeaderLabels(link_header_list);
+
+//link_model->setHeaderData(0,Qt::Orientation::Horizontal,QVariant(1),Qt::EditRole);
 }
 
 void FreeCircos::initLKConfigWidget(void) {
@@ -359,8 +364,10 @@ void FreeCircos::connectLKSignalSlot(void) {
           this, &FreeCircos::onButtonClicked);
   connect(link_confirm_color_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
-  connect(link_model, &QStandardItemModel::itemChanged,
-          this, &FreeCircos::onStandardItemChanged);
+  connect(link_table->horizontalHeader(), &QHeaderView::sectionClicked,
+          link_table, &ExtSortTable::sortExtByCol);
+//  connect(link_model, &QStandardItemModel::itemChanged,
+//          this, &FreeCircos::onStandardItemChanged);
 //  connect(this, &FreeCircos::setLinkColor,
 //          circos, &Circos::onLinkColorSet);
 }

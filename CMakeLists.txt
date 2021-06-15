@@ -132,7 +132,7 @@ set(EXT_FILES
   extension/extcolordialog.cpp
   extension/extitemmodel.cpp
   extension/exttableview.cpp
-  extension/extarroweditor.cpp extension/extsymslider.cpp extension/extsymslider.h)
+  extension/extarroweditor.cpp extension/extsymslider.cpp extension/extsymslider.h extension/extsorttable.cpp extension/extsorttable.h)
 set(FILEPROS_FILES
   fileprocess/excelbase.cpp
   fileprocess/qvariantlistlistmodel.cpp)

@@ -13,6 +13,7 @@
 #include <QFont>
 #include <QDesktopWidget>
 #include <QCloseEvent>
+#include <QSortFilterProxyModel>
 
 #include "settings/winscale.h"
 
@@ -26,6 +27,7 @@
 #include "extension/exttableview.h"
 #include "extension/extarroweditor.h"
 #include "extension/extsymslider.h"
+#include "extension/extsorttable.h"
 
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
@@ -197,7 +199,7 @@ class FreeCircos : public QMainWindow {
   QLineEdit *category_move_lineedit;
 
   QWidget *link_widget;
-  QTableView *link_table;
+  ExtSortTable *link_table;
   QStandardItemModel *link_model;
   ExtCheckBoxHeaderView *link_table_header;
   QWidget *link_config_widget;

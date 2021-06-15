@@ -27,7 +27,7 @@ class ExtCheckBoxHeaderView : public QHeaderView {
   void onCheckBoxStateChanged(int);
  Q_SIGNALS:
   void headerCheckBoxStateChanged(int);
-  void clickRow(bool);    //
+
  private:
 //  bool m_isOn;
 //  int m_iX;
