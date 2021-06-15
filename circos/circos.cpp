@@ -752,7 +752,7 @@ void Circos::setLinkColorFunc(int index, Link::ColorFuns cf, QColor c) {
     }
     if (cf.testFlag(Link::ColorFun::End)) {
       Gene *g = findGene(l->getDGN());
-      auto ls = g->getStartLinks();
+      auto ls = g->getEndLinks();
       for (auto &l_i:ls) { l_i->setColor(c); }
       qDebug() << "This is Link::ColorFun::End";
     }
