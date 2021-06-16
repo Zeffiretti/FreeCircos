@@ -158,7 +158,7 @@ void FreeCircos::initArrowEditor(void) {
                                     g_scale * arrow_canvas_slider_height);
   arrow_tail_slider->setMin(0);
   arrow_tail_slider->setMax(100);
-  arrow_tail_slider->setValue(50);
+  arrow_tail_slider->setValue(100);
   arrow_tail_slider->setProperty("prefix", "arrow");
   arrow_tail_slider->setProperty("function", "tail-width");
 

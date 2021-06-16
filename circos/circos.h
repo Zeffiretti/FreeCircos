@@ -247,7 +247,7 @@ class Circos : public QObject {
   bool track_enabled = false;
   TrackArrow::Types track_arrow_type;
   qreal track_head_width = 1.0;
-  qreal track_tail_width = 0.5;
+  qreal track_tail_width = 1.0;
   qreal track_head_ratio = 0.2;
   QColor track_color = QColor(204, 204, 204);
 
