@@ -14,6 +14,7 @@
 #include <QDesktopWidget>
 #include <QCloseEvent>
 #include <QSortFilterProxyModel>
+#include <QHeaderView>
 
 #include "settings/winscale.h"
 
@@ -199,9 +200,10 @@ class FreeCircos : public QMainWindow {
   QLineEdit *category_move_lineedit;
 
   QWidget *link_widget;
-  ExtSortTable *link_table;
+  QTableView *link_table;
   QStandardItemModel *link_model;
-  ExtCheckBoxHeaderView *link_table_header;
+//  QHeaderView *link_table_header;
+  QCheckBox *link_all_checkbox;
   QWidget *link_config_widget;
   QLabel *link_type_label;
   QComboBox *link_type_combobox;
@@ -245,7 +247,7 @@ class FreeCircos : public QMainWindow {
   QWidget *arrow_widget;
   QTableView *arrow_table;
   QStandardItemModel *arrow_model;
-  ExtCheckBoxHeaderView *arrow_table_header;
+  QHeaderView *arrow_table_header;
   QStringList arrow_header_list;
   QWidget *arrow_config_widget;
   QLabel *arrow_type_label;

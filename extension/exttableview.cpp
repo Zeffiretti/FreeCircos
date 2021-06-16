@@ -26,6 +26,7 @@ ExtTableView::ExtTableView(QWidget *parent)
                           QTableView::item:selected{color:black;background: #63B8FF;}");
 //  setColumnWidth(0, 40);
 }
+
 ExtTableView::~ExtTableView() = default;
 
 void ExtTableView::setExtModel(QStandardItemModel *model) {

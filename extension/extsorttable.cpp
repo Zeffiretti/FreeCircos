@@ -23,3 +23,8 @@ void ExtSortTable::sortExtByCol(int col) {
     }
   }
 }
+void ExtSortTable::setHorizontalHeader(QHeaderView *header_view) {
+  orders.clear();
+  orders.reserve(this->colorCount());
+//  QTableView::setHorizontalHeader(header_view);
+}

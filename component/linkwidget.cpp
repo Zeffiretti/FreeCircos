@@ -14,8 +14,9 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
 
 void FreeCircos::initLKTable(void) {
   link_model = new QStandardItemModel;
-  link_table = new ExtSortTable;
-  link_table_header = new ExtCheckBoxHeaderView;
+  link_table = new QTableView;
+  link_all_checkbox = new QCheckBox;
+//  link_table_header = new QHeaderView;
   link_table->setGeometry(g_scale * table_pos_x,
                           g_scale * table_pos_y,
                           g_scale * table_width,
@@ -31,16 +32,25 @@ void FreeCircos::initLKTable(void) {
   link_table->setProperty("funciton", "link-table");
   link_table->horizontalHeader()->setSectionsClickable(true);
   link_table->setSortingEnabled(true);
-  link_table->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}");
+  link_all_checkbox->setParent(link_table);
+  int ay = (link_table->rowHeight(0) - 20) * 0.5;
+//  qDebug() << "link table horizontal header height:" << link_table->horizontalHeader()->height();
+  link_all_checkbox->setGeometry(0,
+                                 3,
+                                 20,
+                                 20);
+  link_all_checkbox->setProperty("prefix", "link");
+  link_all_checkbox->setProperty("function", "tableselected");
+//  link_table->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}");
   link_header_list << "Index"
                    << "Start"
                    << "StartBlock"
                    << "End"
                    << "EndBlock";
-  link_table_header->setProperty("prefix", "link");
-  link_table_header->setProperty("function", "tableselected");
-  link_table_header->setSectionsClickable(true);
-  link_table->setHorizontalHeader(link_table_header);
+//  link_table_header->setProperty("prefix", "link");
+//  link_table_header->setProperty("function", "tableselected");
+//  link_table_header->setSectionsClickable(true);
+//  link_table->setHorizontalHeader(link_table_header);
   link_model->setHorizontalHeaderLabels(link_header_list);
 
 //link_model->setHeaderData(0,Qt::Orientation::Horizontal,QVariant(1),Qt::EditRole);
@@ -336,8 +346,10 @@ void FreeCircos::initLKConfigWidget(void) {
 void FreeCircos::connectLKSignalSlot(void) {
   connect(link_table->selectionModel(), &QItemSelectionModel::currentRowChanged,
           this, &FreeCircos::onTableSelectedChanged);
-  connect(link_table_header, &ExtCheckBoxHeaderView::headerCheckBoxStateChanged,
-          this, &FreeCircos::onHeaderCheckBoxStateChanged);
+//  connect(link_table_header, &ExtCheckBoxHeaderView::headerCheckBoxStateChanged,
+//          this, &FreeCircos::onHeaderCheckBoxStateChanged);
+  connect(link_all_checkbox, &QCheckBox::stateChanged,
+          this, &FreeCircos::onCheckboxStateChanged);
   connect(link_type_combobox, &QComboBox::currentTextChanged,
           this, &FreeCircos::onComboboxTextChanged);
   connect(link_direction_combobox, &QComboBox::currentTextChanged,
@@ -364,10 +376,10 @@ void FreeCircos::connectLKSignalSlot(void) {
           this, &FreeCircos::onButtonClicked);
   connect(link_confirm_color_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
-  connect(link_table->horizontalHeader(), &QHeaderView::sectionClicked,
-          link_table, &ExtSortTable::sortExtByCol);
-//  connect(link_model, &QStandardItemModel::itemChanged,
-//          this, &FreeCircos::onStandardItemChanged);
+//  connect(link_table_header, &QHeaderView::sectionClicked,
+//          link_table, &ExtSortTable::sortExtByCol);
+  connect(link_model, &QStandardItemModel::itemChanged,
+          this, &FreeCircos::onStandardItemChanged);
 //  connect(this, &FreeCircos::setLinkColor,
 //          circos, &Circos::onLinkColorSet);
 }

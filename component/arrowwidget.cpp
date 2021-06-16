@@ -16,8 +16,8 @@ void FreeCircos::initArrowWidget(QTabWidget *parent) {
 void FreeCircos::initArrowTable(void) {
   arrow_table = new QTableView;
   arrow_model = new QStandardItemModel;
-  arrow_table_header = new ExtCheckBoxHeaderView;
-  arrow_table->setSortingEnabled(false);
+
+  arrow_table->setSortingEnabled(true);
   arrow_table->setGeometry(g_scale * table_pos_x,
                            g_scale * table_pos_y,
                            g_scale * table_width,
@@ -35,9 +35,9 @@ void FreeCircos::initArrowTable(void) {
                     << "Gene"
                     << "Start"
                     << "End";
-  arrow_table_header->setProperty("prefix", "arrow");
-  arrow_table_header->setProperty("function", "tableselected");
-  arrow_table->setHorizontalHeader(arrow_table_header);
+//  arrow_table_header->setProperty("prefix", "arrow");
+//  arrow_table_header->setProperty("function", "tableselected");
+//  arrow_table->setHorizontalHeader(arrow_table_header);
   arrow_model->setHorizontalHeaderLabels(arrow_header_list);
 }
 

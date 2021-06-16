@@ -14,6 +14,7 @@ class ExtSortTable : public QTableView {
  public:
   ExtSortTable(QWidget *parent = nullptr);
   ~ExtSortTable();
+  void setHorizontalHeader(QHeaderView *header_view);
   Q_SLOT void sortExtByCol(int col);
 
   QList<Qt::SortOrder> orders;
