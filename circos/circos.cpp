@@ -15,6 +15,7 @@ Circos::~Circos() {
 }
 
 void Circos::openFile(const QString &xlsFile) {
+  qDebug() << "Open file thread is :" << QThread::currentThreadId();
   m_datas.clear();
   if (xlsFile.isEmpty())
     return;
@@ -33,6 +34,7 @@ void Circos::openFile(const QString &xlsFile) {
 }
 
 Circos::DataProcessState Circos::dataToBackBone(void) {
+  qDebug() << "Data to BB thread is :" << QThread::currentThreadId();
   back_bone.clear();
   back_bone_sequence.clear();
   int name_index = -1;

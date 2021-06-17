@@ -15,6 +15,7 @@
 #include <QCloseEvent>
 #include <QSortFilterProxyModel>
 #include <QHeaderView>
+#include <QThread>
 
 #include "settings/winscale.h"
 
@@ -271,6 +272,9 @@ class FreeCircos : public QMainWindow {
   int background_layer = 0;
   int graph_layer = 1;
   int text_layer = 5;
+
+  // Thread
+  QThread file_process_thread;
 
 };
 #endif // FREECIRCOS_H

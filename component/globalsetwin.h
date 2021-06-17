@@ -32,7 +32,7 @@ class GlobalSetWin : public QMainWindow {
   void setTrkPos(qreal _max, qreal _min);
   void setLinkPos(qreal _max, qreal _min);
   void setComponents(Component c);
-  bool isInit(void);
+  bool isInit(void) const;
  private:
   bool active = false;
   void initPanel(void);

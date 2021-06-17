@@ -21,12 +21,15 @@ const static int button_gap_y = 5;
 
 const static int canvas_pos_x = left_margin;
 const static int canvas_pos_gap_y = 5;
+const static int canvas_pos_y = button_box_pos_y + 2 * button_box_height + button_gap_y + canvas_pos_gap_y;
 const static int canvas_width =
   g_app_base_height - bottom_margin - 2 * button_box_height - button_gap_y - top_margin - canvas_pos_gap_y;
 const static int canvas_height = canvas_width;
 //const static int canvas_dpi_ratio = 1;
 const static int canvas_line_width = 1;
 
+const static int radius_widget_pos_x = canvas_pos_x + canvas_width;
+const static int radius_widget_pos_y = canvas_pos_y;
 const static int radius_widget_width = 10;
 const static int radius_widget_height = canvas_height;
 

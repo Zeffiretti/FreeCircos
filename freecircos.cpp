@@ -3,15 +3,15 @@
 #include "ui_freecircos.h"
 qreal g_scale;
 FreeCircos::FreeCircos(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::FreeCircos) {
-  QDesktopWidget * desktopWidget = QApplication::desktop();
+  : QMainWindow(parent), ui(new Ui::FreeCircos) {
+  QDesktopWidget *desktopWidget = QApplication::desktop();
   QRect screenRect = desktopWidget->screenGeometry();
   int w = screenRect.width();
   int h = screenRect.height();
   ui->setupUi(this);
 //  setWindowFlags(flags);
 //  if (g_app_base_width * g_scale > 0.8 * w) {
-    g_scale = 0.85 * w / g_app_base_width;
+  g_scale = 0.85 * w / g_app_base_width;
 //  }
   if (g_app_base_height * g_scale > 0.6 * h) {
     g_scale = 0.6 * h / g_app_base_height;
@@ -152,8 +152,13 @@ FreeCircos::FreeCircos(QWidget *parent)
 //  dlg->setParent(this);
 ////  dlg->setGeometry(100,20,500,400);
 //  dlg->show();
+  qDebug() << "The main threadID is :" << QThread::currentThreadId();
+  circos->moveToThread(&file_process_thread);
+  file_process_thread.start();
 }
 
 FreeCircos::~FreeCircos() {
   delete ui;
+  file_process_thread.quit();
+  file_process_thread.wait();
 }

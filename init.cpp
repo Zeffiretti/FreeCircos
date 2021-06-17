@@ -16,7 +16,7 @@ void FreeCircos::initCanvas(void) {
   canvas = new QCustomPlot;
   canvas->setParent(this);
   canvas->setGeometry(g_scale * canvas_pos_x,
-                      g_scale * (button_box_pos_y + 2 * button_box_height + button_gap_y + canvas_pos_gap_y),
+                      g_scale * canvas_pos_y,
                       g_scale * canvas_width,
                       g_scale * canvas_height);
   canvas->xAxis->setRange(-canvas_scale, canvas_scale);

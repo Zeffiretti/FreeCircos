@@ -6,6 +6,7 @@
 #include <QErrorMessage>
 #include <QDebug>
 #include <QObject>
+#include <QThread>
 #include "gene.h"
 #include "category.h"
 #include "link.h"
@@ -29,7 +30,7 @@ class Circos : public QObject {
   Circos(QObject *parent = nullptr);
   ~Circos();
 
-  void openFile(const QString &);
+  Q_SLOT void openFile(const QString &);
   DataProcessState dataToBackBone(void);
   DataProcessState dataToCategory(void);
   DataProcessState dataToLink(void);
