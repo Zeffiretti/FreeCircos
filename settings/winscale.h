@@ -27,12 +27,15 @@ const static int canvas_height = canvas_width;
 //const static int canvas_dpi_ratio = 1;
 const static int canvas_line_width = 1;
 
+const static int radius_widget_width = 10;
+const static int radius_widget_height = canvas_height;
+
 const static int config_widget_margin_x = 10;
 const static int config_widget_pos_y = top_margin;
-const static int config_widget_pos_x = canvas_pos_x + canvas_width + config_widget_margin_x;
+const static int config_widget_pos_x = canvas_pos_x + canvas_width + radius_widget_width + config_widget_margin_x;
 const static int config_widget_height = g_app_base_height - bottom_margin - config_widget_pos_y;
 const static int
-  config_widget_width = g_app_base_width - left_margin - right_margin - canvas_width - config_widget_margin_x;
+  config_widget_width = g_app_base_width - right_margin - config_widget_pos_x;
 
 // variables below are referenced in config_widget(backbone & category)
 const static int page_margin = 0;
@@ -117,7 +120,7 @@ const static int arrow_canvas_label_pos_x3 = arrow_canvas_pos_x;
 const static int arrow_canvas_label_pos_y3 = arrow_canvas_pos_y + arrow_canvas_height;
 
 const static int arrow_canvas_slider_pos_x3 = arrow_canvas_pos_x;
-const static int arrow_canvas_slider_pos_y3 = arrow_canvas_label_pos_y3+arrow_canvas_label_height;
+const static int arrow_canvas_slider_pos_y3 = arrow_canvas_label_pos_y3 + arrow_canvas_label_height;
 const static int arrow_canvas_slider_width3 = arrow_canvas_width;
 const static int arrow_canvas_slider_height3 = arrow_canvas_slider_width;
 
