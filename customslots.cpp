@@ -91,22 +91,14 @@ void FreeCircos::onButtonClicked(bool) {
     if (xlsFile.isEmpty()) {
       return;
     }
-    circos->openFile(xlsFile);
+    timer.restart();
+//    circos->openFile(xlsFile);
+    file_open_finished = false;
+    emit openfile(xlsFile, "backbone");
+    qDebug() << "open file consume " << timer.elapsed() / 1000.0 << 's';
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\backbone file.xlsx");
 #endif
-    gene_donut->clear();
-    if (circos->dataToBackBone() != Circos::DataProcessState::Success) {
-      return;
-    }
-    qDebug() << "open file finished";
-    initBackBoneTableModel(backbone_model, circos);
-    color_dialog_->setCategoryButtonEnabled(false);
-    backbone_widget->setEnabled(true);
-//    color_dialog_->setEnabled(true);
-//    backbone_label_state_combobox->setEnabled(true);
-//    backbone_label_position_combobox->setEnabled(true);
-    emit setTableEditMode(TableEditMode::EditGene);
   }
   if (func == "opencategoryfile") {
 #ifndef FILE_RES_USED
@@ -114,19 +106,11 @@ void FreeCircos::onButtonClicked(bool) {
     if (xlsFile.isEmpty()) {
       return;
     }
-    circos->openFile(xlsFile);
+//    circos->openFile(xlsFile);
+    emit openfile(xlsFile, "category");
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\category file.xlsx");
 #endif
-    if (circos->dataToCategory() != Circos::DataProcessState::Success) {
-      return;
-    }
-    circos->setCategoryEnable(true);
-    color_dialog_->setCategoryButtonEnabled(true);
-//    switch_button->setEnabled(true);
-    cat_button->setEnabled(true);
-//        initBackBoneTableModel(backbone_table, backbone_model, circos);
-    addCategoryToTable(backbone_model, circos);
   }
   if (func == "openlinkfile") {
 #ifndef FILE_RES_USED
@@ -134,16 +118,10 @@ void FreeCircos::onButtonClicked(bool) {
     if (xlsFile.isEmpty()) {
       return;
     }
-    circos->openFile(xlsFile);
+    emit openfile(xlsFile, "link");
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\link file.xlsx");
 #endif
-//    connect(circos, &Circos::linkColorFuncChanged,
-//            circos, &Circos::onLinkColorFuncChanged);
-    circos->dataToLink();
-    circos->setLinkEnable(true);
-    //addCategoryToTable(backbone_table, backbone_model, circos);
-    initLKTableModel(link_model, circos);
   }
   if (func.compare("opentrackarrowfile") == 0) {
 #ifndef FILE_RES_USED
@@ -151,13 +129,10 @@ void FreeCircos::onButtonClicked(bool) {
     if (xlsFile.isEmpty()) {
       return;
     }
-    circos->openFile(xlsFile);
+    emit openfile(xlsFile, "trackarrow");
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\track arrow file.xlsx");
 #endif
-    circos->dataToTrackArrow();
-    circos->setTrackEnabled(true);
-    initArrowTableModel(arrow_model, circos);
   }
   if (func == "backboneconfig") {
 //    moveTableRow(backbone_table, backbone_model, 4, 0);
@@ -1018,3 +993,4 @@ void FreeCircos::onTrackValueChanged(int value) {
 void FreeCircos::onTrackColorChanged(QColor c) {
   circos->setTAColor(std::move(c));
 }
+

@@ -152,9 +152,7 @@ FreeCircos::FreeCircos(QWidget *parent)
 //  dlg->setParent(this);
 ////  dlg->setGeometry(100,20,500,400);
 //  dlg->show();
-  qDebug() << "The main threadID is :" << QThread::currentThreadId();
-  circos->moveToThread(&file_process_thread);
-  file_process_thread.start();
+  connectCircosThread();
 }
 
 FreeCircos::~FreeCircos() {

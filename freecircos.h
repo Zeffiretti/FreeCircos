@@ -16,6 +16,7 @@
 #include <QSortFilterProxyModel>
 #include <QHeaderView>
 #include <QThread>
+#include <QTime>
 
 #include "settings/winscale.h"
 
@@ -107,6 +108,7 @@ class FreeCircos : public QMainWindow {
   void initArrowConfigWidget(void);
   void initArrowEditor(void);
   void connectArrowSignalSlot(void);
+  void connectCircosThread(void);
 
   bool eventFilter(QObject *watched, QEvent *event);
 
@@ -116,6 +118,12 @@ class FreeCircos : public QMainWindow {
  signals:
   void setTableEditMode(TableEditMode tem);
   void setLinkColor(int index, QColor c);
+  // multi thread signals
+  void openfile(const QString &file, const QString &type);
+  void dataToBackBone(void);
+  void dataToCategory(void);
+  void dataToLink(void);
+  void dataToTrackArrow(void);
 
  private slots:
   void onButtonClicked(bool);
@@ -138,6 +146,7 @@ class FreeCircos : public QMainWindow {
   void onWindowClosed(void);
   void onTrackValueChanged(int value);
   void onTrackColorChanged(QColor c);
+  void onCircosOperateFinish(const QString &operate_);
 
  private:
 
@@ -275,6 +284,7 @@ class FreeCircos : public QMainWindow {
 
   // Thread
   QThread file_process_thread;
-
+  bool file_open_finished = false;
+  QTime timer;
 };
 #endif // FREECIRCOS_H

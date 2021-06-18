@@ -30,11 +30,11 @@ class Circos : public QObject {
   Circos(QObject *parent = nullptr);
   ~Circos();
 
-  Q_SLOT void openFile(const QString &);
-  DataProcessState dataToBackBone(void);
-  DataProcessState dataToCategory(void);
-  DataProcessState dataToLink(void);
-  DataProcessState dataToTrackArrow(void);
+  Q_SLOT void openFile(const QString &file, const QString &type);
+  Q_SLOT DataProcessState dataToBackBone(void);
+  Q_SLOT DataProcessState dataToCategory(void);
+  Q_SLOT DataProcessState dataToLink(void);
+  Q_SLOT DataProcessState dataToTrackArrow(void);
   int indexOfGene(const QString &);
   int indexOfCategory(const QString &);
   void buildBackBoneSequence(QStandardItemModel *model);
@@ -216,6 +216,7 @@ class Circos : public QObject {
 
  signals:
   void linkColorFuncChanged(int index);
+  void operateFinish(const QString &operate_);
 
  private:
   // global paremater
