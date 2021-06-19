@@ -164,7 +164,8 @@ set(ROOT_FILES
 set(TOOL_FILES
   tool/customtool.cpp)
 set(THREAD_FILES
-  thread/pthcircos.cpp)
+  thread/pthcircos.cpp
+  thread/pthpaint.cpp)
 
 
 if (CMAKE_BUILD_TYPE MATCHES Release)
