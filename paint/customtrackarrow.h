@@ -24,7 +24,7 @@ class CustomTrackArrow {
   int getTrackLayer(void) { return track_layer; }
   void addArrow(CustomTrack *a);
   void clearArrow(void);
-  void drawTracks(QCustomPlot *);
+  void drawTracks(QCustomPlot *plot);
  private:
   int track_layer;
   Types type;
