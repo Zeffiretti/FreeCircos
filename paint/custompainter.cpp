@@ -23,4 +23,46 @@ void CustomPainter::clear(void) {
   canvas->clearPlottables();
 }
 
-void CustomPainter::drawBackbone(void) { gene_donut->drawDonut(canvas); }
+void CustomPainter::drawBackbone(void) {
+  if (m_figures.testFlag(Backbone)) {
+    qDebug() << "drawing backbone donut";
+    gene_donut->drawDonut(canvas);
+  } else {
+    qDebug() << "no backbone!";
+  }
+}
+
+void CustomPainter::drawCategory(void) {
+  if (m_figures.testFlag(Category)) {
+    qDebug() << "drawing category donut";
+    category_donut->drawDonut(canvas);
+  } else {
+    qDebug() << "no category!";
+  }
+}
+
+void CustomPainter::drawLink(void) {
+  if (m_figures.testFlag(Link)) {
+    qDebug() << "drawing link donut";
+    link_canvas->drawLinks(canvas);
+  } else {
+    qDebug() << "no link!";
+  }
+}
+
+void CustomPainter::drawTrack(void) {
+  if (m_figures.testFlag(Track)) {
+    qDebug() << "drawing link donut";
+    track_canvas->drawTracks(canvas);
+  } else {
+    qDebug() << "no link!";
+  }
+}
+
+void CustomPainter::setFigures(CustomPainter::Figure figures) {
+  m_figures = figures;
+}
+
+CustomPainter::Figures CustomPainter::getFigures(void) {
+  return m_figures;
+}

@@ -14,7 +14,7 @@ class CustomLinkCanvas {
   Q_DECLARE_FLAGS(LinkTypes, LinkType)
   CustomLinkCanvas();
   void addCustomLink(CustomLink *);
-  void drawLinks(QCustomPlot *);
+  void drawLinks(QCustomPlot *plot);
   void clearLinks(void);
 
   // getters
