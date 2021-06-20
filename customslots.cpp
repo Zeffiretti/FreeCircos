@@ -4,7 +4,8 @@ void FreeCircos::onButtonClicked(bool) {
   QPushButton *btn = qobject_cast<QPushButton *>(sender());
   QString func = btn->property("function").toString();
   if (func == "generate") {
-    clearCanvas(canvas);
+    clearCanvas(canvas);//deprecate
+    painter->clear();
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
     circos->buildBackBoneSequence(backbone_model);
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
@@ -13,7 +14,8 @@ void FreeCircos::onButtonClicked(bool) {
 //        gene_donut->setSize(0.7, 0.75);
     gene_donut->setSliceLayer(graph_layer + 1);
     gene_donut->setTextLayer(text_layer);
-    gene_donut->drawDonut(canvas);
+    gene_donut->drawDonut(canvas);//deprecate
+    painter->drawBackbone();
     if (circos->getCategoryEnable()) {
       circos->buildCategorySequence(backbone_model);
       circos->buildCategoryDonut(category_donut);

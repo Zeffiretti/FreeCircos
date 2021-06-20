@@ -32,6 +32,7 @@
 #include "extension/extsymslider.h"
 #include "extension/extsorttable.h"
 
+#include "paint/custompainter.h"
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
 #include "paint/customslice.h"
@@ -124,6 +125,7 @@ class FreeCircos : public QMainWindow {
   void dataToCategory(void);
   void dataToLink(void);
   void dataToTrackArrow(void);
+  void paint(void);
 
  private slots:
   void onButtonClicked(bool);
@@ -160,6 +162,7 @@ class FreeCircos : public QMainWindow {
   CustomLinkCanvas *link_canvas;
   CustomTrackArrow *track_canvas;
   Circos *circos;
+  CustomPainter *painter;
 
   QPushButton *generate_button;
   QTabWidget *control_panel;

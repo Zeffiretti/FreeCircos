@@ -149,7 +149,8 @@ set(PAINT_FILES
   paint/customslice.cpp
   paint/customtrack.cpp
   paint/customtrackarrow.cpp
-  paint/qcustomplot.cpp)
+  paint/qcustomplot.cpp
+  paint/custompainter.cpp)
 set(RESOURCE_FILES
   resource/icon.ico
   resource/resource.qrc

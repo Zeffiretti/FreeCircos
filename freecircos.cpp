@@ -28,6 +28,7 @@ FreeCircos::FreeCircos(QWidget *parent)
   initCanvas();
   //init generate button
   initGenerateButton();
+  painter = new CustomPainter;
   gene_donut = new CustomDonut;
   category_donut = new CustomDonut;
   link_canvas = new CustomLinkCanvas;
