@@ -13,6 +13,10 @@
 #include <QFont>
 #include <QDesktopWidget>
 #include <QCloseEvent>
+#include <QSortFilterProxyModel>
+#include <QHeaderView>
+#include <QThread>
+#include <QTime>
 
 #include "settings/winscale.h"
 
@@ -26,7 +30,9 @@
 #include "extension/exttableview.h"
 #include "extension/extarroweditor.h"
 #include "extension/extsymslider.h"
+#include "extension/extsorttable.h"
 
+#include "paint/custompainter.h"
 #include "paint/qcustomplot.h"
 #include "paint/customdonut.h"
 #include "paint/customslice.h"
@@ -70,6 +76,7 @@ class FreeCircos : public QMainWindow {
 
   //init method
   void initCanvas(void);
+  void initRadiusWidget(void);
   void initColorDialog(void);
   void initGenerateButton(void);
   void clearCanvas(QCustomPlot *cvs);
@@ -103,6 +110,8 @@ class FreeCircos : public QMainWindow {
   void initArrowConfigWidget(void);
   void initArrowEditor(void);
   void connectArrowSignalSlot(void);
+  void connectCircosThread(void);
+  void connectPaintThread(void);
 
   bool eventFilter(QObject *watched, QEvent *event);
 
@@ -112,6 +121,13 @@ class FreeCircos : public QMainWindow {
  signals:
   void setTableEditMode(TableEditMode tem);
   void setLinkColor(int index, QColor c);
+  // multi thread signals
+  void openfile(const QString &file, const QString &type);
+  void dataToBackBone(void);
+  void dataToCategory(void);
+  void dataToLink(void);
+  void dataToTrackArrow(void);
+  void paint(void);
 
  private slots:
   void onButtonClicked(bool);
@@ -134,6 +150,8 @@ class FreeCircos : public QMainWindow {
   void onWindowClosed(void);
   void onTrackValueChanged(int value);
   void onTrackColorChanged(QColor c);
+  void onCircosOperateFinish(const QString &operate_);
+  void onPaintOperateFinish(const QString &operate_);
 
  private:
 
@@ -147,6 +165,7 @@ class FreeCircos : public QMainWindow {
   CustomLinkCanvas *link_canvas;
   CustomTrackArrow *track_canvas;
   Circos *circos;
+  CustomPainter *painter;
 
   QPushButton *generate_button;
   QTabWidget *control_panel;
@@ -199,7 +218,8 @@ class FreeCircos : public QMainWindow {
   QWidget *link_widget;
   QTableView *link_table;
   QStandardItemModel *link_model;
-  ExtCheckBoxHeaderView *link_table_header;
+//  QHeaderView *link_table_header;
+  QCheckBox *link_all_checkbox;
   QWidget *link_config_widget;
   QLabel *link_type_label;
   QComboBox *link_type_combobox;
@@ -243,7 +263,7 @@ class FreeCircos : public QMainWindow {
   QWidget *arrow_widget;
   QTableView *arrow_table;
   QStandardItemModel *arrow_model;
-  ExtCheckBoxHeaderView *arrow_table_header;
+  QHeaderView *arrow_table_header;
   QStringList arrow_header_list;
   QWidget *arrow_config_widget;
   QLabel *arrow_type_label;
@@ -268,5 +288,10 @@ class FreeCircos : public QMainWindow {
   int graph_layer = 1;
   int text_layer = 5;
 
+  // Thread
+  QThread file_process_thread;
+  QThread paint_thread;
+  bool file_open_finished = false;
+  QTime timer;
 };
 #endif // FREECIRCOS_H

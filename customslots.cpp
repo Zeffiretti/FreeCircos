@@ -4,36 +4,62 @@ void FreeCircos::onButtonClicked(bool) {
   QPushButton *btn = qobject_cast<QPushButton *>(sender());
   QString func = btn->property("function").toString();
   if (func == "generate") {
-    clearCanvas(canvas);
+//    clearCanvas(canvas);//deprecate
+    painter->clear();
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
     circos->buildBackBoneSequence(backbone_model);
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
-    circos->buildBackBoneDonut(gene_donut);
+//    circos->buildBackBoneDonut(gene_donut);//deprecate
+    circos->buildBackBoneDonut(painter->getGeneDonut());
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
 //        gene_donut->setSize(0.7, 0.75);
-    gene_donut->setSliceLayer(graph_layer + 1);
-    gene_donut->setTextLayer(text_layer);
-    gene_donut->drawDonut(canvas);
+//    gene_donut->setSliceLayer(graph_layer + 1);
+//    gene_donut->setTextLayer(text_layer);
+//    gene_donut->drawDonut(canvas);//deprecate
+//    painter->drawBackbone();
+
     if (circos->getCategoryEnable()) {
       circos->buildCategorySequence(backbone_model);
-      circos->buildCategoryDonut(category_donut);
-//      category_donut->setSize(0.78, 0.83);
-      category_donut->setSliceLayer(graph_layer);
-      category_donut->setTextLayer(text_layer);
-      category_donut->drawDonut(canvas);
+//      circos->buildCategoryDonut(category_donut);//deprecate
+      circos->buildCategoryDonut(painter->getCategoryDonut());
+      CustomPainter::Figures figures = painter->getFigures();
+      painter->setFigures(figures | CustomPainter::Figure::Category);
+//      category_donut->setSliceLayer(graph_layer);
+//      category_donut->setTextLayer(text_layer);
+//      category_donut->drawDonut(canvas);//deprecate
+//      painter->drawCategory();
+    } else {
+      CustomPainter::Figures figures = painter->getFigures();
+      painter->setFigures((figures & (~CustomPainter::Figure::Category)));
     }
     if (circos->getLinkEnable()) {
-      circos->buildCustomLink(link_canvas);
+//      circos->buildCustomLink(link_canvas);//deprecate
+      circos->buildCustomLink(painter->getLinkCanvas());
+      CustomPainter::Figures figures = painter->getFigures();
+      painter->setFigures(figures | CustomPainter::Figure::Link);
 //            link_canvas->setLinkType(CustomLinkCanvas::LinkType::AllOut);
-      link_canvas->setLinkLayer(graph_layer);
-      link_canvas->drawLinks(canvas);
+//      link_canvas->setLinkLayer(graph_layer);
+//      link_canvas->drawLinks(canvas);//deprecate
+//      painter->drawLink();
+    } else {
+      CustomPainter::Figures figures = painter->getFigures();
+      painter->setFigures((figures & (~CustomPainter::Figure::Link)));
     }
     if (circos->getTrackEnabled()) {
-      circos->buildCustomTrack(track_canvas);
-      track_canvas->setTrackLayer(graph_layer + 1);
-      track_canvas->drawTracks(canvas);
+//      circos->buildCustomTrack(track_canvas);//deprecate
+      circos->buildCustomTrack(painter->getTrackCanvas());
+      CustomPainter::Figures figures = painter->getFigures();
+      painter->setFigures(figures | CustomPainter::Figure::Track);
+//      track_canvas->setTrackLayer(graph_layer + 1);
+//      track_canvas->drawTracks(canvas);//deprecate
+//      painter->drawTrack();
+    } else {
+      CustomPainter::Figures figures = painter->getFigures();
+      painter->setFigures((figures & (~CustomPainter::Figure::Track)));
     }
-    canvas->replot();
+    emit paint();
+    qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
+//    canvas->replot();//deprecate
   }
   if (func.compare("reset") == 0) {
     circos->reset();
@@ -67,7 +93,7 @@ void FreeCircos::onButtonClicked(bool) {
     gb_active = true;
     connect(gbset_win, &GlobalSetWin::closeSet,
             this, &FreeCircos::onWindowClosed);
-//    connect(gbset_win,&QWidget::c)
+//
 //    connect(gbset_win, &GlobalSetWin::BBInnerRadiusChanged,
 //            circos, &Circos::setBBHole);
 //    connect(gbset_win, &GlobalSetWin::BBOuterRadiusChanged,
@@ -91,22 +117,14 @@ void FreeCircos::onButtonClicked(bool) {
     if (xlsFile.isEmpty()) {
       return;
     }
-    circos->openFile(xlsFile);
+    timer.restart();
+//    circos->openFile(xlsFile);
+    file_open_finished = false;
+    emit openfile(xlsFile, "backbone");
+    qDebug() << "open file consume " << timer.elapsed() / 1000.0 << 's';
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\backbone file.xlsx");
 #endif
-    gene_donut->clear();
-    if (circos->dataToBackBone() != Circos::DataProcessState::Success) {
-      return;
-    }
-    qDebug() << "open file finished";
-    initBackBoneTableModel(backbone_model, circos);
-    color_dialog_->setCategoryButtonEnabled(false);
-    backbone_widget->setEnabled(true);
-//    color_dialog_->setEnabled(true);
-//    backbone_label_state_combobox->setEnabled(true);
-//    backbone_label_position_combobox->setEnabled(true);
-    emit setTableEditMode(TableEditMode::EditGene);
   }
   if (func == "opencategoryfile") {
 #ifndef FILE_RES_USED
@@ -114,19 +132,11 @@ void FreeCircos::onButtonClicked(bool) {
     if (xlsFile.isEmpty()) {
       return;
     }
-    circos->openFile(xlsFile);
+//    circos->openFile(xlsFile);
+    emit openfile(xlsFile, "category");
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\category file.xlsx");
 #endif
-    if (circos->dataToCategory() != Circos::DataProcessState::Success) {
-      return;
-    }
-    circos->setCategoryEnable(true);
-    color_dialog_->setCategoryButtonEnabled(true);
-//    switch_button->setEnabled(true);
-    cat_button->setEnabled(true);
-//        initBackBoneTableModel(backbone_table, backbone_model, circos);
-    addCategoryToTable(backbone_model, circos);
   }
   if (func == "openlinkfile") {
 #ifndef FILE_RES_USED
@@ -134,16 +144,10 @@ void FreeCircos::onButtonClicked(bool) {
     if (xlsFile.isEmpty()) {
       return;
     }
-    circos->openFile(xlsFile);
+    emit openfile(xlsFile, "link");
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\link file.xlsx");
 #endif
-//    connect(circos, &Circos::linkColorFuncChanged,
-//            circos, &Circos::onLinkColorFuncChanged);
-    circos->dataToLink();
-    circos->setLinkEnable(true);
-    //addCategoryToTable(backbone_table, backbone_model, circos);
-    initLKTableModel(link_model, circos);
   }
   if (func.compare("opentrackarrowfile") == 0) {
 #ifndef FILE_RES_USED
@@ -151,13 +155,10 @@ void FreeCircos::onButtonClicked(bool) {
     if (xlsFile.isEmpty()) {
       return;
     }
-    circos->openFile(xlsFile);
+    emit openfile(xlsFile, "trackarrow");
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\track arrow file.xlsx");
 #endif
-    circos->dataToTrackArrow();
-    circos->setTrackEnabled(true);
-    initArrowTableModel(arrow_model, circos);
   }
   if (func == "backboneconfig") {
 //    moveTableRow(backbone_table, backbone_model, 4, 0);
@@ -341,8 +342,8 @@ void FreeCircos::onButtonClicked(bool) {
       //fileName是文件名
       qDebug() << fileName;
 
-      canvas->toPixmap(0, 0, 10);
-      canvas->savePng(fileName, 500, 500, 10);
+//      canvas->toPixmap(0, 0, 10);//deprecate
+//      canvas->savePng(fileName, 500, 500, 10);//deprecate
 //      canvas->savePng(fileName, 0, 0, 1.0, 5, 1024, QCP::ResolutionUnit::ruDotsPerCentimeter);
       //(const QString &fileName, int width = 0, int height = 0, double scale = 1.0, int quality = -1, int resolution = 96, QCP::ResolutionUnit resolutionUnit = QCP::ruDotsPerInch);
     } else {
@@ -838,6 +839,19 @@ void FreeCircos::onCheckboxStateChanged(int state) {
 //      link_apply_combobox->setEnabled(state == Qt::CheckState::Checked);
       }
     }
+    if (func.compare("tableselected") == 0) {
+      qDebug() << "now entering slots link--tableselected--onHeaderCheckBoxStateChanged";
+      int rows = link_model->rowCount();
+      for (int i = 0; i < rows; ++i) {
+        link_model->item(i, 0)->setCheckState(Qt::CheckState(state));
+//        link_model->setState(i, Qt::CheckState(state));
+//        circos.getLi
+      }
+//      if(state == Qt::Checked) {
+//      } else if (state == Qt::Unchecked) {
+//      } else {
+//      }
+    }
   }
 }
 
@@ -1005,3 +1019,4 @@ void FreeCircos::onTrackValueChanged(int value) {
 void FreeCircos::onTrackColorChanged(QColor c) {
   circos->setTAColor(std::move(c));
 }
+

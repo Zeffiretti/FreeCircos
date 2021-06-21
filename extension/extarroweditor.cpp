@@ -5,7 +5,8 @@
 #include "extarroweditor.h"
 ExtArrowEditor::ExtArrowEditor(QWidget *parent) : QCustomPlot(parent) {
   datas.clear();
-  this->setBackground(QBrush(QColor(200, 200, 200)));
+  this->setBackground(QBrush(QColor(240, 240, 240)));
+//  this.setb
   connect(this, &ExtArrowEditor::valueChanged,
           this, &ExtArrowEditor::drawArrow);
 }
@@ -23,7 +24,8 @@ void ExtArrowEditor::drawArrow(void) {
     this->yAxis->setVisible(false);
     this->xAxis->grid()->setZeroLinePen(Qt::NoPen);
     this->yAxis->grid()->setZeroLinePen(Qt::NoPen);
-    this->axisRect()->setMinimumMargins(QMargins(0, 0, 0, 0));
+    this->axisRect()->setMinimumMargins(QMargins(1, 1, 1, 1));
+//    this->setStyleSheet("background-color:rgba(0,0,0,0.2);border:1px solid black");
   }
 
   buildData();

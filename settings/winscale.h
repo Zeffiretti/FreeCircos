@@ -21,18 +21,49 @@ const static int button_gap_y = 5;
 
 const static int canvas_pos_x = left_margin;
 const static int canvas_pos_gap_y = 5;
+const static int canvas_pos_y = button_box_pos_y + 2 * button_box_height + button_gap_y + canvas_pos_gap_y;
 const static int canvas_width =
   g_app_base_height - bottom_margin - 2 * button_box_height - button_gap_y - top_margin - canvas_pos_gap_y;
 const static int canvas_height = canvas_width;
 //const static int canvas_dpi_ratio = 1;
 const static int canvas_line_width = 1;
 
-const static int config_widget_margin_x = 10;
+const static int radius_widget_pos_x = canvas_pos_x + canvas_width;
+const static int radius_widget_pos_y = canvas_pos_y;
+const static int radius_widget_width = 40;
+const static int radius_widget_height = canvas_height;
+const static int radius_slider_pos_x1 = 1;
+const static int radius_slider_pos_y1 = 0;
+const static int radius_inner_margin = 1;
+const static int radius_slider_width = (radius_widget_width - 3 * radius_inner_margin) / 4;
+const static int radius_slider_height = canvas_height / 2;
+const static int radius_checkbox_pos_x1 = 0;
+const static int radius_checkbox_pos_y1 = radius_slider_pos_y1 + radius_slider_height;
+const static int radius_checkbox_width = radius_widget_width / 4;
+const static int radius_checkbox_height = radius_checkbox_width;
+const static int radius_label_pos_x1 = 1;
+const static int radius_label_pos_y1 = radius_checkbox_pos_y1 + radius_checkbox_height;
+const static int radius_label_width = radius_checkbox_width;
+const static int radius_label_height = 30;
+const static int radius_value_pos_x1 = radius_label_pos_x1;
+const static int radius_value_pos_y1 = radius_label_pos_y1 + radius_label_height;
+const static int radius_value_width = radius_label_width;
+const static int radius_value_height = radius_label_height;
+const static int radius_edit_pos_x1 = 0;
+const static int radius_edit_pos_y1 = radius_value_pos_y1 + radius_value_height;
+const static int radius_edit_width = radius_widget_width;
+const static int radius_edit_height = 10;
+const static int radius_confirm_pos_x1 = 0;
+const static int radius_confirm_pos_y1 = radius_edit_pos_y1 + 4 * radius_edit_height;
+const static int radius_confirm_width = radius_widget_width;
+const static int radius_confirm_height = radius_edit_height;
+
+const static int config_widget_margin_x = 0;
 const static int config_widget_pos_y = top_margin;
-const static int config_widget_pos_x = canvas_pos_x + canvas_width + config_widget_margin_x;
+const static int config_widget_pos_x = canvas_pos_x + canvas_width + radius_widget_width + config_widget_margin_x;
 const static int config_widget_height = g_app_base_height - bottom_margin - config_widget_pos_y;
 const static int
-  config_widget_width = g_app_base_width - left_margin - right_margin - canvas_width - config_widget_margin_x;
+  config_widget_width = g_app_base_width - right_margin - config_widget_pos_x;
 
 // variables below are referenced in config_widget(backbone & category)
 const static int page_margin = 0;
@@ -117,7 +148,7 @@ const static int arrow_canvas_label_pos_x3 = arrow_canvas_pos_x;
 const static int arrow_canvas_label_pos_y3 = arrow_canvas_pos_y + arrow_canvas_height;
 
 const static int arrow_canvas_slider_pos_x3 = arrow_canvas_pos_x;
-const static int arrow_canvas_slider_pos_y3 = arrow_canvas_label_pos_y3+arrow_canvas_label_height;
+const static int arrow_canvas_slider_pos_y3 = arrow_canvas_label_pos_y3 + arrow_canvas_label_height;
 const static int arrow_canvas_slider_width3 = arrow_canvas_width;
 const static int arrow_canvas_slider_height3 = arrow_canvas_slider_width;
 

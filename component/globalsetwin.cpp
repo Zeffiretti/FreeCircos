@@ -1,12 +1,13 @@
 #include "globalsetwin.h"
-
-GlobalSetWin::GlobalSetWin(QWidget *parent) : QMainWindow(parent) {
+extern qreal g_scale;
+GlobalSetWin::GlobalSetWin(QWidget *parent) : QWidget(parent) {
   c_ptr = new Circos;
   initPanel();
 }
 
 GlobalSetWin::GlobalSetWin(Circos *c, QWidget *parent) {
   c_ptr = c;
+  setParent(parent);
   initPanel();
   active = true;
 }
@@ -15,13 +16,19 @@ void GlobalSetWin::closeEvent(QCloseEvent *e) {
   emit closeSet();
 }
 
-bool GlobalSetWin::isInit(void) { return active; }
+bool GlobalSetWin::isInit(void) const { return active; }
 
 void GlobalSetWin::initPanel() {
-  this->setGeometry(400, 400, 600, 500);
+  this->setGeometry(g_scale * radius_widget_pos_x,
+                    g_scale * radius_widget_pos_y,
+                    g_scale * radius_widget_width,
+                    g_scale * radius_widget_height);
   back_bone_dslider = new ExtDoubleSlider;
   back_bone_dslider->setParent(this);
-  back_bone_dslider->setGeometry(50, 20, 30, 400);
+  back_bone_dslider->setGeometry(g_scale * radius_slider_pos_x1,
+                                 g_scale * radius_slider_pos_y1,
+                                 g_scale * radius_slider_width,
+                                 g_scale * radius_slider_height);
   back_bone_dslider->setRange(0, 100);
   back_bone_dslider->setHandleMovementMode(ExtDoubleSlider::NoOverlapping);
   back_bone_dslider->setUpperValue(c_ptr->getBBPie() / canvas_scale * back_bone_dslider->maximum());
@@ -30,7 +37,10 @@ void GlobalSetWin::initPanel() {
   back_bone_dslider->setProperty("function", "back_bone_dslider");
   category_dslider = new ExtDoubleSlider;
   category_dslider->setParent(this);
-  category_dslider->setGeometry(150, 20, 30, 400);
+  category_dslider->setGeometry(g_scale * (radius_slider_pos_x1 + radius_slider_width + radius_inner_margin),
+                                g_scale * radius_slider_pos_y1,
+                                g_scale * radius_slider_width,
+                                g_scale * radius_slider_height);
   category_dslider->setRange(0, 100);
   category_dslider->setHandleMovementMode(ExtDoubleSlider::NoOverlapping);
   category_dslider->setUpperValue(c_ptr->getCGPie() / canvas_scale * category_dslider->maximum());
@@ -40,7 +50,10 @@ void GlobalSetWin::initPanel() {
   category_dslider->setProperty("function", "category_dslider");
   trackarrow_dslider = new ExtDoubleSlider;
   trackarrow_dslider->setParent(this);
-  trackarrow_dslider->setGeometry(250, 20, 30, 400);
+  trackarrow_dslider->setGeometry(g_scale * (radius_slider_pos_x1 + 2 * radius_slider_width + 2 * radius_inner_margin),
+                                  g_scale * radius_slider_pos_y1,
+                                  g_scale * radius_slider_width,
+                                  g_scale * radius_slider_height);
   trackarrow_dslider->setRange(0, 100);
   trackarrow_dslider->setHandleMovementMode(ExtDoubleSlider::NoOverlapping);
   trackarrow_dslider->setUpperValue(c_ptr->getTAPie() / canvas_scale * trackarrow_dslider->maximum());
@@ -49,105 +62,160 @@ void GlobalSetWin::initPanel() {
   trackarrow_dslider->setProperty("function", "trackarrow_dslider");
   link_dslider = new ExtDoubleSlider;
   link_dslider->setParent(this);
-  link_dslider->setGeometry(350, 20, 30, 400);
+  link_dslider->setGeometry(g_scale * (radius_slider_pos_x1 + 3 * radius_slider_width + 3 * radius_inner_margin),
+                            g_scale * radius_slider_pos_y1,
+                            g_scale * radius_slider_width,
+                            g_scale * radius_slider_height);
   link_dslider->setRange(0, 100);
   link_dslider->setHandleMovementMode(ExtDoubleSlider::NoOverlapping);
   link_dslider->setUpperValue(c_ptr->getLKPie() / canvas_scale * link_dslider->maximum());
   link_dslider->setLowerValue(c_ptr->getLKHole() / canvas_scale * link_dslider->maximum());
   link_dslider->setProperty("prefix", "radius");
   link_dslider->setProperty("function", "link_dslider");
-  bbs_name_label = new QLabel;
+  bbs_name_label = new ExtVerticalLabel;
   bbs_name_label->setParent(this);
-  bbs_name_label->setGeometry(10, 420, 110, 30);
+  bbs_name_label->setGeometry(g_scale * radius_label_pos_x1,
+                              g_scale * radius_label_pos_y1,
+                              g_scale * radius_label_width,
+                              g_scale * radius_label_height);
   bbs_name_label->setText("BackBone");
+//  bbs_name_label->setTextFormat(Qt::TextFlag::)
   bbs_name_label->setAlignment(Qt::AlignCenter);
-  bbs_value_label = new QLabel;
+  bbs_value_label = new ExtVerticalLabel;
   bbs_value_label->setParent(this);
-  bbs_value_label->setGeometry(10, 450, 110, 30);
+  bbs_value_label->setGeometry(g_scale * radius_value_pos_x1,
+                               g_scale * radius_value_pos_y1,
+                               g_scale * radius_value_width,
+                               g_scale * radius_value_height);
   bbs_value_label->setText(
-      QString::number(back_bone_dslider->lowerValue()) + "--" + QString::number(back_bone_dslider->upperValue()));
+    QString::number(back_bone_dslider->lowerValue()) + "--" + QString::number(back_bone_dslider->upperValue()));
   bbs_value_label->setAlignment(Qt::AlignCenter);
-  cgs_name_label = new QLabel;
+  cgs_name_label = new ExtVerticalLabel;
   cgs_name_label->setParent(this);
-  cgs_name_label->setGeometry(110, 420, 110, 30);
+  cgs_name_label->setGeometry(g_scale * (radius_label_pos_x1 + radius_label_width),
+                              g_scale * radius_label_pos_y1,
+                              g_scale * radius_label_width,
+                              g_scale * radius_label_height);
   cgs_name_label->setText("Category");
   cgs_name_label->setAlignment(Qt::AlignCenter);
   cgs_enable_checkbox = new QCheckBox;
   cgs_enable_checkbox->setParent(this);
-  cgs_enable_checkbox->setGeometry(120, 427, 15, 15);
+  cgs_enable_checkbox->setGeometry(g_scale * (radius_checkbox_pos_x1 + radius_checkbox_width),
+                                   g_scale * radius_checkbox_pos_y1,
+                                   g_scale * radius_checkbox_width,
+                                   g_scale * radius_checkbox_height);
   cgs_enable_checkbox->setCheckState(c_ptr->getCategoryEnable() ? Qt::Checked : Qt::Unchecked);
   cgs_enable_checkbox->setProperty("prefix", "category");
   cgs_enable_checkbox->setProperty("function", "set-enable");
   cgs_enable_checkbox->setCheckState(c_ptr->getCategoryEnable() ? Qt::Checked : Qt::Unchecked);
-  cgs_value_label = new QLabel;
+  cgs_value_label = new ExtVerticalLabel;
   cgs_value_label->setParent(this);
-  cgs_value_label->setGeometry(110, 450, 110, 30);
+  cgs_value_label->setGeometry(g_scale * (radius_value_pos_x1 + radius_value_width),
+                               g_scale * radius_value_pos_y1,
+                               g_scale * radius_value_width,
+                               g_scale * radius_value_height);
   cgs_value_label->setText(
-      QString::number(category_dslider->lowerValue()) + "--" + QString::number(category_dslider->upperValue()));
+    QString::number(category_dslider->lowerValue()) + "--" + QString::number(category_dslider->upperValue()));
   cgs_value_label->setAlignment(Qt::AlignCenter);
-  arw_name_label = new QLabel;
+  arw_name_label = new ExtVerticalLabel;
   arw_name_label->setParent(this);
-  arw_name_label->setGeometry(210, 420, 110, 30);
-  arw_name_label->setText("TrackArrow");
+  arw_name_label->setGeometry(g_scale * (radius_label_pos_x1 + 2 * radius_label_width),
+                              g_scale * radius_label_pos_y1,
+                              g_scale * radius_label_width,
+                              g_scale * radius_label_height);
+  arw_name_label->setText("Track");
   arw_name_label->setAlignment(Qt::AlignCenter);
   arw_enable_checkbox = new QCheckBox;
   arw_enable_checkbox->setParent(this);
-  arw_enable_checkbox->setGeometry(220, 427, 15, 15);
+  arw_enable_checkbox->setGeometry(g_scale * (radius_checkbox_pos_x1 + 2 * radius_checkbox_width),
+                                   g_scale * radius_checkbox_pos_y1,
+                                   g_scale * radius_checkbox_width,
+                                   g_scale * radius_checkbox_height);
   arw_enable_checkbox->setProperty("prefix", "trackarrow");
   arw_enable_checkbox->setProperty("function", "set-enable");
   arw_enable_checkbox->setCheckState(c_ptr->getTrackEnabled() ? Qt::Checked : Qt::Unchecked);
-  arw_value_label = new QLabel;
+  arw_value_label = new ExtVerticalLabel;
   arw_value_label->setParent(this);
-  arw_value_label->setGeometry(210, 450, 110, 30);
+  arw_value_label->setGeometry(g_scale * (radius_value_pos_x1 + 2 * radius_value_width),
+                               g_scale * radius_value_pos_y1,
+                               g_scale * radius_value_width,
+                               g_scale * radius_value_height);
   arw_value_label->setText(
-      QString::number(trackarrow_dslider->lowerValue()) + "--" + QString::number(trackarrow_dslider->upperValue()));
+    QString::number(trackarrow_dslider->lowerValue()) + "--" + QString::number(trackarrow_dslider->upperValue()));
   arw_value_label->setAlignment(Qt::AlignCenter);
-  link_name_label = new QLabel;
+  link_name_label = new ExtVerticalLabel;
   link_name_label->setParent(this);
-  link_name_label->setGeometry(310, 420, 110, 30);
+  link_name_label->setGeometry(g_scale * (radius_label_pos_x1 + 3 * radius_label_width),
+                               g_scale * radius_label_pos_y1,
+                               g_scale * radius_label_width,
+                               g_scale * radius_label_height);
   link_name_label->setText("Link");
   link_name_label->setAlignment(Qt::AlignCenter);
   link_enable_checkbox = new QCheckBox;
   link_enable_checkbox->setParent(this);
-  link_enable_checkbox->setGeometry(300, 427, 15, 15);
+  link_enable_checkbox->setGeometry(g_scale * (radius_checkbox_pos_x1 + 3 * radius_checkbox_width),
+                                    g_scale * radius_checkbox_pos_y1,
+                                    g_scale * radius_checkbox_width,
+                                    g_scale * radius_checkbox_height);
   link_enable_checkbox->setProperty("prefix", "link");
   link_enable_checkbox->setProperty("function", "set-enable");
   link_enable_checkbox->setCheckState(c_ptr->getLinkEnable() ? Qt::CheckState::Checked : Qt::CheckState::Unchecked);
-  link_value_label = new QLabel;
+  link_value_label = new ExtVerticalLabel;
   link_value_label->setParent(this);
-  link_value_label->setGeometry(310, 450, 110, 30);
+  link_value_label->setGeometry(g_scale * (radius_value_pos_x1 + 3 * radius_value_width),
+                                g_scale * radius_value_pos_y1,
+                                g_scale * radius_value_width,
+                                g_scale * radius_value_height);
   link_value_label->setText(
-      QString::number(link_dslider->lowerValue()) + "--" + QString::number(link_dslider->upperValue()));
+    QString::number(link_dslider->lowerValue()) + "--" + QString::number(link_dslider->upperValue()));
   link_value_label->setAlignment(Qt::AlignCenter);
   gene_gap_label = new QLabel;
   gene_gap_label->setParent(this);
-  gene_gap_label->setGeometry(410, 20, 110, 30);
+  gene_gap_label->setGeometry(g_scale * radius_edit_pos_x1,
+                              g_scale * radius_edit_pos_y1,
+                              g_scale * radius_edit_width,
+                              g_scale * radius_edit_height);
   gene_gap_label->setText("Gene Gap");
   gene_gap_edit = new QLineEdit;
   gene_gap_edit->setParent(this);
-  gene_gap_edit->setGeometry(520, 25, 50, 20);
+  gene_gap_edit->setGeometry(g_scale * radius_edit_pos_x1,
+                             g_scale * (radius_edit_pos_y1 + radius_edit_height),
+                             g_scale * radius_edit_width,
+                             g_scale * radius_edit_height);
   gene_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getBBGap()), 'f', 2));
   gene_gap_edit->setProperty("prefix", "gene");
   gene_gap_edit->setProperty("function", "set-gap");
   cgs_gap_label = new QLabel;
   cgs_gap_label->setParent(this);
-  cgs_gap_label->setGeometry(410, 60, 110, 30);
+  cgs_gap_label->setGeometry(g_scale * radius_edit_pos_x1,
+                             g_scale * (radius_edit_pos_y1 + 2 * radius_edit_height),
+                             g_scale * radius_edit_width,
+                             g_scale * radius_edit_height);
   cgs_gap_label->setText("Category Gap");
   cgs_gap_edit = new QLineEdit;
   cgs_gap_edit->setParent(this);
-  cgs_gap_edit->setGeometry(520, 65, 50, 20);
+  cgs_gap_edit->setGeometry(g_scale * radius_edit_pos_x1,
+                            g_scale * (radius_edit_pos_y1 + 3 * radius_edit_height),
+                            g_scale * radius_edit_width,
+                            g_scale * radius_edit_height);
   cgs_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getCatGap()), 'f', 2));
 
   cancel_button = new QPushButton;
-  cancel_button->setParent(this);
-  cancel_button->setText("取消");
-  cancel_button->setGeometry(450, 420, 50, 20);
-  cancel_button->setProperty("prefix", "global");
-  cancel_button->setProperty("function", "cancel");
+//  cancel_button->setParent(this);
+//  cancel_button->setText("Cancel");
+//  cancel_button->setGeometry(g_scale * (radius_confirm_pos_x1 + radius_confirm_width),
+//                             g_scale * radius_confirm_pos_y1,
+//                             g_scale * radius_confirm_width,
+//                             g_scale * radius_confirm_height);
+//  cancel_button->setProperty("prefix", "global");
+//  cancel_button->setProperty("function", "cancel");
   ok_button = new QPushButton;
   ok_button->setParent(this);
-  ok_button->setText("确定");
-  ok_button->setGeometry(520, 420, 50, 20);
+  ok_button->setText("Ok");
+  ok_button->setGeometry(g_scale * radius_confirm_pos_x1,
+                         g_scale * radius_confirm_pos_y1,
+                         g_scale * radius_confirm_width,
+                         g_scale * radius_confirm_height);
   ok_button->setProperty("prefix", "global");
   ok_button->setProperty("function", "ok");
 //  cgs_gap_edit->setText(QString::number(radiusToDegree(c_ptr->getCGHole()));
@@ -240,22 +308,22 @@ void GlobalSetWin::onDoubleSliderLowerValueChanged(int i) {
     if (func.compare("back_bone_dslider") == 0) {
       emit BBInnerRadiusChanged(i / 100.0);
       bbs_value_label->setText(
-          QString::number(back_bone_dslider->lowerValue()) + "--" + QString::number(back_bone_dslider->upperValue()));
+        QString::number(back_bone_dslider->lowerValue()) + "--" + QString::number(back_bone_dslider->upperValue()));
     }
     if (func.compare("category_dslider") == 0) {
       emit CatInnerRadiusChanged(i / 100.0);
       cgs_value_label->setText(
-          QString::number(category_dslider->lowerValue()) + "--" + QString::number(category_dslider->upperValue()));
+        QString::number(category_dslider->lowerValue()) + "--" + QString::number(category_dslider->upperValue()));
     }
     if (func.compare("trackarrow_dslider") == 0) {
       emit ARWInnerRadiusChanged(i / 100.0);
       arw_value_label->setText(
-          QString::number(trackarrow_dslider->lowerValue()) + "--" + QString::number(trackarrow_dslider->upperValue()));
+        QString::number(trackarrow_dslider->lowerValue()) + "--" + QString::number(trackarrow_dslider->upperValue()));
     }
     if (func.compare("link_dslider") == 0) {
       emit LinkInnerRadiusChanged(i / 100.0);
       link_value_label->setText(
-          QString::number(link_dslider->lowerValue()) + "--" + QString::number(link_dslider->upperValue()));
+        QString::number(link_dslider->lowerValue()) + "--" + QString::number(link_dslider->upperValue()));
     }
   }
 }
@@ -268,26 +336,26 @@ void GlobalSetWin::onDoubleSliderUpperValueChanged(int i) {
     if (func.compare("back_bone_dslider") == 0) {
       emit BBOuterRadiusChanged(i / 100.0);
       bbs_value_label->setText(QString::number(back_bone_dslider->lowerValue())
-                                   + "--"
-                                   + QString::number(back_bone_dslider->upperValue()));
+                                 + "--"
+                                 + QString::number(back_bone_dslider->upperValue()));
     }
     if (func.compare("category_dslider") == 0) {
       emit CatOuterRadiusChanged(i / 100.0);
       cgs_value_label->setText(QString::number(category_dslider->lowerValue())
-                                   + "--"
-                                   + QString::number(category_dslider->upperValue()));
+                                 + "--"
+                                 + QString::number(category_dslider->upperValue()));
     }
     if (func.compare("trackarrow_dslider") == 0) {
       emit ARWOuterRadiusChanged(i / 100.0);
       arw_value_label->setText(QString::number(trackarrow_dslider->lowerValue())
-                                   + "--"
-                                   + QString::number(trackarrow_dslider->upperValue()));
+                                 + "--"
+                                 + QString::number(trackarrow_dslider->upperValue()));
     }
     if (func.compare("link_dslider") == 0) {
       emit LinkOuterRadiusChanged(i / 100.0);
       link_value_label->setText(QString::number(link_dslider->lowerValue())
-                                    + "--"
-                                    + QString::number(link_dslider->upperValue()));
+                                  + "--"
+                                  + QString::number(link_dslider->upperValue()));
     }
   }
 }
@@ -302,7 +370,7 @@ void GlobalSetWin::onButtonClicked(bool) {
     }
   } else if (prefix.compare("global") == 0) {
     if (func.compare("cancel") == 0) {
-      this->close();
+      //this->close();
     } else if (func.compare("ok") == 0) {
 //      c_ptr->setBBGap(degreeToRadius(text.toDouble()));
       qreal inner_, outer_;
@@ -328,7 +396,7 @@ void GlobalSetWin::onButtonClicked(bool) {
       gap = cgs_gap_edit->text().toDouble();
       c_ptr->setCatGap(degreeToRadius(gap));
       c_ptr->setCategoryEnable(cgs_enable_checkbox->checkState() == Qt::CheckState::Checked);
-      this->close();
+//      this->close();
     }
   }
 }

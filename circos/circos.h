@@ -6,6 +6,7 @@
 #include <QErrorMessage>
 #include <QDebug>
 #include <QObject>
+#include <QThread>
 #include "gene.h"
 #include "category.h"
 #include "link.h"
@@ -29,11 +30,11 @@ class Circos : public QObject {
   Circos(QObject *parent = nullptr);
   ~Circos();
 
-  void openFile(const QString &);
-  DataProcessState dataToBackBone(void);
-  DataProcessState dataToCategory(void);
-  DataProcessState dataToLink(void);
-  DataProcessState dataToTrackArrow(void);
+  Q_SLOT void openFile(const QString &file, const QString &type);
+  Q_SLOT DataProcessState dataToBackBone(void);
+  Q_SLOT DataProcessState dataToCategory(void);
+  Q_SLOT DataProcessState dataToLink(void);
+  Q_SLOT DataProcessState dataToTrackArrow(void);
   int indexOfGene(const QString &);
   int indexOfCategory(const QString &);
   void buildBackBoneSequence(QStandardItemModel *model);
@@ -163,6 +164,7 @@ class Circos : public QObject {
   void onLinkColorFuncChanged(int index);
   void setBBHole(qreal bbh) {
     back_bone_inner_radius = bbh;
+    emit valueChanged();
   }
   void setBBPie(qreal bbp) {
     back_bone_outer_radius = bbp;
@@ -215,6 +217,8 @@ class Circos : public QObject {
 
  signals:
   void linkColorFuncChanged(int index);
+  void operateFinish(const QString &operate_);
+  void valueChanged(void);
 
  private:
   // global paremater
@@ -247,7 +251,7 @@ class Circos : public QObject {
   bool track_enabled = false;
   TrackArrow::Types track_arrow_type;
   qreal track_head_width = 1.0;
-  qreal track_tail_width = 0.5;
+  qreal track_tail_width = 1.0;
   qreal track_head_ratio = 0.2;
   QColor track_color = QColor(204, 204, 204);
 

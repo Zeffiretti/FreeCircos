@@ -45,7 +45,7 @@ class ExtArrowEditor : public QCustomPlot {
   QCPCurve *curve;
   qreal head_ratio = 0.2;
   qreal head_width = 1.0;
-  qreal tail_width = 0.5;
+  qreal tail_width = 1.0;
   QColor color = QColor(212, 175, 55, 127);
   QList<QCPCurveData *> datas;
 

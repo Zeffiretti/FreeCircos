@@ -3,15 +3,15 @@
 #include "ui_freecircos.h"
 qreal g_scale;
 FreeCircos::FreeCircos(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::FreeCircos) {
-  QDesktopWidget * desktopWidget = QApplication::desktop();
+  : QMainWindow(parent), ui(new Ui::FreeCircos) {
+  QDesktopWidget *desktopWidget = QApplication::desktop();
   QRect screenRect = desktopWidget->screenGeometry();
   int w = screenRect.width();
   int h = screenRect.height();
   ui->setupUi(this);
 //  setWindowFlags(flags);
 //  if (g_app_base_width * g_scale > 0.8 * w) {
-    g_scale = 0.85 * w / g_app_base_width;
+  g_scale = 0.85 * w / g_app_base_width;
 //  }
   if (g_app_base_height * g_scale > 0.6 * h) {
     g_scale = 0.6 * h / g_app_base_height;
@@ -25,18 +25,27 @@ FreeCircos::FreeCircos(QWidget *parent)
 ////  major_font->setPointSize(10);
 //  major_font->setBold(true);
   //init canvas
-  initCanvas();
+//  initCanvas();//deprecate
   //init generate button
   initGenerateButton();
+  painter = new CustomPainter;
   gene_donut = new CustomDonut;
   category_donut = new CustomDonut;
   link_canvas = new CustomLinkCanvas;
   track_canvas = new CustomTrackArrow;
   circos = new Circos;
+  canvas = new QCustomPlot;
+  painter->initCanvas(this,
+                      g_scale * canvas_pos_x,
+                      g_scale * canvas_pos_y,
+                      g_scale * canvas_width,
+                      g_scale * canvas_height);
   circos->setWidget(this);
   table_edit_mode = EditGene;
-  connect(gene_donut, &CustomDonut::sliceAngleChanged,
-          circos, &Circos::onGeneAngleChanged);
+//  connect(gene_donut, &CustomDonut::sliceAngleChanged,
+//          circos, &Circos::onGeneAngleChanged);//deprecate
+  connect(painter->getGeneDonut(), &CustomDonut::sliceAngleChanged,
+          circos, &Circos::onGeneAngleChanged);//deprecate
   QPushButton *backbone_button = new QPushButton;
   backbone_button->setParent(this);
   backbone_button->setText("backbone");
@@ -91,6 +100,7 @@ FreeCircos::FreeCircos(QWidget *parent)
   setting_button->setProperty("function", "globalsetting");
   connect(setting_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
+  setting_button->setEnabled(false);
   QPushButton *save_button = new QPushButton;
   save_button->setParent(this);
   save_button->setText("Save");
@@ -142,6 +152,7 @@ FreeCircos::FreeCircos(QWidget *parent)
                              g_scale * config_widget_pos_y,
                              g_scale * config_widget_width,
                              g_scale * config_widget_height);
+  initRadiusWidget();
   initBackBoneWidget(control_panel);
   initLinkWidget(control_panel);
   initArrowWidget(control_panel);
@@ -152,8 +163,15 @@ FreeCircos::FreeCircos(QWidget *parent)
 //  dlg->setParent(this);
 ////  dlg->setGeometry(100,20,500,400);
 //  dlg->show();
+
+  connectPaintThread();
+  connectCircosThread();
 }
 
 FreeCircos::~FreeCircos() {
   delete ui;
+  file_process_thread.quit();
+  file_process_thread.wait();
+  paint_thread.quit();
+  paint_thread.wait();
 }

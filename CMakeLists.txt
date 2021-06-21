@@ -123,7 +123,8 @@ set(COMPONENT_FILES
   component/linkwidget.cpp
   component/globalsetwin.cpp
   component/colorwidget.cpp
-  component/arrowwidget.cpp)
+  component/arrowwidget.cpp
+  component/radiuswidget.cpp)
 set(EXT_FILES
   extension/extcheckboxheaderview.cpp
   extension/extdoubleslider.cpp
@@ -132,7 +133,9 @@ set(EXT_FILES
   extension/extcolordialog.cpp
   extension/extitemmodel.cpp
   extension/exttableview.cpp
-  extension/extarroweditor.cpp extension/extsymslider.cpp extension/extsymslider.h)
+  extension/extarroweditor.cpp
+  extension/extsymslider.cpp
+  extension/extsorttable.cpp extension/extverticallabel.cpp extension/extverticallabel.h)
 set(FILEPROS_FILES
   fileprocess/excelbase.cpp
   fileprocess/qvariantlistlistmodel.cpp)
@@ -146,7 +149,8 @@ set(PAINT_FILES
   paint/customslice.cpp
   paint/customtrack.cpp
   paint/customtrackarrow.cpp
-  paint/qcustomplot.cpp)
+  paint/qcustomplot.cpp
+  paint/custompainter.cpp)
 set(RESOURCE_FILES
   resource/icon.ico
   resource/resource.qrc
@@ -160,6 +164,9 @@ set(ROOT_FILES
   main.cpp)
 set(TOOL_FILES
   tool/customtool.cpp)
+set(THREAD_FILES
+  thread/pthcircos.cpp
+  thread/pthpaint.cpp)
 
 
 if (CMAKE_BUILD_TYPE MATCHES Release)
@@ -173,7 +180,8 @@ if (CMAKE_BUILD_TYPE MATCHES Release)
     ${PAINT_FILES}
     ${RESOURCE_FILES}
     ${ROOT_FILES}
-    ${TOOL_FILES})
+    ${TOOL_FILES}
+    ${THREAD_FILES})
 elseif (CMAKE_BUILD_TYPE MATCHES Debug)
   add_executable(${PROJECT_NAME}
     ${ADD_FILES}
@@ -185,7 +193,8 @@ elseif (CMAKE_BUILD_TYPE MATCHES Debug)
     ${PAINT_FILES}
     ${RESOURCE_FILES}
     ${ROOT_FILES}
-    ${TOOL_FILES})
+    ${TOOL_FILES}
+    ${THREAD_FILES})
 endif ()
 target_link_libraries(${PROJECT_NAME}
   Qt5::Core

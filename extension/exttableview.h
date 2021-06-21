@@ -21,7 +21,7 @@
 class ExtTableView : public QTableView {
  Q_OBJECT
  public:
-  ExtTableView(QWidget *parent = nullptr);
+  explicit ExtTableView(QWidget *parent = nullptr);
   ~ExtTableView();
   void setExtModel(QStandardItemModel *model);
   Q_SIGNAL

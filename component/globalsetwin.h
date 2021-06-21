@@ -7,11 +7,14 @@
 #include <QPushButton>
 #include <QLineEdit>
 #include <QCheckBox>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 #include "extension/extdoubleslider.h"
+#include "extension/extverticallabel.h"
 #include "circos/circos.h"
 #include "settings/winscale.h"
 
-class GlobalSetWin : public QMainWindow {
+class GlobalSetWin : public QWidget {
  Q_OBJECT
  public:
   enum ComponentEnable {
@@ -32,7 +35,7 @@ class GlobalSetWin : public QMainWindow {
   void setTrkPos(qreal _max, qreal _min);
   void setLinkPos(qreal _max, qreal _min);
   void setComponents(Component c);
-  bool isInit(void);
+  bool isInit(void) const;
  private:
   bool active = false;
   void initPanel(void);
@@ -45,15 +48,15 @@ class GlobalSetWin : public QMainWindow {
   ExtDoubleSlider *trackarrow_dslider;
   ExtDoubleSlider *link_dslider;
 
-  QLabel *bbs_name_label;
-  QLabel *bbs_value_label;
-  QLabel *cgs_name_label;
-  QLabel *cgs_value_label;
-  QLabel *trk_name_label;
-  QLabel *arw_name_label;
-  QLabel *arw_value_label;
-  QLabel *link_name_label;
-  QLabel *link_value_label;
+  ExtVerticalLabel *bbs_name_label;
+  ExtVerticalLabel *bbs_value_label;
+  ExtVerticalLabel *cgs_name_label;
+  ExtVerticalLabel *cgs_value_label;
+  ExtVerticalLabel *trk_name_label;
+  ExtVerticalLabel *arw_name_label;
+  ExtVerticalLabel *arw_value_label;
+  ExtVerticalLabel *link_name_label;
+  ExtVerticalLabel *link_value_label;
   QLineEdit *gene_gap_edit;
   QLabel *gene_gap_label;
   QLabel *cgs_gap_label;
