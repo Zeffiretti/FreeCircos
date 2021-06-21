@@ -12,7 +12,7 @@ void FreeCircos::initGenerateButton(void) {
           this, &FreeCircos::onButtonClicked);
 }
 
-void FreeCircos::initCanvas(void) {
+[[deprecate]] void FreeCircos::initCanvas(void) {
   canvas = new QCustomPlot;
   canvas->setParent(this);
   canvas->setGeometry(g_scale * canvas_pos_x,

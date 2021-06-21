@@ -6,7 +6,7 @@
 
 void FreeCircos::connectCircosThread(void) {
   qDebug() << "The main threadID is :" << QThread::currentThreadId();
-  circos->moveToThread(&file_process_thread);
+//  circos->moveToThread(&file_process_thread);
   connect(this, &FreeCircos::openfile,
           circos, &Circos::openFile);
   connect(this, &FreeCircos::dataToBackBone,
@@ -35,6 +35,9 @@ void FreeCircos::onCircosOperateFinish(const QString &operate_) {
     qDebug() << "open file finished";
     qDebug() << "data to BB consume " << timer.elapsed() / 1000.0 << 's';
     initBackBoneTableModel(backbone_model, circos);
+    CustomPainter::Figures figures = painter->getFigures();
+    figures |= CustomPainter::Figure::Backbone;
+    painter->setFigures(figures);
     color_dialog_->setCategoryButtonEnabled(false);
     backbone_widget->setEnabled(true);
 //    color_dialog_->setEnabled(true);
@@ -47,6 +50,9 @@ void FreeCircos::onCircosOperateFinish(const QString &operate_) {
 //    }
     emit dataToCategory();
     circos->setCategoryEnable(true);
+    CustomPainter::Figures figures = painter->getFigures();
+    figures |= CustomPainter::Figure::Category;
+    painter->setFigures(figures);
     color_dialog_->setCategoryButtonEnabled(true);
 //    switch_button->setEnabled(true);
     cat_button->setEnabled(true);
@@ -57,11 +63,17 @@ void FreeCircos::onCircosOperateFinish(const QString &operate_) {
 //            circos, &Circos::onLinkColorFuncChanged);
     emit dataToLink();
     circos->setLinkEnable(true);
+    CustomPainter::Figures figures = painter->getFigures();
+    figures |= CustomPainter::Figure::Link;
+    painter->setFigures(figures);
     //addCategoryToTable(backbone_table, backbone_model, circos);
     initLKTableModel(link_model, circos);
   } else if (operate_.compare("Circos::openFile::trackarrow") == 0) {
     emit dataToTrackArrow();
     circos->setTrackEnabled(true);
+    CustomPainter::Figures figures = painter->getFigures();
+    figures |= CustomPainter::Figure::Track;
+    painter->setFigures(figures);
     initArrowTableModel(arrow_model, circos);
   }
 }

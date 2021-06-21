@@ -110,6 +110,7 @@ class FreeCircos : public QMainWindow {
   void initArrowEditor(void);
   void connectArrowSignalSlot(void);
   void connectCircosThread(void);
+  void connectPaintThread(void);
 
   bool eventFilter(QObject *watched, QEvent *event);
 
@@ -149,6 +150,7 @@ class FreeCircos : public QMainWindow {
   void onTrackValueChanged(int value);
   void onTrackColorChanged(QColor c);
   void onCircosOperateFinish(const QString &operate_);
+  void onPaintOperateFinish(const QString &operate_);
 
  private:
 
@@ -287,6 +289,7 @@ class FreeCircos : public QMainWindow {
 
   // Thread
   QThread file_process_thread;
+  QThread paint_thread;
   bool file_open_finished = false;
   QTime timer;
 };

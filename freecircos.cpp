@@ -25,7 +25,7 @@ FreeCircos::FreeCircos(QWidget *parent)
 ////  major_font->setPointSize(10);
 //  major_font->setBold(true);
   //init canvas
-  initCanvas();
+//  initCanvas();//deprecate
   //init generate button
   initGenerateButton();
   painter = new CustomPainter;
@@ -34,10 +34,18 @@ FreeCircos::FreeCircos(QWidget *parent)
   link_canvas = new CustomLinkCanvas;
   track_canvas = new CustomTrackArrow;
   circos = new Circos;
+  canvas = new QCustomPlot;
+  painter->initCanvas(this,
+                      g_scale * canvas_pos_x,
+                      g_scale * canvas_pos_y,
+                      g_scale * canvas_width,
+                      g_scale * canvas_height);
   circos->setWidget(this);
   table_edit_mode = EditGene;
-  connect(gene_donut, &CustomDonut::sliceAngleChanged,
-          circos, &Circos::onGeneAngleChanged);
+//  connect(gene_donut, &CustomDonut::sliceAngleChanged,
+//          circos, &Circos::onGeneAngleChanged);//deprecate
+  connect(painter->getGeneDonut(), &CustomDonut::sliceAngleChanged,
+          circos, &Circos::onGeneAngleChanged);//deprecate
   QPushButton *backbone_button = new QPushButton;
   backbone_button->setParent(this);
   backbone_button->setText("backbone");
@@ -154,10 +162,13 @@ FreeCircos::FreeCircos(QWidget *parent)
 ////  dlg->setGeometry(100,20,500,400);
 //  dlg->show();
   connectCircosThread();
+  connectPaintThread();
 }
 
 FreeCircos::~FreeCircos() {
   delete ui;
   file_process_thread.quit();
   file_process_thread.wait();
+  paint_thread.quit();
+  paint_thread.wait();
 }

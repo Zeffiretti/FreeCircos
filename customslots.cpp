@@ -4,38 +4,45 @@ void FreeCircos::onButtonClicked(bool) {
   QPushButton *btn = qobject_cast<QPushButton *>(sender());
   QString func = btn->property("function").toString();
   if (func == "generate") {
-    clearCanvas(canvas);//deprecate
+//    clearCanvas(canvas);//deprecate
     painter->clear();
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
     circos->buildBackBoneSequence(backbone_model);
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
-    circos->buildBackBoneDonut(gene_donut);
+//    circos->buildBackBoneDonut(gene_donut);//deprecate
+    circos->buildBackBoneDonut(painter->getGeneDonut());
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
 //        gene_donut->setSize(0.7, 0.75);
-    gene_donut->setSliceLayer(graph_layer + 1);
-    gene_donut->setTextLayer(text_layer);
-    gene_donut->drawDonut(canvas);//deprecate
-    painter->drawBackbone();
+//    gene_donut->setSliceLayer(graph_layer + 1);
+//    gene_donut->setTextLayer(text_layer);
+//    gene_donut->drawDonut(canvas);//deprecate
+//    painter->drawBackbone();
     if (circos->getCategoryEnable()) {
       circos->buildCategorySequence(backbone_model);
-      circos->buildCategoryDonut(category_donut);
-//      category_donut->setSize(0.78, 0.83);
-      category_donut->setSliceLayer(graph_layer);
-      category_donut->setTextLayer(text_layer);
-      category_donut->drawDonut(canvas);
+//      circos->buildCategoryDonut(category_donut);//deprecate
+      circos->buildCategoryDonut(painter->getCategoryDonut());
+//      category_donut->setSliceLayer(graph_layer);
+//      category_donut->setTextLayer(text_layer);
+//      category_donut->drawDonut(canvas);//deprecate
+//      painter->drawCategory();
     }
     if (circos->getLinkEnable()) {
-      circos->buildCustomLink(link_canvas);
+//      circos->buildCustomLink(link_canvas);//deprecate
+      circos->buildCustomLink(painter->getLinkCanvas());
 //            link_canvas->setLinkType(CustomLinkCanvas::LinkType::AllOut);
-      link_canvas->setLinkLayer(graph_layer);
-      link_canvas->drawLinks(canvas);
+//      link_canvas->setLinkLayer(graph_layer);
+//      link_canvas->drawLinks(canvas);//deprecate
+//      painter->drawLink();
     }
     if (circos->getTrackEnabled()) {
-      circos->buildCustomTrack(track_canvas);
-      track_canvas->setTrackLayer(graph_layer + 1);
-      track_canvas->drawTracks(canvas);
+//      circos->buildCustomTrack(track_canvas);//deprecate
+      circos->buildCustomTrack(painter->getTrackCanvas());
+//      track_canvas->setTrackLayer(graph_layer + 1);
+//      track_canvas->drawTracks(canvas);//deprecate
+//      painter->drawTrack();
     }
-    canvas->replot();
+    emit paint();
+//    canvas->replot();//deprecate
   }
   if (func.compare("reset") == 0) {
     circos->reset();
@@ -318,8 +325,8 @@ void FreeCircos::onButtonClicked(bool) {
       //fileName是文件名
       qDebug() << fileName;
 
-      canvas->toPixmap(0, 0, 10);
-      canvas->savePng(fileName, 500, 500, 10);
+//      canvas->toPixmap(0, 0, 10);//deprecate
+//      canvas->savePng(fileName, 500, 500, 10);//deprecate
 //      canvas->savePng(fileName, 0, 0, 1.0, 5, 1024, QCP::ResolutionUnit::ruDotsPerCentimeter);
       //(const QString &fileName, int width = 0, int height = 0, double scale = 1.0, int quality = -1, int resolution = 96, QCP::ResolutionUnit resolutionUnit = QCP::ruDotsPerInch);
     } else {
