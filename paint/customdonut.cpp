@@ -38,6 +38,7 @@ qreal CustomDonut::caculateAngleSpan(int index) {
 }
 
 void CustomDonut::drawDonut(QCustomPlot *canvas) {
+  qDebug() << "CustomDonut::drawDonut" << QThread::currentThreadId() << ":" << QThread::currentThread();
   if (size_reset) {
     setSize(d_hole_size, d_pie_size);
   }
@@ -52,7 +53,8 @@ void CustomDonut::drawDonut(QCustomPlot *canvas) {
 //    }
   caculateSum();
   qreal last_start = start_angle;
-  if(m_slices.size()>1){
+  qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
+  if (m_slices.size() > 1) {
     for (int i = 0; i < m_slices.size(); ++i) {
       qreal span = caculateAngleSpan(i);
       m_slices.at(i)->setSE(last_start, last_start + span);
@@ -62,11 +64,12 @@ void CustomDonut::drawDonut(QCustomPlot *canvas) {
       m_slices.at(i)->drawSlice(canvas);
       last_start += span;
     }
-  }else{
+  } else {
     m_slices.at(0)->setSliceLayer(slice_layer);
     m_slices.at(0)->setTextLayer(text_layer);
     m_slices.at(0)->drawAnnulus(canvas);
   }
+//  canvas->replot();
 }
 
 void CustomDonut::clear(void) {

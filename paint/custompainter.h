@@ -19,6 +19,7 @@ class CustomPainter : public QObject {
  Q_OBJECT
  public:
   enum Figure {
+    None = 0x00,
     Backbone = 0x01,
     Category = 0x02,
     Link = 0x04,
@@ -45,6 +46,9 @@ class CustomPainter : public QObject {
   Figures getFigures(void);
 
   Q_SIGNAL void finish(const QString &op);
+  Q_SIGNAL void drawBackboneDonut(QCustomPlot *plot);
+  Q_SIGNAL void drawCategoryDonut(QCustomPlot *plot);
+  Q_SIGNAL void replot();
  private:
   QCustomPlot *canvas;
   CustomDonut *gene_donut;
@@ -52,7 +56,7 @@ class CustomPainter : public QObject {
   CustomLinkCanvas *link_canvas;
   CustomTrackArrow *track_canvas;
 
-  Figures m_figures = Backbone;
+  Figures m_figures = None;
   int background_layer = 0;
   int graph_layer = 1;
   int text_layer = 5;

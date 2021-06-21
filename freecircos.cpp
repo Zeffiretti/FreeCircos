@@ -161,8 +161,9 @@ FreeCircos::FreeCircos(QWidget *parent)
 //  dlg->setParent(this);
 ////  dlg->setGeometry(100,20,500,400);
 //  dlg->show();
-  connectCircosThread();
+
   connectPaintThread();
+  connectCircosThread();
 }
 
 FreeCircos::~FreeCircos() {

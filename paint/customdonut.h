@@ -15,7 +15,7 @@ class CustomDonut : public QObject {
   void setSize(qreal hole, qreal pie);
   void caculateSum(void);
   qreal caculateAngleSpan(int index);
-  void drawDonut(QCustomPlot *plot);
+  Q_SLOT void drawDonut(QCustomPlot *plot);
 //    void DrawDonut(QCustomPlot *, Circos *);
   void clear(void);
   void removeFrom(QCustomPlot *);

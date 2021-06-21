@@ -10,6 +10,12 @@ CustomPainter::CustomPainter() {
   link_canvas = new CustomLinkCanvas;
   track_canvas = new CustomTrackArrow;
   qDebug() << "create painter finished.";
+  connect(this, &CustomPainter::drawBackboneDonut,
+          gene_donut, &CustomDonut::drawDonut);
+  connect(this, &CustomPainter::drawCategoryDonut,
+          category_donut, &CustomDonut::drawDonut);
+  connect(this, SIGNAL(replot),
+          canvas, SLOT(replot));
 }
 
 CustomPainter::~CustomPainter() = default;
@@ -25,12 +31,16 @@ void CustomPainter::clear(void) {
 }
 
 void CustomPainter::drawBackbone(void) {
-  qDebug() << "CustomPainter::drawBackbone" << QThread::currentThreadId();
+  qDebug() << "CustomDonut::drawDonut" << QThread::currentThreadId() << ":" << QThread::currentThread();
   if (m_figures.testFlag(Backbone)) {
     qDebug() << "drawing backbone donut";
     gene_donut->setSliceLayer(graph_layer);
+    qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
     gene_donut->setTextLayer(text_layer);
-    gene_donut->drawDonut(canvas);
+    qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
+//    gene_donut->drawDonut(canvas);
+    emit drawBackboneDonut(canvas);
+    qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
 //    canvas->replot();
   } else {
     qDebug() << "no backbone!";
@@ -43,7 +53,8 @@ void CustomPainter::drawCategory(void) {
     qDebug() << "drawing category donut";
     category_donut->setSliceLayer(graph_layer);
     category_donut->setTextLayer(text_layer);
-    category_donut->drawDonut(canvas);
+//    category_donut->drawDonut(canvas);
+    emit drawCategoryDonut(canvas);
 //    canvas->replot();
   } else {
     qDebug() << "no category!";
@@ -71,7 +82,7 @@ void CustomPainter::drawTrack(void) {
     track_canvas->drawTracks(canvas);
 //    canvas->replot();
   } else {
-    qDebug() << "no link!";
+    qDebug() << "no track!";
   }
 }
 
@@ -83,9 +94,12 @@ CustomPainter::Figures CustomPainter::getFigures(void) {
   return m_figures;
 }
 CustomDonut *CustomPainter::getGeneDonut(void) {
+  qDebug() << "CustomPainter::getGeneDonut" << QThread::currentThreadId();
+  emit finish("CustomPainter::getGeneDonut");
   return gene_donut;
 }
 CustomDonut *CustomPainter::getCategoryDonut(void) {
+  emit finish("CustomPainter::getCategoryDonut");
   return category_donut;
 }
 CustomLinkCanvas *CustomPainter::getLinkCanvas(void) {
@@ -101,10 +115,7 @@ void CustomPainter::initCanvas(QWidget *parent,
                                int ah) {
   canvas = new QCustomPlot;
   canvas->setParent(parent);
-  canvas->setGeometry(ax,
-                      ay,
-                      aw,
-                      ah);
+  canvas->setGeometry(ax, ay, aw, ah);
   canvas->xAxis->setRange(-canvas_scale, canvas_scale);
   canvas->yAxis->setRange(-canvas_scale, canvas_scale);
   canvas->xAxis->setVisible(false);
@@ -123,6 +134,7 @@ void CustomPainter::draw(void) {
   drawCategory();
   drawLink();
   drawTrack();
+//  emit replot();
   canvas->replot();
   emit finish("CustomPainter::draw");
 }

@@ -164,6 +164,7 @@ class Circos : public QObject {
   void onLinkColorFuncChanged(int index);
   void setBBHole(qreal bbh) {
     back_bone_inner_radius = bbh;
+    emit valueChanged();
   }
   void setBBPie(qreal bbp) {
     back_bone_outer_radius = bbp;
@@ -217,6 +218,7 @@ class Circos : public QObject {
  signals:
   void linkColorFuncChanged(int index);
   void operateFinish(const QString &operate_);
+  void valueChanged(void);
 
  private:
   // global paremater

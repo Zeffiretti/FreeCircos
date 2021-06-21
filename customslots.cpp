@@ -42,6 +42,7 @@ void FreeCircos::onButtonClicked(bool) {
 //      painter->drawTrack();
     }
     emit paint();
+    qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
 //    canvas->replot();//deprecate
   }
   if (func.compare("reset") == 0) {
@@ -76,7 +77,7 @@ void FreeCircos::onButtonClicked(bool) {
     gb_active = true;
     connect(gbset_win, &GlobalSetWin::closeSet,
             this, &FreeCircos::onWindowClosed);
-//    connect(gbset_win,&QWidget::c)
+//
 //    connect(gbset_win, &GlobalSetWin::BBInnerRadiusChanged,
 //            circos, &Circos::setBBHole);
 //    connect(gbset_win, &GlobalSetWin::BBOuterRadiusChanged,
