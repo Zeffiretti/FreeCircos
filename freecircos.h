@@ -279,7 +279,9 @@ class FreeCircos : public QMainWindow {
   QLabel *arrow_tail_number;
   QLabel *arrow_ratio_label;
   QLabel *arrow_ratio_number;
-
+  QLabel *arrow_apply_label;
+  QPushButton *arrow_apply_indi_button;
+  QPushButton *arrow_apply_all_button;
 
 
 //  QPushButton

@@ -14,8 +14,8 @@ CustomPainter::CustomPainter() {
           gene_donut, &CustomDonut::drawDonut);
   connect(this, &CustomPainter::drawCategoryDonut,
           category_donut, &CustomDonut::drawDonut);
-  connect(this, SIGNAL(replot),
-          canvas, SLOT(replot));
+//  connect(this, SIGNAL(replot),
+//          canvas, SLOT(replot));
 }
 
 CustomPainter::~CustomPainter() = default;

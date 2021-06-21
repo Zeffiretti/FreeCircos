@@ -431,6 +431,28 @@ void FreeCircos::onButtonClicked(bool) {
       }
     }
   }
+  if (func.compare("arrow-apply-to-all") == 0) {
+    // type setting
+    if (arrow_type_combobox->currentText().compare("Arrow") == 0) {
+      circos->setTAType(TrackArrow::Type::Arrow);
+    } else if (arrow_type_combobox->currentText().compare("Tile") == 0) {
+      circos->setTAType(TrackArrow::Type::Tile);
+    } else {
+      qDebug() << "This Track Type doesn't exist: " << arrow_type_combobox->currentText();
+    }
+    circos->setTAHeadWidth(arrow_head_slider->getValue() * 1.0 / 100.0);
+    circos->setTATailWidth(arrow_tail_slider->getValue() * 1.0 / 100.0);
+    circos->setTAHeadRatio(arrow_ratio_slider->value() * 1.0 / 100.0);
+    circos->setTAColor(arrow_editor->getColor());
+  }
+  if (func.compare("arrow-apply-to-indi") == 0) {
+    int row = arrow_table->currentIndex().row();
+    int index = arrow_model->item(row, 0)->text().toInt() - 1;
+    circos->setTAColorAt(index, arrow_editor->getColor());
+    circos->setTAHeadWidthAt(index, arrow_head_slider->getValue() * 1.0 / 100.0);
+    circos->setTATailWidthAt(index, arrow_tail_slider->getValue() * 1.0 / 100.0);
+    circos->setTAHeadRatioAt(index, arrow_ratio_slider->value() * 1.0 / 100.0);
+  }
 }
 
 void FreeCircos::onActionTriggered(bool) {
@@ -1003,15 +1025,15 @@ void FreeCircos::onTrackValueChanged(int value) {
     if (func.compare("head-width") == 0) {
       arrow_head_number->setText(QString::number(value));
       arrow_editor->setHeadWidth(value * 1.0 / 100.0);
-      circos->setTAHeadWidth(value * 1.0 / 100.0);
+//      circos->setTAHeadWidth(value * 1.0 / 100.0);
     } else if (func.compare("tail-width") == 0) {
       arrow_tail_number->setText(QString::number(value));
       arrow_editor->setTailWidth(value * 1.0 / 100.0);
-      circos->setTATailWidth(value * 1.0 / 100.0);
+//      circos->setTATailWidth(value * 1.0 / 100.0);
     } else if (func.compare("head-ratio") == 0) {
       arrow_ratio_number->setText(QString::number(value));
       arrow_editor->setHeadRatio(value * 1.0 / 100.0);
-      circos->setTAHeadRatio(value * 1.0 / 100.0);
+//      circos->setTAHeadRatio(value * 1.0 / 100.0);
     }
   }
 }

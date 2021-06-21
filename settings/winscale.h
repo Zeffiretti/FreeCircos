@@ -156,6 +156,12 @@ const static int arrow_canvas_number_pos_x1 = arrow_canvas_label_pos_x1;
 const static int arrow_canvas_number_pos_x2 = arrow_canvas_label_pos_x2;
 const static int arrow_canvas_number_pos_x3 = arrow_canvas_label_pos_x3;
 const static int arrow_canvas_number_pos_y = arrow_canvas_slider_pos_y3 + arrow_canvas_slider_height3;
+
+const static int arrow_set_apply_margin_y = 5;
+const static int arrow_set_apply_label_pos_x = arrow_canvas_slider_pos_x3;
+const static int arrow_set_apply_label_pos_y = arrow_canvas_number_pos_y + arrow_canvas_label_height;
+const static int arrow_set_apply_width = arrow_canvas_width / 3;
+const static int arrow_set_apply_height = arrow_canvas_label_height;
 // canvas setting
 const static int canvas_scale = 1000;
 #endif //FREECIRCOS_SETTINGS_WINSCALE_H_
