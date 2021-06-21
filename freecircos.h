@@ -76,6 +76,7 @@ class FreeCircos : public QMainWindow {
 
   //init method
   void initCanvas(void);
+  void initRadiusWidget(void);
   void initColorDialog(void);
   void initGenerateButton(void);
   void clearCanvas(QCustomPlot *cvs);

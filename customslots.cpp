@@ -17,29 +17,45 @@ void FreeCircos::onButtonClicked(bool) {
 //    gene_donut->setTextLayer(text_layer);
 //    gene_donut->drawDonut(canvas);//deprecate
 //    painter->drawBackbone();
+
     if (circos->getCategoryEnable()) {
       circos->buildCategorySequence(backbone_model);
 //      circos->buildCategoryDonut(category_donut);//deprecate
       circos->buildCategoryDonut(painter->getCategoryDonut());
+      CustomPainter::Figures figures = painter->getFigures();
+      painter->setFigures(figures | CustomPainter::Figure::Category);
 //      category_donut->setSliceLayer(graph_layer);
 //      category_donut->setTextLayer(text_layer);
 //      category_donut->drawDonut(canvas);//deprecate
 //      painter->drawCategory();
+    } else {
+      CustomPainter::Figures figures = painter->getFigures();
+      painter->setFigures((figures & (~CustomPainter::Figure::Category)));
     }
     if (circos->getLinkEnable()) {
 //      circos->buildCustomLink(link_canvas);//deprecate
       circos->buildCustomLink(painter->getLinkCanvas());
+      CustomPainter::Figures figures = painter->getFigures();
+      painter->setFigures(figures | CustomPainter::Figure::Link);
 //            link_canvas->setLinkType(CustomLinkCanvas::LinkType::AllOut);
 //      link_canvas->setLinkLayer(graph_layer);
 //      link_canvas->drawLinks(canvas);//deprecate
 //      painter->drawLink();
+    } else {
+      CustomPainter::Figures figures = painter->getFigures();
+      painter->setFigures((figures & (~CustomPainter::Figure::Link)));
     }
     if (circos->getTrackEnabled()) {
 //      circos->buildCustomTrack(track_canvas);//deprecate
       circos->buildCustomTrack(painter->getTrackCanvas());
+      CustomPainter::Figures figures = painter->getFigures();
+      painter->setFigures(figures | CustomPainter::Figure::Track);
 //      track_canvas->setTrackLayer(graph_layer + 1);
 //      track_canvas->drawTracks(canvas);//deprecate
 //      painter->drawTrack();
+    } else {
+      CustomPainter::Figures figures = painter->getFigures();
+      painter->setFigures((figures & (~CustomPainter::Figure::Track)));
     }
     emit paint();
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;

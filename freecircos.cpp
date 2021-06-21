@@ -100,6 +100,7 @@ FreeCircos::FreeCircos(QWidget *parent)
   setting_button->setProperty("function", "globalsetting");
   connect(setting_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
+  setting_button->setEnabled(false);
   QPushButton *save_button = new QPushButton;
   save_button->setParent(this);
   save_button->setText("Save");
@@ -151,6 +152,7 @@ FreeCircos::FreeCircos(QWidget *parent)
                              g_scale * config_widget_pos_y,
                              g_scale * config_widget_width,
                              g_scale * config_widget_height);
+  initRadiusWidget();
   initBackBoneWidget(control_panel);
   initLinkWidget(control_panel);
   initArrowWidget(control_panel);
