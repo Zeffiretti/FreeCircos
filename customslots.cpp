@@ -4,62 +4,62 @@ void FreeCircos::onButtonClicked(bool) {
   QPushButton *btn = qobject_cast<QPushButton *>(sender());
   QString func = btn->property("function").toString();
   if (func == "generate") {
-//    clearCanvas(canvas);//deprecate
-    painter->clear();
+    clearCanvas(canvas);//deprecate
+//    painter->clear();
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
     circos->buildBackBoneSequence(backbone_model);
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
-//    circos->buildBackBoneDonut(gene_donut);//deprecate
-    circos->buildBackBoneDonut(painter->getGeneDonut());
+    circos->buildBackBoneDonut(gene_donut);//deprecate
+//    circos->buildBackBoneDonut(painter->getGeneDonut());
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
 //        gene_donut->setSize(0.7, 0.75);
-//    gene_donut->setSliceLayer(graph_layer + 1);
-//    gene_donut->setTextLayer(text_layer);
-//    gene_donut->drawDonut(canvas);//deprecate
+    gene_donut->setSliceLayer(graph_layer + 1);
+    gene_donut->setTextLayer(text_layer);
+    gene_donut->drawDonut(canvas);//deprecate
 //    painter->drawBackbone();
-
+//    painter->setFigures(CustomPainter::Figure::Backbone);
     if (circos->getCategoryEnable()) {
       circos->buildCategorySequence(backbone_model);
-//      circos->buildCategoryDonut(category_donut);//deprecate
-      circos->buildCategoryDonut(painter->getCategoryDonut());
-      CustomPainter::Figures figures = painter->getFigures();
-      painter->setFigures(figures | CustomPainter::Figure::Category);
-//      category_donut->setSliceLayer(graph_layer);
-//      category_donut->setTextLayer(text_layer);
-//      category_donut->drawDonut(canvas);//deprecate
+      circos->buildCategoryDonut(category_donut);//deprecate
+//      circos->buildCategoryDonut(painter->getCategoryDonut());
+//      CustomPainter::Figures figures = painter->getFigures();
+//      painter->setFigures(figures | CustomPainter::Figure::Category);
+      category_donut->setSliceLayer(graph_layer);
+      category_donut->setTextLayer(text_layer);
+      category_donut->drawDonut(canvas);//deprecate
 //      painter->drawCategory();
     } else {
-      CustomPainter::Figures figures = painter->getFigures();
-      painter->setFigures((figures & (~CustomPainter::Figure::Category)));
+//      CustomPainter::Figures figures = painter->getFigures();
+//      painter->setFigures((figures & (~CustomPainter::Figure::Category)));
     }
     if (circos->getLinkEnable()) {
-//      circos->buildCustomLink(link_canvas);//deprecate
-      circos->buildCustomLink(painter->getLinkCanvas());
-      CustomPainter::Figures figures = painter->getFigures();
-      painter->setFigures(figures | CustomPainter::Figure::Link);
+      circos->buildCustomLink(link_canvas);//deprecate
+//      circos->buildCustomLink(painter->getLinkCanvas());
+//      CustomPainter::Figures figures = painter->getFigures();
+//      painter->setFigures(figures | CustomPainter::Figure::Link);
 //            link_canvas->setLinkType(CustomLinkCanvas::LinkType::AllOut);
-//      link_canvas->setLinkLayer(graph_layer);
-//      link_canvas->drawLinks(canvas);//deprecate
+      link_canvas->setLinkLayer(graph_layer);
+      link_canvas->drawLinks(canvas);//deprecate
 //      painter->drawLink();
     } else {
-      CustomPainter::Figures figures = painter->getFigures();
-      painter->setFigures((figures & (~CustomPainter::Figure::Link)));
+//      CustomPainter::Figures figures = painter->getFigures();
+//      painter->setFigures((figures & (~CustomPainter::Figure::Link)));
     }
     if (circos->getTrackEnabled()) {
-//      circos->buildCustomTrack(track_canvas);//deprecate
-      circos->buildCustomTrack(painter->getTrackCanvas());
-      CustomPainter::Figures figures = painter->getFigures();
-      painter->setFigures(figures | CustomPainter::Figure::Track);
-//      track_canvas->setTrackLayer(graph_layer + 1);
-//      track_canvas->drawTracks(canvas);//deprecate
+      circos->buildCustomTrack(track_canvas);//deprecate
+//      circos->buildCustomTrack(painter->getTrackCanvas());
+//      CustomPainter::Figures figures = painter->getFigures();
+//      painter->setFigures(figures | CustomPainter::Figure::Track);
+      track_canvas->setTrackLayer(graph_layer + 1);
+      track_canvas->drawTracks(canvas);//deprecate
 //      painter->drawTrack();
     } else {
-      CustomPainter::Figures figures = painter->getFigures();
-      painter->setFigures((figures & (~CustomPainter::Figure::Track)));
+//      CustomPainter::Figures figures = painter->getFigures();
+//      painter->setFigures((figures & (~CustomPainter::Figure::Track)));
     }
-    emit paint();
+//    painter->draw();
     qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
-//    canvas->replot();//deprecate
+    canvas->replot();//deprecate
   }
   if (func.compare("reset") == 0) {
     circos->reset();
@@ -111,20 +111,78 @@ void FreeCircos::onButtonClicked(bool) {
 //    connect(gbset_win, &GlobalSetWin::LinkOuterRadiusChanged,
 //            circos, &Circos::setLKPie);
   }
+//ALL THREE FUNCTIONS BELOW ARE UNSTABLE
+//  if (func == "openbackbonefile") {
+//#ifndef FILE_RES_USED
+//    QString xlsFile = QFileDialog::getOpenFileName(this, QString(), QString(), "excel(*.xls *.xlsx)");
+//    if (xlsFile.isEmpty()) {
+//      return;
+//    }
+//    timer.restart();
+////    circos->openFile(xlsFile);
+//    file_open_finished = false;
+//    emit openfile(xlsFile, "backbone");
+//    qDebug() << "open file consume " << timer.elapsed() / 1000.0 << 's';
+//#else
+//    circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\backbone file.xlsx");
+//#endif
+//  }
+//  if (func == "opencategoryfile") {
+//#ifndef FILE_RES_USED
+//    QString xlsFile = QFileDialog::getOpenFileName(this, QString(), QString(), "excel(*.xls *.xlsx)");
+//    if (xlsFile.isEmpty()) {
+//      return;
+//    }
+////    circos->openFile(xlsFile);
+//    emit openfile(xlsFile, "category");
+//#else
+//    circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\category file.xlsx");
+//#endif
+//  }
+//  if (func == "openlinkfile") {
+//#ifndef FILE_RES_USED
+//    QString xlsFile = QFileDialog::getOpenFileName(this, QString(), QString(), "excel(*.xls *.xlsx)");
+//    if (xlsFile.isEmpty()) {
+//      return;
+//    }
+//    emit openfile(xlsFile, "link");
+//#else
+//    circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\link file.xlsx");
+//#endif
+//  }
+//  if (func.compare("opentrackarrowfile") == 0) {
+//#ifndef FILE_RES_USED
+//    QString xlsFile = QFileDialog::getOpenFileName(this, QString(), QString(), "excel(*.xls *.xlsx)");
+//    if (xlsFile.isEmpty()) {
+//      return;
+//    }
+//    emit openfile(xlsFile, "trackarrow");
+//#else
+//    circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\track arrow file.xlsx");
+//#endif
+//  }
   if (func == "openbackbonefile") {
 #ifndef FILE_RES_USED
     QString xlsFile = QFileDialog::getOpenFileName(this, QString(), QString(), "excel(*.xls *.xlsx)");
     if (xlsFile.isEmpty()) {
       return;
     }
-    timer.restart();
-//    circos->openFile(xlsFile);
-    file_open_finished = false;
-    emit openfile(xlsFile, "backbone");
-    qDebug() << "open file consume " << timer.elapsed() / 1000.0 << 's';
+    circos->openFile(xlsFile);
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\backbone file.xlsx");
 #endif
+    gene_donut->clear();
+    if (circos->dataToBackBone() != Circos::DataProcessState::Success) {
+      return;
+    }
+    qDebug() << "open file finished";
+    initBackBoneTableModel(backbone_model, circos);
+    color_dialog_->setCategoryButtonEnabled(false);
+    backbone_widget->setEnabled(true);
+//    color_dialog_->setEnabled(true);
+//    backbone_label_state_combobox->setEnabled(true);
+//    backbone_label_position_combobox->setEnabled(true);
+    emit setTableEditMode(TableEditMode::EditGene);
   }
   if (func == "opencategoryfile") {
 #ifndef FILE_RES_USED
@@ -132,11 +190,19 @@ void FreeCircos::onButtonClicked(bool) {
     if (xlsFile.isEmpty()) {
       return;
     }
-//    circos->openFile(xlsFile);
-    emit openfile(xlsFile, "category");
+    circos->openFile(xlsFile);
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\category file.xlsx");
 #endif
+    if (circos->dataToCategory() != Circos::DataProcessState::Success) {
+      return;
+    }
+    circos->setCategoryEnable(true);
+    color_dialog_->setCategoryButtonEnabled(true);
+//    switch_button->setEnabled(true);
+    cat_button->setEnabled(true);
+//        initBackBoneTableModel(backbone_table, backbone_model, circos);
+    addCategoryToTable(backbone_model, circos);
   }
   if (func == "openlinkfile") {
 #ifndef FILE_RES_USED
@@ -144,10 +210,16 @@ void FreeCircos::onButtonClicked(bool) {
     if (xlsFile.isEmpty()) {
       return;
     }
-    emit openfile(xlsFile, "link");
+    circos->openFile(xlsFile);
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\link file.xlsx");
 #endif
+//    connect(circos, &Circos::linkColorFuncChanged,
+//            circos, &Circos::onLinkColorFuncChanged);
+    circos->dataToLink();
+    circos->setLinkEnable(true);
+    //addCategoryToTable(backbone_table, backbone_model, circos);
+    initLKTableModel(link_model, circos);
   }
   if (func.compare("opentrackarrowfile") == 0) {
 #ifndef FILE_RES_USED
@@ -155,10 +227,13 @@ void FreeCircos::onButtonClicked(bool) {
     if (xlsFile.isEmpty()) {
       return;
     }
-    emit openfile(xlsFile, "trackarrow");
+    circos->openFile(xlsFile);
 #else
     circos->openFile("D:\\Works\\FreeCircos\\resource\\testfile\\track arrow file.xlsx");
 #endif
+    circos->dataToTrackArrow();
+    circos->setTrackEnabled(true);
+    initArrowTableModel(arrow_model, circos);
   }
   if (func == "backboneconfig") {
 //    moveTableRow(backbone_table, backbone_model, 4, 0);

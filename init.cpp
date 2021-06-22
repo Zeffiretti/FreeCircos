@@ -3,10 +3,10 @@ extern qreal g_scale;
 void FreeCircos::initGenerateButton(void) {
   generate_button = new QPushButton("Generate!");
   generate_button->setParent(this);
-  generate_button->setGeometry(g_scale * (button_box_pos_x + 3 * button_box_width + 3 * button_gap_x),
-                               g_scale * (button_box_pos_y + 0 * button_box_height + 0 * button_gap_y),
-                               button_box_width * g_scale,
-                               button_box_height * g_scale);
+  generate_button->setGeometry(g_scale * generate_button_pos_x,
+                               g_scale * generate_button_pos_y,
+                               generate_button_width * g_scale,
+                               generate_button_height * g_scale);
   generate_button->setProperty("function", "generate");
   connect(generate_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);

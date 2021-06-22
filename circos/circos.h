@@ -31,6 +31,7 @@ class Circos : public QObject {
   Circos(QObject *parent = nullptr);
   ~Circos();
 
+  Q_SLOT void openFile(const QString &file);
   Q_SLOT void openFile(const QString &file, const QString &type);
   Q_SLOT DataProcessState dataToBackBone(void);
   Q_SLOT DataProcessState dataToCategory(void);

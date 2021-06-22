@@ -18,6 +18,10 @@ const static int button_box_width = 68;
 const static int button_box_height = 20;
 const static int button_gap_x = 6;
 const static int button_gap_y = 5;
+const static int generate_button_pos_x = button_box_pos_x + 3 * button_box_width + 3 * button_gap_x;
+const static int generate_button_pos_y = button_box_pos_y;
+const static int generate_button_width = button_box_width;
+const static int generate_button_height = 2 * button_box_height + button_gap_y;
 
 const static int canvas_pos_x = left_margin;
 const static int canvas_pos_gap_y = 5;

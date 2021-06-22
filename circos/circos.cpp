@@ -14,6 +14,24 @@ Circos::~Circos() {
   delete this;
 }
 
+void Circos::openFile(const QString &xlsFile) {
+  m_datas.clear();
+  if (xlsFile.isEmpty())
+    return;
+  QElapsedTimer timer;
+  timer.start();
+  if (m_xls.isNull())
+    m_xls.reset(new ExcelBase);
+  m_xls->open(xlsFile);
+//    qDebug() << "open cost:" << timer.elapsed() << "ms";
+  timer.restart();
+  m_xls->setCurrentSheet(1);
+  m_xls->readAll(m_datas);
+//    qDebug() << "read data cost:" << timer.elapsed() << "ms";
+  timer.restart();
+  m_xls->close();
+}
+
 void Circos::openFile(const QString &xlsFile, const QString &type) {
   qDebug() << "Circos::openFile thread is :" << QThread::currentThreadId();
   m_datas.clear();

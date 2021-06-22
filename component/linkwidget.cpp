@@ -433,7 +433,8 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
   parent1->rescaleAxes();
   parent2->rescaleAxes();
 //    link_thermometer_color_scale->setVisible(false);
-  parent2->setParent(canvas);
+  parent2->setParent(canvas);//deprecate
+//  parent2->setParent(painter->getCanvas());
   parent2->setVisible(true);
   link_cm_button1->setParent(link_config_widget);
   link_cm_button1->setGeometry(g_scale * (link_cm_button_pos_x1 + 0.02 * thermometer_width),

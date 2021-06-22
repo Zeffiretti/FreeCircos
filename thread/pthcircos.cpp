@@ -7,8 +7,8 @@
 void FreeCircos::connectCircosThread(void) {
   qDebug() << "The main threadID is :" << QThread::currentThreadId();
 //  circos->moveToThread(&file_process_thread);
-  connect(this, &FreeCircos::openfile,
-          circos, &Circos::openFile);
+//  connect(this, &FreeCircos::openfile,
+//          circos, &Circos::openFile);
   connect(this, &FreeCircos::dataToBackBone,
           circos, &Circos::dataToBackBone);
   connect(this, &FreeCircos::dataToCategory,
@@ -19,7 +19,7 @@ void FreeCircos::connectCircosThread(void) {
           circos, &Circos::dataToTrackArrow);
   connect(circos, &Circos::operateFinish,
           this, &FreeCircos::onCircosOperateFinish);
-  file_process_thread.start();
+//  file_process_thread.start();
 }
 
 void FreeCircos::onCircosOperateFinish(const QString &operate_) {

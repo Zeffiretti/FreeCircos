@@ -25,27 +25,27 @@ FreeCircos::FreeCircos(QWidget *parent)
 ////  major_font->setPointSize(10);
 //  major_font->setBold(true);
   //init canvas
-//  initCanvas();//deprecate
+  initCanvas();//deprecate
   //init generate button
   initGenerateButton();
-  painter = new CustomPainter;
+//  painter = new CustomPainter;
   gene_donut = new CustomDonut;
   category_donut = new CustomDonut;
   link_canvas = new CustomLinkCanvas;
   track_canvas = new CustomTrackArrow;
   circos = new Circos;
-  canvas = new QCustomPlot;
-  painter->initCanvas(this,
-                      g_scale * canvas_pos_x,
-                      g_scale * canvas_pos_y,
-                      g_scale * canvas_width,
-                      g_scale * canvas_height);
+//  canvas = new QCustomPlot;
+//  painter->initCanvas(this,
+//                      g_scale * canvas_pos_x,
+//                      g_scale * canvas_pos_y,
+//                      g_scale * canvas_width,
+//                      g_scale * canvas_height);
   circos->setWidget(this);
   table_edit_mode = EditGene;
-//  connect(gene_donut, &CustomDonut::sliceAngleChanged,
-//          circos, &Circos::onGeneAngleChanged);//deprecate
-  connect(painter->getGeneDonut(), &CustomDonut::sliceAngleChanged,
+  connect(gene_donut, &CustomDonut::sliceAngleChanged,
           circos, &Circos::onGeneAngleChanged);//deprecate
+//  connect(painter->getGeneDonut(), &CustomDonut::sliceAngleChanged,
+//          circos, &Circos::onGeneAngleChanged);//deprecate
   QPushButton *backbone_button = new QPushButton;
   backbone_button->setParent(this);
   backbone_button->setText("backbone");
@@ -88,19 +88,19 @@ FreeCircos::FreeCircos(QWidget *parent)
   trackarrow_button->setVisible(true);
   connect(trackarrow_button, &QPushButton::clicked,
           this, &FreeCircos::onButtonClicked);
-  QPushButton *setting_button = new QPushButton;
-  setting_button->setParent(this);
-  setting_button->setObjectName("Global Setting");
-  setting_button->setText("Global Setting");
-  setting_button->setGeometry(g_scale * (button_box_pos_x + 2 * button_box_width + 2 * button_gap_x),
-                              g_scale * (button_box_pos_y + 0 * button_box_height + 0 * button_gap_y),
-                              button_box_width * g_scale,
-                              button_box_height * g_scale);
-  setting_button->setProperty("prefix", "global");
-  setting_button->setProperty("function", "globalsetting");
-  connect(setting_button, &QPushButton::clicked,
-          this, &FreeCircos::onButtonClicked);
-  setting_button->setEnabled(false);
+//  QPushButton *setting_button = new QPushButton;
+//  setting_button->setParent(this);
+//  setting_button->setObjectName("Global Setting");
+//  setting_button->setText("Global Setting");
+//  setting_button->setGeometry(g_scale * (button_box_pos_x + 2 * button_box_width + 2 * button_gap_x),
+//                              g_scale * (button_box_pos_y + 0 * button_box_height + 0 * button_gap_y),
+//                              button_box_width * g_scale,
+//                              button_box_height * g_scale);
+//  setting_button->setProperty("prefix", "global");
+//  setting_button->setProperty("function", "globalsetting");
+//  connect(setting_button, &QPushButton::clicked,
+//          this, &FreeCircos::onButtonClicked);
+//  setting_button->setEnabled(false);
   QPushButton *save_button = new QPushButton;
   save_button->setParent(this);
   save_button->setText("Save");
@@ -115,8 +115,12 @@ FreeCircos::FreeCircos(QWidget *parent)
   reset_button->setParent(this);
   reset_button->setText("Reset");
   reset_button->setProperty("function", "reset");
-  reset_button->setGeometry(g_scale * (button_box_pos_x + 3 * button_box_width + 3 * button_gap_x),
-                            g_scale * (button_box_pos_y + button_box_height + button_gap_y),
+//  reset_button->setGeometry(g_scale * (button_box_pos_x + 3 * button_box_width + 3 * button_gap_x),
+//                            g_scale * (button_box_pos_y + button_box_height + button_gap_y),
+//                            button_box_width * g_scale,
+//                            button_box_height * g_scale);
+  reset_button->setGeometry(g_scale * (button_box_pos_x + 2 * button_box_width + 2 * button_gap_x),
+                            g_scale * (button_box_pos_y + 0 * button_box_height + 0 * button_gap_y),
                             button_box_width * g_scale,
                             button_box_height * g_scale);
   connect(reset_button, &QPushButton::clicked,
@@ -164,8 +168,8 @@ FreeCircos::FreeCircos(QWidget *parent)
 ////  dlg->setGeometry(100,20,500,400);
 //  dlg->show();
 
-  connectPaintThread();
-  connectCircosThread();
+//  connectPaintThread();
+//  connectCircosThread();
 }
 
 FreeCircos::~FreeCircos() {
