@@ -452,6 +452,14 @@ void FreeCircos::onButtonClicked(bool) {
     circos->setTAHeadWidthAt(index, arrow_head_slider->getValue() * 1.0 / 100.0);
     circos->setTATailWidthAt(index, arrow_tail_slider->getValue() * 1.0 / 100.0);
     circos->setTAHeadRatioAt(index, arrow_ratio_slider->value() * 1.0 / 100.0);
+    // type setting
+    if (arrow_type_combobox->currentText().compare("Arrow") == 0) {
+      circos->setTATypeAt(index, TrackArrow::Type::Arrow);
+    } else if (arrow_type_combobox->currentText().compare("Tile") == 0) {
+      circos->setTATypeAt(index, TrackArrow::Type::Tile);
+    } else {
+      qDebug() << "This Track Type doesn't exist: " << arrow_type_combobox->currentText();
+    }
   }
 }
 

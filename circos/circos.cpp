@@ -275,6 +275,7 @@ Circos::DataProcessState Circos::dataToTrackArrow(void) {
   tracks_hw.clear();
   tracks_tw.clear();
   tracks_hr.clear();
+  tracks_at.clear();
   if (!m_datas.empty()) {
     qDebug() << "TrackArrow Numbers: " << m_datas.size();
     int start_index = -1;
@@ -321,6 +322,7 @@ Circos::DataProcessState Circos::dataToTrackArrow(void) {
 //      qDebug("this is tile file.");
 //          ta->setDirections(TrackArrow::Direction::None);
 //          ta->setTypes(TrackArrow::Type::Tile);
+//          tracks_at.append(track_arrow_type);
         } else {
 //          ta->setTypes(TrackArrow::Type::Arrow);
           if (data.at(direction_index).toString().compare("+") == 0) {
@@ -334,12 +336,10 @@ Circos::DataProcessState Circos::dataToTrackArrow(void) {
         ta->setStart(data.at(start_index).toInt());
         track_arrow.append(ta);
         track_colors.append(new QColor(track_color));
-        qreal hw = track_head_width;
         tracks_hw.append(track_head_width);
-        qreal tw = track_tail_width;
         tracks_tw.append(track_tail_width);
-        qreal hr = track_head_ratio;
         tracks_hr.append(track_head_ratio);
+        tracks_at.append(track_arrow_type);
       }
   }
   return DataProcessState::Success;
@@ -608,7 +608,7 @@ void Circos::buildCustomTrack(CustomTrackArrow *track) {
 //      tr->setStart(start);
 //      tr->setEnd(end);
 //        if (it->getTypes().testFlag(TrackArrow::Type::Arrow)) {
-        if (track_arrow_type.testFlag(TrackArrow::Type::Arrow)) {
+        if (tracks_at[index].testFlag(TrackArrow::Type::Arrow)) {
 //          track->setType(CustomTrackArrow::Type::Arrow);
 //          qreal boud = CustomTool::mapInt2Real(100, 0, start, end, 100 * it->getHeadRatio());
           qreal boud = CustomTool::mapInt2Real(100, 0, start, end, 100 * tracks_hr[index]);

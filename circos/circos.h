@@ -184,10 +184,16 @@ class Circos : public QObject {
   }
   void setTAType(TrackArrow::Types t) {
     track_arrow_type = t;
+    for (auto &i : tracks_at) {
+      i = track_arrow_type;
+    }
+  }
+  void setTATypeAt(int index, TrackArrow::Types t) {
+    tracks_at[index] = t;
   }
   void setTAHeadWidth(qreal width) {
     track_head_width = width;
-    for (double & i : tracks_hw) {
+    for (double &i : tracks_hw) {
       i = track_head_width;
     }
   }
@@ -196,7 +202,7 @@ class Circos : public QObject {
   }
   void setTATailWidth(qreal width) {
     track_tail_width = width;
-    for (double & i : tracks_tw) {
+    for (double &i : tracks_tw) {
       i = track_tail_width;
     }
   }
@@ -205,7 +211,7 @@ class Circos : public QObject {
   }
   void setTAHeadRatio(qreal ratio) {
     track_head_ratio = ratio;
-    for (double & i : tracks_hr) {
+    for (double &i : tracks_hr) {
       i = track_head_ratio;
     }
     qDebug() << "Track head ratio[1] is" << tracks_hr[1];
@@ -284,6 +290,7 @@ class Circos : public QObject {
   QVector<qreal> tracks_hw;
   QVector<qreal> tracks_tw;
   QVector<qreal> tracks_hr;
+  QVector<TrackArrow::Types> tracks_at;
   QColor track_color = QColor(204, 204, 204);
 
   QScopedPointer<ExcelBase> m_xls;
