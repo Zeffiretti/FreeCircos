@@ -13,9 +13,9 @@ bool FreeCircos::eventFilter(QObject *watched, QEvent *event) {
 }
 
 void FreeCircos::closeEvent(QCloseEvent *event) {
-  if (gb_active) {
-    gbset_win->close();
-  }
+//  if (gb_active) {
+//    gbset_win->close();
+//  }
 }
 
 // Canvas Method

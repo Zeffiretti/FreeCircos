@@ -18,6 +18,10 @@ const static int button_box_width = 68;
 const static int button_box_height = 20;
 const static int button_gap_x = 6;
 const static int button_gap_y = 5;
+const static int generate_button_pos_x = button_box_pos_x + 3 * button_box_width + 3 * button_gap_x;
+const static int generate_button_pos_y = button_box_pos_y;
+const static int generate_button_width = button_box_width;
+const static int generate_button_height = 2 * button_box_height + button_gap_y;
 
 const static int canvas_pos_x = left_margin;
 const static int canvas_pos_gap_y = 5;
@@ -44,7 +48,7 @@ const static int radius_checkbox_height = radius_checkbox_width;
 const static int radius_label_pos_x1 = 1;
 const static int radius_label_pos_y1 = radius_checkbox_pos_y1 + radius_checkbox_height;
 const static int radius_label_width = radius_checkbox_width;
-const static int radius_label_height = 30;
+const static int radius_label_height = 38;
 const static int radius_value_pos_x1 = radius_label_pos_x1;
 const static int radius_value_pos_y1 = radius_label_pos_y1 + radius_label_height;
 const static int radius_value_width = radius_label_width;
@@ -52,7 +56,7 @@ const static int radius_value_height = radius_label_height;
 const static int radius_edit_pos_x1 = 0;
 const static int radius_edit_pos_y1 = radius_value_pos_y1 + radius_value_height;
 const static int radius_edit_width = radius_widget_width;
-const static int radius_edit_height = 10;
+const static int radius_edit_height = 12;
 const static int radius_confirm_pos_x1 = 0;
 const static int radius_confirm_pos_y1 = radius_edit_pos_y1 + 4 * radius_edit_height;
 const static int radius_confirm_width = radius_widget_width;
@@ -156,6 +160,12 @@ const static int arrow_canvas_number_pos_x1 = arrow_canvas_label_pos_x1;
 const static int arrow_canvas_number_pos_x2 = arrow_canvas_label_pos_x2;
 const static int arrow_canvas_number_pos_x3 = arrow_canvas_label_pos_x3;
 const static int arrow_canvas_number_pos_y = arrow_canvas_slider_pos_y3 + arrow_canvas_slider_height3;
+
+const static int arrow_set_apply_margin_y = 5;
+const static int arrow_set_apply_label_pos_x = arrow_canvas_slider_pos_x3;
+const static int arrow_set_apply_label_pos_y = arrow_canvas_number_pos_y + arrow_canvas_label_height;
+const static int arrow_set_apply_width = arrow_canvas_width / 3;
+const static int arrow_set_apply_height = arrow_canvas_label_height;
 // canvas setting
 const static int canvas_scale = 1000;
 #endif //FREECIRCOS_SETTINGS_WINSCALE_H_

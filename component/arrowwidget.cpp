@@ -41,25 +41,35 @@ void FreeCircos::initArrowTable(void) {
   arrow_model->setHorizontalHeaderLabels(arrow_header_list);
 }
 
-void FreeCircos::initArrowTableModel(QStandardItemModel *model, Circos *c) {
+void FreeCircos::initArrowTableModel(QStandardItemModel *model, Circos *c, QStandardItemModel *pmodel) {
   int index = 0;
+  QList<QString> genes;
+  genes.clear();
+  for (int i = 0; i < pmodel->rowCount(); ++i) {
+    if (pmodel->item(i, 0)->checkState() == Qt::Checked) {
+      genes.append(pmodel->item(i, 1)->text());
+    }
+  }
+  model->clear();
     foreach(auto it, c->getTrackArrow()) {
-      // index
-      QStandardItem *index_item = new QStandardItem;
-      index_item->setData(index + 1, Qt::EditRole);
-      // gene
-      QStandardItem *gene_item = new QStandardItem(it->getName());
-      // start
-      QStandardItem *start_item = new QStandardItem;
-      start_item->setData(QVariant(it->getStart()), Qt::EditRole);
-      QStandardItem *end_item = new QStandardItem;
-      end_item->setData(QVariant(it->getEnd()), Qt::EditRole);
+      if (genes.contains(it->getName())) {
+        // index
+        QStandardItem *index_item = new QStandardItem;
+        index_item->setData(index + 1, Qt::EditRole);
+        // gene
+        QStandardItem *gene_item = new QStandardItem(it->getName());
+        // start
+        QStandardItem *start_item = new QStandardItem;
+        start_item->setData(QVariant(it->getStart()), Qt::EditRole);
+        QStandardItem *end_item = new QStandardItem;
+        end_item->setData(QVariant(it->getEnd()), Qt::EditRole);
 
-      model->setItem(index, 0, index_item);
-      model->setItem(index, 1, gene_item);
-      model->setItem(index, 2, start_item);
-      model->setItem(index, 3, end_item);
-      index++;
+        model->setItem(index, 0, index_item);
+        model->setItem(index, 1, gene_item);
+        model->setItem(index, 2, start_item);
+        model->setItem(index, 3, end_item);
+        index++;
+      }
     }
 }
 
@@ -109,6 +119,9 @@ void FreeCircos::initArrowEditor(void) {
   arrow_tail_number = new QLabel;
   arrow_ratio_label = new QLabel;
   arrow_ratio_number = new QLabel;
+  arrow_apply_label = new QLabel;
+  arrow_apply_indi_button = new QPushButton;
+  arrow_apply_all_button = new QPushButton;
 
   arrow_head_label->setParent(arrow_config_widget);
   arrow_head_label->setGeometry(g_scale * arrow_canvas_label_pos_x1,
@@ -212,19 +225,51 @@ void FreeCircos::initArrowEditor(void) {
   arrow_ratio_number->setFont(*major_font);
   arrow_ratio_number->setAlignment(Qt::AlignmentFlag::AlignHCenter
                                      | Qt::AlignmentFlag::AlignTop);
+
+  arrow_apply_label->setParent(arrow_config_widget);
+  arrow_apply_label->setGeometry(g_scale * arrow_set_apply_label_pos_x,
+                                 g_scale * arrow_set_apply_label_pos_y,
+                                 g_scale * arrow_set_apply_width,
+                                 g_scale * arrow_set_apply_height);
+  arrow_apply_label->setText(tr("Apply to     "));
+  arrow_apply_label->setFont(*major_font);
+  arrow_apply_label->setAlignment(Qt::AlignmentFlag::AlignRight
+                                    | Qt::AlignmentFlag::AlignVCenter);
+  arrow_apply_indi_button->setParent(arrow_config_widget);
+  arrow_apply_indi_button->setGeometry(g_scale * (arrow_set_apply_label_pos_x + arrow_set_apply_width),
+                                       g_scale * arrow_set_apply_label_pos_y,
+                                       g_scale * arrow_set_apply_width,
+                                       g_scale * arrow_set_apply_height);
+  arrow_apply_indi_button->setText(tr("Solitary track"));
+  arrow_apply_indi_button->setFont(*major_font);
+  arrow_apply_indi_button->setProperty("prefix", "arrow");
+  arrow_apply_indi_button->setProperty("function", "arrow-apply-to-indi");
+  arrow_apply_all_button->setParent(arrow_config_widget);
+  arrow_apply_all_button->setGeometry(g_scale * (arrow_set_apply_label_pos_x + 2 * arrow_set_apply_width),
+                                      g_scale * arrow_set_apply_label_pos_y,
+                                      g_scale * arrow_set_apply_width,
+                                      g_scale * arrow_set_apply_height);
+  arrow_apply_all_button->setText(tr("All tracks"));
+  arrow_apply_all_button->setFont(*major_font);
+  arrow_apply_all_button->setProperty("prefix", "arrow");
+  arrow_apply_all_button->setProperty("function", "arrow-apply-to-all");
 }
 
 void FreeCircos::connectArrowSignalSlot(void) {
-  connect(arrow_type_combobox, &QComboBox::currentTextChanged,
-          this, &FreeCircos::onComboboxTextChanged);
+//  connect(arrow_type_combobox, &QComboBox::currentTextChanged,
+//          this, &FreeCircos::onComboboxTextChanged);
   connect(arrow_head_slider, &ExtSymSlider::valueChanged,
           this, &FreeCircos::onTrackValueChanged);
   connect(arrow_tail_slider, &ExtSymSlider::valueChanged,
           this, &FreeCircos::onTrackValueChanged);
   connect(arrow_ratio_slider, &QSlider::valueChanged,
           this, &FreeCircos::onTrackValueChanged);
-  connect(arrow_editor, &ExtArrowEditor::extColorChanged,
-          circos, &Circos::setTAColor);
+//  connect(arrow_editor, &ExtArrowEditor::extColorChanged,
+//          circos, &Circos::setTAColor);
+  connect(arrow_apply_indi_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
+  connect(arrow_apply_all_button, &QPushButton::clicked,
+          this, &FreeCircos::onButtonClicked);
 }
 
 

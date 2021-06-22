@@ -135,7 +135,8 @@ set(EXT_FILES
   extension/exttableview.cpp
   extension/extarroweditor.cpp
   extension/extsymslider.cpp
-  extension/extsorttable.cpp extension/extverticallabel.cpp extension/extverticallabel.h)
+  extension/extsorttable.cpp
+  extension/extverticallabel.cpp)
 set(FILEPROS_FILES
   fileprocess/excelbase.cpp
   fileprocess/qvariantlistlistmodel.cpp)

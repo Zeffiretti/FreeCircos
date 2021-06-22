@@ -433,7 +433,8 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
   parent1->rescaleAxes();
   parent2->rescaleAxes();
 //    link_thermometer_color_scale->setVisible(false);
-  parent2->setParent(canvas);
+  parent2->setParent(canvas);//deprecate
+//  parent2->setParent(painter->getCanvas());
   parent2->setVisible(true);
   link_cm_button1->setParent(link_config_widget);
   link_cm_button1->setGeometry(g_scale * (link_cm_button_pos_x1 + 0.02 * thermometer_width),
@@ -487,35 +488,48 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
           circos, &Circos::setGradientColor);
 }
 
-void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c) {
+void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c, QStandardItemModel *pmodel) {
+  QList<QString> genes;
+  genes.clear();
+  for (int i = 0; i < pmodel->rowCount(); ++i) {
+    if (pmodel->item(i, 0)->checkState() == Qt::Checked) {
+      genes.append(pmodel->item(i, 1)->text());
+    }
+  }
+  int row = 0;
+  model->clear();
   for (qint8 i = 0; i < c->getLinkNum(); ++i) {
     //Link*
     Link *l = c->getLink(i);
-    //index
-    QStandardItem *index_item = new QStandardItem;
-    index_item->setData(i + 1, Qt::EditRole);
-    model->setItem(i, 0, index_item);
-    index_item->setCheckState(Qt::Checked);
-    index_item->setCheckable(true);
+    if (genes.contains(l->getDGN()) || genes.contains(l->getSGN())) {
+      //index
+      QStandardItem *index_item = new QStandardItem;
+      index_item->setData(row + 1, Qt::EditRole);
+      model->setItem(row, 0, index_item);
+      index_item->setCheckState(Qt::Checked);
+      index_item->setCheckable(true);
 //    connect(index_item, &QStandardItem:
 //            this, &FreeCircos::onCheckboxStateChanged);
-    //start name
-    model->setItem(i, 1, new QStandardItem(l->getSGN()));
-    //startblock
-    QString startblock = QString::number(l->getSourceStart());
-    if (l->getSourceEnd() > 0) {
-      startblock = startblock + "---" + QString::number(l->getSourceEnd());
+      //start name
+      model->setItem(row, 1, new QStandardItem(l->getSGN()));
+      //startblock
+      QString startblock = QString::number(l->getSourceStart());
+      if (l->getSourceEnd() > 0) {
+        startblock = startblock + "---" + QString::number(l->getSourceEnd());
+      }
+      model->setItem(row, 2, new QStandardItem(startblock));
+      //end name
+      model->setItem(row, 3, new QStandardItem(l->getDGN()));
+      // endblock
+      QString endblock = QString::number(l->getDestStart());
+      if (l->getDestEnd() > 0) {
+        endblock = endblock + "---" + QString::number(l->getDestEnd());
+      }
+      model->setItem(row, 4, new QStandardItem(endblock));
+      row++;
     }
-    model->setItem(i, 2, new QStandardItem(startblock));
-    //end name
-    model->setItem(i, 3, new QStandardItem(l->getDGN()));
-    // endblock
-    QString endblock = QString::number(l->getDestStart());
-    if (l->getDestEnd() > 0) {
-      endblock = endblock + "---" + QString::number(l->getDestEnd());
-    }
-    model->setItem(i, 4, new QStandardItem(endblock));
-  }
 //  connect(model, &ExtStandardItemModel::stateSet,
 //          this, &FreeCircos::onExtStandardItemStateSet);
+
+  }
 }

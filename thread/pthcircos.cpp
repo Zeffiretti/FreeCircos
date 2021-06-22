@@ -7,8 +7,8 @@
 void FreeCircos::connectCircosThread(void) {
   qDebug() << "The main threadID is :" << QThread::currentThreadId();
 //  circos->moveToThread(&file_process_thread);
-  connect(this, &FreeCircos::openfile,
-          circos, &Circos::openFile);
+//  connect(this, &FreeCircos::openfile,
+//          circos, &Circos::openFile);
   connect(this, &FreeCircos::dataToBackBone,
           circos, &Circos::dataToBackBone);
   connect(this, &FreeCircos::dataToCategory,
@@ -19,7 +19,7 @@ void FreeCircos::connectCircosThread(void) {
           circos, &Circos::dataToTrackArrow);
   connect(circos, &Circos::operateFinish,
           this, &FreeCircos::onCircosOperateFinish);
-  file_process_thread.start();
+//  file_process_thread.start();
 }
 
 void FreeCircos::onCircosOperateFinish(const QString &operate_) {
@@ -67,13 +67,13 @@ void FreeCircos::onCircosOperateFinish(const QString &operate_) {
     figures |= CustomPainter::Figure::Link;
     painter->setFigures(figures);
     //addCategoryToTable(backbone_table, backbone_model, circos);
-    initLKTableModel(link_model, circos);
+    initLKTableModel(link_model, circos, backbone_model);
   } else if (operate_.compare("Circos::openFile::trackarrow") == 0) {
     emit dataToTrackArrow();
     circos->setTrackEnabled(true);
     CustomPainter::Figures figures = painter->getFigures();
     figures |= CustomPainter::Figure::Track;
     painter->setFigures(figures);
-    initArrowTableModel(arrow_model, circos);
+    initArrowTableModel(arrow_model, circos, backbone_model);
   }
 }
