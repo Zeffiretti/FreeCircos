@@ -160,6 +160,8 @@ FreeCircos::FreeCircos(QWidget *parent)
   initBackBoneWidget(control_panel);
   initLinkWidget(control_panel);
   initArrowWidget(control_panel);
+  connect(control_panel, &QTabWidget::currentChanged,
+          this, &FreeCircos::onTabwidgetChanged);
   //qDebug() << CustomTool::mapInt2Real(202293916, 202585582, 0, 1, 202417563);
 //    qDebug() << QColor(Qt::red).name();
 //  initColorDialog();

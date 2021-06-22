@@ -102,11 +102,11 @@ class FreeCircos : public QMainWindow {
   void initLKTable(void);
   void initLKConfigWidget(void);
   void initLKColorScale(QCustomPlot *parent1 = nullptr, QCustomPlot *parent2 = nullptr);
-  void initLKTableModel(QStandardItemModel *model, Circos *c);
+  void initLKTableModel(QStandardItemModel *model, Circos *c, QStandardItemModel *pmodel);
 
   void initArrowWidget(QTabWidget *parent);
   void initArrowTable(void);
-  void initArrowTableModel(QStandardItemModel *model, Circos *c);
+  void initArrowTableModel(QStandardItemModel *model, Circos *c, QStandardItemModel *pmodel);
   void initArrowConfigWidget(void);
   void initArrowEditor(void);
   void connectArrowSignalSlot(void);
@@ -152,6 +152,7 @@ class FreeCircos : public QMainWindow {
   void onTrackColorChanged(QColor c);
   void onCircosOperateFinish(const QString &operate_);
   void onPaintOperateFinish(const QString &operate_);
+  void onTabwidgetChanged(int index);
 
  private:
 

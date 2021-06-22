@@ -41,25 +41,35 @@ void FreeCircos::initArrowTable(void) {
   arrow_model->setHorizontalHeaderLabels(arrow_header_list);
 }
 
-void FreeCircos::initArrowTableModel(QStandardItemModel *model, Circos *c) {
+void FreeCircos::initArrowTableModel(QStandardItemModel *model, Circos *c, QStandardItemModel *pmodel) {
   int index = 0;
+  QList<QString> genes;
+  genes.clear();
+  for (int i = 0; i < pmodel->rowCount(); ++i) {
+    if (pmodel->item(i, 0)->checkState() == Qt::Checked) {
+      genes.append(pmodel->item(i, 1)->text());
+    }
+  }
+  model->clear();
     foreach(auto it, c->getTrackArrow()) {
-      // index
-      QStandardItem *index_item = new QStandardItem;
-      index_item->setData(index + 1, Qt::EditRole);
-      // gene
-      QStandardItem *gene_item = new QStandardItem(it->getName());
-      // start
-      QStandardItem *start_item = new QStandardItem;
-      start_item->setData(QVariant(it->getStart()), Qt::EditRole);
-      QStandardItem *end_item = new QStandardItem;
-      end_item->setData(QVariant(it->getEnd()), Qt::EditRole);
+      if (genes.contains(it->getName())) {
+        // index
+        QStandardItem *index_item = new QStandardItem;
+        index_item->setData(index + 1, Qt::EditRole);
+        // gene
+        QStandardItem *gene_item = new QStandardItem(it->getName());
+        // start
+        QStandardItem *start_item = new QStandardItem;
+        start_item->setData(QVariant(it->getStart()), Qt::EditRole);
+        QStandardItem *end_item = new QStandardItem;
+        end_item->setData(QVariant(it->getEnd()), Qt::EditRole);
 
-      model->setItem(index, 0, index_item);
-      model->setItem(index, 1, gene_item);
-      model->setItem(index, 2, start_item);
-      model->setItem(index, 3, end_item);
-      index++;
+        model->setItem(index, 0, index_item);
+        model->setItem(index, 1, gene_item);
+        model->setItem(index, 2, start_item);
+        model->setItem(index, 3, end_item);
+        index++;
+      }
     }
 }
 

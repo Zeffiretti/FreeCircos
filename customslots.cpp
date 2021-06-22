@@ -219,7 +219,7 @@ void FreeCircos::onButtonClicked(bool) {
     circos->dataToLink();
     circos->setLinkEnable(true);
     //addCategoryToTable(backbone_table, backbone_model, circos);
-    initLKTableModel(link_model, circos);
+    initLKTableModel(link_model, circos, backbone_model);
   }
   if (func.compare("opentrackarrowfile") == 0) {
 #ifndef FILE_RES_USED
@@ -233,7 +233,7 @@ void FreeCircos::onButtonClicked(bool) {
 #endif
     circos->dataToTrackArrow();
     circos->setTrackEnabled(true);
-    initArrowTableModel(arrow_model, circos);
+    initArrowTableModel(arrow_model, circos, backbone_model);
   }
   if (func == "backboneconfig") {
 //    moveTableRow(backbone_table, backbone_model, 4, 0);
@@ -1123,5 +1123,23 @@ void FreeCircos::onTrackValueChanged(int value) {
 
 void FreeCircos::onTrackColorChanged(QColor c) {
   circos->setTAColor(std::move(c));
+}
+
+void FreeCircos::onTabwidgetChanged(int index) {
+  switch (index) {
+    case 0: {
+      break;
+    }
+    case 1: {
+      initLKTableModel(link_model, circos, backbone_model);
+      break;
+    }
+    case 2: {
+      initArrowTableModel(arrow_model, circos, backbone_model);
+      break;
+    }
+    default:break;
+  }
+  qDebug() << "table" << index << "selected";
 }
 
