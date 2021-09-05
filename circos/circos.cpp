@@ -962,6 +962,15 @@ QList<TrackArrow *> Circos::getTrackArrow(void) {
   return track_arrow;
 }
 
+int Circos::indexofArrow(const QString &arrow_name) {
+  for (int i = 0; i < getTrackArrow().size(); ++i) {
+    if(getTrackArrow().at(i)->getName()==arrow_name){
+      return i;
+    }
+  }
+  return 0;
+}
+
 void Circos::onGeneAngleChanged(const QString &n, qreal s, qreal e) {
   findGene(n)->setAngle(s, e);
 }

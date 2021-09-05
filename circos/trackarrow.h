@@ -6,7 +6,7 @@
 #include <QColor>
 
 class TrackArrow : public QObject {
-  Q_OBJECT
+ Q_OBJECT
  public:
   explicit TrackArrow(QObject *parent = nullptr);
   enum Direction {
@@ -22,7 +22,7 @@ class TrackArrow : public QObject {
   Q_DECLARE_FLAGS(Types, Type)
 
   // setters
-  void setName(const QString& n) {
+  void setName(const QString &n) {
     gene_name = n;
   }
   void setStart(int s) {

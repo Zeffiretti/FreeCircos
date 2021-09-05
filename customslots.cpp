@@ -522,7 +522,8 @@ void FreeCircos::onButtonClicked(bool) {
   }
   if (func.compare("arrow-apply-to-indi") == 0) {
     int row = arrow_table->currentIndex().row();
-    int index = arrow_model->item(row, 0)->text().toInt() - 1;
+//    int index = arrow_model->item(row, 0)->text().toInt() - 1;
+    int index = circos->indexofArrow(arrow_model->item(row, 1)->text());
     circos->setTAColorAt(index, arrow_editor->getColor());
     circos->setTAHeadWidthAt(index, arrow_head_slider->getValue() * 1.0 / 100.0);
     circos->setTATailWidthAt(index, arrow_tail_slider->getValue() * 1.0 / 100.0);

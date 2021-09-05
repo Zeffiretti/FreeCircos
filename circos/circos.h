@@ -113,6 +113,7 @@ class Circos : public QObject {
   void setTrackEnabled(bool b);
   bool getTrackEnabled(void);
   void clearTrackArrow(void);
+  int indexofArrow(const QString &arrow_name);
   QList<TrackArrow *> getTrackArrow(void);
 
   void setWidget(QWidget *w) { widget = w; }
