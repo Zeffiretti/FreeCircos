@@ -55,7 +55,7 @@ find_package(Qt5 COMPONENTS
   AxContainer
   Widgets
   PrintSupport REQUIRED)
-
+# who wrote those foolish code? 
 if (${Qt5AxContainer_FOUND})
   message("Qt5AxContainer Found Successfully.")
   add_definitions(${Qt5AxContainer_DEFINITIONS})
