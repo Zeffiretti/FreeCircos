@@ -71,6 +71,7 @@ void FreeCircos::initArrowTableModel(QStandardItemModel *model, Circos *c, QStan
         index++;
       }
     }
+  model->setHorizontalHeaderLabels(arrow_header_list);
 }
 
 void FreeCircos::initArrowConfigWidget(void) {

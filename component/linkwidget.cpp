@@ -498,10 +498,11 @@ void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c, QStandar
   }
   int row = 0;
   model->clear();
-  for (qint8 i = 0; i < c->getLinkNum(); ++i) {
+  for (int i = 0; i < c->getLinkNum(); ++i) {
     //Link*
     Link *l = c->getLink(i);
-    if (genes.contains(l->getDGN()) || genes.contains(l->getSGN())) {
+    // links are shown only if sources and destinations both selected
+    if (genes.contains(l->getDGN()) && genes.contains(l->getSGN())) {
       //index
       QStandardItem *index_item = new QStandardItem;
       index_item->setData(row + 1, Qt::EditRole);
@@ -528,6 +529,7 @@ void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c, QStandar
       model->setItem(row, 4, new QStandardItem(endblock));
       row++;
     }
+    model->setHorizontalHeaderLabels(link_header_list);
 //  connect(model, &ExtStandardItemModel::stateSet,
 //          this, &FreeCircos::onExtStandardItemStateSet);
 
