@@ -182,6 +182,7 @@ Circos::DataProcessState Circos::dataToCategory(void) {
 
 Circos::DataProcessState Circos::dataToLink(void) {
   links.clear();
+  int link_index = 0;
   // all varibles from file
   QString source_gene_name, dest_gene_name;
   int source_gene_start, source_gene_end, dest_gene_start, dest_gene_end;
@@ -279,6 +280,8 @@ Circos::DataProcessState Circos::dataToLink(void) {
       }
       l->setStreCode(stre);
       l->setLineWidth(lwd);
+      l->setIndex(link_index);
+      link_index++;
       links.append(l);
 //    connect(l,&Link::setColorFun
 //        qDebug() << l->getSGN() << "---" << l->getDGN();
@@ -760,13 +763,13 @@ QString Circos::getLinkColorFunStr(int index) {
   return getLink(index)->getColorFunString();
 }
 
-void Circos::setLinkColorFunc(int index, Link::ColorFuns cf, QColor c) {
+void Circos::setLinkColorFunc(int index, Link::ColorFuns cf, const QColor &c) {
   if (cf.testFlag(Link::ColorFun::Ramp)) {
     for (auto &l:links) {
       qreal stre_code = l->getStreCode();
-      QColor c = QColor(link_gradient->color(stre_code,
-                                             QCPRange(getLinkStreMin(), getLinkStreMax())));
-      l->setColor(c);
+      QColor color = QColor(link_gradient->color(stre_code,
+                                                 QCPRange(getLinkStreMin(), getLinkStreMax())));
+      l->setColor(color);
     }
     qDebug() << "This is Link::ColorFun::Ramp";
   } else if (cf.testFlag(Link::ColorFun::All)) {
@@ -805,12 +808,14 @@ void Circos::setLinkColorFunc(int index, Link::ColorFuns cf, QColor c) {
       qDebug() << "This is Link::ColorFun::Start";
     }
     if (cf.testFlag(Link::ColorFun::End)) {
+      qDebug() << "find end genes " << l->getDGN();
       Gene *g1 = findGene(l->getDGN());
       Category *cat = g1->getCategory();
+      qDebug() << "end at category " << cat->getName();
       auto gs_n = cat->getGenes();
       for (auto &g_n:gs_n) {
         Gene *g = findGene(g_n);
-        auto ls = g->getStartLinks();
+        auto ls = g->getEndLinks();
         for (auto &l_i:ls) { l_i->setColor(c); }
       }
       qDebug() << "This is Link::ColorFun::End";
@@ -884,11 +889,11 @@ qreal Circos::getLinkStre(int index) {
   return getLink(index)->getStreCode();
 }
 
-qreal Circos::getLinkStreMax(void) {
+qreal Circos::getLinkStreMax(void) const {
   return link_stre_max;
 }
 
-qreal Circos::getLinkStreMin(void) {
+qreal Circos::getLinkStreMin(void) const {
   return link_stre_min;
 }
 
@@ -964,7 +969,7 @@ QList<TrackArrow *> Circos::getTrackArrow(void) {
 
 int Circos::indexofArrow(const QString &arrow_name) {
   for (int i = 0; i < getTrackArrow().size(); ++i) {
-    if(getTrackArrow().at(i)->getName()==arrow_name){
+    if (getTrackArrow().at(i)->getName() == arrow_name) {
       return i;
     }
   }
@@ -990,4 +995,7 @@ void Circos::onLinkColorFuncChanged(int index) {
 //    emit setLinkColor(index, c);
     getLink(index)->setColor(c);
   }
+}
+int Circos::indexOfLinks(const QString &name) {
+  return 0;
 }

@@ -110,6 +110,12 @@ QString Link::getColorName(void) {
 bool Link::getEnable(void) {
   return is_active;
 }
+void Link::setIndex(int i) {
+  index = i;
+}
+int Link::getIndex(void) {
+  return index;
+}
 
 //void Link::onColorFunChanged(ColorFuns cf) {
 //  if(cf.testFlag(ColorFun::Ramp)) {

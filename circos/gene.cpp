@@ -118,10 +118,12 @@ void Gene::addLink(Link *l) {
 }
 
 void Gene::addLink(Link *l, CustomLink::LinkGenes lg) {
-  start_links.append(l);
   switch (lg) {
-    case CustomLink::LinkGene::LinkStart:break;
-    case CustomLink::LinkGene::LinkEnd:break;
+    case CustomLink::LinkGene::LinkStart:
+      start_links.append(l);
+      break;
+    case CustomLink::LinkGene::LinkEnd:end_links.append(l);
+      break;
     default:break;
   }
 }

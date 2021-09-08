@@ -21,6 +21,7 @@ class Link {
   Q_DECLARE_FLAGS(ColorFuns, ColorFun)
   Link();
   // setters
+  void setIndex(int i);
   void setSGN(QString sgn);
   void setDGN(QString dgn);
   void setSourceStart(int ss);
@@ -50,10 +51,12 @@ class Link {
   ColorFuns getColorFun(void);
   QString getColorName(void);
   bool getEnable(void);
+  int getIndex(void);
 //  qreal getColorCode(void);
 // public slots:
 //  void onColorFunChanged(ColorFuns cf);
  private:
+  int index;
   QString source_gene_name;
   QString destination_gene_name;
   int source_start = -1, source_end = -1;
