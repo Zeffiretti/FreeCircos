@@ -505,7 +505,7 @@ void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c, QStandar
     if (genes.contains(l->getDGN()) && genes.contains(l->getSGN())) {
       //index
       QStandardItem *index_item = new QStandardItem;
-      index_item->setData(row + 1, Qt::EditRole);
+      index_item->setData(l->getIndex() + 1, Qt::EditRole);
       model->setItem(row, 0, index_item);
       index_item->setCheckState(Qt::Checked);
       index_item->setCheckable(true);

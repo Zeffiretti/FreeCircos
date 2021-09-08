@@ -69,9 +69,10 @@ class Circos : public QObject {
   void setLinkEnable(bool b);
   bool getLinkEnable(void);
 
+  int indexOfLinks(const QString &name);
   void setLinkColorFunStr(int index, const QString &cf);
   QString getLinkColorFunStr(int index);
-  void setLinkColorFunc(int index, Link::ColorFuns cf, QColor c);
+  void setLinkColorFunc(int index, Link::ColorFuns cf, const QColor &c);
   void setLinkColorFunc(int index, Link::ColorFuns cf);
   void setLinkColorFunc(Link::ColorFuns cf);
   Link::ColorFuns getLinkColorFunc(int index);
@@ -96,8 +97,8 @@ class Circos : public QObject {
   qreal getLinkLineWidth(void);
   void setLinkStre(qreal min, qreal max);
   qreal getLinkStre(int index);
-  qreal getLinkStreMin(void);
-  qreal getLinkStreMax(void);
+  qreal getLinkStreMin(void) const;
+  qreal getLinkStreMax(void) const;
   QCPRange *getLinkStreRange(void);
 
   void setLinkGradient(QCPColorGradient *g);
