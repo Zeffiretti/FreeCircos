@@ -234,6 +234,7 @@ void FreeCircos::onButtonClicked(bool) {
     circos->dataToTrackArrow();
     circos->setTrackEnabled(true);
     initArrowTableModel(arrow_model, circos, backbone_model);
+    arrow_widget->setEnabled(true);
   }
   if (func == "backboneconfig") {
 //    moveTableRow(backbone_table, backbone_model, 4, 0);

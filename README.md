@@ -20,9 +20,9 @@ To Develop A Program for Painting Circos Figure.
    ![img_2.png](img_2.png)![img_3.png](img_3.png)
 2. 外部曲线跨度大时不好看
    ![img_4.png](img_4.png)
-3. 当没有输入arrow文件时，arrow部分操作会宕机，可以把arrow的solitary track和all track在没有数据是也变灰色
+3. ~~当没有输入arrow文件时，arrow部分操作会宕机，可以把arrow的solitary track和all track在没有数据是也变灰色
    <font color=red>没数据时这里是黑色可以点击的</font>
-   ![img_5.png](img_5.png)
+   ![img_5.png](img_5.png)~~
 4. 导入一个错误的文件时，会弹出错误提示，但是去不掉。。
 5. 输入文件导致的bug较多。。
    - 二次load backbone 画图会宕机
