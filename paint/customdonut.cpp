@@ -75,7 +75,7 @@ void CustomDonut::drawDonut(QCustomPlot *canvas) {
 void CustomDonut::clear(void) {
   m_slices.clear();
   sum = 0;
-  start_angle = 0;
+  start_angle = 0.0;
   start_angle_reset = true;
   size_reset = true;
   gap_reset = true;
@@ -222,4 +222,11 @@ CustomSlice *CustomDonut::findSlice(const QString &n) {
 //    while (it.hasNext()) {
 //        if(it.)
 //    }
+}
+void CustomDonut::setRotate(qreal rot) {
+  start_angle = rot;
+}
+
+qreal CustomDonut::getRotate(void) {
+  return start_angle;
 }

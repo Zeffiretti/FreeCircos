@@ -33,11 +33,14 @@ const static int canvas_height = canvas_width;
 const static int canvas_line_width = 1;
 
 const static int radius_widget_pos_x = canvas_pos_x + canvas_width;
-const static int radius_widget_pos_y = canvas_pos_y;
+//const static int radius_widget_pos_y = canvas_pos_y;
+const static int radius_widget_pos_y = button_box_pos_y;
 const static int radius_widget_width = 40;
-const static int radius_widget_height = canvas_height;
+const static int radius_widget_height = g_app_base_height - bottom_margin - top_margin;
+const static int radius_rotate_edit_pos_x = 0;
+const static int radius_rotate_edit_pos_y = 0;
 const static int radius_slider_pos_x1 = 1;
-const static int radius_slider_pos_y1 = 0;
+const static int radius_slider_pos_y1 = 2 * button_box_height + button_gap_y + canvas_pos_gap_y;
 const static int radius_inner_margin = 1;
 const static int radius_slider_width = (radius_widget_width - 3 * radius_inner_margin) / 4;
 const static int radius_slider_height = canvas_height / 2;

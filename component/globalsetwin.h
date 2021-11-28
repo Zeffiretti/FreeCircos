@@ -57,6 +57,8 @@ class GlobalSetWin : public QWidget {
   ExtVerticalLabel *arw_value_label;
   ExtVerticalLabel *link_name_label;
   ExtVerticalLabel *link_value_label;
+  QLineEdit *rotate_edit;
+  QLabel *rotate_label;
   QLineEdit *gene_gap_edit;
   QLabel *gene_gap_label;
   QLabel *cgs_gap_label;

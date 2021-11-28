@@ -399,6 +399,11 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
                        g_scale * thermometer_pos_y,
                        g_scale * thermometer_width,
                        g_scale * thermometer_height);
+  parent1->xAxis->setSubTickLength(1, 0);
+  auto ticker = parent1->xAxis->ticker();
+  ticker->setTickCount(10-1);
+  ticker->setTickStepStrategy(QCPAxisTicker::TickStepStrategy::tssReadability);
+//  ticker->setTickOrigin(0.0);
   parent1->yAxis->setVisible(false);
   link_thermometer_onpanel_color_map->data()->setSize(40, 1);
   link_thermometer_onpanel_color_map->data()->setRange(QCPRange(10, 50), QCPRange(0, 1));

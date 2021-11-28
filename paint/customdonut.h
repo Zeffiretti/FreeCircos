@@ -43,6 +43,9 @@ class CustomDonut : public QObject {
 
   void setSliceLayer(int l);
   void setTextLayer(int l);
+
+  void setRotate(qreal rot);
+  qreal getRotate(void );
  signals:
   void sliceAngleChanged(const QString &n, qreal s, qreal e);
 
@@ -50,7 +53,7 @@ class CustomDonut : public QObject {
 
   QList<CustomSlice *> m_slices;
   qreal sum = 0;
-  qreal start_angle = 0.0;
+  qreal start_angle = 0;
   bool start_angle_reset = true;
   qreal d_hole_size = 0.7, d_pie_size = 0.8;
   bool size_reset = true;

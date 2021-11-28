@@ -23,6 +23,19 @@ void GlobalSetWin::initPanel() {
                     g_scale * radius_widget_pos_y,
                     g_scale * radius_widget_width,
                     g_scale * radius_widget_height);
+  // pre-dslider component
+  rotate_label = new QLabel(this);
+  rotate_label->setGeometry(g_scale * radius_rotate_edit_pos_x,
+                            g_scale * radius_rotate_edit_pos_y,
+                            g_scale * radius_edit_width,
+                            g_scale * radius_edit_height);
+  rotate_label->setText("Rotate");
+  rotate_edit = new QLineEdit(this);
+  rotate_edit->setGeometry(g_scale * radius_rotate_edit_pos_x,
+                           g_scale * (radius_rotate_edit_pos_y + radius_edit_height),
+                           g_scale * radius_edit_width,
+                           g_scale * radius_edit_height);
+  rotate_edit->setText(QString::number(c_ptr->getRotate()));
   back_bone_dslider = new ExtDoubleSlider;
   back_bone_dslider->setParent(this);
   back_bone_dslider->setGeometry(g_scale * radius_slider_pos_x1,
@@ -396,6 +409,7 @@ void GlobalSetWin::onButtonClicked(bool) {
       gap = cgs_gap_edit->text().toDouble();
       c_ptr->setCatGap(degreeToRadius(gap));
       c_ptr->setCategoryEnable(cgs_enable_checkbox->checkState() == Qt::CheckState::Checked);
+      c_ptr->setRotate(rotate_edit->text().toDouble());
 //      this->close();
     }
   }
