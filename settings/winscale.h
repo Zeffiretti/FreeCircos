@@ -113,6 +113,7 @@ const static int lk_combobox_pos_x2 = lk_text_pos_x2 + lk_label_width;
 const static int thermometer_pos_x = lk_text_pos_x1 + label_margin_x;
 const static int thermometer_pos_y = lk_text_pos_y1 + 5 * (lk_label_height + label_margin_y);
 const static int thermometer_width = lk_config_width - 4 * label_margin_x;
+const static int link_thermometer_size = 40;
 const static int thermometer_height = 2 * lk_label_height;
 const static int thermometer_canvas_pos_x = 0.86 * canvas_width;
 const static int thermometer_canvas_pos_y = 0.7 * canvas_width;
