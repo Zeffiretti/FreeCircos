@@ -515,7 +515,6 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
 ////  }
 //  link_thermometer_onpanel_color_map->keyAxis()->setRange(QCPRange(1000, 5000));
 //  link_thermometer_onpanel_color_map->rescaleDataRange(true);
-//  setLKColorRange(QCPRange(1000, 5000));
 }
 
 void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c, QStandardItemModel *pmodel) {
@@ -564,9 +563,11 @@ void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c, QStandar
 //          this, &FreeCircos::onExtStandardItemStateSet);
 
   }
+  setLKColorRange(*(c->getLinkStreRange()));
 }
 
 void FreeCircos::setLKColorRange(QCPRange range) {
+  qDebug() << "link color range:" << range;
   link_thermometer_onpanel_color_map->data()->setSize(link_thermometer_size, 1);
   link_thermometer_onpanel_color_map->data()->setRange(range, QCPRange(0, 1));
   link_thermometer_oncanvas_color_map->data()->setSize(1, link_thermometer_size);
