@@ -24,6 +24,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 add_compile_definitions(QT_DEPRECATED_WARNINGS)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/colorwidgets)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/OpenXLSX)
 
 if (NOT DEFINED ENV{Qt5_Dir})
   message(FATAL_ERROR "not defined environment variable: Qt5_Dir")
@@ -53,6 +54,10 @@ find_package(Qt5 COMPONENTS
   AxContainer
   Widgets
   PrintSupport REQUIRED)
+
+#list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/lib/OpenXLSX")
+#find_package(OpenXLSX REQUIRED)
+
 # who wrote those foolish code?
 if (${Qt5AxContainer_FOUND})
   message("Qt5AxContainer Found Successfully.")
@@ -214,7 +219,8 @@ target_link_libraries(${PROJECT_NAME}
   Qt5::Widgets)
 link_directories(lib/colorwidgets)
 
-target_link_libraries(${PROJECT_NAME} QtColorWidgets)
+target_link_libraries(${PROJECT_NAME} QtColorWidgets OpenXLSX::OpenXLSX)
+message("OpenXLSX include directory:${OpenXLSX_INCLUDE_DIRS}")
 add_dependencies(${PROJECT_NAME} QtColorWidgets)
 message("Build Type: ${CMAKE_BUILD_TYPE}")
 if (CMAKE_BUILD_TYPE MATCHES Release)
