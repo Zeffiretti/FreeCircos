@@ -90,7 +90,7 @@ Circos::DataProcessState Circos::dataToBackBone(void) {
 ////        err_dialog->setParent(widget);
 //        err_dialog->setWindowTitle(tr("Open Backbone Error"));
 //        err_dialog->showMessage(tr("'from' exists but No 'to'!!!"));
-        QMessageBox::critical(widget,
+        QMessageBox::critical(nullptr,
                               tr("Open Backbone Error"),
                               tr("'from' exists but No 'to'!!!"),
                               QMessageBox::Ok);
@@ -141,13 +141,13 @@ Circos::DataProcessState Circos::dataToCategory(void) {
       }
     }
     if (name_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open Category Error"),
                             tr("no \'Gene name\' item."),
                             QMessageBox::Ok);
       return DataProcessState::Error;
     } else if (sys_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open Category Error"),
                             tr("no \'System\' item."),
                             QMessageBox::Ok);
@@ -196,7 +196,7 @@ Circos::DataProcessState Circos::dataToLink(void) {
 //    it.peekNext();
     QList<QVariant> data = it.next();
     for (int i = 0; i < data.size(); ++i) {
-      if (data.at(i).toString().toUpper().compare("STRE") == 0) {
+      if (data.at(i).toString().toUpper().compare("STRE") == 0 || data.at(i).toString().toUpper().compare("COL") == 0) {
         stre_index = i;
       } else if (data.at(i).toString().toUpper().compare("LWD") == 0) {
         lwd_index = i;
@@ -215,13 +215,13 @@ Circos::DataProcessState Circos::dataToLink(void) {
       }
     }
     if (gene1_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open Link Error"),
                             tr("no \'GENE1\' item."),
                             QMessageBox::Ok);
       return DataProcessState::Error;
     } else if (gene2_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open Link Error"),
                             tr("no \'GENE2\' item."),
                             QMessageBox::Ok);
@@ -311,19 +311,19 @@ Circos::DataProcessState Circos::dataToTrackArrow(void) {
       else if (str == "Direction") { direction_index = i; }
     }
     if (start_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open TrackArrow Error"),
                             tr("no \'geneStart\' item."),
                             QMessageBox::Ok);
       return DataProcessState::Error;
     } else if (end_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open TrackArrow Error"),
                             tr("no \'geneEnd\' item."),
                             QMessageBox::Ok);
       return DataProcessState::Error;
     } else if (name_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open TrackArrow Error"),
                             tr("no \'Gene name\' item."),
                             QMessageBox::Ok);
