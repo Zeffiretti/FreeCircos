@@ -464,10 +464,10 @@ void FreeCircos::onButtonClicked(bool) {
                                           QColorDialog::ShowAlphaChannel);
     if (color.isValid()) {
       QString style = QString("background-color: rgba(%1, %2, %3, %4)")
-        .arg(color.red())
-        .arg(color.green())
-        .arg(color.blue())
-        .arg(color.alpha());
+                      .arg(color.red())
+                      .arg(color.green())
+                      .arg(color.blue())
+                      .arg(color.alpha());
       qDebug() << "Style is " << style;
       btn->setStyleSheet(style);
     }
@@ -576,20 +576,20 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
       qDebug() << "Index=" << index;
       Gene *b = circos->getGene(index);
       switch (b->getLabelState()) {
-        case CustomSlice::LabelInvisable:backbone_label_state_combobox->setCurrentText("Invisable");
-          break;
-        case CustomSlice::LabelSleep:backbone_label_state_combobox->setCurrentText("Sleep");
-          break;
-        case CustomSlice::LabelStand:backbone_label_state_combobox->setCurrentText("Stand");
-          break;
+      case CustomSlice::LabelInvisable: backbone_label_state_combobox->setCurrentText("Invisable");
+        break;
+      case CustomSlice::LabelSleep: backbone_label_state_combobox->setCurrentText("Sleep");
+        break;
+      case CustomSlice::LabelStand: backbone_label_state_combobox->setCurrentText("Stand");
+        break;
       }
       switch (b->getLabelPosition()) {
-        case CustomSlice::LabelInsideDonut:backbone_label_position_combobox->setCurrentText("Inside");
-          break;
-        case CustomSlice::LabelOnDonut:backbone_label_position_combobox->setCurrentText("On");
-          break;
-        case CustomSlice::LabelOutsideDonut:backbone_label_position_combobox->setCurrentText("Outside");
-          break;
+      case CustomSlice::LabelInsideDonut: backbone_label_position_combobox->setCurrentText("Inside");
+        break;
+      case CustomSlice::LabelOnDonut: backbone_label_position_combobox->setCurrentText("On");
+        break;
+      case CustomSlice::LabelOutsideDonut: backbone_label_position_combobox->setCurrentText("Outside");
+        break;
       }
       if (table_edit_mode == TableEditMode::EditGene) {
         color_dialog_->setColor(b->getFillColor());
@@ -599,20 +599,20 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
       Category *c = circos->getGene(index)->getCategory();
       if (!c->isEmpty()) {
         switch (c->getLabelState()) {
-          case CustomSlice::LabelInvisable:category_label_state_combobox->setCurrentText("Invisable");
-            break;
-          case CustomSlice::LabelSleep:category_label_state_combobox->setCurrentText("Sleep");
-            break;
-          case CustomSlice::LabelStand:category_label_state_combobox->setCurrentText("Stand");
-            break;
+        case CustomSlice::LabelInvisable: category_label_state_combobox->setCurrentText("Invisable");
+          break;
+        case CustomSlice::LabelSleep: category_label_state_combobox->setCurrentText("Sleep");
+          break;
+        case CustomSlice::LabelStand: category_label_state_combobox->setCurrentText("Stand");
+          break;
         }
         switch (c->getLabelPosition()) {
-          case CustomSlice::LabelInsideDonut:category_label_position_combobox->setCurrentText("Inside");
-            break;
-          case CustomSlice::LabelOnDonut:category_label_position_combobox->setCurrentText("On");
-            break;
-          case CustomSlice::LabelOutsideDonut:category_label_position_combobox->setCurrentText("Outside");
-            break;
+        case CustomSlice::LabelInsideDonut: category_label_position_combobox->setCurrentText("Inside");
+          break;
+        case CustomSlice::LabelOnDonut: category_label_position_combobox->setCurrentText("On");
+          break;
+        case CustomSlice::LabelOutsideDonut: category_label_position_combobox->setCurrentText("Outside");
+          break;
         }
         if (table_edit_mode == TableEditMode::EditCategory) {
           backbone_label_state_combobox->setEnabled(false);
@@ -662,6 +662,8 @@ void FreeCircos::onTableSelectedChanged(const QModelIndex &current, const QModel
       line_color_combobox->setEnabled(true);
       int index = link_model->item(sel_row, 0)->text().toInt() - 1;
       QString colfun = circos->getLinkColorFunStr(index);
+      auto l = circos->getLink(index);
+      link_lwd_lineedit->setText(QString::number(l->getLineWidth()));
       link_colfun_combobox->setCurrentText(colfun);
       if (colfun.compare("ramp") == 0) {
 //        link_stre_lineedit->setVisible(true);
@@ -692,8 +694,8 @@ void FreeCircos::onComboboxTextChanged(const QString &text) {
   QString prefix = cbb->property("prefix").toString();
   QString func = cbb->property("function").toString();
   if (prefix.compare("backbone") == 0
-    || prefix.compare("gene") == 0
-    || prefix.compare("category") == 0) {
+      || prefix.compare("gene") == 0
+      || prefix.compare("category") == 0) {
     int sel_row = backbone_table->selectionModel()->currentIndex().row();
     int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
     if (func == "backbone-label-state") {
@@ -864,16 +866,16 @@ void FreeCircos::onTableEditModeChanged(TableEditMode tem) {
 //      break;
 //  }
   switch (tem) {
-    case TableEditMode::EditGene:table_edit_mode = TableEditMode::EditGene;
-      color_dialog_->setGeneButtonEnabled(true);
-      backbone_table->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
+  case TableEditMode::EditGene: table_edit_mode = TableEditMode::EditGene;
+    color_dialog_->setGeneButtonEnabled(true);
+    backbone_table->setSelectionMode(QAbstractItemView::SelectionMode::SingleSelection);
 //        qDebug() << "Edit Gene.";
-      break;
-    default:table_edit_mode = TableEditMode::EditCategory;
-      backbone_table->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
-      color_dialog_->setGeneButtonEnabled(false);
+    break;
+  default: table_edit_mode = TableEditMode::EditCategory;
+    backbone_table->setSelectionMode(QAbstractItemView::SelectionMode::MultiSelection);
+    color_dialog_->setGeneButtonEnabled(false);
 //        qDebug() << "Edit Category.";
-      break;
+    break;
   }
 }
 
@@ -897,51 +899,51 @@ void FreeCircos::onCheckboxStateChanged(int state) {
   if (prefix.compare("link") == 0) {
     if (func.compare("link-directional") == 0) {
       switch (state) {
-        case Qt::CheckState::Checked:emit link_direction_combobox->currentTextChanged(link_direction_combobox->currentText());
-          link_direction_combobox->setEnabled(true);
-          break;
-        case Qt::CheckState::Unchecked:link_direction_combobox->setEnabled(false);
-          circos->setLinkArrowDirection(CustomLink::LinkDirection::NoArrow);
-          break;
-        default:link_direction_combobox->setEnabled(false);
-          circos->setLinkArrowDirection(CustomLink::LinkDirection::NoArrow);
-          break;
+      case Qt::CheckState::Checked: emit link_direction_combobox->currentTextChanged(link_direction_combobox->currentText());
+        link_direction_combobox->setEnabled(true);
+        break;
+      case Qt::CheckState::Unchecked: link_direction_combobox->setEnabled(false);
+        circos->setLinkArrowDirection(CustomLink::LinkDirection::NoArrow);
+        break;
+      default: link_direction_combobox->setEnabled(false);
+        circos->setLinkArrowDirection(CustomLink::LinkDirection::NoArrow);
+        break;
       }
     }
     if (func.compare("link-thermometer") == 0) {
       switch (state) {
-        case Qt::CheckState::Checked: {
+      case Qt::CheckState::Checked: {
 //          circos.setlinkc
-          link_thermometer_colormap_oncanvas_plot->setVisible(true);
-          link_fixcolor_checkbox->setCheckState(Qt::CheckState::Unchecked);
-          break;
-        }
-        case Qt::CheckState::Unchecked: {
-          link_thermometer_colormap_oncanvas_plot->setVisible(false);
-          link_fixcolor_checkbox->setCheckState(Qt::CheckState::Checked);
-          break;
-        }
-        default:break;
+        link_thermometer_colormap_oncanvas_plot->setVisible(true);
+        link_fixcolor_checkbox->setCheckState(Qt::CheckState::Unchecked);
+        break;
+      }
+      case Qt::CheckState::Unchecked: {
+        link_thermometer_colormap_oncanvas_plot->setVisible(false);
+        link_fixcolor_checkbox->setCheckState(Qt::CheckState::Checked);
+        break;
+      }
+      default: break;
       }
     }
     if (func.compare("fix-color") == 0) {
       switch (state) {
-        case Qt::CheckState::Checked: {
+      case Qt::CheckState::Checked: {
 //          link_thermometer_colormap_oncanvas_plot->setVisible(true);
-          link_apply_combobox->setEnabled(true);
-          link_apply2_combobox->setEnabled(true);
-          link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
-          link_fixcolor_button->setEnabled(true);
-          break;
-        }
-        case Qt::CheckState::Unchecked: {
-          link_apply_combobox->setEnabled(false);
-          link_apply2_combobox->setEnabled(true);
-          link_thermometer_checkbox->setCheckState(Qt::CheckState::Checked);
-          link_fixcolor_button->setEnabled(false);
-          break;
-        }
-        default:break;
+        link_apply_combobox->setEnabled(true);
+        link_apply2_combobox->setEnabled(true);
+        link_thermometer_checkbox->setCheckState(Qt::CheckState::Unchecked);
+        link_fixcolor_button->setEnabled(true);
+        break;
+      }
+      case Qt::CheckState::Unchecked: {
+        link_apply_combobox->setEnabled(false);
+        link_apply2_combobox->setEnabled(true);
+        link_thermometer_checkbox->setCheckState(Qt::CheckState::Checked);
+        link_fixcolor_button->setEnabled(false);
+        break;
+      }
+      default: break;
 //      link_fixcolor_button->setEnabled(state == Qt::CheckState::Checked);
 //      link_apply_combobox->setEnabled(state == Qt::CheckState::Checked);
       }
@@ -970,7 +972,7 @@ void FreeCircos::onLineEditTextChanged(const QString &text) {
   }
   if (prefix.compare("link") == 0) {
     if (func.compare("link-line-width") == 0) {
-      circos->setLinkLineWidth(text.toDouble());
+      circos->setLinkLineWidth(text.toDouble());//todo: change the whole setting to single setting
     }
     if (func.compare("link-line-color") == 0) {
       int row = link_table->currentIndex().row();
@@ -1043,18 +1045,18 @@ void FreeCircos::onBackboneColorSelected(QColor c) {
   int sel_row = backbone_table->selectionModel()->currentIndex().row();
   int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
   switch (table_edit_mode) {
-    case TableEditMode::EditCategory: {
-      QMessageBox::critical(this,
-                            tr("Set Color Error"),
-                            tr("You are in wrong mode."),
-                            QMessageBox::Ok);
-      break;
-    }
-    case TableEditMode::EditGene:
-    default: {
-      circos->getGene(index)->setFillColor(c);
-      break;
-    }
+  case TableEditMode::EditCategory: {
+    QMessageBox::critical(this,
+                          tr("Set Color Error"),
+                          tr("You are in wrong mode."),
+                          QMessageBox::Ok);
+    break;
+  }
+  case TableEditMode::EditGene:
+  default: {
+    circos->getGene(index)->setFillColor(c);
+    break;
+  }
   }
 }
 
@@ -1063,19 +1065,19 @@ void FreeCircos::onCategoryColorSelected(QColor c) {
   int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
   Category *cat = circos->getGene(index)->getCategory();
   switch (table_edit_mode) {
-    case TableEditMode::EditCategory: {
-      cat->setFillColor(c);
-      break;
+  case TableEditMode::EditCategory: {
+    cat->setFillColor(c);
+    break;
+  }
+  case TableEditMode::EditGene:
+  default: {
+    QList<QString> genes = cat->getGenes();
+    QString g;
+    foreach (g, genes) {
+      circos->findGene(g)->setFillColor(c);
     }
-    case TableEditMode::EditGene:
-    default: {
-      QList<QString> genes = cat->getGenes();
-      QString g;
-        foreach(g, genes) {
-          circos->findGene(g)->setFillColor(c);
-        }
-      break;
-    }
+    break;
+  }
   }
 }
 
@@ -1084,15 +1086,19 @@ void FreeCircos::onAllColorSelected(QColor c) {
   int index = backbone_model->item(sel_row, 0)->text().toInt() - 1;
   Category *cat = circos->getGene(index)->getCategory();
   switch (table_edit_mode) {
-    case TableEditMode::EditCategory: {
-      for (int i = 0; i < circos->getCategoryNum(); ++i) { circos->getCategory(i)->setFillColor(c); }
-      break;
+  case TableEditMode::EditCategory: {
+    for (int i = 0; i < circos->getCategoryNum(); ++i) {
+      circos->getCategory(i)->setFillColor(c);
     }
-    case TableEditMode::EditGene:
-    default: {
-      for (int i = 0; i < circos->getGeneNum(); ++i) { circos->getGene(i)->setFillColor(c); }
-      break;
+    break;
+  }
+  case TableEditMode::EditGene:
+  default: {
+    for (int i = 0; i < circos->getGeneNum(); ++i) {
+      circos->getGene(i)->setFillColor(c);
     }
+    break;
+  }
   }
 }
 
@@ -1129,18 +1135,18 @@ void FreeCircos::onTrackColorChanged(QColor c) {
 
 void FreeCircos::onTabwidgetChanged(int index) {
   switch (index) {
-    case 0: {
-      break;
-    }
-    case 1: {
-      initLKTableModel(link_model, circos, backbone_model);
-      break;
-    }
-    case 2: {
-      initArrowTableModel(arrow_model, circos, backbone_model);
-      break;
-    }
-    default:break;
+  case 0: {
+    break;
+  }
+  case 1: {
+    initLKTableModel(link_model, circos, backbone_model);
+    break;
+  }
+  case 2: {
+    initArrowTableModel(arrow_model, circos, backbone_model);
+    break;
+  }
+  default: break;
   }
   qDebug() << "table" << index << "selected";
 }
