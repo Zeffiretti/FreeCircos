@@ -6,12 +6,9 @@ set(${PROJECT_NAME}_VERSION_MINOR 6)
 set(${PROJECT_NAME}_VERSION_PATCH 2)
 set(PROJECT_VERSION ${${PROJECT_NAME}_VERSION_MAJOR}_${${PROJECT_NAME}_VERSION_MINOR})
 message("Projecte Infomation: [${PROJECT_NAME}_${PROJECT_VERSION}]")
-if (WIN32)
-  ADD_DEFINITIONS(-DWINDOWS_H_)
-endif ()
-if (UNIX)
-  ADD_DEFINITIONS(-DUNIX_H_)
-endif ()
+# only win platform si supported
+ADD_DEFINITIONS(-DWINDOWS_H_)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -27,6 +24,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 add_compile_definitions(QT_DEPRECATED_WARNINGS)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/colorwidgets)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/lib/OpenXLSX)
 
 if (NOT DEFINED ENV{Qt5_Dir})
   message(FATAL_ERROR "not defined environment variable: Qt5_Dir")
@@ -48,14 +46,19 @@ endif ()
 #set(Qt5_DIR "D:/Apps/Qt5129/5.12.9/mingw73_64/lib/cmake")
 message("CMAKE_PREFIX_PATH at ${CMAKE_PREFIX_PATH}")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
+include_directories(${PROJECT_BINARY_DIR}/${PROJECT}_autogen/include*)
+message("${PROJECT_BINARY_DIR}/${PROJECT_NAME}_autogen/include_Debug")
 find_package(Qt5 COMPONENTS
   Core
   Gui
   AxContainer
   Widgets
   PrintSupport REQUIRED)
-# who wrote those foolish code? 
+
+#list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/lib/OpenXLSX")
+#find_package(OpenXLSX REQUIRED)
+
+# who wrote those foolish code?
 if (${Qt5AxContainer_FOUND})
   message("Qt5AxContainer Found Successfully.")
   add_definitions(${Qt5AxContainer_DEFINITIONS})
@@ -109,6 +112,17 @@ else ()
   message(FATAL_ERROR "No QtColorWidgets")
 endif ()
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+# file(GLOB_RECURSE ADD_FILES addition/*.cpp)
+# file(GLOB_RECURSE CIRCOS_FILES circos/*.cpp)
+# file(GLOB_RECURSE COMPONENT_FILES component/*.cpp)
+# file(GLOB_RECURSE EXT_FILES extension/*.cpp)
+# file(GLOB_RECURSE FILEPROS_FILES fileprocess/*.cpp)
+# file(GLOB_RECURSE ICON_FILE icon.rc)
+# file(GLOB_RECURSE PAINT_FILES paint/*.cpp)
+# file(GLOB_RECURSE RESOURCE_FILES resource/*)
+# file(GLOB_RECURSE ROOT_FILES ./*)
+# file(GLOB_RECURSE TOOL_FILES tool/*.cpp)
+# file(GLOB_RECURSE THREAD_FILES thread/*.cpp)
 set(ADD_FILES
   addition/tablemovedialog.cpp)
 set(CIRCOS_FILES
@@ -205,7 +219,8 @@ target_link_libraries(${PROJECT_NAME}
   Qt5::Widgets)
 link_directories(lib/colorwidgets)
 
-target_link_libraries(${PROJECT_NAME} QtColorWidgets)
+target_link_libraries(${PROJECT_NAME} QtColorWidgets OpenXLSX::OpenXLSX)
+message("OpenXLSX include directory:${OpenXLSX_INCLUDE_DIRS}")
 add_dependencies(${PROJECT_NAME} QtColorWidgets)
 message("Build Type: ${CMAKE_BUILD_TYPE}")
 if (CMAKE_BUILD_TYPE MATCHES Release)

@@ -28,7 +28,7 @@ void CustomLinkCanvas::drawLinks(QCustomPlot *canvas) {
     }
     link->setLineStyle(line_style);
     link->setLinkDirection(arrow_direction);
-    link->setLineWidth(line_width);
+    // link->setLineWidth(line_width);
     link->setLinkLayer(link_layer);
     link->drawLink(canvas);
   }

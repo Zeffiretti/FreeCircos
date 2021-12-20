@@ -62,10 +62,15 @@ Circos::DataProcessState Circos::dataToBackBone(void) {
   int length_index = -1;
   if (!m_datas.empty()) {
     for (int i = 0; i < m_datas.at(0).size(); ++i) {
-      if (m_datas.at(0).at(i).toString() == "Gene name") { name_index = i; }
-      else if (m_datas.at(0).at(i).toString() == "from") { start_index = i; }
-      else if (m_datas.at(0).at(i).toString() == "to") { end_index = i; }
-      else if (m_datas.at(0).at(i).toString() == "length") { length_index = i; }
+      if (m_datas.at(0).at(i).toString() == "Gene name") {
+        name_index = i;
+      } else if (m_datas.at(0).at(i).toString() == "from") {
+        start_index = i;
+      } else if (m_datas.at(0).at(i).toString() == "to") {
+        end_index = i;
+      } else if (m_datas.at(0).at(i).toString() == "length") {
+        length_index = i;
+      }
     }
     if (name_index < 0) {
 //      qDebug() << "Open Backbone Error: No 'Gene name'!!!";
@@ -90,7 +95,7 @@ Circos::DataProcessState Circos::dataToBackBone(void) {
 ////        err_dialog->setParent(widget);
 //        err_dialog->setWindowTitle(tr("Open Backbone Error"));
 //        err_dialog->showMessage(tr("'from' exists but No 'to'!!!"));
-        QMessageBox::critical(widget,
+        QMessageBox::critical(nullptr,
                               tr("Open Backbone Error"),
                               tr("'from' exists but No 'to'!!!"),
                               QMessageBox::Ok);
@@ -141,13 +146,13 @@ Circos::DataProcessState Circos::dataToCategory(void) {
       }
     }
     if (name_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open Category Error"),
                             tr("no \'Gene name\' item."),
                             QMessageBox::Ok);
       return DataProcessState::Error;
     } else if (sys_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open Category Error"),
                             tr("no \'System\' item."),
                             QMessageBox::Ok);
@@ -196,7 +201,7 @@ Circos::DataProcessState Circos::dataToLink(void) {
 //    it.peekNext();
     QList<QVariant> data = it.next();
     for (int i = 0; i < data.size(); ++i) {
-      if (data.at(i).toString().toUpper().compare("STRE") == 0) {
+      if (data.at(i).toString().toUpper().compare("STRE") == 0 || data.at(i).toString().toUpper().compare("COL") == 0) {
         stre_index = i;
       } else if (data.at(i).toString().toUpper().compare("LWD") == 0) {
         lwd_index = i;
@@ -215,13 +220,13 @@ Circos::DataProcessState Circos::dataToLink(void) {
       }
     }
     if (gene1_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open Link Error"),
                             tr("no \'GENE1\' item."),
                             QMessageBox::Ok);
       return DataProcessState::Error;
     } else if (gene2_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open Link Error"),
                             tr("no \'GENE2\' item."),
                             QMessageBox::Ok);
@@ -305,25 +310,30 @@ Circos::DataProcessState Circos::dataToTrackArrow(void) {
     int direction_index = -1;
     for (int i = 0; i < m_datas[0].size(); ++i) {
       QString str = m_datas[0][i].toString();
-      if (str == "geneStart") { start_index = i; }
-      else if (str == "geneEnd") { end_index = i; }
-      else if (str == "Gene name") { name_index = i; }
-      else if (str == "Direction") { direction_index = i; }
+      if (str == "geneStart") {
+        start_index = i;
+      } else if (str == "geneEnd") {
+        end_index = i;
+      } else if (str == "Gene name") {
+        name_index = i;
+      } else if (str == "Direction") {
+        direction_index = i;
+      }
     }
     if (start_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open TrackArrow Error"),
                             tr("no \'geneStart\' item."),
                             QMessageBox::Ok);
       return DataProcessState::Error;
     } else if (end_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open TrackArrow Error"),
                             tr("no \'geneEnd\' item."),
                             QMessageBox::Ok);
       return DataProcessState::Error;
     } else if (name_index < 0) {
-      QMessageBox::critical(widget,
+      QMessageBox::critical(nullptr,
                             tr("Open TrackArrow Error"),
                             tr("no \'Gene name\' item."),
                             QMessageBox::Ok);
@@ -336,32 +346,32 @@ Circos::DataProcessState Circos::dataToTrackArrow(void) {
       track_arrow_type = TrackArrow::Type::Arrow;
     }
     m_datas.removeAt(0);
-      foreach (data, m_datas) {
-        TrackArrow *ta = new TrackArrow;
-        ta->setTypes(track_arrow_type);
-        if (direction_index < 0) {
+    foreach (data, m_datas) {
+      TrackArrow *ta = new TrackArrow;
+      ta->setTypes(track_arrow_type);
+      if (direction_index < 0) {
 //      qDebug("this is tile file.");
 //          ta->setDirections(TrackArrow::Direction::None);
 //          ta->setTypes(TrackArrow::Type::Tile);
 //          tracks_at.append(track_arrow_type);
-        } else {
+      } else {
 //          ta->setTypes(TrackArrow::Type::Arrow);
-          if (data.at(direction_index).toString().compare("+") == 0) {
-            ta->setDirections(TrackArrow::Direction::ClockWise);
-          } else {
-            ta->setDirections(TrackArrow::Direction::AntiClockWise);
-          }
+        if (data.at(direction_index).toString().compare("+") == 0) {
+          ta->setDirections(TrackArrow::Direction::ClockWise);
+        } else {
+          ta->setDirections(TrackArrow::Direction::AntiClockWise);
         }
-        ta->setName(data.at(name_index).toString());
-        ta->setEnd(data.at(end_index).toInt());
-        ta->setStart(data.at(start_index).toInt());
-        track_arrow.append(ta);
-        track_colors.append(new QColor(track_color));
-        tracks_hw.append(track_head_width);
-        tracks_tw.append(track_tail_width);
-        tracks_hr.append(track_head_ratio);
-        tracks_at.append(track_arrow_type);
       }
+      ta->setName(data.at(name_index).toString());
+      ta->setEnd(data.at(end_index).toInt());
+      ta->setStart(data.at(start_index).toInt());
+      track_arrow.append(ta);
+      track_colors.append(new QColor(track_color));
+      tracks_hw.append(track_head_width);
+      tracks_tw.append(track_tail_width);
+      tracks_hr.append(track_head_ratio);
+      tracks_at.append(track_arrow_type);
+    }
   }
   return DataProcessState::Success;
 }
@@ -399,6 +409,7 @@ void Circos::buildBackBoneSequence(QStandardItemModel *model) {
 
 void Circos::buildBackBoneDonut(CustomDonut *donut) {
   donut->clear();
+  donut->setRotate(CustomTool::angle2radius(rotate));
   QListIterator<Gene *> it(back_bone);
   while (it.hasNext()) {
     Gene *g = it.next();
@@ -471,6 +482,7 @@ void Circos::buildCategorySequence(QStandardItemModel *model) {
 
 void Circos::buildCategoryDonut(CustomDonut *donut) {
   donut->clear();
+  donut->setRotate(CustomTool::angle2radius(rotate));
 //  donut->setSize(category_inner_raidus, category_outer_radius);
   for (int i = 0; i < category_sequence.size(); ++i) {
     int index = category_sequence.at(i);
@@ -551,43 +563,7 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
         } else if (end_mul) {
           lc = CustomLink::LinkClass::End2Block;
         }
-//      Link::ColorFuns cf = l->getColorFun();
-//      if(cf.testFlag(Link::ColorFun::Ramp)) {
-//      } else if(cf.testFlag(Link::ColorFun::Rainbow)) {
-//      } else {
-//                  qreal stre_code = circos->getLinkStre(index);
-//                  QColor c = QColor(link_gradient->color(stre_code,
-//                                                         QCPRange(circos->getLinkStreMin(),
-//                                                             circos->getLinkStreMax())));
-//                  emit setLinkColor(index, c);
-//          l->set
-//      }
-
-
-//        Link::ColorFuns cf = l->getColorFun();
-//        if (cf.testFlag(Link::ColorFun::Ramp)) {
-//          qreal stre_code = l->getStreCode();
-//          QColor c = QColor(link_gradient->color(stre_code,
-//                                                 QCPRange(getLinkStreMin(), getLinkStreMax())));
-//          l->setColor(c);
-//        } else if (cf.testFlag(Link::ColorFun::Rainbow)) {
-//          switch (qrand() % 5) {
-//            case 0:l->setColor(Qt::blue);
-//              break;
-//            case 1:l->setColor(Qt::green);
-//              break;
-//            case 2:l->setColor(Qt::yellow);
-//              break;
-//            case 3:l->setColor(Qt::red);
-//              break;
-//            case 4:l->setColor(Qt::darkRed);
-//              break;
-//            default:break;
-//          }
-//        } else {
-//          l->setColor(Qt::black);
-//        }
-        custom_link->setLineWidth(1);
+        // custom_link->setLineWidth(1);
         custom_link->setLinkClass(lc);
         custom_link->setHoleSize(getLKHole());
         custom_link->setPieSize(getLKPie());
@@ -599,6 +575,7 @@ void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
         custom_link->setDSA(dest_start_angle);
         custom_link->setSEA(source_end_angle);
         custom_link->setDEA(dest_end_angle);
+        custom_link->setLineWidth(l->getLineWidth());
         custom_links->addCustomLink(custom_link);
       }
     }
@@ -609,67 +586,67 @@ void Circos::buildCustomTrack(CustomTrackArrow *track) {
   track->clearArrow();
   track->setType(CustomTrackArrow::Type::Arrow);
   int index = 0;
-    foreach(TrackArrow *it, track_arrow) {
-      CustomTrack *tr = new CustomTrack;
-      Gene *g = findGene(it->getName());
-      if (g->getOnCanvas()) {
+  foreach (TrackArrow *it, track_arrow) {
+    CustomTrack *tr = new CustomTrack;
+    Gene *g = findGene(it->getName());
+    if (g->getOnCanvas()) {
 //      track->addArrow(tr);
-        int int_min = g->getStart();
-        int int_max = g->getEnd();
-        qreal real_min = g->getStartAngle();
-        qreal real_max = g->getEndAngle();
-        qreal start = CustomTool::mapInt2Real(int_min, int_max,
-                                              real_min, real_max,
-                                              it->getStart());
-        qreal end = CustomTool::mapInt2Real(int_min, int_max,
+      int int_min = g->getStart();
+      int int_max = g->getEnd();
+      qreal real_min = g->getStartAngle();
+      qreal real_max = g->getEndAngle();
+      qreal start = CustomTool::mapInt2Real(int_min, int_max,
                                             real_min, real_max,
-                                            it->getEnd());
+                                            it->getStart());
+      qreal end = CustomTool::mapInt2Real(int_min, int_max,
+                                          real_min, real_max,
+                                          it->getEnd());
 //      qDebug("int_min:%d, int_max:%d, real_min:%.3f, real_max:%.3f", int_min, int_max, real_min, real_max);
 //      qDebug("values:%d, valuee:%d, start:%.4f, end:%.4f", it->getStart(), it->getEnd(), start, end);
 //      tr->setStart(start);
 //      tr->setEnd(end);
 //        if (it->getTypes().testFlag(TrackArrow::Type::Arrow)) {
-        if (tracks_at[index].testFlag(TrackArrow::Type::Arrow)) {
+      if (tracks_at[index].testFlag(TrackArrow::Type::Arrow)) {
 //          track->setType(CustomTrackArrow::Type::Arrow);
 //          qreal boud = CustomTool::mapInt2Real(100, 0, start, end, 100 * it->getHeadRatio());
-          qreal boud = CustomTool::mapInt2Real(100, 0, start, end, 100 * tracks_hr[index]);
-          if (it->getDirections().testFlag(TrackArrow::Direction::ClockWise)) {
-            tr->setDirection(CustomTrack::ArrowDirection::ClockWise);
-            tr->setStart(qMin(start, end));
-            tr->setEnd(qMax(start, end));
-          } else {
-//            boud = CustomTool::mapInt2Real(100, 0, end, start, 100 * it->getHeadRatio());
-            boud = CustomTool::mapInt2Real(100, 0, end, start, 100 * tracks_hr[index]);
-            tr->setDirection(CustomTrack::ArrowDirection::AntiClockWise);
-            tr->setStart(qMax(start, end));
-            tr->setEnd(qMin(start, end));
-          }
-          tr->setBoundary(boud);
-          tr->setType(CustomTrack::Type::Arrow);
-        } else {
-          tr->setType(CustomTrack::Type::Tile);
-//          track->setType(CustomTrackArrow::Type::Tile);
-
+        qreal boud = CustomTool::mapInt2Real(100, 0, start, end, 100 * tracks_hr[index]);
+        if (it->getDirections().testFlag(TrackArrow::Direction::ClockWise)) {
+          tr->setDirection(CustomTrack::ArrowDirection::ClockWise);
           tr->setStart(qMin(start, end));
           tr->setEnd(qMax(start, end));
+        } else {
+//            boud = CustomTool::mapInt2Real(100, 0, end, start, 100 * it->getHeadRatio());
+          boud = CustomTool::mapInt2Real(100, 0, end, start, 100 * tracks_hr[index]);
+          tr->setDirection(CustomTrack::ArrowDirection::AntiClockWise);
+          tr->setStart(qMax(start, end));
+          tr->setEnd(qMin(start, end));
+        }
+        tr->setBoundary(boud);
+        tr->setType(CustomTrack::Type::Arrow);
+      } else {
+        tr->setType(CustomTrack::Type::Tile);
+//          track->setType(CustomTrackArrow::Type::Tile);
+
+        tr->setStart(qMin(start, end));
+        tr->setEnd(qMax(start, end));
 
 //        qDebug("this is tile");
-        }
-        qreal margin = 0.5 * (1.0 - tracks_hw.at(index));
-        qreal range = getTAPie() - getTAHole();
-        qreal offset = margin * range;
-        tr->setHoleSize(getTAHole() + offset);
-        tr->setPieSize(getTAPie() - offset);
-        margin = 0.5 * (1.0 - tracks_tw.at(index));
-        range = getTAPie() - getTAHole();
-        offset = margin * range;
-        tr->setInnerTail(getTAHole() + offset);
-        tr->setOuterTail(getTAPie() - offset);
-        tr->setColor(*(track_colors.at(index)));
-        track->addArrow(tr);
       }
-      index++;
+      qreal margin = 0.5 * (1.0 - tracks_hw.at(index));
+      qreal range = getTAPie() - getTAHole();
+      qreal offset = margin * range;
+      tr->setHoleSize(getTAHole() + offset);
+      tr->setPieSize(getTAPie() - offset);
+      margin = 0.5 * (1.0 - tracks_tw.at(index));
+      range = getTAPie() - getTAHole();
+      offset = margin * range;
+      tr->setInnerTail(getTAHole() + offset);
+      tr->setOuterTail(getTAPie() - offset);
+      tr->setColor(*(track_colors.at(index)));
+      track->addArrow(tr);
     }
+    index++;
+  }
 }
 
 void Circos::reset() {
@@ -701,7 +678,9 @@ Category *Circos::findCategory(const QString name) {
   return new Category;
 }
 
-Category *Circos::getCategory(int index) { return category.at(index); }
+Category *Circos::getCategory(int index) {
+  return category.at(index);
+}
 
 int Circos::takeGeneAt(int index) {
   return back_bone_sequence.takeAt(index);
@@ -737,7 +716,9 @@ void Circos::clearCategorySequence(void) {
   category_sequence.clear();
 }
 
-int Circos::getCategoryNum() { return category.size(); }
+int Circos::getCategoryNum() {
+  return category.size();
+}
 
 void Circos::setCategoryEnable(bool b) {
   category_enabled = b;
@@ -765,15 +746,17 @@ QString Circos::getLinkColorFunStr(int index) {
 
 void Circos::setLinkColorFunc(int index, Link::ColorFuns cf, const QColor &c) {
   if (cf.testFlag(Link::ColorFun::Ramp)) {
-    for (auto &l:links) {
+    for (auto &l : links) {
       qreal stre_code = l->getStreCode();
       QColor color = QColor(link_gradient->color(stre_code,
-                                                 QCPRange(getLinkStreMin(), getLinkStreMax())));
+                            QCPRange(getLinkStreMin(), getLinkStreMax())));
       l->setColor(color);
     }
     qDebug() << "This is Link::ColorFun::Ramp";
   } else if (cf.testFlag(Link::ColorFun::All)) {
-    for (auto &l:links) { l->setColor(c); }
+    for (auto &l : links) {
+      l->setColor(c);
+    }
     qDebug() << "This is Link::ColorFun::All";
   } else if (cf.testFlag(Link::ColorFun::Single)) {
     getLink(index)->setColor(c);
@@ -784,13 +767,17 @@ void Circos::setLinkColorFunc(int index, Link::ColorFuns cf, const QColor &c) {
     if (cf.testFlag(Link::ColorFun::Start)) {
       Gene *g = findGene(l->getSGN());
       auto ls = g->getStartLinks();
-      for (auto &l_i:ls) { l_i->setColor(c); }
+      for (auto &l_i : ls) {
+        l_i->setColor(c);
+      }
       qDebug() << "This is Link::ColorFun::Start";
     }
     if (cf.testFlag(Link::ColorFun::End)) {
       Gene *g = findGene(l->getDGN());
       auto ls = g->getEndLinks();
-      for (auto &l_i:ls) { l_i->setColor(c); }
+      for (auto &l_i : ls) {
+        l_i->setColor(c);
+      }
       qDebug() << "This is Link::ColorFun::End";
     }
   } else if (cf.testFlag(Link::ColorFun::Category)) {
@@ -800,10 +787,12 @@ void Circos::setLinkColorFunc(int index, Link::ColorFuns cf, const QColor &c) {
       Gene *g1 = findGene(l->getSGN());
       Category *cat = g1->getCategory();
       auto gs_n = cat->getGenes();
-      for (auto &g_n:gs_n) {
+      for (auto &g_n : gs_n) {
         Gene *g = findGene(g_n);
         auto ls = g->getStartLinks();
-        for (auto &l_i:ls) { l_i->setColor(c); }
+        for (auto &l_i : ls) {
+          l_i->setColor(c);
+        }
       }
       qDebug() << "This is Link::ColorFun::Start";
     }
@@ -813,10 +802,12 @@ void Circos::setLinkColorFunc(int index, Link::ColorFuns cf, const QColor &c) {
       Category *cat = g1->getCategory();
       qDebug() << "end at category " << cat->getName();
       auto gs_n = cat->getGenes();
-      for (auto &g_n:gs_n) {
+      for (auto &g_n : gs_n) {
         Gene *g = findGene(g_n);
         auto ls = g->getEndLinks();
-        for (auto &l_i:ls) { l_i->setColor(c); }
+        for (auto &l_i : ls) {
+          l_i->setColor(c);
+        }
       }
       qDebug() << "This is Link::ColorFun::End";
     }
@@ -827,13 +818,17 @@ void Circos::setLinkColorFunc(int index, Link::ColorFuns cf) {
   getLink(index)->setColorFun(cf);
 }
 
-void Circos::setLinkColorFunc(Link::ColorFuns cf) { color_funs_ = cf; }
+void Circos::setLinkColorFunc(Link::ColorFuns cf) {
+  color_funs_ = cf;
+}
 
 Link::ColorFuns Circos::getLinkColorFunc(int index) {
   return getLink(index)->getColorFun();
 }
 
-Link::ColorFuns Circos::getLinkColorFunc(void) { return color_funs_; }
+Link::ColorFuns Circos::getLinkColorFunc(void) {
+  return color_funs_;
+}
 
 void Circos::setLinkColorName(int index, const QString &name) {
   getLink(index)->setColorName(name);
@@ -899,6 +894,16 @@ qreal Circos::getLinkStreMin(void) const {
 
 QCPRange *Circos::getLinkStreRange(void) {
   return new QCPRange(link_stre_min, link_stre_max);
+}
+
+std::vector<qreal> Circos::generateLinkTicks(void) {
+  std::vector<qreal> ticks(5);
+  qreal range = link_stre_max - link_stre_min;
+  qreal interval = range / 4;
+  for (int i = 0; i < 5; ++i) {
+    ticks[i] = i * interval + link_stre_min;
+  }
+  return ticks;
 }
 
 void Circos::setLinkGradient(QCPColorGradient *g) {

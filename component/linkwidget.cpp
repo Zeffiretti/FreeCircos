@@ -399,16 +399,22 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
                        g_scale * thermometer_pos_y,
                        g_scale * thermometer_width,
                        g_scale * thermometer_height);
+  parent1->xAxis->setSubTickLength(1, 0);
+  auto ticker = parent1->xAxis->ticker();
+  ticker->setTickCount(10 - 1);
+  ticker->setTickStepStrategy(QCPAxisTicker::TickStepStrategy::tssReadability);
+//  ticker->setTickOrigin(0.0);
   parent1->yAxis->setVisible(false);
-  link_thermometer_onpanel_color_map->data()->setSize(40, 1);
-  link_thermometer_onpanel_color_map->data()->setRange(QCPRange(10, 50), QCPRange(0, 1));
-  link_thermometer_oncanvas_color_map->data()->setSize(1, 40);
-  link_thermometer_oncanvas_color_map->data()->setRange(QCPRange(0, 1), QCPRange(10, 50));
-  for (int i = 0; i < 40; ++i) {
-    qreal value = CustomTool::mapInt2Real(0, 39, 10, 50, i);
-    link_thermometer_onpanel_color_map->data()->setData(value, 0, i);
-    link_thermometer_oncanvas_color_map->data()->setData(0, value, i);
-  }
+  setLKColorRange(QCPRange(10, 50));
+//  link_thermometer_onpanel_color_map->data()->setSize(link_thermometer_size, 1);
+//  link_thermometer_onpanel_color_map->data()->setRange(QCPRange(10, 5000), QCPRange(0, 1));
+//  link_thermometer_oncanvas_color_map->data()->setSize(1, link_thermometer_size);
+//  link_thermometer_oncanvas_color_map->data()->setRange(QCPRange(0, 1), QCPRange(10, 5000));
+//  for (int i = 0; i < link_thermometer_size; ++i) {
+//    qreal value = CustomTool::mapInt2Real(0, link_thermometer_size - 1, 10, 5000, i);
+//    link_thermometer_onpanel_color_map->data()->setData(value, 0, i);
+//    link_thermometer_oncanvas_color_map->data()->setData(0, value, i);
+//  }
 //  parent2->setParent(canvas);
   parent2->xAxis->setVisible(false);
 //    parent2->yAxis->setTickLength(5);
@@ -486,6 +492,29 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
           circos, &Circos::setGradientColor);
   connect(link_cm_button5, &ExtGradientButton::colorChanged,
           circos, &Circos::setGradientColor);
+
+//  link_thermometer_onpanel_color_map->data()->setSize(link_thermometer_size, 1);
+//  link_thermometer_onpanel_color_map->data()->setRange(QCPRange(10, 50), QCPRange(0, 1));
+//  link_thermometer_oncanvas_color_map->data()->setSize(1, link_thermometer_size);
+//  link_thermometer_oncanvas_color_map->data()->setRange(QCPRange(0, 1), QCPRange(10, 50));
+////  for (int i = 0; i < link_thermometer_size; ++i) {
+////    qreal value = CustomTool::mapInt2Real(0, link_thermometer_size - 1, 10, 50, i);
+////    link_thermometer_onpanel_color_map->data()->setData(value, 0, i);
+////    link_thermometer_oncanvas_color_map->data()->setData(0, value, i);
+////  }
+//  link_thermometer_onpanel_color_map->keyAxis()->setRange(QCPRange(10, 50));
+//
+//  link_thermometer_onpanel_color_map->data()->setSize(link_thermometer_size, 1);
+//  link_thermometer_onpanel_color_map->data()->setRange(QCPRange(1000, 5000), QCPRange(0, 1));
+//  link_thermometer_oncanvas_color_map->data()->setSize(1, link_thermometer_size);
+//  link_thermometer_oncanvas_color_map->data()->setRange(QCPRange(0, 1), QCPRange(1000, 5000));
+////  for (int i = 0; i < link_thermometer_size; ++i) {
+////    qreal value = CustomTool::mapInt2Real(0, link_thermometer_size - 1, 10, 50, i);
+////    link_thermometer_onpanel_color_map->data()->setData(value, 0, i);
+////    link_thermometer_oncanvas_color_map->data()->setData(0, value, i);
+////  }
+//  link_thermometer_onpanel_color_map->keyAxis()->setRange(QCPRange(1000, 5000));
+//  link_thermometer_onpanel_color_map->rescaleDataRange(true);
 }
 
 void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c, QStandardItemModel *pmodel) {
@@ -534,4 +563,20 @@ void FreeCircos::initLKTableModel(QStandardItemModel *model, Circos *c, QStandar
 //          this, &FreeCircos::onExtStandardItemStateSet);
 
   }
+  setLKColorRange(*(c->getLinkStreRange()));
+}
+
+void FreeCircos::setLKColorRange(QCPRange range) {
+  qDebug() << "link color range:" << range;
+  link_thermometer_onpanel_color_map->data()->setSize(link_thermometer_size, 1);
+  link_thermometer_onpanel_color_map->data()->setRange(range, QCPRange(0, 1));
+  link_thermometer_oncanvas_color_map->data()->setSize(1, link_thermometer_size);
+  link_thermometer_oncanvas_color_map->data()->setRange(QCPRange(0, 1), range);
+  for (int i = 0; i < link_thermometer_size; ++i) {
+    qreal value = CustomTool::mapInt2Real(0, link_thermometer_size - 1, range.lower, range.upper, i);
+    link_thermometer_onpanel_color_map->data()->setData(value, 0, i);
+    link_thermometer_oncanvas_color_map->data()->setData(0, value, i);
+  }
+  link_thermometer_onpanel_color_map->keyAxis()->setRange(range);
+  link_thermometer_oncanvas_color_map->keyAxis()->setRange(range);
 }

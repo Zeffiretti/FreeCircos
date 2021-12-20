@@ -60,7 +60,7 @@ class FreeCircos;
 QT_END_NAMESPACE
 //class TableMoveDialog;
 class FreeCircos : public QMainWindow {
- Q_OBJECT
+  Q_OBJECT
 
  public:
   FreeCircos(QWidget *parent = nullptr);
@@ -103,6 +103,7 @@ class FreeCircos : public QMainWindow {
   void initLKConfigWidget(void);
   void initLKColorScale(QCustomPlot *parent1 = nullptr, QCustomPlot *parent2 = nullptr);
   void initLKTableModel(QStandardItemModel *model, Circos *c, QStandardItemModel *pmodel);
+  void setLKColorRange(QCPRange range);
 
   void initArrowWidget(QTabWidget *parent);
   void initArrowTable(void);

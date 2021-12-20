@@ -8,6 +8,8 @@ using namespace std;
 class CustomTool {
  public:
   CustomTool();
+  static qreal radius2angle(qreal radius);
+  static qreal angle2radius(qreal angle);
   static qreal mapInt2Real(int i_min, int i_max, qreal r_min, qreal r_max, int value);
   static int mapInt2Int(int i_min, int i_max, int r_min, int r_max, int value);
   static qreal normalizeAngle(qreal angle);

@@ -11,6 +11,7 @@ void FreeCircos::initArrowWidget(QTabWidget *parent) {
   initArrowConfigWidget();
   connectArrowSignalSlot();
   parent->addTab(arrow_widget, tr("Arrow"));
+  arrow_widget->setEnabled(false);
 }
 
 void FreeCircos::initArrowTable(void) {
@@ -72,6 +73,7 @@ void FreeCircos::initArrowTableModel(QStandardItemModel *model, Circos *c, QStan
       }
     }
   model->setHorizontalHeaderLabels(arrow_header_list);
+//  arrow_widget->setEnabled(true);
 }
 
 void FreeCircos::initArrowConfigWidget(void) {

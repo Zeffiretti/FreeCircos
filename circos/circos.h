@@ -100,6 +100,7 @@ class Circos : public QObject {
   qreal getLinkStreMin(void) const;
   qreal getLinkStreMax(void) const;
   QCPRange *getLinkStreRange(void);
+  std::vector<qreal> generateLinkTicks(void);
 
   void setLinkGradient(QCPColorGradient *g);
   QCPColorGradient *getLinkGradient(void);
@@ -119,47 +120,55 @@ class Circos : public QObject {
 
   void setWidget(QWidget *w) { widget = w; }
 
-  qreal getBBHole(void) {
+  [[nodiscard]] qreal getBBHole(void) const {
     return back_bone_inner_radius;
   }
 
-  qreal getBBPie(void) {
+  [[nodiscard]] qreal getBBPie(void) const {
     return back_bone_outer_radius;
   }
 
-  qreal getCGHole(void) {
+  [[nodiscard]] qreal getCGHole(void) const {
     return category_inner_raidus;
   }
 
-  qreal getCGPie(void) {
+  [[nodiscard]] qreal getCGPie(void) const {
     return category_outer_radius;
   }
 
-  qreal getTAHole(void) {
+  [[nodiscard]] qreal getTAHole(void) const {
     return trackarrow_inner_radius;
   }
 
-  qreal getTAPie(void) {
+  [[nodiscard]] qreal getTAPie(void) const {
     return trackarrow_outer_radius;
   }
-  TrackArrow::Types getTrackType(void) {
+  [[maybe_unused]] TrackArrow::Types getTrackType(void) {
     return track_arrow_type;
   }
+
   QColor getTAColor(void) {
     return track_color;
   }
-  qreal getLKHole(void) {
+
+  [[nodiscard]] qreal getLKHole(void) const {
     return link_inner_radius;
   }
-  qreal getLKPie(void) {
+
+  [[nodiscard]] qreal getLKPie(void) const {
     return link_outer_radius;
   }
 
-  qreal getBBGap(void) {
+  [[nodiscard]] qreal getBBGap(void) const {
     return back_bone_gap;
   }
-  qreal getCatGap(void) {
+
+  [[nodiscard]] qreal getCatGap(void) const {
     return category_gap;
+  }
+
+  [[nodiscard]] qreal getRotate(void) const {
+    return rotate;
   }
 
  public slots:
@@ -187,7 +196,7 @@ class Circos : public QObject {
   }
   void setTAType(TrackArrow::Types t) {
     track_arrow_type = t;
-    for (auto &i : tracks_at) {
+    for (auto &i: tracks_at) {
       i = track_arrow_type;
     }
   }
@@ -196,7 +205,7 @@ class Circos : public QObject {
   }
   void setTAHeadWidth(qreal width) {
     track_head_width = width;
-    for (double &i : tracks_hw) {
+    for (double &i: tracks_hw) {
       i = track_head_width;
     }
   }
@@ -205,7 +214,7 @@ class Circos : public QObject {
   }
   void setTATailWidth(qreal width) {
     track_tail_width = width;
-    for (double &i : tracks_tw) {
+    for (double &i: tracks_tw) {
       i = track_tail_width;
     }
   }
@@ -214,7 +223,7 @@ class Circos : public QObject {
   }
   void setTAHeadRatio(qreal ratio) {
     track_head_ratio = ratio;
-    for (double &i : tracks_hr) {
+    for (double &i: tracks_hr) {
       i = track_head_ratio;
     }
     qDebug() << "Track head ratio[1] is" << tracks_hr[1];
@@ -250,6 +259,9 @@ class Circos : public QObject {
     category_gap = g;
 //    category.at(0).
   }
+  void setRotate(qreal rot) {
+    rotate = rot;
+  }
 
  signals:
   void linkColorFuncChanged(int index);
@@ -258,6 +270,7 @@ class Circos : public QObject {
 
  private:
   // global paremater
+  qreal rotate = 0;
   qreal back_bone_inner_radius = canvas_scale * 0.6;
   qreal back_bone_outer_radius = canvas_scale * 0.7;
   qreal category_inner_raidus = canvas_scale * 0.7;
