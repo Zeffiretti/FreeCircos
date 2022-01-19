@@ -53,7 +53,7 @@ void CustomDonut::drawDonut(QCustomPlot *canvas) {
 //    }
   caculateSum();
   qreal last_start = start_angle;
-  qDebug() << "Procedding to " << __FILE__ << "in Line " << __LINE__;
+  qDebug() << "Proceeding to " << __FILE__ << "in Line " << __LINE__;
   if (m_slices.size() > 1) {
     for (int i = 0; i < m_slices.size(); ++i) {
       qreal span = caculateAngleSpan(i);
