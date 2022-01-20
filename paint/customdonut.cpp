@@ -14,19 +14,19 @@ void CustomDonut::addSlice(CustomSlice *slice) {
 
 void CustomDonut::setSize(qreal hole, qreal pie) {
   size_reset = false;
-  for (int i = 0; i < m_slices.size(); ++i) {
-    m_slices.at(i)->setSize(hole, pie);
+  for (auto m_slice : m_slices) {
+    m_slice->setSize(hole, pie);
   }
 }
 
-void CustomDonut::caculateSum(void) {
+void CustomDonut::calculateSum(void) {
   sum = 0;
-  for (int i = 0; i < m_slices.size(); ++i) {
-    sum += m_slices.at(i)->getLength();
+  for (auto m_slice : m_slices) {
+    sum += m_slice->getLength();
   }
 }
 
-qreal CustomDonut::caculateAngleSpan(int index) {
+qreal CustomDonut::calculateAngleSpan(int index) {
   if (index >= m_slices.size()) {
     qDebug() << "index out of range.[CustomDonut::CaculateAngleSpan]";
     qDebug() << "index is " << index;
@@ -51,12 +51,12 @@ void CustomDonut::drawDonut(QCustomPlot *canvas) {
 //    if(lp_reset) {
 //        SetLabelPositions(d_lp);
 //    }
-  caculateSum();
+  calculateSum();
   qreal last_start = start_angle;
   qDebug() << "Proceeding to " << __FILE__ << "in Line " << __LINE__;
   if (m_slices.size() > 1) {
     for (int i = 0; i < m_slices.size(); ++i) {
-      qreal span = caculateAngleSpan(i);
+      qreal span = calculateAngleSpan(i);
       m_slices.at(i)->setSE(last_start, last_start + span);
       emit sliceAngleChanged(m_slices.at(i)->getName(), m_slices.at(i)->getStart(), m_slices.at(i)->getEnd());
       m_slices.at(i)->setSliceLayer(slice_layer);
@@ -87,8 +87,8 @@ void CustomDonut::clear(void) {
 }
 
 void CustomDonut::removeFrom(QCustomPlot *canvas) {
-  for (int i = 0; i < m_slices.size(); ++i) {
-    m_slices.at(i)->removeFrom(canvas);
+  for (auto m_slice : m_slices) {
+    m_slice->removeFrom(canvas);
   }
 }
 
@@ -109,7 +109,7 @@ void CustomDonut::setGaps(qreal g) {
   }
 }
 
-void CustomDonut::setGaps(QList<qreal> g_s) {
+void CustomDonut::setGaps(const QList<qreal>& g_s) {
   for (int i = 0; i < g_s.size(); ++i) {
     setSingleGap(i, g_s.at(i));
   }
@@ -132,7 +132,7 @@ void CustomDonut::setLabelStates(CustomSlice::LabelState ls) {
   }
 }
 
-void CustomDonut::setLabelStates(QList<CustomSlice::LabelState> ls_s) {
+void CustomDonut::setLabelStates(const QList<CustomSlice::LabelState>& ls_s) {
   for (int i = 0; i < ls_s.size(); ++i) {
     setSingleLabelState(i, ls_s.at(i));
   }
@@ -155,13 +155,13 @@ void CustomDonut::setLabelPositions(CustomSlice::LabelPosition lp) {
   }
 }
 
-void CustomDonut::setLabelPositions(QList<CustomSlice::LabelPosition> lp_s) {
+void CustomDonut::setLabelPositions(const QList<CustomSlice::LabelPosition>& lp_s) {
   for (int i = 0; i < lp_s.size(); ++i) {
     setSingleLabelPosition(i, lp_s.at(i));
   }
 }
 
-void CustomDonut::setSinglePen(int index, QColor p) {
+void CustomDonut::setSinglePen(int index, const QColor& p) {
   pen_reset = false;
   if (index >= m_slices.size()) {
     qDebug() << "index out of range.[CustomDonut::SetSinglePen]";
@@ -172,19 +172,19 @@ void CustomDonut::setSinglePen(int index, QColor p) {
   }
 }
 
-void CustomDonut::setPens(QColor p) {
+void CustomDonut::setPens(const QColor& p) {
   for (int i = 0; i < m_slices.size(); ++i) {
     setSinglePen(i, p);
   }
 }
 
-void CustomDonut::setPens(QList<QColor> p_s) {
+void CustomDonut::setPens(const QList<QColor>& p_s) {
   for (int i = 0; i < p_s.size(); ++i) {
     setSinglePen(i, p_s.at(i));
   }
 }
 
-void CustomDonut::setSingleBrush(int index, QColor b) {
+void CustomDonut::setSingleBrush(int index, const QColor& b) {
   brush_reset = false;
   if (index >= m_slices.size()) {
     qDebug() << "index out of range.[CustomDonut::SetSingleBrush]";
@@ -195,13 +195,13 @@ void CustomDonut::setSingleBrush(int index, QColor b) {
   }
 }
 
-void CustomDonut::setBrushes(QColor b) {
+void CustomDonut::setBrushes(const QColor& b) {
   for (int i = 0; i < m_slices.size(); ++i) {
     setSingleBrush(i, b);
   }
 }
 
-void CustomDonut::setBrushes(QList<QColor> b_s) {
+void CustomDonut::setBrushes(const QList<QColor>& b_s) {
   for (int i = 0; i < b_s.size(); ++i) {
     setSingleBrush(i, b_s.at(i));
   }
@@ -211,9 +211,9 @@ void CustomDonut::setSliceLayer(int l) { slice_layer = l; }
 void CustomDonut::setTextLayer(int l) { text_layer = l; }
 
 CustomSlice *CustomDonut::findSlice(const QString &n) {
-  for (int i = 0; i < m_slices.size(); ++i) {
-    if (m_slices.at(i)->getName() == n) {
-      return m_slices.at(i);
+  for (auto m_slice : m_slices) {
+    if (m_slice->getName() == n) {
+      return m_slice;
     }
   }
   return new CustomSlice;
@@ -227,6 +227,6 @@ void CustomDonut::setRotate(qreal rot) {
   start_angle = rot;
 }
 
-qreal CustomDonut::getRotate(void) {
+qreal CustomDonut::getRotate(void) const {
   return start_angle;
 }
