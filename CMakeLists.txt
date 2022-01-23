@@ -46,7 +46,7 @@ endif ()
 #set(Qt5_DIR "D:/Apps/Qt5129/5.12.9/mingw73_64/lib/cmake")
 message("CMAKE_PREFIX_PATH at ${CMAKE_PREFIX_PATH}")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-include_directories(${PROJECT_BINARY_DIR}/${PROJECT}_autogen/include*)
+include_directories(${PROJECT_BINARY_DIR}/${PROJECT_NAME}_autogen/include*)
 message("${PROJECT_BINARY_DIR}/${PROJECT_NAME}_autogen/include_Debug")
 find_package(Qt5 COMPONENTS
   Core
