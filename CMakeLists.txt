@@ -143,6 +143,7 @@ set(EXT_FILES
   extension/extcheckboxheaderview.cpp
   extension/extdoubleslider.cpp
   extension/extdoublesliderprivate.h
+  extension/extgradient.cpp
   extension/extgradientbutton.cpp
   extension/extcolordialog.cpp
   extension/extitemmodel.cpp

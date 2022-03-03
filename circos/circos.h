@@ -21,8 +21,9 @@
 #include "fileprocess/excelbase.h"
 #include "fileprocess/qvariantlistlistmodel.h"
 #include "tool/customtool.h"
+#include "extension/extgradient.h"
 class Circos : public QObject {
- Q_OBJECT
+  Q_OBJECT
  public:
   enum DataProcessState {
     Success,
@@ -102,8 +103,8 @@ class Circos : public QObject {
   QCPRange *getLinkStreRange(void);
   std::vector<qreal> generateLinkTicks(void);
 
-  void setLinkGradient(QCPColorGradient *g);
-  QCPColorGradient *getLinkGradient(void);
+  void setLinkGradient(ExtGradient *g);
+  ExtGradient *getLinkGradient(void);
 
   Gene *getGene(int index);
   void clearBackBone(void);
@@ -118,7 +119,9 @@ class Circos : public QObject {
   int indexofArrow(const QString &arrow_name);
   QList<TrackArrow *> getTrackArrow(void);
 
-  void setWidget(QWidget *w) { widget = w; }
+  void setWidget(QWidget *w) {
+    widget = w;
+  }
 
   [[nodiscard]] qreal getBBHole(void) const {
     return back_bone_inner_radius;
@@ -196,7 +199,7 @@ class Circos : public QObject {
   }
   void setTAType(TrackArrow::Types t) {
     track_arrow_type = t;
-    for (auto &i: tracks_at) {
+    for (auto &i : tracks_at) {
       i = track_arrow_type;
     }
   }
@@ -205,7 +208,7 @@ class Circos : public QObject {
   }
   void setTAHeadWidth(qreal width) {
     track_head_width = width;
-    for (double &i: tracks_hw) {
+    for (double &i : tracks_hw) {
       i = track_head_width;
     }
   }
@@ -214,7 +217,7 @@ class Circos : public QObject {
   }
   void setTATailWidth(qreal width) {
     track_tail_width = width;
-    for (double &i: tracks_tw) {
+    for (double &i : tracks_tw) {
       i = track_tail_width;
     }
   }
@@ -223,7 +226,7 @@ class Circos : public QObject {
   }
   void setTAHeadRatio(qreal ratio) {
     track_head_ratio = ratio;
-    for (double &i: tracks_hr) {
+    for (double &i : tracks_hr) {
       i = track_head_ratio;
     }
     qDebug() << "Track head ratio[1] is" << tracks_hr[1];
@@ -234,9 +237,9 @@ class Circos : public QObject {
   Q_SLOT void setTAColor(QColor c) {
     qDebug() << "set all ta color to" << c;
     track_color = c;
-      foreach(auto track_c, track_colors) {
-        *track_c = track_color;
-      }
+    foreach (auto track_c, track_colors) {
+      *track_c = track_color;
+    }
   }
   Q_SLOT void setTAColorAt(int index, QColor c) {
     *(track_colors.at(index)) = std::move(c);
@@ -250,7 +253,9 @@ class Circos : public QObject {
   }
   void setGradientColor(int i, QColor c) {
     qreal pos = CustomTool::mapInt2Real(0, 4, 0, 1.0, i);
-    getLinkGradient()->setColorStopAt(pos, c);
+    getLinkGradient()->setExtColorStopAt(pos, c);
+    // show pos and color
+    qDebug() << "set gradient color at" << i << "to" << c;
   }
   void setBBGap(qreal g) {
     back_bone_gap = g;
@@ -289,7 +294,7 @@ class Circos : public QObject {
   qreal category_gap = 0.01;
   bool link_enabled = false;
   QList<Link *> links;
-  QCPColorGradient *link_gradient;
+  ExtGradient *link_gradient;
   CustomLinkCanvas::LinkTypes link_type = CustomLinkCanvas::LinkType::IntroOut;
   CustomLink::LinkDirections link_arrow_direction = CustomLink::LinkDirection::NoArrow;
   Qt::PenStyle link_line_style = Qt::PenStyle::SolidLine;

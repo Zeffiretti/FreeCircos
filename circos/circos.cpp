@@ -748,8 +748,11 @@ void Circos::setLinkColorFunc(int index, Link::ColorFuns cf, const QColor &c) {
   if (cf.testFlag(Link::ColorFun::Ramp)) {
     for (auto &l : links) {
       qreal stre_code = l->getStreCode();
-      QColor color = QColor(link_gradient->color(stre_code,
-                            QCPRange(getLinkStreMin(), getLinkStreMax())));
+      QColor color = link_gradient->getExtColor(stre_code,
+                     QCPRange(getLinkStreMin(), getLinkStreMax()));
+      // show the color
+      qDebug() << "color at " << index << ":" << color;
+      // qDebug()<<"stops use alpha:"<<link_gradient->stopsUseAlpha();
       l->setColor(color);
     }
     qDebug() << "This is Link::ColorFun::Ramp";
@@ -906,11 +909,11 @@ std::vector<qreal> Circos::generateLinkTicks(void) {
   return ticks;
 }
 
-void Circos::setLinkGradient(QCPColorGradient *g) {
+void Circos::setLinkGradient(ExtGradient *g) {
   link_gradient = g;
 }
 
-QCPColorGradient *Circos::getLinkGradient(void) {
+ExtGradient *Circos::getLinkGradient(void) {
   return link_gradient;
 }
 

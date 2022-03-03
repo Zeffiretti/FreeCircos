@@ -31,6 +31,7 @@
 #include "extension/extarroweditor.h"
 #include "extension/extsymslider.h"
 #include "extension/extsorttable.h"
+#include "extension/extgradient.h"
 
 #include "paint/custompainter.h"
 #include "paint/qcustomplot.h"
@@ -251,7 +252,8 @@ class FreeCircos : public QMainWindow {
   QCPColorMap *link_thermometer_onpanel_color_map;
   QCPColorMap *link_thermometer_oncanvas_color_map;
 //    QCPColorScale *link_thermometer_color_scale;
-  QCPColorGradient *link_gradient;
+  // QCPColorGradient *link_gradient;
+  ExtGradient *link_gradient;
   ExtGradientButton *link_cm_button1;
   ExtGradientButton *link_cm_button2;
   ExtGradientButton *link_cm_button3;
