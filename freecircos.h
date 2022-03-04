@@ -219,7 +219,7 @@ class FreeCircos : public QMainWindow {
   QLineEdit *category_move_lineedit;
 
   QWidget *link_widget;
-  QTableView *link_table;
+  ExtTableView *link_table;
   QStandardItemModel *link_model;
 //  QHeaderView *link_table_header;
   QCheckBox *link_all_checkbox;

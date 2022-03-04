@@ -504,16 +504,24 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
   donut->setSize(category_inner_raidus, category_outer_radius);
 }
 
+void Circos::buildLinkSequence(QStandardItemModel *model) {
+  links_sequence.clear();
+  for (int i = 0; i < model->rowCount(); ++i) {
+    int index = model->item(i, 0)->text().toInt() - 1;
+    links_sequence.append(index);
+  }
+}
+
 void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
   custom_links->clearLinks();
-  QListIterator<Link *> it(links);
+  QListIterator<int> it(links_sequence);
   custom_links->setLinkType(link_type);
   custom_links->setArrowDirection(link_arrow_direction);
   custom_links->setLineStyle(link_line_style);
   custom_links->setLineWidth(link_line_width);
 //    qDebug("buildCustomLink starts...");
   while (it.hasNext()) {
-    Link *l = it.next();
+    Link *l = links.at(it.next());
     if (l->getEnable()) {
       Gene *sg = findGene(l->getSGN());
       Gene *dg = findGene(l->getDGN());

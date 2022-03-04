@@ -44,6 +44,7 @@ class Circos : public QObject {
   void buildBackBoneDonut(CustomDonut *);
   void buildCategorySequence(QStandardItemModel *model);
   void buildCategoryDonut(CustomDonut *);
+  void buildLinkSequence(QStandardItemModel *model);
   void buildCustomLink(CustomLinkCanvas *);
   void buildCustomTrack(CustomTrackArrow *);
   void reset(void);
@@ -294,6 +295,7 @@ class Circos : public QObject {
   qreal category_gap = 0.01;
   bool link_enabled = false;
   QList<Link *> links;
+  QList<int> links_sequence;
   ExtGradient *link_gradient;
   CustomLinkCanvas::LinkTypes link_type = CustomLinkCanvas::LinkType::IntroOut;
   CustomLink::LinkDirections link_arrow_direction = CustomLink::LinkDirection::NoArrow;

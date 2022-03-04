@@ -14,7 +14,7 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
 
 void FreeCircos::initLKTable(void) {
   link_model = new QStandardItemModel;
-  link_table = new QTableView;
+  link_table = new ExtTableView;
   link_all_checkbox = new QCheckBox;
 //  link_table_header = new QHeaderView;
   link_table->setGeometry(g_scale * table_pos_x,
@@ -22,7 +22,7 @@ void FreeCircos::initLKTable(void) {
                           g_scale * table_width,
                           g_scale * table_height);
   link_table->setParent(link_widget);
-  link_table->setModel(link_model);
+  link_table->setExtModel(link_model);
   link_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
   link_table->setSelectionBehavior(QAbstractItemView::SelectRows);
   link_table->verticalHeader()->hide();
