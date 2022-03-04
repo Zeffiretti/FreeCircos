@@ -504,16 +504,24 @@ void Circos::buildCategoryDonut(CustomDonut *donut) {
   donut->setSize(category_inner_raidus, category_outer_radius);
 }
 
+void Circos::buildLinkSequence(QStandardItemModel *model) {
+  links_sequence.clear();
+  for (int i = 0; i < model->rowCount(); ++i) {
+    int index = model->item(i, 0)->text().toInt() - 1;
+    links_sequence.append(index);
+  }
+}
+
 void Circos::buildCustomLink(CustomLinkCanvas *custom_links) {
   custom_links->clearLinks();
-  QListIterator<Link *> it(links);
+  QListIterator<int> it(links_sequence);
   custom_links->setLinkType(link_type);
   custom_links->setArrowDirection(link_arrow_direction);
   custom_links->setLineStyle(link_line_style);
   custom_links->setLineWidth(link_line_width);
 //    qDebug("buildCustomLink starts...");
   while (it.hasNext()) {
-    Link *l = it.next();
+    Link *l = links.at(it.next());
     if (l->getEnable()) {
       Gene *sg = findGene(l->getSGN());
       Gene *dg = findGene(l->getDGN());
@@ -748,8 +756,11 @@ void Circos::setLinkColorFunc(int index, Link::ColorFuns cf, const QColor &c) {
   if (cf.testFlag(Link::ColorFun::Ramp)) {
     for (auto &l : links) {
       qreal stre_code = l->getStreCode();
-      QColor color = QColor(link_gradient->color(stre_code,
-                            QCPRange(getLinkStreMin(), getLinkStreMax())));
+      QColor color = link_gradient->getExtColor(stre_code,
+                     QCPRange(getLinkStreMin(), getLinkStreMax()));
+      // show the color
+      qDebug() << "color at " << index << ":" << color;
+      // qDebug()<<"stops use alpha:"<<link_gradient->stopsUseAlpha();
       l->setColor(color);
     }
     qDebug() << "This is Link::ColorFun::Ramp";
@@ -906,11 +917,11 @@ std::vector<qreal> Circos::generateLinkTicks(void) {
   return ticks;
 }
 
-void Circos::setLinkGradient(QCPColorGradient *g) {
+void Circos::setLinkGradient(ExtGradient *g) {
   link_gradient = g;
 }
 
-QCPColorGradient *Circos::getLinkGradient(void) {
+ExtGradient *Circos::getLinkGradient(void) {
   return link_gradient;
 }
 

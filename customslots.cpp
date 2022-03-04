@@ -33,6 +33,7 @@ void FreeCircos::onButtonClicked(bool) {
 //      painter->setFigures((figures & (~CustomPainter::Figure::Category)));
     }
     if (circos->getLinkEnable()) {
+      circos->buildLinkSequence(link_model);
       circos->buildCustomLink(link_canvas);//deprecate
 //      circos->buildCustomLink(painter->getLinkCanvas());
 //      CustomPainter::Figures figures = painter->getFigures();

@@ -14,7 +14,7 @@ void FreeCircos::initLinkWidget(QTabWidget *parent) {
 
 void FreeCircos::initLKTable(void) {
   link_model = new QStandardItemModel;
-  link_table = new QTableView;
+  link_table = new ExtTableView;
   link_all_checkbox = new QCheckBox;
 //  link_table_header = new QHeaderView;
   link_table->setGeometry(g_scale * table_pos_x,
@@ -22,7 +22,7 @@ void FreeCircos::initLKTable(void) {
                           g_scale * table_width,
                           g_scale * table_height);
   link_table->setParent(link_widget);
-  link_table->setModel(link_model);
+  link_table->setExtModel(link_model);
   link_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
   link_table->setSelectionBehavior(QAbstractItemView::SelectRows);
   link_table->verticalHeader()->hide();
@@ -393,7 +393,8 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
   link_cm_button3 = new ExtGradientButton(2);
   link_cm_button4 = new ExtGradientButton(3);
   link_cm_button5 = new ExtGradientButton(4);
-  link_gradient = new QCPColorGradient;
+  link_gradient = new ExtGradient;
+  link_gradient->setColorInterpolation(QCPColorGradient::ColorInterpolation::ciRGB);
   parent1->setParent(link_config_widget);
   parent1->setGeometry(g_scale * thermometer_pos_x,
                        g_scale * thermometer_pos_y,
@@ -424,14 +425,16 @@ void FreeCircos::initLKColorScale(QCustomPlot *parent1, QCustomPlot *parent2) {
                        g_scale * thermometer_canvas_pos_y,
                        g_scale * thermometer_canvas_width,
                        g_scale * thermometer_canvas_height);
-  link_gradient->setColorStopAt(0.0, QColor(Qt::blue));   //
-  link_gradient->setColorStopAt(0.25, QColor(Qt::green));
-  link_gradient->setColorStopAt(0.5, QColor(Qt::yellow));
-  link_gradient->setColorStopAt(0.75, QColor(Qt::red));
-  link_gradient->setColorStopAt(1.0, QColor(Qt::darkRed));  //
+  link_gradient->setExtColorStopAt(0.0, QColor(Qt::blue));   //
+  link_gradient->setExtColorStopAt(0.25, QColor(Qt::green));
+  link_gradient->setExtColorStopAt(0.5, QColor(Qt::yellow));
+  link_gradient->setExtColorStopAt(0.75, QColor(Qt::red));
+  link_gradient->setExtColorStopAt(1.0, QColor(Qt::darkRed));  //
   link_thermometer_oncanvas_color_map->setGradient(*link_gradient);
   link_thermometer_onpanel_color_map->setGradient(*link_gradient);
   circos->setLinkGradient(link_gradient);
+  // QCPColorGradient grad = link_thermometer_onpanel_color_map->gradient();
+  // circos->setLinkGradient(&grad);
   link_thermometer_onpanel_color_map->rescaleDataRange();
   link_thermometer_onpanel_color_map->setVisible(true);
   link_thermometer_oncanvas_color_map->rescaleDataRange();

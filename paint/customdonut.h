@@ -13,8 +13,8 @@ class CustomDonut : public QObject {
   ~CustomDonut();
   void addSlice(CustomSlice *slice);
   void setSize(qreal hole, qreal pie);
-  void caculateSum(void);
-  qreal caculateAngleSpan(int index);
+  void calculateSum(void);
+  qreal calculateAngleSpan(int index);
   Q_SLOT void drawDonut(QCustomPlot *plot);
 //    void DrawDonut(QCustomPlot *, Circos *);
   void clear(void);
@@ -22,30 +22,30 @@ class CustomDonut : public QObject {
 
   void setSingleGap(int index, qreal g);
   void setGaps(qreal g);
-  void setGaps(QList<qreal> g_s);
+  void setGaps(const QList<qreal>& g_s);
 
   void setSingleLabelState(int index, CustomSlice::LabelState ls);
   void setLabelStates(CustomSlice::LabelState ls);
-  void setLabelStates(QList<CustomSlice::LabelState> ls_s);
+  void setLabelStates(const QList<CustomSlice::LabelState>& ls_s);
 
   void setSingleLabelPosition(int index, CustomSlice::LabelPosition lp);
   void setLabelPositions(CustomSlice::LabelPosition lp);
-  void setLabelPositions(QList<CustomSlice::LabelPosition> lp_s);
+  void setLabelPositions(const QList<CustomSlice::LabelPosition>& lp_s);
 
-  void setSinglePen(int index, QColor p);
-  void setPens(QColor p);
-  void setPens(QList<QColor> p_s);
+  void setSinglePen(int index, const QColor& p);
+  void setPens(const QColor& p);
+  void setPens(const QList<QColor>& p_s);
 
-  void setSingleBrush(int index, QColor b);
-  void setBrushes(QColor b);
-  void setBrushes(QList<QColor> b_s);
+  void setSingleBrush(int index, const QColor& b);
+  void setBrushes(const QColor& b);
+  void setBrushes(const QList<QColor>& b_s);
   CustomSlice *findSlice(const QString &n);
 
   void setSliceLayer(int l);
   void setTextLayer(int l);
 
   void setRotate(qreal rot);
-  qreal getRotate(void );
+  qreal getRotate(void ) const;
  signals:
   void sliceAngleChanged(const QString &n, qreal s, qreal e);
 
