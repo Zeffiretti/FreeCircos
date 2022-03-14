@@ -38,6 +38,13 @@ set(OPENXLSX_LIBRARY_TYPE "STATIC" CACHE STRING "Set the library type to SHARED 
 #   Define external libraries used by OpenXLSX. The libraries (Zippy, PugiXML, and NoWide) are header-only, so
 #   INTERFACE libraries should be defined.
 #=======================================================================================================================
+find_package(Qt5 COMPONENTS
+  Core
+  Gui
+  AxContainer
+  Widgets
+  PrintSupport REQUIRED)
+
 add_library(NoWide INTERFACE IMPORTED)
 target_include_directories(NoWide SYSTEM INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/external/nowide/>)
 
